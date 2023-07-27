@@ -35,7 +35,11 @@ class FlightModel {
     //שליפה
 
     static async GetAllFlights() {
-        return await new DB().FindAll('flights');
+        return await new DB().FindAll('Flights');
+    }
+
+    static async DeleteFlight(flightId){
+        await new DB().DeleteDocument('Flights', flightId);
     }
 }
 

@@ -5,12 +5,13 @@ class HotelModel {
     name;
     address;
     city;
-    Eco_rating;
-    Price_per_night;
-    Check_in;
-    Check_out;
+    country;
+    ecoRating;
+    pricePerNight;
+    checkIn;
+    checkOut;
 
-    constructor(id, name, address, city, Eco_rating, Price_per_night, Check_in, Check_out) {
+    constructor(id, name, address, city, Eco_rating, Price_per_night, Check_in, Check_out, country) {
         this.id = id;
         this.name = name;
         this.address = address;
