@@ -11,15 +11,16 @@ class HotelModel {
     checkIn;
     checkOut;
 
-    constructor(id, name, address, city, Eco_rating, Price_per_night, Check_in, Check_out, country) {
+    constructor(id, name, address, city, ecoRating, pricePerNight, checkIn, checkOut, country) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.city = city;
-        this.Eco_rating = Eco_rating;
-        this.Price_per_night = Price_per_night;
-        this.Check_in = Check_in;
-        this.Check_out = Check_out;
+        this.ecoRating = ecoRating;
+        this.pricePerNight = pricePerNight;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.country = country;
     }
 
     //פעולות נוספות
