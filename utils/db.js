@@ -23,14 +23,13 @@ class DB {
             await this.client.close();
         }
     }
-    
 
     async DeleteDocument(collection, id) {
         try {
             await this.client.connect();
             let objectId = new ObjectId(id);
             let result = await this.client
-            await this.client.db(this.db_name).collection(collection).remove({_id: objectId});
+            await this.client.db(this.db_name).collection(collection).deleteOne({_id: objectId});
             if (result.deletedCount === 1) {
                 console.log('Document deleted successfully.');
               } else {
@@ -40,23 +39,34 @@ class DB {
             throw error;
         } finally {
             await this.client.close();
-        }
-    }
+        }
+    }
 
-    async UpdateById(collection, id, doc) {
-        try {
+    async InsertDocument(doc, collection){
+        try{
             await this.client.connect();
-            console.log({...doc});
-            return await this.client.db(this.db_name).collection(collection).updateOne(
-                { _id: new ObjectId(id) },
-                { $set: {...doc} });
-        } catch (error) {
+            await this.client.db(this.db_name).collection(collection).insertOne(doc);
+        }catch(error){
             throw error;
-        }
-        finally {
+        }finally{
             await this.client.close();
         }
     }
+
+        async UpdateDocumentById(id, doc, collection){
+        try{
+            await this.client.connect();
+            let query = {"_id": new ObjectId(id)};
+            let newValues = {$set: doc}
+            await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
+        }catch(error){
+            throw error;
+        }finally{
+            await this.client.close();
+        }
+    }
+    
+
 
 }
 
