@@ -15,7 +15,9 @@ class DB {
     async FindAll(collection, query = {}, project = {}) {
         try {
             await this.client.connect();
+            console.log('Connected successfully to the database!');
             const data = await this.client.db(this.db_name).collection(collection).find(query, project).toArray();
+            console.log('Data retrieved from the database:', data); // הוסף את שורה זו
             return data;
         } catch (error) {
             throw error;
@@ -24,18 +26,18 @@ class DB {
         }
     }
     
+    
 
     async DeleteDocument(collection, id) {
         try {
             await this.client.connect();
             let objectId = new ObjectId(id);
+            console.log(objectId)
+            console.log(collection)
             let result = await this.client
-            await this.client.db(this.db_name).collection(collection).remove({_id: objectId});
-            if (result.deletedCount === 1) {
-                console.log('Document deleted successfully.');
-              } else {
-                console.log('Document with the specified ID not found.');
-              }
+            //await this.client.db(this.db_name).collection(collection).remove({_id: objectId});
+            await this.client.db(this.db_name).collection(collection).deleteOne({_id: objectId});
+            console.log("hi")
         } catch (error) {
             throw error;
         } finally {
