@@ -25,8 +25,11 @@ class DB {
             await this.client.close();
         }
     }
+<<<<<<< HEAD
     
     
+=======
+>>>>>>> aa6cb7bedff463259fb2fcc6886b230da62abb02
 
     async DeleteDocument(collection, id) {
         try {
@@ -35,30 +38,50 @@ class DB {
             console.log(objectId)
             console.log(collection)
             let result = await this.client
+<<<<<<< HEAD
             //await this.client.db(this.db_name).collection(collection).remove({_id: objectId});
             await this.client.db(this.db_name).collection(collection).deleteOne({_id: objectId});
             console.log("hi")
+=======
+            await this.client.db(this.db_name).collection(collection).deleteOne({_id: objectId});
+            if (result.deletedCount === 1) {
+                console.log('Document deleted successfully.');
+              } else {
+                console.log('Document with the specified ID not found.');
+              }
+>>>>>>> aa6cb7bedff463259fb2fcc6886b230da62abb02
         } catch (error) {
             throw error;
         } finally {
             await this.client.close();
-        }
-    }
+        }
+    }
 
-    async UpdateById(collection, id, doc) {
-        try {
+    async InsertDocument(doc, collection){
+        try{
             await this.client.connect();
-            console.log({...doc});
-            return await this.client.db(this.db_name).collection(collection).updateOne(
-                { _id: new ObjectId(id) },
-                { $set: {...doc} });
-        } catch (error) {
+            await this.client.db(this.db_name).collection(collection).insertOne(doc);
+        }catch(error){
             throw error;
-        }
-        finally {
+        }finally{
             await this.client.close();
         }
     }
+
+        async UpdateDocumentById(id, doc, collection){
+        try{
+            await this.client.connect();
+            let query = {"_id": new ObjectId(id)};
+            let newValues = {$set: doc}
+            await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
+        }catch(error){
+            throw error;
+        }finally{
+            await this.client.close();
+        }
+    }
+    
+
 
 }
 

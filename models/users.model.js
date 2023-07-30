@@ -1,4 +1,3 @@
-const { log } = require('console');
 const DB = require('../utils/db');
 
 class UsersModel {
@@ -39,6 +38,14 @@ class UsersModel {
 
     static async DeleteUser(userId){
         await new DB().DeleteDocument('users', userId);
+    }
+
+    static async CreateUser(user){
+        await new DB().InsertDocument(user, 'users');
+    }
+
+    static async UpdateUser(userId, user){
+        await new DB().UpdateDocumentById(userId, user, 'users');
     }
 }
 
