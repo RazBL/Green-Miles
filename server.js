@@ -10,10 +10,6 @@ app.use(cors());
 
 app.use('/api/users', require('./routes/users.route'));
 
-app.use('/api/flights', require('./routes/flights.route'));
-
-app.use('/api/hotels', require('./routes/hotels.route'));
-
 app.get('/', (req, res) => {
   res.send('Mashrmellow')
 });
