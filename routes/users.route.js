@@ -1,38 +1,19 @@
 const UsersModel = require('../models/users.model');
 const bcrypt = require('bcrypt');
+const {AuthUser} = require('../utils/auth');
 const UsersRoute = require('express').Router();
 
 //CRUD
 
 
 //CREATE == POST
-UsersRoute.post('/register-step-1', async (req, res) => {
+UsersRoute.post('/register', async (req, res) => {
     try {
-        let hashedPassword = await bcrypt.hash(req.body.password, 10);
         let user = { 
             email: req.body.email,
-            password: hashedPassword,
+            password: req.body.password,
             savedFlights: [],
             savedHotels: [],
-            firstName: "",
-            lastName: "",
-            phoneNumber: "",
-            image: "",
-            country: "",
-            city: "",
-            address: ""
-        };
-        let newUser = await UsersModel.CreateUserStep1(user);
-        res.status(200).json({ message: 'User created successfully', userId: newUser._id });
-    } catch (error) { 
-        console.log(error);
-        res.status(500).json({ error: 'Failed to create user' });
-    }
-});
-
-UsersRoute.put('/register-step-2/:id', async(req, res) => {
-    try{
-        let user = {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             phoneNumber: req.body.phoneNumber,
@@ -40,15 +21,52 @@ UsersRoute.put('/register-step-2/:id', async(req, res) => {
             country: req.body.country,
             city: req.body.city,
             address: req.body.address
-        }
-        let userId = req.params.id;
-        await UsersModel.UpdateUser(userId, user);
-        res.status(200).json({ message: 'User updated successfully' });
-    }catch(error){
+        };
+       let newUser = await UsersModel.Register(user);
+        res.status(201).json(newUser);
+    } catch (error) { 
         console.log(error);
-        res.status(500).json({ error: 'Failed to update user' });
-    }
+        res.status(500).json({ error: 'Failed to create user' });
+    }
 });
+
+
+UsersRoute.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const loginResult = await UsersModel.Login(email, password);
+
+    if (loginResult) {
+      let token = await UsersModel.GenerateUserToken(loginResult);
+      res.status(200).json({ message: 'Login successful', token });
+    } else {
+      res.status(401).json({ message: 'Incorrect details' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+// UsersRoute.put('/register-step-2/:id', async(req, res) => {
+//     try{
+//         let user = {
+//             firstName: req.body.firstName,
+//             lastName: req.body.lastName,
+//             phoneNumber: req.body.phoneNumber,
+//             image: req.body.image,
+//             country: req.body.country,
+//             city: req.body.city,
+//             address: req.body.address
+//         }
+//         let userId = req.params.id;
+//         await UsersModel.UpdateUser(userId, user);
+//         res.status(200).json({ message: 'User updated successfully' });
+//     }catch(error){
+//         console.log(error);
+//         res.status(500).json({ error: 'Failed to update user' });
+//     }
+// });
 
 //READ == GET
 UsersRoute.get('/', async (req, res) => {
@@ -60,6 +78,14 @@ UsersRoute.get('/', async (req, res) => {
     }
 })
 
+UsersRoute.get('/profile', AuthUser, async(req, res) =>{
+ try{
+  res.status(200).json(req.user)
+ }catch(error){
+  res.status(500).json({error});
+ }
+}
+)
 
 //UPDATE == PUT
 
