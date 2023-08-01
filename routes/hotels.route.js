@@ -21,6 +21,11 @@ HotelRoute.get('/', async (req, res) => {
 //UPDATE == PUT
 
 //DELETE == DELETE
+static async DeleteHotel(hotelId){
+    await new DB().DeleteDocument('Hotels', hotelId);
+}
+
+}
 
 //HTTP -> GET = READ, POST = ADD, PUT = UPDATE, DELETE = DELETE
 

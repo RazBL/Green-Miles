@@ -33,6 +33,10 @@ class HotelModel {
     static async GetAllHotels() {
         return await new DB().FindAll('Hotels');
     }
+    static async DeleteHotel(hotelId){
+        await new DB().DeleteDocument('Hotels', hotelId);
+    }
+
 }
 
 module.exports = HotelModel;
