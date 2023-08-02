@@ -33,9 +33,8 @@ class DB {
         try {
             await this.client.connect();
             let objectId = new ObjectId(id);
-            console.log(objectId)
-            console.log(collection)
             let result = await this.client
+            //await this.client.db(this.db_name).collection(collection).remove({_id: objectId});
             await this.client.db(this.db_name).collection(collection).deleteOne({_id: objectId});
             if (result.deletedCount === 1) {
                 console.log('Document deleted successfully.');
@@ -72,24 +71,21 @@ class DB {
             await this.client.close();
         }
     }
-
-
-    async GenerateToken(doc) {
-        const token = jwt.sign(doc, process.env.SECRET_KEY, { expiresIn: '1h' });
-        return token;
-    }
-    
-
-    async FindOne(query = {}, collection){
+    /*
+    async ChangeBookingStatus(collection, id, status){
         try{
             await this.client.connect();
-            return await this.client.db(this.db_name).collection(collection).findOne(query);
+            let query = {"_id": new ObjectId(id)};
+            let newValues = {$set: status}
+            await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
         }catch(error){
             throw error;
         }finally{
             await this.client.close();
         }
     }
+    */
+
 
     async ChangeBookingStatus(collection, id, status) {
         try {
@@ -103,9 +99,6 @@ class DB {
             await this.client.close();
         }
     }
-    
-
-
 }
 
 module.exports = DB;
