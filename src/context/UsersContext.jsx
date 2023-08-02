@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createContext } from 'react'
-const usersData = require('../data/users.json')
+import {base_api} from '../../utils/api' ;
 
 export const UsersContext = createContext();
 
@@ -7,18 +7,63 @@ export default function UsersContextProvider({ children }) {
 
     const [users, SetUsers] = useState([]);
 
-    const GetUsers = async () => {
+    const LoadAllUsers = async () => {
         try {
-            SetUsers(usersData);
+            let res = await fetch(`${base_api}/users`);
+            let data = await res.json();
+            SetUsers(data);
         } catch (err) {
             console.error(err);
         }
     }
 
-    const IfUserExists = (email, password) => {
-        let userFound = users.find(u => u.email === email && u.password === password);
-        return userFound;
+    const RegisterUser = async (newUser) => {
+        try{
+            let res = await fetch(`${base_api}/users/register`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newUser)
+            });
+            let data = await res.json();
+            if(data){
+                await LoadAllUsers();
+                return true;
+            }
+        }catch(err){
+            console.log(err);
+        }
     }
+
+    const IfUserExists = async (email, password) => {
+        try {
+            let res = await fetch(`${base_api}/users/login`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+    
+            if(!res.ok) {
+                console.log("hi");
+                let errorData = await res.json();  
+                console.error(`Error response from server: ${errorData.error}`);
+                return null;
+            }
+    
+            let data = await res.json();
+            console.log(data);
+            return data;
+        } catch(err) {
+            console.error(err);
+        }
+    }
+    
 
     const EmailExists = (email) => {
         let userFound = users.find(u => u.email === email);
@@ -31,8 +76,7 @@ export default function UsersContextProvider({ children }) {
     
 
     useEffect(() => {
-        GetUsers()
-        console.log(users);
+        LoadAllUsers()
     }, [])
 
     const value = {
@@ -40,7 +84,8 @@ export default function UsersContextProvider({ children }) {
         SetUsers,
         IfUserExists,
         EmailExists,
-        CheckValidEmail
+        CheckValidEmail,
+        RegisterUser
     }
 
     return (

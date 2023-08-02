@@ -1,24 +1,24 @@
-const HotelModel = require('../models/hotels.model');
+// const HotelModel = require('../models/hotels.model');
 
-const HotelRoute = require('express').Router();
+// const HotelRoute = require('express').Router();
 
-//CRUD
+// //CRUD
 
-//CREATE == POST
+// //CREATE == POST
 
-//READ == GET
-HotelRoute.get('/', async (req, res) => {
-    try{
-        let data = await HotelModel.GetAllHotels();
-        res.status(200).json(data);
-    }catch(error){
-        res.status(500).json({error});
-    }
+// //READ == GET
+// HotelRoute.get('/', async (req, res) => {
+//     try{
+//         let data = await HotelModel.GetAllHotels();
+//         res.status(200).json(data);
+//     }catch(error){
+//         res.status(500).json({error});
+//     }
 
-})
+// })
 
 
-//UPDATE == PUT
+// //UPDATE == PUT
 
 //DELETE == DELETE routes hotel, route
 HotelRoute.delete('delete/:id', async (req, res) => {
@@ -34,4 +34,4 @@ HotelRoute.delete('delete/:id', async (req, res) => {
 //DeleteDocument
 //HTTP -> GET = READ, POST = ADD, PUT = UPDATE, DELETE = DELETE
 
-module.exports = HotelRoute;
+// module.exports = HotelRoute;
