@@ -13,10 +13,9 @@ export default function Login({ navigation }) {
     scrollRef.current.scrollTo({x: 0, y: 180, animated: true});
   };
 
-  const LoginHandler = () => {
-    console.log(email + " " + password);
-    let user = IfUserExists(email, password)
-    console.log(user);
+  const LoginHandler = async () => {
+    let user = await IfUserExists(email, password)
+    console.log(user.firstName);
   };
 
   const SignUpBtnHandler = () => {
