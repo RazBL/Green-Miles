@@ -1,4 +1,5 @@
 const {MongoClient,ObjectId} = require('mongodb');
+const jwt = require("jsonwebtoken");
 
 class DB {
     db_uri;
@@ -65,6 +66,24 @@ class DB {
             let query = {"_id": new ObjectId(id)};
             let newValues = {$set: doc}
             await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
+        }catch(error){
+            throw error;
+        }finally{
+            await this.client.close();
+        }
+    }
+
+
+    async GenerateToken(doc) {
+        const token = jwt.sign(doc, process.env.SECRET_KEY, { expiresIn: '1h' });
+        return token;
+    }
+    
+
+    async FindOne(query = {}, collection){
+        try{
+            await this.client.connect();
+            return await this.client.db(this.db_name).collection(collection).findOne(query);
         }catch(error){
             throw error;
         }finally{

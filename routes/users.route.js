@@ -16,14 +16,14 @@ UsersRoute.post('/register', async (req, res) => {
             savedHotels: [],
             firstName: req.body.firstName,
             lastName: req.body.lastName,
-            phoneNumber: req.body.phoneNumber,
-            image: req.body.image,
-            country: req.body.country,
-            city: req.body.city,
-            address: req.body.address
+            phoneNumber: "",
+            image: "" ,
+            country: "",
+            city: "",
+            address: ""
         };
        let newUser = await UsersModel.Register(user);
-        res.status(201).json(newUser);
+        res.status(201).json({message: 'Rgistration successful', newUser});
     } catch (error) { 
         console.log(error);
         res.status(500).json({ error: 'Failed to create user' });
