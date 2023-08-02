@@ -15,7 +15,12 @@ export default function Login({ navigation }) {
 
   const LoginHandler = async () => {
     let user = await IfUserExists(email, password)
-    console.log(user.firstName);
+    if(user){
+        alert("Welcome back "+user.firstName + " :)");
+        navigation.navigate('Home');
+    }else{
+        alert("Incorect details")
+    }
   };
 
   const SignUpBtnHandler = () => {
