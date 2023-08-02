@@ -1,7 +1,3 @@
-//const UsersModel = require('../models/users.model');
-
-//const UsersRoute = require('express').Router();
-
 const { Long } = require('mongodb');
 const FlightBookingModel = require('../models/flight_booking.model');
 
@@ -59,5 +55,4 @@ UsersRoute.get('/', async (req, res) => {
 
 //HTTP -> GET = READ, POST = ADD, PUT = UPDATE, DELETE = DELETE
 
-//module.exports = UsersRoute;
 module.exports = FlightBookingRoute;
