@@ -48,6 +48,17 @@ class DB {
         }
     }
 
+async FindOne(query = {}, collection){
+    try{
+        await this.client.connect();
+        return await this.client.db(this.db_name).collection(collection).findOne(query);
+    }catch(error){
+        throw error;
+    }finally{
+        await this.client.close();
+    }
+}
+
     async InsertDocument(doc, collection){
         try{
             await this.client.connect();
@@ -86,6 +97,10 @@ class DB {
     }
     */
 
+    async GenerateToken(doc) {
+        const token = jwt.sign(doc, process.env.SECRET_KEY, { expiresIn: '1h' });
+        return token;
+    }
 
     async ChangeBookingStatus(collection, id, status) {
         try {

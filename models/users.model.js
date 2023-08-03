@@ -55,6 +55,7 @@ class UsersModel {
     }
 
     static async Login(email, password) {
+        console.log("from Login users.model")
         let query = {
             email: email
         }
