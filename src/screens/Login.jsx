@@ -14,10 +14,11 @@ export default function Login({ navigation }) {
   };
 
   const LoginHandler = async () => {
-    let user = await IfUserExists(email, password)
+    let lowerCaseEmail = email.toLowerCase();
+    let user = await IfUserExists(lowerCaseEmail, password)
     if(user){
         alert("Welcome back "+user.firstName + " :)");
-        navigation.navigate('Home');
+        navigation.navigate('Navigation');
     }else{
         alert("Incorect details")
     }
@@ -32,7 +33,7 @@ export default function Login({ navigation }) {
   };
   
   const SkipBtnHandler = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Navigation');
   }
 
   return (
