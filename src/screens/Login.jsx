@@ -50,7 +50,7 @@ export default function Login({ navigation }) {
       </View>
 
       <View style={styles.informationBox}>
-        <Headline style={styles.headline}>Welcome back!</Headline>
+        <Headline style={[styles.headline]}>Welcome back!</Headline>
         <TextInput
           label="Email"
           backgroundColor="white"
@@ -62,7 +62,7 @@ export default function Login({ navigation }) {
         <TextInput
           label="Password"
           backgroundColor="white"
-          style={styles.textInput}
+          style={[styles.textInput]}
           onChangeText={text => SetPassword(text)}
           secureTextEntry
           onFocus={handleInputFocus}
@@ -77,22 +77,22 @@ export default function Login({ navigation }) {
           style={styles.loginButton}
           onPress={LoginHandler}
         >
-          <Text style={{ fontSize: 15, color: 'white' }}>Sign in</Text>
+          <Text style={[{ fontSize: 15, color: 'white' }, {fontFamily: 'Montserrat_Medium'}]}>Sign in</Text>
         </Button>
         <View style={styles.linkTextContainer}>
           <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={ForgotPasswordBtnHandler}>
-            <Text style={styles.linkText}>Forgot your password?</Text>
+            <Text style={[styles.linkText, styles.default]}>Forgot your password?</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.linkTextContainer}>
-          <Text style={{color: 'black', fontSize: 15}}>Don't have an account? </Text>
+          <Text style={[{color: 'black', fontSize: 15}, styles.default]}>Don't have an account? </Text>
           <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignUpBtnHandler}>
-            <Text style={styles.linkText}>Sign Up</Text>
+            <Text style={[styles.linkText, styles.default]}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
       <TouchableOpacity style={styles.skipPrevBtn} onPress={SkipBtnHandler}>
-            <Text style={styles.skipPrevBtnText}>Skip</Text>
+            <Text style={[styles.skipPrevBtnText]}>Skip</Text>
           </TouchableOpacity>
     </View>
     </ScrollView>
@@ -104,6 +104,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  default: {
+    fontFamily: 'Montserrat_Medium',
   },
   imageFrame: {
     height: 160,
@@ -127,17 +130,18 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 30,
     fontSize: 25,
-    fontWeight: 'bold'
+    fontFamily:"Montserrat_Bold"
   },
   textInput: {
     borderRadius: 5,
     marginBottom: 25,
   },
   loginButton: {
+    marginTop:15,
     marginBottom: 25,
     borderRadius: 25,
-    borderWidth: 1,
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    borderColor: 'transparent',
   },
   linkTextContainer: {
     flexDirection: 'row',
@@ -145,18 +149,18 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   linkText: {
-    color: 'blue',
+    color: '#007BFF',
     fontSize:15
-},
+  },
   skipPrevBtn: {
     position: "absolute",
     bottom: 30,
     left:20
   },
   skipPrevBtnText: {
-    color: 'black',
+    color: '#007BFF',
     fontSize: 18,
     textDecorationLine: 'underline',
-    fontWeight: 'bold'
+    fontFamily: 'Montserrat_Bold'
   },
 });

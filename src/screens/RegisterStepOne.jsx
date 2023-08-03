@@ -67,7 +67,7 @@ export default function RegisterStepOne({ navigation }) {
             />
           </View>
           <View style={styles.informationBox}>
-            <Headline style={styles.headline}>Become a <Text style={{ color: '#1CD995' }}>Green</Text> Miles member today!</Headline>
+            <Headline style={[styles.headline]}>Become a <Text style={{ color: '#1CD995' }}>Green</Text> Miles member today!</Headline>
             <View style={styles.nameContainer}>
               <TextInput
                 label="First Name"
@@ -102,19 +102,14 @@ export default function RegisterStepOne({ navigation }) {
             />
             <Button
               mode="outlined"
-              contentStyle={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 50,
-              }}
               style={styles.registerButton}
               onPress={RegisterHandler}
             >
-              <Text style={{ fontSize: 15, color: 'black' }}>Sign up</Text>
+              <Text style={[{ fontSize: 15, color: 'white' }, styles.default]}>Sign up</Text>
             </Button>
             <View style={styles.linkTextContainer}>
-              <Text style={{ color: 'black', fontSize: 15 }}>Already have an account? </Text>
-              <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignInBtnHandler}>
+              <Text style={[{ color: 'black', fontSize: 15 },styles.default]}>Already have an account? </Text>
+              <TouchableOpacity style={{ padding: 0, margin: 0}} onPress={SignInBtnHandler}>
                 <Text style={styles.linkText}>Sign In</Text>
               </TouchableOpacity>
             </View>
@@ -133,6 +128,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },
+  default: {
+    fontFamily: 'Montserrat_Medium',
   },
   imageFrame: {
     height: 160,
@@ -156,7 +154,7 @@ const styles = StyleSheet.create({
     color: 'black',
     textAlign: 'center',
     marginBottom: 30,
-    fontWeight: 'bold',
+    fontFamily: 'Montserrat_Bold',
     fontSize: 25,
   },
   nameContainer: {
@@ -177,11 +175,15 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   registerButton: {
+    marginTop:15,
     marginBottom: 25,
     borderRadius: 25,
-    borderColor: 'black',
+    borderColor: 'transparent',
     borderWidth: 1,
-    backgroundColor: '#1e272e'
+    justifyContent: 'center',
+    backgroundColor: 'black',
+    alignItems: 'center',
+    height: 50,
   },
   linkTextContainer: {
     flexDirection: 'row',
@@ -189,8 +191,9 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   linkText: {
-    color: 'blue',
-    fontSize: 15
+    color: '#007BFF',
+    fontSize: 15,
+    fontFamily: "Montserrat_Medium"
   },
   skipPrevBtn: {
     position: "absolute",
@@ -198,9 +201,9 @@ const styles = StyleSheet.create({
     left:20
   },
   skipPrevBtnText: {
-    color: 'black',
+    color: '#007BFF',
     fontSize: 18,
     textDecorationLine: 'underline',
-    fontWeight: 'bold'
+    fontFamily: 'Montserrat_Bold'
   },
 });

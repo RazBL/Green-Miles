@@ -1,104 +1,124 @@
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
-import React, { useContext, useState } from 'react'
+import { KeyboardAvoidingView, ScrollView,Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useState, useRef } from 'react';
 import { TextInput, Button, Headline } from 'react-native-paper';
-import { UsersContext } from '../context/UsersContext';
 
-export default function ForgotPassword({navigation}) {
-  
+export default function ForgotPassword({ navigation }) {
+  const [email, SetEmail] = useState('');
+  const scrollRef = useRef(null);
+
+  const handleInputFocus = () => {
+    scrollRef.current.scrollTo({x: 0, y: 180, animated: true});
+  };
+
+  const ResetPasswordHandler = () => {
+    // Add your logic for resetting the password
+    alert("A reset link has been sent to your email address");
+  };
+
   const PrevBtnHandler = () => {
-    navigation.goBack()
-}
-
-const SignInBtnHandler = () => {
-  navigation.navigate('Login');
-}
+    navigation.goBack();
+  };
 
   return (
-<View style={styles.container}>
-            <View>
-                <View style={styles.imageFrame}>
-                    <View style={styles.logo}>
-                        <Text style={{ fontSize: 22 }}>Logo</Text>
-                    </View>
-                </View>
-
-                <View style={styles.informationBox}>
-                    <Headline style={{ marginBottom: 20 }}>Forgot Password?</Headline>
-                    <View>
-                        <Text style={{ fontSize: 13, marginBottom: 20 }}>Enter your user account's verified email address and we will send you a password reset link.</Text>
-                    </View>
-                    <TextInput
-                        label="Email"
-                        backgroundColor="white"
-                        style={{ marginBottom: 20, height: 50 }}
-                        keyboardType="email-address"
-                    />
-                    <Button
-                        buttonColor="white"
-                        outlined
-                        mode="outlined"
-                        contentStyle={{
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                            height: 50,
-                        }}
-                        textColor="black"
-                        style={{ borderRadius: 25, marginBottom: 20 }}
-                        >
-                        <Text style={{ fontSize: 15 }}>Reset My assword</Text>
-                    </Button>
-                </View>
-            </View>
-
-            <TouchableOpacity style={styles.skipPrevBtn} onPress={PrevBtnHandler}>
-                <Text style={styles.skipPrevBtnText}>Prev</Text>
-            </TouchableOpacity>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 20}
+    style={styles.container} >
+      <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{flexGrow: 1}} ref={scrollRef}>
+        <View style={styles.container}>
+          <View style={styles.imageFrame}>
+            <Image
+              source={require('../images/LogoPng.png')}
+              style={styles.logo}
+            />
+          </View>
+          <View style={styles.informationBox}>
+            <Headline style={[styles.headline]}>Forgot Password?</Headline>
+            <Text style={{ marginBottom: 20, fontSize: 15, fontFamily: 'Montserrat_Medium', textAlign: 'center' }}>
+              Enter your user account's verified email address and we will send you a password reset link.
+            </Text>
+            <TextInput
+              label="Email"
+              backgroundColor="white"
+              style={styles.textInput}
+              onChangeText={text => SetEmail(text)}
+              keyboardType="email-address"
+              onFocus={handleInputFocus}
+            />
+            <Button
+              mode="outlined"
+              contentStyle={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 50,
+              }}
+              style={styles.loginButton}
+              onPress={ResetPasswordHandler}
+            >
+              <Text style={[{ fontSize: 15, color: 'white' }, {fontFamily: 'Montserrat_Medium'}]}>Reset My Password</Text>
+            </Button>
+          </View>
+          <TouchableOpacity style={styles.skipPrevBtn} onPress={PrevBtnHandler}>
+            <Text style={[styles.skipPrevBtnText, styles.default]}>Prev</Text>
+          </TouchableOpacity>
         </View>
-  )
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
-      flex: 1,
-      justifyContent: 'space-between',
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  default: {
+    fontFamily: 'Montserrat_Medium',
   },
   imageFrame: {
-      backgroundColor: '#D9D9D9',
-      height: 180,
-      marginTop: 40,
+    height: 160,
+    alignItems: 'center',
+    backgroundColor: '#1e272e',
+    justifyContent: 'center',
   },
   logo: {
-      marginTop: 20,
-      marginLeft: 20,
-      marginRight: 20,
-  },
-  emailBtn: {
-      backgroundColor: 'white',
-      borderWidth: 1,
-      borderColor: 'black',
+    height: 80,
+    width: 130,
   },
   informationBox: {
-      marginTop: 50,
-      marginLeft: 20,
-      marginRight: 20,
+    paddingTop:50,
+    paddingLeft: 20,
+    paddingRight: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
+  headline: {
+    color: 'black',
+    textAlign: 'center',
+    marginBottom: 30,
+    fontSize: 25,
+    fontFamily:"Montserrat_Bold"
+  },
+  textInput: {
+    borderRadius: 5,
+    marginBottom: 25,
+  },
+  loginButton: {
+    marginTop:15,
+    marginBottom: 25,
+    borderRadius: 25,
+    backgroundColor: 'black',
+    borderColor: 'transparent',
   },
   skipPrevBtn: {
-      marginLeft: 20,
-      marginBottom: 50,
+    position: "absolute",
+    bottom: 30,
+    left:20
   },
   skipPrevBtnText: {
-      fontSize: 18,
-      textDecorationLine: 'underline',
-      fontWeight: 'bold'
+    color: '#007BFF',
+    fontSize: 18,
+    textDecorationLine: 'underline',
+    fontWeight: 'bold'
   },
-  line: {
-      borderBottomWidth: 1,
-      borderBottomColor: '#D9D9D9',
-      marginBottom: 18
-  },
-  linkText: {
-      color: 'blue',
-      textDecorationLine: 'underline'
-  }
 });
