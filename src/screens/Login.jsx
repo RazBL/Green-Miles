@@ -14,7 +14,8 @@ export default function Login({ navigation }) {
   };
 
   const LoginHandler = async () => {
-    let user = await IfUserExists(email, password)
+    let lowerCaseEmail = email.toLowerCase();
+    let user = await IfUserExists(lowerCaseEmail, password)
     if(user){
         alert("Welcome back "+user.firstName + " :)");
         navigation.navigate('Navigation');

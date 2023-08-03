@@ -51,7 +51,8 @@ class DB {
 async FindOne(query = {}, collection){
     try{
         await this.client.connect();
-        return await this.client.db(this.db_name).collection(collection).findOne(query);
+         document =  await this.client.db(this.db_name).collection(collection).findOne(query);
+         return document;
     }catch(error){
         throw error;
     }finally{
