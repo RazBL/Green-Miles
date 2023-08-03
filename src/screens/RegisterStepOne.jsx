@@ -32,10 +32,12 @@ export default function RegisterStepOne({ navigation }) {
     }
     else {
 
+      let lowerCaseEmail = email.toLowerCase();
+
       let user = {
         firstName: firstName,
         lastName: lastName,
-        email: email,
+        email: lowerCaseEmail,
         password: password
       }
 

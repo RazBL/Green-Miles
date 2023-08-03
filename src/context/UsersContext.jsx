@@ -50,14 +50,12 @@ export default function UsersContextProvider({ children }) {
             });
     
             if(!res.ok) {
-                console.log("hi");
                 let errorData = await res.json();  
                 console.error(`Error response from server: ${errorData.error}`);
                 return null;
             }
     
             let data = await res.json();
-            console.log(data);
             return data;
         } catch(err) {
             console.error(err);
@@ -66,7 +64,7 @@ export default function UsersContextProvider({ children }) {
     
 
     const EmailExists = (email) => {
-        let userFound = users.find(u => u.email === email);
+        let userFound = users.find(u => u.email.toLowerCase() === email.toLowerCase());
         return userFound;
     }
 
@@ -76,7 +74,7 @@ export default function UsersContextProvider({ children }) {
     
 
     useEffect(() => {
-        LoadAllUsers()
+        LoadAllUsers();
     }, [])
 
     const value = {
