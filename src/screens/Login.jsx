@@ -17,7 +17,7 @@ export default function Login({ navigation }) {
     let user = await IfUserExists(email, password)
     if(user){
         alert("Welcome back "+user.firstName + " :)");
-        navigation.navigate('Home');
+        navigation.navigate('Navigation');
     }else{
         alert("Incorect details")
     }
@@ -32,7 +32,7 @@ export default function Login({ navigation }) {
   };
   
   const SkipBtnHandler = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Navigation');
   }
 
   return (
