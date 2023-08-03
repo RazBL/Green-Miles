@@ -1,14 +1,16 @@
 import { StatusBar, StyleSheet, Text, View, I18nManager, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import UsersContextProvider from './src/context/UsersContext';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useFonts } from 'expo-font';
+
+//Screens
 import Login from './src/screens/Login';
 import RegisterStepOne from './src/screens/RegisterStepOne';
 import Navigation from './src/screens/Navigation';
 import ForgotPassword from './src/screens/ForgotPassword';
-import UsersContextProvider from './src/context/UsersContext';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Support from './src/screens/Support';
-import { useFonts } from 'expo-font';
 
 const Stack = createStackNavigator();
 
