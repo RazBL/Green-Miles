@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import UsersContextProvider from './src/context/UsersContext';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
+import HotelsContextProvider from './src/context/HotelsContext';
+
 
 //Screens
 import Login from './src/screens/Login';
@@ -28,6 +30,7 @@ export default function App() {
 
   return (
       <UsersContextProvider>
+        <HotelsContextProvider>
         <NavigationContainer>
           <SafeAreaProvider style={styles.container}>
             <Stack.Navigator>
@@ -39,6 +42,7 @@ export default function App() {
             </Stack.Navigator>
           </SafeAreaProvider>
         </NavigationContainer>
+        </HotelsContextProvider>
       </UsersContextProvider>
   );
 }

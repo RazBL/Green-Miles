@@ -26,65 +26,67 @@ export default function Navigation() {
   const centerOffset = (singleTabWidth - barWidth) / 2;
 
   return (
-    <View style={styles.container}>
 
-      <Appbar style={styles.upperBar}>
-        <Image source={require('../images/LogoPng.png')} resizeMode="contain" style={styles.image} />
-      </Appbar>
+      <View style={styles.container}>
 
-      <Tab.Navigator
-        screenOptions={{
-          headerShown: false,
-          tabBarActiveTintColor: '#1CD995',
-          tabBarInactiveTintColor: 'white',
-          tabBarStyle: {
-            height: 60,
-            backgroundColor: '#1e272e',
-          },
+        <Appbar style={styles.upperBar}>
+          <Image source={require('../images/LogoPng.png')} resizeMode="contain" style={styles.image} />
+        </Appbar>
+
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarActiveTintColor: '#1CD995',
+            tabBarInactiveTintColor: 'white',
+            tabBarStyle: {
+              height: 60,
+              backgroundColor: '#1e272e',
+            },
+          }}
+        >
+          {[
+            { name: "Home", component: Home, icon: "home" },
+            { name: "Flights", component: Flights, icon: "airplane" },
+            { name: "Hotels", component: Hotels, icon: "home" },
+            { name: "Save", component: Save, icon: "heart" },
+            { name: "Account", component: Account, icon: "account" }
+          ].map((item, i) => (
+            <Tab.Screen
+              key={i}
+              name={item.name}
+              component={item.component}
+              options={{
+                tabBarLabel: () => null,
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons name={item.icon} color={color} size={size} />
+                ),
+              }}
+              listeners={() => ({
+                tabPress: e => {
+                  Animated.spring(tabOffSetValue, {
+                    toValue: i * singleTabWidth + centerOffset,
+                    duration: 500,
+                    useNativeDriver: true
+                  }).start();
+                },
+              })}
+            />
+          ))}
+        </Tab.Navigator>
+
+        <Animated.View style={{
+          width: barWidth,
+          height: 2,
+          backgroundColor: '#1CD995',
+          position: 'absolute',
+          bottom: 60,
+          transform: [{ translateX: tabOffSetValue }]
         }}
-      >
-        {[
-          { name: "Home", component: Home, icon: "home" },
-          { name: "Flights", component: Flights, icon: "airplane" },
-          { name: "Hotels", component: Hotels, icon: "home" },
-          { name: "Save", component: Save, icon: "heart" },
-          { name: "Account", component: Account, icon: "account" }
-        ].map((item, i) => (
-          <Tab.Screen
-            key={i}
-            name={item.name}
-            component={item.component}
-            options={{
-              tabBarLabel: () => null,
-              tabBarIcon: ({ color, size }) => (
-                <MaterialCommunityIcons name={item.icon} color={color} size={size} />
-              ),
-            }}
-            listeners={() => ({
-              tabPress: e => {
-                Animated.spring(tabOffSetValue, {
-                  toValue: i * singleTabWidth + centerOffset,
-                  duration: 500,
-                  useNativeDriver: true
-                }).start();
-              },
-            })}
-          />
-        ))}
-      </Tab.Navigator>
+        >
+        </Animated.View>
 
-      <Animated.View style={{
-        width: barWidth,
-        height: 2,
-        backgroundColor: '#1CD995',
-        position: 'absolute',
-        bottom: 60,
-        transform: [{ translateX: tabOffSetValue }]
-      }}
-      >
-      </Animated.View>
-
-    </View>
+      </View>
+ 
   );
 }
 
