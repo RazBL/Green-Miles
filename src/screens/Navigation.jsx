@@ -4,8 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Appbar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
+//screens
 import Home from './Home';
-import Flights from './Flights';
+import Flights from './FlightSearch';
 import Hotels from './Hotels';
 import Save from './Save';
 import Account from './Account';

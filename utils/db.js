@@ -34,7 +34,6 @@ class DB {
             await this.client.connect();
             let objectId = new ObjectId(id);
             let result = await this.client
-            //await this.client.db(this.db_name).collection(collection).remove({_id: objectId});
             await this.client.db(this.db_name).collection(collection).deleteOne({_id: objectId});
             if (result.deletedCount === 1) {
                 console.log('Document deleted successfully.');

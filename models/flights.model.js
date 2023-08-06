@@ -41,6 +41,10 @@ class FlightModel {
     static async DeleteFlight(flightId){
         await new DB().DeleteDocument('Flights', flightId);
     }
+
+    static async GetFlightSearchResult(query) {
+        return await new DB().FindAll('Flights',query, {});
+    }
 }
 
 module.exports = FlightModel;

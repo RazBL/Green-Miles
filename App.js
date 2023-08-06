@@ -1,11 +1,14 @@
 import { StatusBar, StyleSheet, Text, View, I18nManager, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import UsersContextProvider from './src/context/UsersContext';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
-import HotelsContextProvider from './src/context/HotelsContext';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
+//Contexts
+import UsersContextProvider from './src/context/UsersContext';
+import HotelsContextProvider from './src/context/HotelsContext';
+import FlightsContextProvider from './src/context/FlightsContext';
 
 //Screens
 import Login from './src/screens/Login';
@@ -13,8 +16,17 @@ import RegisterStepOne from './src/screens/RegisterStepOne';
 import Navigation from './src/screens/Navigation';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
+import Flights from './src/screens/Flights';
 
 const Stack = createStackNavigator();
+
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    
+  },
+};
 
 export default function App() {
 
@@ -29,21 +41,26 @@ export default function App() {
   }
 
   return (
-      <UsersContextProvider>
-        <HotelsContextProvider>
-        <NavigationContainer>
-          <SafeAreaProvider style={styles.container}>
-            <Stack.Navigator>
-              <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
-              <Stack.Screen name="Navigation" component={Navigation} options={{headerTransparent: true, headerTitle: '',headerLeft: null  }}/>
-              <Stack.Screen name="Register" component={RegisterStepOne} options={{headerTransparent: true, headerTitle: '', headerLeft: null}}/>
-              <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
-              <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
-            </Stack.Navigator>
-          </SafeAreaProvider>
-        </NavigationContainer>
-        </HotelsContextProvider>
-      </UsersContextProvider>
+    <PaperProvider theme={theme}>
+      <FlightsContextProvider>
+        <UsersContextProvider>
+          <HotelsContextProvider>
+            <NavigationContainer>
+              <SafeAreaProvider style={styles.container}>
+                <Stack.Navigator>
+                  <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
+                  <Stack.Screen name="Navigation" component={Navigation} options={{headerTransparent: true, headerTitle: '',headerLeft: null  }}/>
+                  <Stack.Screen name="Register" component={RegisterStepOne} options={{headerTransparent: true, headerTitle: '', headerLeft: null}}/>
+                  <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
+                  <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
+                </Stack.Navigator>
+              </SafeAreaProvider>
+            </NavigationContainer>
+            
+          </HotelsContextProvider>
+        </UsersContextProvider>
+      </FlightsContextProvider>
+    </PaperProvider>
   );
 }
 
