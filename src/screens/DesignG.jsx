@@ -1,12 +1,11 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native'; // שינוי כאן - הוספת TouchableOpacity
+import { Text } from 'react-native';
 import { Card, Button } from 'react-native-paper';
-import { View } from 'react-native-web';
 
-const HotelCard = ({ hotelData, onMoreInfoClicked }) => { // שינוי כאן - הוספת פרמטר onMoreInfoClicked
+const HotelCard = ({ hotelData }) => {
   return (
     <Card style={styles.card}>
-      <Card.Cover source={{ uri: 'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg' }} />
+      <Card.Cover source={{ uri: 'https://example.com/hotel-image.jpg' }} />
       <Card.Title title={hotelData.name} subtitle={hotelData.country} />
       <Card.Content>
         <Text style={styles.address}>{hotelData.address}</Text>
@@ -16,11 +15,9 @@ const HotelCard = ({ hotelData, onMoreInfoClicked }) => { // שינוי כאן -
         <Text style={styles.checkOut}>Check-out: {hotelData.checkOut}</Text>
       </Card.Content>
       <Card.Actions>
-        {/* שינוי כאן - הכפתור משתמש בפונקציה שמועברת כפרמטר */}
-        <Button mode="contained" onPress={() => onMoreInfoClicked(hotelData)}>
+        <Button mode="contained" onPress={() => console.log('More info clicked')}>
           More Info
-         </Button>
-
+        </Button>
       </Card.Actions>
     </Card>
   );
