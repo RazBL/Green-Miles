@@ -38,8 +38,22 @@ class FlightModel {
         return await new DB().FindAll('Flights');
     }
 
-    static async DeleteFlight(flightId){
+    static async DeleteFlight(flightId) {
         await new DB().DeleteDocument('Flights', flightId);
+    }
+
+    static async GetFlightSearchResult(query, dateQuery, nextDateQuery) {
+        const pipeline = [{
+            $match: {
+                ...query,
+                departure_time: {
+                    $gte: dateQuery,
+                    $lt: nextDateQuery
+                }
+            }
+        }];
+
+        return await new DB().Aggregate('Flights', pipeline);
     }
 }
 

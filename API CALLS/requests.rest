@@ -1,3 +1,20 @@
-GET http://localhost:3500/
+GET http://localhost:3500/api/users
 
 ###
+
+GET http://localhost:3500/api/flights/search?destination=City%20B&origin=City%20A&date=2023-05-12T10%3A30%3A00Z&availableSeats=5
+
+###
+
+GET https://greenmiles.onrender.com/api/flights/search?destination=City%20B&origin=City%20A&date=2023-05-12T10%3A30%3A00Z&availableSeats=5
+
+
+###
+
+POST http://localhost:3500/api/users/login
+Content-Type: application/json
+
+{
+  "email": "raz@gmail.com",
+  "password": "razraz"
+}

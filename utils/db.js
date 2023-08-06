@@ -1,4 +1,7 @@
-const {MongoClient,ObjectId} = require('mongodb');
+const {
+    MongoClient,
+    ObjectId
+} = require('mongodb');
 const jwt = require("jsonwebtoken");
 
 class DB {
@@ -26,60 +29,65 @@ class DB {
             await this.client.close();
         }
     }
-    
-    
+
+
 
     async DeleteDocument(collection, id) {
         try {
             await this.client.connect();
             let objectId = new ObjectId(id);
             let result = await this.client
-            //await this.client.db(this.db_name).collection(collection).remove({_id: objectId});
-            await this.client.db(this.db_name).collection(collection).deleteOne({_id: objectId});
+            await this.client.db(this.db_name).collection(collection).deleteOne({
+                _id: objectId
+            });
             if (result.deletedCount === 1) {
                 console.log('Document deleted successfully.');
-              } else {
+            } else {
                 console.log('Document with the specified ID not found.');
-              }
+            }
         } catch (error) {
             throw error;
         } finally {
             await this.client.close();
-        }
-    }
-
-async FindOne(query = {}, collection){
-    try{
-        await this.client.connect();
-         document =  await this.client.db(this.db_name).collection(collection).findOne(query);
-         return document;
-    }catch(error){
-        throw error;
-    }finally{
-        await this.client.close();
+        }
     }
-}
 
-    async InsertDocument(doc, collection){
-        try{
+    async FindOne(query = {}, collection) {
+        try {
             await this.client.connect();
-            await this.client.db(this.db_name).collection(collection).insertOne(doc);
-        }catch(error){
+            let document = await this.client.db(this.db_name).collection(collection).findOne(query);
+            return document;
+        } catch (error) {
             throw error;
-        }finally{
+        } finally {
             await this.client.close();
         }
     }
 
-        async UpdateDocumentById(id, doc, collection){
-        try{
+    async InsertDocument(doc, collection) {
+        try {
             await this.client.connect();
-            let query = {"_id": new ObjectId(id)};
-            let newValues = {$set: doc}
-            await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
-        }catch(error){
+            await this.client.db(this.db_name).collection(collection).insertOne(doc);
+        } catch (error) {
             throw error;
-        }finally{
+        } finally {
+            await this.client.close();
+        }
+    }
+
+    async UpdateDocumentById(id, doc, collection) {
+        try {
+            await this.client.connect();
+            let query = {
+                "_id": new ObjectId(id)
+            };
+            let newValues = {
+                $set: doc
+            }
+            await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
+        } catch (error) {
+            throw error;
+        } finally {
             await this.client.close();
         }
     }
@@ -99,16 +107,34 @@ async FindOne(query = {}, collection){
     */
 
     async GenerateToken(doc) {
-        const token = jwt.sign(doc, process.env.SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign(doc, process.env.SECRET_KEY, {
+            expiresIn: '1h'
+        });
         return token;
     }
 
     async ChangeBookingStatus(collection, id, status) {
         try {
             await this.client.connect();
-            let query = { "_id": new ObjectId(id) };
-            let newValues = { $set: status };
+            let query = {
+                "_id": new ObjectId(id)
+            };
+            let newValues = {
+                $set: status
+            };
             await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
+        } catch (error) {
+            throw error;
+        } finally {
+            await this.client.close();
+        }
+    }
+
+    async Aggregate(collection, pipeline = []) {
+        try {
+            await this.client.connect();
+            const data = await this.client.db(this.db_name).collection(collection).aggregate(pipeline).toArray();
+            return data;
         } catch (error) {
             throw error;
         } finally {
