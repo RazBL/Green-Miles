@@ -35,7 +35,7 @@ UsersRoute.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const loginResult = await UsersModel.Login(email, password);
-
+    console.log(loginResult);
     if (loginResult) {
       let token = await UsersModel.GenerateUserToken(loginResult);
       res.status(200).json(loginResult);
@@ -48,25 +48,7 @@ UsersRoute.post('/login', async (req, res) => {
   }
 });
 
-// UsersRoute.put('/register-step-2/:id', async(req, res) => {
-//     try{
-//         let user = {
-//             firstName: req.body.firstName,
-//             lastName: req.body.lastName,
-//             phoneNumber: req.body.phoneNumber,
-//             image: req.body.image,
-//             country: req.body.country,
-//             city: req.body.city,
-//             address: req.body.address
-//         }
-//         let userId = req.params.id;
-//         await UsersModel.UpdateUser(userId, user);
-//         res.status(200).json({ message: 'User updated successfully' });
-//     }catch(error){
-//         console.log(error);
-//         res.status(500).json({ error: 'Failed to update user' });
-//     }
-// });
+
 
 //READ == GET
 UsersRoute.get('/', async (req, res) => {

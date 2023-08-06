@@ -53,7 +53,6 @@ export default function FlightsContextProvider({ children }) {
 
     useEffect(() => {
         fetchData();
-        console.log("hi");
     }, []);
 
     const value = {
