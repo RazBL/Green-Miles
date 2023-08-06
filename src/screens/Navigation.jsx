@@ -11,6 +11,7 @@ import Flights from './FlightSearch';
 import Hotels from './Hotels';
 import Save from './Save';
 import Account from './Account';
+import HotelDetails from './HotelDetails'; // יבוא הקומפוננטה
 
 const Tab = createBottomTabNavigator();
 
@@ -38,7 +39,6 @@ export default function Navigation() {
   }, []);
 
   return (
-
       <View style={styles.container}>
 
         <Appbar style={styles.upperBar}>
@@ -83,6 +83,14 @@ export default function Navigation() {
               })}
             />
           ))}
+
+          {/* מסך HotelDetails */}
+          <Tab.Screen
+            name="HotelDetails"
+            component={HotelDetails}
+            options={{ hidden: true }}
+          />
+
         </Tab.Navigator>
 
         <Animated.View style={{
