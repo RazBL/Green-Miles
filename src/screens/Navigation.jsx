@@ -68,7 +68,6 @@ export default function Navigation() {
               name={item.name}
               component={item.component}
               options={{
-                tabBarLabel: () => null,
                 tabBarIcon: ({ color, size }) => (
                   <MaterialCommunityIcons name={item.icon} color={color} size={size} />
                 ),
