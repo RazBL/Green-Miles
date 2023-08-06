@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
@@ -8,6 +8,7 @@ export default function SearchBar({ data, placeholder, onSelect, icon }) {
     const [filteredData, SetFilteredData] = useState([]);
     const [searchBarHeight, SetSearchBarHeight] = useState(0);
     const [isFocused, SetIsFocused] = useState(false);
+    const searchbarRef = useRef(null);
 
     const onChangeSearch = query => SetSearchQuery(query);
 
@@ -15,6 +16,10 @@ export default function SearchBar({ data, placeholder, onSelect, icon }) {
         SetSearchQuery(item);
         onSelect(item);
         SetIsFocused(false);
+
+        if (searchbarRef.current) {
+            searchbarRef.current.blur();
+        }
     };
 
     const HandleLayout = event => {
@@ -34,25 +39,29 @@ export default function SearchBar({ data, placeholder, onSelect, icon }) {
     }, [searchQuery, isFocused]);
 
     return (<>
-            <Searchbar
-                placeholder={placeholder}
-                onChangeText={onChangeSearch}
-                value={searchQuery}
-                icon={icon}
-                style={styles.searchBar}
-                onLayout={HandleLayout}
-                onFocus={() => { SetIsFocused(true); }}
-                onBlur={() => { SetIsFocused(false); }}
-            />
-            {isFocused && filteredData.length > 0 && (
-                <View style={[styles.dropdown, { top: searchBarHeight }]}>
-                    {filteredData.map((item, index) => (
-                        <TouchableOpacity key={index} onPress={() => HandleSelectItem(item)}>
-                            <Text>{item}</Text>
-                        </TouchableOpacity>
-                    ))}
-                </View>
-            )}
+        <Searchbar
+            ref={searchbarRef}
+            placeholder={placeholder}
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            icon={icon}
+            style={styles.searchBar}
+            onLayout={HandleLayout}
+            onFocus={() => { SetIsFocused(true); }}
+            onBlur={() => { SetIsFocused(false); }}
+            autoCompleteType="off"
+            importantForAccessibility="no"
+            textContentType="none"
+        />
+        {isFocused && filteredData.length > 0 && (
+            <View style={[styles.dropdown, { top: searchBarHeight }]}>
+                {filteredData.map((item, index) => (
+                    <TouchableOpacity key={index} onPress={() => HandleSelectItem(item)}>
+                        <Text>{item}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        )}
     </>
     );
 };

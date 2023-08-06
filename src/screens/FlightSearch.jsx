@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TouchableOpacity, Modal } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback , Keyboard } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { DefaultTheme } from 'react-native-paper';
 import { FlightsContext } from '../context/FlightsContext';
@@ -42,130 +42,128 @@ export default function FlightSearch() {
             availableSeats: passangers
         };
 
-        console.log(formattedDate);
-
         FlightSearchResults(query);
     }
 
     const HandleSelectLocation = (location) => {
-        console.log(`selected location: ${location}`);
         SetSelectedLocation(location);
     }
 
     const HandleSelectDestination = (location) => {
-        console.log(`selected location: ${location}`);
         SetSelectedDestination(location);
     }
 
     return (
-        <View style={styles.container}>
-            <View style={styles.flightSearch}>
-                <View style={styles.searchSection}>
-                    <SearchBar
-                        data={origins}
-                        placeholder={"Choose a Location"}
-                        onSelect={HandleSelectLocation}
-                        icon={"map-marker"}
-                    />
-                </View>
-                <View style={styles.searchSection}>
-                    <SearchBar
-                        data={destinations}
-                        placeholder={"Choose a Destination"}
-                        onSelect={HandleSelectDestination}
-                        icon={"map-marker"}
-                    />
-                </View>
-                <View style={styles.dualSearchSection}>
-                    <TouchableOpacity style={[styles.searchSection, { flex: 1 }]} onPress={() => SetDatePickerVisibility(true)}>
-                        <TextInput
-                            editable={false}
-                            icon="calendar"
-                            underlineColor="transparent"
-                            backgroundColor="white"
-                            style={styles.input}
-                            placeholder="Choose a date"
-                            theme={{
-                                ...DefaultTheme,
-                                colors: {
-                                    surfaceVariant: 'white',
-                                },
-                            }}
-                            left={<TextInput.Icon icon="calendar" />}
-                            value={date.toDateString()}
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style={styles.container}>
+                <View style={styles.flightSearch}>
+                    <View style={styles.searchSection}>
+                        <SearchBar
+                            data={origins}
+                            placeholder={"Choose a Location"}
+                            onSelect={HandleSelectLocation}
+                            icon={"map-marker"}
                         />
-                        {showDatePicker && (
-                            <DateTimePicker
-                                mode="date"
-                                value={date}
-                                onChange={onChange}
-                            />
-                        )}
-                    </TouchableOpacity>
-                    <View style={[styles.searchSection, { flex: 1, marginLeft: 10 }]}>
-                        <TouchableOpacity style={[styles.searchSection, { flex: 1 }]} onPress={() => setModalVisible(true)}>
+                    </View>
+                    <View style={styles.searchSection}>
+                        <SearchBar
+                            data={destinations}
+                            placeholder={"Choose a Destination"}
+                            onSelect={HandleSelectDestination}
+                            icon={"map-marker"}
+                        />
+                    </View>
+                    <View style={styles.dualSearchSection}>
+                        <TouchableOpacity style={[styles.searchSection, { flex: 1 }]} onPress={() => SetDatePickerVisibility(true)}>
                             <TextInput
                                 editable={false}
-                                icon="account-outline"
+                                icon="calendar"
                                 underlineColor="transparent"
                                 backgroundColor="white"
                                 style={styles.input}
-                                placeholder={`${passangers} passenger${passangers === 1 ? '' : 's'}`}
+                                placeholder="Choose a date"
                                 theme={{
                                     ...DefaultTheme,
                                     colors: {
                                         surfaceVariant: 'white',
                                     },
                                 }}
-                                left={<TextInput.Icon icon="account-outline" />}
+                                left={<TextInput.Icon icon="calendar" />}
+                                value={date.toDateString()}
                             />
-
+                            {showDatePicker && (
+                                <DateTimePicker
+                                    mode="date"
+                                    value={date}
+                                    onChange={onChange}
+                                />
+                            )}
                         </TouchableOpacity>
-                        <Modal
-                            animationType="slide"
-                            transparent={true}
-                            visible={isModalVisible}
-                            onRequestClose={() => {
-                                setModalVisible(!isModalVisible);
-                            }}
-                        >
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
-                                    <View style={{ flexDirection: "column" }}>
-                                        <TouchableOpacity onPress={DecrementPassengers}>
-                                            <Text style={styles.modalText}>-</Text>
-                                        </TouchableOpacity>
-                                        <Text style={[styles.modalText]}>{passangers}</Text>
-                                        <TouchableOpacity onPress={IncrementPassengers}>
-                                            <Text style={styles.modalText}>+</Text>
+                        <View style={[styles.searchSection, { flex: 1, marginLeft: 10 }]}>
+                            <TouchableOpacity style={[styles.searchSection, { flex: 1 }]} onPress={() => setModalVisible(true)}>
+                                <TextInput
+                                    editable={false}
+                                    icon="account-outline"
+                                    underlineColor="transparent"
+                                    backgroundColor="white"
+                                    style={styles.input}
+                                    placeholder={`${passangers} Passenger${passangers === 1 ? '' : 's'}`}
+                                    theme={{
+                                        ...DefaultTheme,
+                                        colors: {
+                                            surfaceVariant: 'white',
+                                        },
+                                    }}
+                                    left={<TextInput.Icon icon="account-outline" />}
+                                />
+
+                            </TouchableOpacity>
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={isModalVisible}
+                                onRequestClose={() => {
+                                    setModalVisible(!isModalVisible);
+                                }}
+                            >
+                                <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+                                        <View style={{ flexDirection: "column" }}>
+                                            <TouchableOpacity onPress={IncrementPassengers}>
+                                                <Text style={styles.modalText}>+</Text>
+                                            </TouchableOpacity>
+                                            <Text style={[styles.modalText]}>{passangers}</Text>
+                                            <TouchableOpacity onPress={DecrementPassengers}>
+                                                <Text style={styles.modalText}>-</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <TouchableOpacity
+                                            style={[styles.button, styles.buttonClose]}
+                                            onPress={() => setModalVisible(!isModalVisible)}
+                                        >
+                                            <Text style={styles.textStyle}>Done</Text>
                                         </TouchableOpacity>
                                     </View>
-                                    <TouchableOpacity
-                                        style={[styles.button, styles.buttonClose]}
-                                        onPress={() => setModalVisible(!isModalVisible)}
-                                    >
-                                        <Text style={styles.textStyle}>Done</Text>
-                                    </TouchableOpacity>
                                 </View>
-                            </View>
-                        </Modal>
+                            </Modal>
 
+                        </View>
                     </View>
+                    <Button
+                        mode="flat"
+                        contentStyle={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            height: 50,
+                        }}
+                        onPress={HandleFlightSearch}
+                        style={styles.loginButton}
+                    >
+                        <Text style={[{ fontSize: 15, color: 'black' }, { fontFamily: 'Montserrat_Bold' }]}>Search</Text>
+                    </Button>
                 </View>
-                <Button
-                    mode="flat"
-                    contentStyle={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        height: 50,
-                    }}
-                    onPress={HandleFlightSearch}
-                    style={styles.loginButton}
-                >
-                    <Text style={[{ fontSize: 15, color: 'black' }, { fontFamily: 'Montserrat_Bold' }]}>Search</Text>
-                </Button>
             </View>
-        </View>
+        </TouchableWithoutFeedback>
 
     )
 }

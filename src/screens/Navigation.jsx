@@ -3,6 +3,7 @@ import { Animated, View, StyleSheet, Image, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Appbar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigationState } from '@react-navigation/native';
 
 //screens
 import Home from './Home';
@@ -15,6 +16,8 @@ const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
 
+  const navigationState = useNavigationState(state => state.index - 1);
+
   const tabOffSetValue = useRef(new Animated.Value(0)).current;
 
   const GetWidth = () => {
@@ -25,6 +28,14 @@ export default function Navigation() {
   const barWidth = 50;
   const singleTabWidth = GetWidth();
   const centerOffset = (singleTabWidth - barWidth) / 2;
+
+  useEffect(() => {
+    Animated.spring(tabOffSetValue, {
+      toValue: navigationState * singleTabWidth + centerOffset,
+      duration: 500,
+      useNativeDriver: true
+    }).start();
+  }, []);
 
   return (
 

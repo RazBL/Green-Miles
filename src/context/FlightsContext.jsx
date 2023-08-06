@@ -37,7 +37,7 @@ export default function FlightsContextProvider({ children }) {
           console.log(url);
           let res = await fetch(url);
           let data = await res.json();
-          console.log(data);
+          SetSearchedFlights(data);
         } catch (err) {
           console.error(err);
         }
@@ -45,21 +45,20 @@ export default function FlightsContextProvider({ children }) {
 
       
 
-    const fetchData = async () => {
-        await LoadAllFlights();
-        GetDestinations();
-        GetOrigins();
-    };
+
 
     useEffect(() => {
-        fetchData();
+        LoadAllFlights();
+        GetDestinations();
+        GetOrigins();
     }, []);
 
     const value = {
         flights,
         destinations,
         origins,
-        FlightSearchResults
+        FlightSearchResults,
+        searchedFlights
     }
 
     return (
