@@ -32,13 +32,17 @@ export default function FlightSearch() {
     };
 
 
-    const HandleFlightSearch = () => { 
+    const HandleFlightSearch = () => {
+        const formattedDate = date.toISOString().split('T')[0];
+
         let query = {
             destination: selectedDestination,
             origin: selectedLocation,
-            date: date.toISOString(),
+            date: formattedDate,
             availableSeats: passangers
-        }
+        };
+
+        console.log(formattedDate);
 
         FlightSearchResults(query);
     }
@@ -127,14 +131,14 @@ export default function FlightSearch() {
                         >
                             <View style={styles.centeredView}>
                                 <View style={styles.modalView}>
-                                    <View style={{flexDirection: "column"}}>
-                                    <TouchableOpacity onPress={DecrementPassengers}>
-                                        <Text style={styles.modalText}>-</Text>
-                                    </TouchableOpacity>
-                                    <Text style={[styles.modalText]}>{passangers}</Text>
-                                    <TouchableOpacity onPress={IncrementPassengers}>
-                                        <Text style={styles.modalText}>+</Text>
-                                    </TouchableOpacity>
+                                    <View style={{ flexDirection: "column" }}>
+                                        <TouchableOpacity onPress={DecrementPassengers}>
+                                            <Text style={styles.modalText}>-</Text>
+                                        </TouchableOpacity>
+                                        <Text style={[styles.modalText]}>{passangers}</Text>
+                                        <TouchableOpacity onPress={IncrementPassengers}>
+                                            <Text style={styles.modalText}>+</Text>
+                                        </TouchableOpacity>
                                     </View>
                                     <TouchableOpacity
                                         style={[styles.button, styles.buttonClose]}
@@ -217,7 +221,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        padding:20,
+        padding: 20,
         paddingTop: 50,
         paddingBottom: 50
     },
@@ -234,12 +238,12 @@ const styles = StyleSheet.create({
     },
     buttonClose: {
         backgroundColor: '#2196F3',
-        
+
     },
     textStyle: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
-        
+
     },
 });

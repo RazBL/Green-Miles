@@ -36,15 +36,8 @@ export default function FlightsContextProvider({ children }) {
           const url = `${base_api}/flights/search?${queryString}`;
           console.log(url);
           let res = await fetch(url);
-      
-          // Check if response status is OK
-          if (!res.ok) {
-            console.error('Server responded with an error:', res.status);
-            return;
-          }
-      
           let data = await res.json();
-          console.log(data); // Moved this line below the definition of data
+          console.log(data);
         } catch (err) {
           console.error(err);
         }
@@ -60,6 +53,7 @@ export default function FlightsContextProvider({ children }) {
 
     useEffect(() => {
         fetchData();
+        console.log("hi");
     }, []);
 
     const value = {

@@ -14,17 +14,21 @@ FlightRoute.get('/', async (req, res) => {
     }catch(error){
         res.status(500).json({error});
     }
-})
+});
+
 
 FlightRoute.get('/search', async (req, res) => {
     try {
-        let query = {
+        let dateQuery = new Date(req.query.date);
+        let nextDateQuery = new Date(dateQuery);
+        nextDateQuery.setDate(nextDateQuery.getDate() + 1);
+
+        let data = await FlightModel.GetFlightSearchResult({
             destination: req.query.destination,
             origin: req.query.origin,
-            departure_time: new Date(req.query.date), // Convert to Date object
-            availableSeats: { $gte: parseInt(req.query.availableSeats) } // Parse as integer
-        };
-        let data = await FlightModel.GetFlightSearchResult(query);
+            availableSeats: { $gte: parseInt(req.query.availableSeats) }
+        }, dateQuery, nextDateQuery);
+        
         res.status(200).json(data);
     } catch (error) {
         res.status(500).json({ error });
@@ -46,7 +50,7 @@ FlightRoute.delete('/:id', async (req, res) => {
     }catch(error){
         res.status(500).json({error});
     }
-})
+});
 
 //HTTP -> GET = READ, POST = ADD, PUT = UPDATE, DELETE = DELETE
 

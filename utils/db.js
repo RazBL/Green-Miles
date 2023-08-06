@@ -114,6 +114,18 @@ async FindOne(query = {}, collection){
             await this.client.close();
         }
     }
+
+    async Aggregate(collection, pipeline = []) {
+        try {
+            await this.client.connect();
+            const data = await this.client.db(this.db_name).collection(collection).aggregate(pipeline).toArray();
+            return data;
+        } catch (error) {
+            throw error;
+        } finally {
+            await this.client.close();
+        }
+    }
 }
 
 module.exports = DB;
