@@ -1,11 +1,10 @@
-import { KeyboardAvoidingView, ScrollView, Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Image, View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import React, { useContext, useState, useRef } from 'react';
 import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
-  const {RemoveToken,  Login } = useContext(UsersContext);
+  const { RemoveToken, Login } = useContext(UsersContext);
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
   const scrollRef = useRef(null);
@@ -39,67 +38,66 @@ export default function Login({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 20}
-      style={styles.container} >
-      <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1 }} ref={scrollRef}>
-        <View style={styles.container}>
-          <View style={styles.imageFrame}>
-            <Image
-              source={require('../images/LogoPng.png')}
-              style={styles.logo}
-            />
-          </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView  style={styles.container} >
+        <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1 }} ref={scrollRef}>
+          <View style={styles.container}>
+            <View style={styles.imageFrame}>
+              <Image
+                source={require('../images/Logo.png')}
+                style={styles.logo}
+              />
+            </View>
 
-          <View style={styles.informationBox}>
-            <Headline style={[styles.headline]}>Welcome back!</Headline>
-            <TextInput
-              label="Email"
-              backgroundColor="white"
-              style={styles.textInput}
-              onChangeText={text => SetEmail(text)}
-              keyboardType="email-address"
-              onFocus={handleInputFocus}
-            />
-            <TextInput
-              label="Password"
-              backgroundColor="white"
-              style={[styles.textInput]}
-              onChangeText={text => SetPassword(text)}
-              secureTextEntry
-              onFocus={handleInputFocus}
-            />
-            <Button
-              mode="outlined"
-              contentStyle={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 50,
-              }}
-              style={styles.loginButton}
-              onPress={LoginHandler}
-            >
-              <Text style={[{ fontSize: 15, color: 'white' }, { fontFamily: 'Montserrat_Medium' }]}>Sign in</Text>
-            </Button>
-            <View style={styles.linkTextContainer}>
-              <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={ForgotPasswordBtnHandler}>
-                <Text style={[styles.linkText, styles.default]}>Forgot your password?</Text>
-              </TouchableOpacity>
+            <View style={styles.informationBox}>
+              <Headline style={[styles.headline]}>Welcome back!</Headline>
+              <TextInput
+                label="Email"
+                backgroundColor="white"
+                style={styles.textInput}
+                onChangeText={text => SetEmail(text)}
+                keyboardType="email-address"
+                onFocus={handleInputFocus}
+              />
+              <TextInput
+                label="Password"
+                backgroundColor="white"
+                style={[styles.textInput]}
+                onChangeText={text => SetPassword(text)}
+                secureTextEntry
+                onFocus={handleInputFocus}
+              />
+              <Button
+                mode="outlined"
+                contentStyle={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 50,
+                }}
+                style={styles.loginButton}
+                onPress={LoginHandler}
+              >
+                <Text style={[{ fontSize: 15, color: 'white' }, { fontFamily: 'Montserrat_Medium' }]}>Sign in</Text>
+              </Button>
+              <View style={styles.linkTextContainer}>
+                <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={ForgotPasswordBtnHandler}>
+                  <Text style={[styles.linkText, styles.default]}>Forgot your password?</Text>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.linkTextContainer}>
+                <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Don't have an account? </Text>
+                <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignUpBtnHandler}>
+                  <Text style={[styles.linkText, styles.default]}>Sign Up</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.linkTextContainer}>
-              <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Don't have an account? </Text>
-              <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignUpBtnHandler}>
-                <Text style={[styles.linkText, styles.default]}>Sign Up</Text>
-              </TouchableOpacity>
-            </View>
+            <TouchableOpacity style={styles.skipPrevBtn} onPress={SkipBtnHandler}>
+              <Text style={[styles.skipPrevBtnText]}>Skip</Text>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.skipPrevBtn} onPress={SkipBtnHandler}>
-            <Text style={[styles.skipPrevBtnText]}>Skip</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -158,7 +156,7 @@ const styles = StyleSheet.create({
   skipPrevBtn: {
     position: "absolute",
     bottom: 30,
-    left:20
+    left: 20
   },
   skipPrevBtnText: {
     color: '#007BFF',

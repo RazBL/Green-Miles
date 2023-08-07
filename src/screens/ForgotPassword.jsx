@@ -28,7 +28,7 @@ export default function ForgotPassword({ navigation }) {
         <View style={styles.container}>
           <View style={styles.imageFrame}>
             <Image
-              source={require('../images/LogoPng.png')}
+              source={require('../images/Logo.png')}
               style={styles.logo}
             />
           </View>

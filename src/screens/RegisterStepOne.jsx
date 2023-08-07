@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, KeyboardAvoidingView, Image, View, Text, StyleSheet, TouchableOpacity, Alert, Platform } from 'react-native'
+import { SafeAreaView, ScrollView, KeyboardAvoidingView, Image, View, Text, StyleSheet, TouchableOpacity, Alert, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import React, { useContext, useState, useRef } from 'react'
 import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
@@ -41,11 +41,11 @@ export default function RegisterStepOne({ navigation }) {
         password: password
       }
 
-      if(RegisterUser(user)){
+      if (RegisterUser(user)) {
         alert("User was created successfully!");
         navigation.navigate('Login');
       }
-      else{
+      else {
         alert('error');
       }
     }
@@ -56,72 +56,72 @@ export default function RegisterStepOne({ navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 20}
-      style={styles.container} >
-      <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1 }} ref={scrollRef}>
-        <SafeAreaView style={styles.container}>
-          <View style={styles.imageFrame}>
-            <Image
-              source={require('../images/LogoPng.png')}
-              style={styles.logo}
-            />
-          </View>
-          <View style={styles.informationBox}>
-            <Headline style={[styles.headline]}>Become a <Text style={{ color: '#1CD995' }}>Green</Text> Miles member today!</Headline>
-            <View style={styles.nameContainer}>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <KeyboardAvoidingView
+        style={styles.container} >
+        <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1 }} ref={scrollRef}>
+          <SafeAreaView style={styles.container}>
+            <View style={styles.imageFrame}>
+              <Image
+                source={require('../images/Logo.png')}
+                style={styles.logo}
+              />
+            </View>
+            <View style={styles.informationBox}>
+              <Headline style={[styles.headline]}>Become a <Text style={{ color: '#1CD995' }}>Green</Text> Miles member today!</Headline>
+              <View style={styles.nameContainer}>
+                <TextInput
+                  label="First Name"
+                  backgroundColor="white"
+                  style={[styles.nameInput, styles.marginRight]}
+                  onChangeText={text => SetFirstName(text)}
+                  onFocus={handleInputFocus}
+                />
+                <TextInput
+                  label="Last Name"
+                  backgroundColor="white"
+                  style={[styles.nameInput, styles.marginLeft]}
+                  onChangeText={text => SetLastName(text)}
+                  onFocus={handleInputFocus}
+                />
+              </View>
               <TextInput
-                label="First Name"
+                label="Email"
                 backgroundColor="white"
-                style={[styles.nameInput, styles.marginRight]}
-                onChangeText={text => SetFirstName(text)}
+                style={styles.textInput}
+                onChangeText={text => SetEmail(text)}
+                keyboardType="email-address"
                 onFocus={handleInputFocus}
               />
               <TextInput
-                label="Last Name"
+                label="Password"
                 backgroundColor="white"
-                style={[styles.nameInput, styles.marginLeft]}
-                onChangeText={text => SetLastName(text)}
+                style={styles.textInput}
+                onChangeText={text => SetPassword(text)}
+                secureTextEntry
                 onFocus={handleInputFocus}
               />
+              <Button
+                mode="outlined"
+                style={styles.registerButton}
+                onPress={RegisterHandler}
+              >
+                <Text style={[{ fontSize: 15, color: 'white' }, styles.default]}>Sign up</Text>
+              </Button>
+              <View style={styles.linkTextContainer}>
+                <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Already have an account? </Text>
+                <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignInBtnHandler}>
+                  <Text style={styles.linkText}>Sign In</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-            <TextInput
-              label="Email"
-              backgroundColor="white"
-              style={styles.textInput}
-              onChangeText={text => SetEmail(text)}
-              keyboardType="email-address"
-              onFocus={handleInputFocus}
-            />
-            <TextInput
-              label="Password"
-              backgroundColor="white"
-              style={styles.textInput}
-              onChangeText={text => SetPassword(text)}
-              secureTextEntry
-              onFocus={handleInputFocus}
-            />
-            <Button
-              mode="outlined"
-              style={styles.registerButton}
-              onPress={RegisterHandler}
-            >
-              <Text style={[{ fontSize: 15, color: 'white' }, styles.default]}>Sign up</Text>
-            </Button>
-            <View style={styles.linkTextContainer}>
-              <Text style={[{ color: 'black', fontSize: 15 },styles.default]}>Already have an account? </Text>
-              <TouchableOpacity style={{ padding: 0, margin: 0}} onPress={SignInBtnHandler}>
-                <Text style={styles.linkText}>Sign In</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <TouchableOpacity style={styles.skipPrevBtn} onPress={PrevBtnHandler}>
-            <Text style={styles.skipPrevBtnText}>Prev</Text>
-          </TouchableOpacity>
-        </SafeAreaView>
-      </ScrollView>
-    </KeyboardAvoidingView>
+            <TouchableOpacity style={styles.skipPrevBtn} onPress={PrevBtnHandler}>
+              <Text style={styles.skipPrevBtnText}>Prev</Text>
+            </TouchableOpacity>
+          </SafeAreaView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   registerButton: {
-    marginTop:15,
+    marginTop: 15,
     marginBottom: 25,
     borderRadius: 25,
     borderColor: 'transparent',
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   skipPrevBtn: {
     position: "absolute",
     bottom: 30,
-    left:20
+    left: 20
   },
   skipPrevBtnText: {
     color: '#007BFF',

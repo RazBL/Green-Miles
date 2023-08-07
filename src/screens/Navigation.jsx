@@ -44,7 +44,7 @@ export default function Navigation() {
       <View style={styles.container}>
 
         <Appbar style={styles.upperBar}>
-          <Image source={require('../images/LogoPng.png')} resizeMode="contain" style={styles.image} />
+          <Image source={require('../images/Logo.png')} resizeMode="contain" style={styles.image} />
         </Appbar>
 
         <Tab.Navigator
