@@ -1,4 +1,5 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
 import { View, Text } from 'react-native';
 import { Card } from 'react-native-paper';
 
@@ -6,7 +7,7 @@ const HotelDetails = ({ route }) => {
   const { hotelData } = route.params;
 
   return (
-    <View style={{ padding: 16 }}>
+    <View style={styles.container}>
       <Card>
         <Card.Cover source={{ uri: 'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg' }} />
         <Card.Content>
@@ -24,3 +25,10 @@ const HotelDetails = ({ route }) => {
 };
 
 export default HotelDetails;
+
+const styles = StyleSheet.create({
+container: {
+      backgroundColor:'white',
+      padding:16
+}
+})

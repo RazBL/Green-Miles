@@ -3,9 +3,8 @@ import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import { HotelsContext } from '../context/HotelsContext';
 import { Button, Searchbar } from 'react-native-paper';
 import HotelCard from '../components/HotelCard';
-import { useNavigation } from '@react-navigation/native';
 
-export default function Hotels() {
+export default function Hotels({ navigation }) {
   const { hotels } = useContext(HotelsContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [minRating, setMinRating] = useState('');
@@ -55,7 +54,6 @@ export default function Hotels() {
     setFilteredHotels(filteredHotels); // עדכון הרשימה המסוננת
   };
 
-  const navigation = useNavigation();
 
   const onMoreInfoClicked = (hotelData) => {
     navigation.navigate('HotelDetails', { hotelData });
@@ -64,23 +62,25 @@ export default function Hotels() {
   return (
     <>
       <View style={styles.searchContainer}>
-        <Searchbar
-          placeholder="Search"
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          style={styles.searchBar}
-        />
+        <View>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            style={styles.searchBar}
+          />
+        </View>
         <View style={styles.buttonContainer}>
-          <Button mode="contained" icon="filter" onPress={onFilterClicked} style={styles.filterButton}>
+          <Button mode="contained" icon="filter" onPress={onFilterClicked} style={styles.filterButton} labelStyle={{fontSize:15, fontFamily:'Montserrat_Medium' }}>
             Filter
           </Button>
-          <Button mode="contained" icon="sort" onPress={onSortClicked} style={styles.sortButton}>
+          <Button mode="contained" icon="sort" onPress={onSortClicked} style={styles.sortButton} labelStyle={{color:'black',fontSize:15, fontFamily:'Montserrat_Medium' }}>
             Sort
           </Button>
         </View>
       </View>
 
-      <ScrollView>
+      <ScrollView style={styles.scrollViewStyle}>
         {filteredHotels.map((hotel) => (
           <HotelCard key={hotel._id} hotelData={hotel} onMoreInfoClicked={onMoreInfoClicked} />
         ))}
@@ -92,23 +92,33 @@ export default function Hotels() {
 const styles = StyleSheet.create({
   searchContainer: {
     padding: 16,
-    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 16,
+    backgroundColor: 'white',
   },
   searchBar: {
-    flex: 1,
     marginRight: 8,
+    width: '100%'
   },
   buttonContainer: {
     flexDirection: 'row',
+    marginTop: 15
   },
   filterButton: {
-    backgroundColor: 'blue',
-    marginRight: 8,
+    backgroundColor: '#1e272e',
+    borderTopEndRadius: 0,
+    borderBottomEndRadius: 0,
+    width:130
   },
   sortButton: {
-    backgroundColor: 'green',
+    backgroundColor: '#1CD995',
+    borderBottomStartRadius:0,
+    borderTopStartRadius:0,
+    width:130
   },
+  scrollViewStyle: {
+    padding: 20
+  }
 });
+

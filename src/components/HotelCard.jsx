@@ -17,7 +17,7 @@ const HotelCard = ({ hotelData, onMoreInfoClicked }) => { // שינוי כאן -
       </Card.Content>
       <Card.Actions>
         {/* שינוי כאן - הכפתור משתמש בפונקציה שמועברת כפרמטר */}
-        <Button mode="contained" onPress={() => onMoreInfoClicked(hotelData)}>
+        <Button mode="contained" style={{backgroundColor: '#95a5a6',}} labelStyle={{ color: 'black'}} onPress={() => onMoreInfoClicked(hotelData)}>
           More Info
          </Button>
 
