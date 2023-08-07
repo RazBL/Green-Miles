@@ -57,10 +57,11 @@ export default function UsersContextProvider({ children }) {
             }
 
             let data = await res.json();
-            const { user, token } = data;
+            const { loggedinUser , token } = data;
+            console.log(data);
             if(token != null)
                 await AsyncStorage.setItem('userToken', token);
-            return user;
+            return loggedinUser;
 
         } catch(err) {
             console.error(err);

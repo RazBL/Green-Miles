@@ -34,12 +34,12 @@ UsersRoute.post('/register', async (req, res) => {
 UsersRoute.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-    const loginResult = await UsersModel.Login(email, password);
-    console.log(loginResult);
-    if (loginResult) {
-      let token = await UsersModel.GenerateUserToken(loginResult);
+    const loggedinUser = await UsersModel.Login(email, password);
+    console.log(loggedinUser);
+    if (loggedinUser) {
+      let token = await UsersModel.GenerateUserToken(loggedinUser);
       console.log(token);
-      res.status(200).json({loginResult, token }); 
+      res.status(200).json({fullUser: loggedinUser, token, }); 
     } else {
       res.status(401).json({ message: 'Incorrect details' });
     }
