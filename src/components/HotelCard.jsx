@@ -14,14 +14,10 @@ const HotelCard = ({ hotelData, onMoreInfoClicked }) => { // שינוי כאן -
         <Text style={styles.price}>Price per night: ${hotelData.price_per_night}</Text>
         <Text style={styles.checkIn}>Check-in: {hotelData.checkIn}</Text>
         <Text style={styles.checkOut}>Check-out: {hotelData.checkOut}</Text>
+          <Button mode="contained" style={{ backgroundColor: '#95a5a6', }} labelStyle={{ color: 'black' }} onPress={() => onMoreInfoClicked(hotelData)}>
+            More Info
+          </Button>
       </Card.Content>
-      <Card.Actions>
-        {/* שינוי כאן - הכפתור משתמש בפונקציה שמועברת כפרמטר */}
-        <Button mode="contained" style={{backgroundColor: '#95a5a6',}} labelStyle={{ color: 'black'}} onPress={() => onMoreInfoClicked(hotelData)}>
-          More Info
-         </Button>
-
-      </Card.Actions>
     </Card>
   );
 };
