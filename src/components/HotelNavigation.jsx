@@ -10,7 +10,7 @@ import HotelDetails from '../screens/HotelDetails'
 export default function HotelNavigation() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Hotels" component={HotelsSearch} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
+            <Stack.Screen name="HotelsSearch" component={HotelsSearch} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
             <Stack.Screen name="HotelDetails" component={HotelDetails} options={{
                 headerStyle: {
                     shadowColor: '#000',
