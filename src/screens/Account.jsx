@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext} from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
-import { Searchbar } from 'react-native-paper';
+import { View, Text } from 'react-native';
 import { UsersContext } from '../context/UsersContext';
 
 export default function Account() {

@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback , Keyboard } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { DefaultTheme } from 'react-native-paper';
 import { FlightsContext } from '../context/FlightsContext';
@@ -8,8 +8,8 @@ import SearchBar from '../components/SearchBar';
 
 
 
-export default function FlightSearch({navigation}) {
-    const {destinations, origins, FlightSearchResults } = useContext(FlightsContext);
+export default function FlightSearch({ navigation }) {
+    const { destinations, origins, FlightSearchResults } = useContext(FlightsContext);
     const [passangers, SetPassangers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
@@ -46,7 +46,7 @@ export default function FlightSearch({navigation}) {
 
         FlightSearchResults(query);
         navigation.navigate('Flight Search Results');
-        }
+    }
 
     const HandleSelectLocation = (location) => {
         SetSelectedLocation(location);
@@ -78,48 +78,52 @@ export default function FlightSearch({navigation}) {
                     </View>
                     <View style={styles.dualSearchSection}>
                         <TouchableOpacity style={[styles.searchSection, { flex: 1 }]} onPress={() => SetDatePickerVisibility(true)}>
-                            <TextInput
-                                editable={false}
-                                icon="calendar"
-                                underlineColor="transparent"
-                                backgroundColor="white"
-                                style={styles.input}
-                                placeholder="Choose a date"
-                                theme={{
-                                    ...DefaultTheme,
-                                    colors: {
-                                        surfaceVariant: 'white',
-                                    },
-                                }}
-                                left={<TextInput.Icon icon="calendar" />}
-                                value={date.toDateString()}
-                            />
-                            {showDatePicker && (
-                                <DateTimePicker
-                                    mode="date"
-                                    value={date}
-                                    onChange={OnChange}
-                                />
-                            )}
-                        </TouchableOpacity>
-                        <View style={[styles.searchSection, { flex: 1, marginLeft: 10 }]}>
-                            <TouchableOpacity style={[styles.searchSection, { flex: 1 }]} onPress={() => setModalVisible(true)}>
+                            <View style={styles.inputWrapper}>
+
                                 <TextInput
                                     editable={false}
-                                    icon="account-outline"
+                                    icon="calendar"
                                     underlineColor="transparent"
                                     backgroundColor="white"
                                     style={styles.input}
-                                    placeholder={`${passangers} Passenger${passangers === 1 ? '' : 's'}`}
+                                    placeholder="Choose a date"
                                     theme={{
                                         ...DefaultTheme,
                                         colors: {
                                             surfaceVariant: 'white',
                                         },
                                     }}
-                                    left={<TextInput.Icon icon="account-outline" />}
+                                    left={<TextInput.Icon icon="calendar" />}
+                                    value={date.toDateString()}
                                 />
-
+                                {showDatePicker && (
+                                    <DateTimePicker
+                                        mode="date"
+                                        value={date}
+                                        onChange={OnChange}
+                                    />
+                                )}
+                            </View>
+                        </TouchableOpacity>
+                        <View style={[styles.searchSection, { flex: 1, marginLeft: 10 }]}>
+                            <TouchableOpacity style={[styles.searchSection, { flex: 1 }]} onPress={() => setModalVisible(true)}>
+                                <View style={styles.inputWrapper}>
+                                    <TextInput
+                                        editable={false}
+                                        icon="account-outline"
+                                        underlineColor="transparent"
+                                        backgroundColor="white"
+                                        style={styles.input}
+                                        placeholder={`${passangers} Passenger${passangers === 1 ? '' : 's'}`}
+                                        theme={{
+                                            ...DefaultTheme,
+                                            colors: {
+                                                surfaceVariant: 'white',
+                                            },
+                                        }}
+                                        left={<TextInput.Icon icon="account-outline" />}
+                                    />
+                                </View>
                             </TouchableOpacity>
                             <Modal
                                 animationType="slide"
@@ -180,7 +184,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat_Medium'
     },
     searchSection: {
-        marginBottom: 20
+        marginBottom: 20,
     },
     dualSearchSection: {
         flexDirection: 'row',
@@ -201,7 +205,12 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     input: {
-        borderRadius: 10
+        borderWidth: 1,
+        borderTopStartRadius: 0,
+    },
+    inputWrapper: {
+        borderRadius: 10,
+        overflow: 'hidden', // Important to ensure the borderRadius is applied
     },
     centeredView: {
         flex: 1,
