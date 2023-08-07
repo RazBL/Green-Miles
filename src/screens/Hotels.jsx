@@ -90,13 +90,6 @@ export default function Hotels() {
 }
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    padding: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
   searchBar: {
     flex: 1,
     marginRight: 8,
@@ -110,5 +103,8 @@ const styles = StyleSheet.create({
   },
   sortButton: {
     backgroundColor: 'green',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
   },
 });

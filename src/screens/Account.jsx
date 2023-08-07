@@ -1,54 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
-import { base_api } from '../../utils/api';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Login from './Login';
 import { Searchbar } from 'react-native-paper';
+import { UsersContext } from '../context/UsersContext';
 
-function Profile() {
-  const [user, setUser] = useState(null);
+export default function Account() {
 
-  const fetchUserProfile = async () => {
-    try {
-      const token = await AsyncStorage.getItem('userToken');
-      if (token) {
-        let res = await fetch(`${base_api}/users/profile`, {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-        });
+  const { GetUserProfile } = useContext(UsersContext);
+  const [user, SetUser] = useState(null); 
 
-        if (!res.ok) {
-          console.error('Error fetching profile');
-          return;
-        }
-
-        let data = await res.json();
-        setUser(data.fullUser);
-      }
-    } catch (err) {
-      console.error(err);
+  
+  const GetUser = async () => {
+    let checkUser = await GetUserProfile();
+    if (checkUser) {
+      SetUser(checkUser);
+    } else {
+      console.log("not logged in");
     }
-  };
+  }
+
 
   useEffect(() => {
-    fetchUserProfile();
+    GetUser();
   }, []);
 
   return (
     <View>
       {user ? (
-        <>
-          <Text style={{ fontSize: 24 }}>Profile</Text>
-          <Text>Name: {user.firstName}</Text>
-          <Text>Last Name: {user.lastName}</Text>
-          <Text>Email: {user.email}</Text>
-        </>
+        <Text>{user.firstName}</Text>
       ) : (
-        <Searchbar />
+        <Text>Please log in</Text>
       )}
     </View>
   );
 }
-
-export default Profile;

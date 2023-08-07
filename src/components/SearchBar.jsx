@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet, ScrollView } from 'react-native';
 import { Searchbar } from 'react-native-paper';
 
 
@@ -38,32 +38,34 @@ export default function SearchBar({ data, placeholder, onSelect, icon }) {
         }
     }, [searchQuery, isFocused]);
 
-    return (<>
+    return (  <>
         <Searchbar
-            ref={searchbarRef}
-            placeholder={placeholder}
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            icon={icon}
-            style={styles.searchBar}
-            onLayout={HandleLayout}
-            onFocus={() => { SetIsFocused(true); }}
-            onBlur={() => { SetIsFocused(false); }}
-            autoCompleteType="off"
-            importantForAccessibility="no"
-            textContentType="none"
-            autoCorrect={false}
+          ref={searchbarRef}
+          placeholder={placeholder}
+          onChangeText={onChangeSearch}
+          value={searchQuery}
+          icon={icon}
+          style={styles.searchBar}
+          onLayout={HandleLayout}
+          onFocus={() => { SetIsFocused(true); }}
+          onBlur={() => { SetIsFocused(false); }}
+          autoCompleteType="off"
+          importantForAccessibility="no"
+          textContentType="none"
+          autoCorrect={false}
         />
         {isFocused && filteredData.length > 0 && (
-            <View style={[styles.dropdown, { top: searchBarHeight }]}>
-                {filteredData.map((item, index) => (
-                    <TouchableOpacity key={index} onPress={() => HandleSelectItem(item)}>
-                        <Text>{item}</Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
+          <View style={[styles.dropdown, { top: searchBarHeight }]}>
+            <ScrollView showsVerticalScrollIndicator={true}>
+              {filteredData.map((item, index) => (
+                <TouchableOpacity style={styles.dropdownItem} key={index} onPress={() => HandleSelectItem(item)}>
+                  <Text>{item}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
         )}
-    </>
+      </>
     );
 };
 const styles = StyleSheet.create({
@@ -87,6 +89,5 @@ const styles = StyleSheet.create({
     },
     dropdownItem: {
         padding: 10,
-        marginBottom: 10
     }
 });

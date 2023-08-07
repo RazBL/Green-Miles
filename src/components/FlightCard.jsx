@@ -6,7 +6,6 @@ export default function FlightCard({ flight }) {
     return (
         <Card>
             <Card.Content>
-
             </Card.Content>
             <Card.Content>
                 <Card.Actions>

@@ -7,13 +7,12 @@ import { useNavigationState } from '@react-navigation/native';
 
 //screens
 import Home from './Home';
-import Flights from './FlightSearch';
 import Hotels from './Hotels';
 import Save from './Save';
 import Account from './Account';
 
 //Components
-import FlightsNavigator from '../components/FlightNavigation';
+import FlightNavigation from '../components/FlightNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -63,7 +62,7 @@ export default function Navigation() {
         >
           {[
             { name: "Home", component: Home, icon: "home" },
-            { name: "Flights", component: FlightsNavigator, icon: "airplane" },
+            { name: "Flights", component: FlightNavigation, icon: "airplane" },
             { name: "Hotels", component: Hotels, icon: "home" },
             { name: "Save", component: Save, icon: "heart" },
             { name: "Account", component: Account, icon: "account" }
