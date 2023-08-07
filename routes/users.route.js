@@ -38,7 +38,8 @@ UsersRoute.post('/login', async (req, res) => {
     console.log(loginResult);
     if (loginResult) {
       let token = await UsersModel.GenerateUserToken(loginResult);
-      res.status(200).json(loginResult);
+      console.log(token);
+      res.status(200).json({loginResult, token }); 
     } else {
       res.status(401).json({ message: 'Incorrect details' });
     }

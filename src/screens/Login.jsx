@@ -4,7 +4,7 @@ import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
 
 export default function Login({ navigation }) {
-  const { IfUserExists } = useContext(UsersContext);
+  const { Login } = useContext(UsersContext);
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
   const scrollRef = useRef(null);
@@ -15,7 +15,7 @@ export default function Login({ navigation }) {
 
   const LoginHandler = async () => {
     let lowerCaseEmail = email.toLowerCase();
-    let user = await IfUserExists(lowerCaseEmail, password)
+    let user = await Login(lowerCaseEmail, password)
     if (user) {
       alert("Welcome back " + user.firstName + " :)");
       navigation.navigate('Navigation');

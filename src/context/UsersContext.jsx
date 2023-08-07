@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react'
 import {base_api} from '../../utils/api' ;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const UsersContext = createContext();
 
@@ -36,7 +37,7 @@ export default function UsersContextProvider({ children }) {
         }
     }
 
-    const IfUserExists = async (email, password) => {
+    const Login = async (email, password) => {
         try {
             let res = await fetch(`${base_api}/users/login`,{
                 method: 'POST',
@@ -48,15 +49,19 @@ export default function UsersContextProvider({ children }) {
                     password: password
                 })
             });
-    
+            
             if(!res.ok) {
                 let errorData = await res.json();  
-                console.error(`Error response from server: ${errorData.error}`);
+                console.error(`Error is: ${errorData.error}`);
                 return null;
             }
-    
+
             let data = await res.json();
-            return data;
+            const { user, token } = data;
+            if(token != null)
+                await AsyncStorage.setItem('userToken', token);
+            return user;
+
         } catch(err) {
             console.error(err);
         }
@@ -80,7 +85,7 @@ export default function UsersContextProvider({ children }) {
     const value = {
         users,
         SetUsers,
-        IfUserExists,
+        Login,
         EmailExists,
         CheckValidEmail,
         RegisterUser

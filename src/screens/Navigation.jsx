@@ -84,12 +84,6 @@ export default function Navigation() {
             />
           ))}
 
-          {/* מסך HotelDetails */}
-          <Tab.Screen
-            name="HotelDetails"
-            component={HotelDetails}
-            options={{ hidden: true }}
-          />
 
         </Tab.Navigator>
 
