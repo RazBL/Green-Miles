@@ -4,7 +4,7 @@ import { HotelsContext } from '../context/HotelsContext';
 import { Button, Searchbar } from 'react-native-paper';
 import HotelCard from '../components/HotelCard';
 
-export default function Hotels({ navigation }) {
+export default function HotelsSearch({ navigation }) {
   const { hotels } = useContext(HotelsContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [minRating, setMinRating] = useState('');
