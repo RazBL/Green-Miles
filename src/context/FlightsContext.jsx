@@ -51,7 +51,7 @@ export default function FlightsContextProvider({ children }) {
         LoadAllFlights();
         GetDestinations();
         GetOrigins();
-        console.log("hi");
+        console.log(flights);
     }, []);
 
     const value = {

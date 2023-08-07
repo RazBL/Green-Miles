@@ -8,14 +8,16 @@ import SearchBar from '../components/SearchBar';
 
 
 
-export default function FlightSearch() {
-    const { FlightSearchResults, destinations, origins } = useContext(FlightsContext);
+export default function FlightSearch({navigation}) {
+    const {destinations, origins, FlightSearchResults } = useContext(FlightsContext);
     const [passangers, SetPassangers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
     const [selectedLocation, SetSelectedLocation] = useState("");
     const [selectedDestination, SetSelectedDestination] = useState("");
     const [isModalVisible, setModalVisible] = useState(false);
+
+
 
     const IncrementPassengers = () => {
         if (passangers < 9) SetPassangers(passangers + 1);
@@ -25,8 +27,8 @@ export default function FlightSearch() {
         if (passangers > 1) SetPassangers(passangers - 1);
     };
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
+    const OnChange = (event, selectedDate) => {
+        const currentDate = selectedDate;
         SetDatePickerVisibility(Platform.OS === 'ios');
         SetDate(currentDate);
     };
@@ -43,7 +45,8 @@ export default function FlightSearch() {
         };
 
         FlightSearchResults(query);
-    }
+        navigation.navigate('Flight Search Results');
+        }
 
     const HandleSelectLocation = (location) => {
         SetSelectedLocation(location);
@@ -95,7 +98,7 @@ export default function FlightSearch() {
                                 <DateTimePicker
                                     mode="date"
                                     value={date}
-                                    onChange={onChange}
+                                    onChange={OnChange}
                                 />
                             )}
                         </TouchableOpacity>

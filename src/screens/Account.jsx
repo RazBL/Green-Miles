@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { base_api } from '../../utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Login from './Login';
+import { Searchbar } from 'react-native-paper';
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -43,7 +45,7 @@ function Profile() {
           <Text>Email: {user.email}</Text>
         </>
       ) : (
-        <ActivityIndicator />
+        <Searchbar />
       )}
     </View>
   );

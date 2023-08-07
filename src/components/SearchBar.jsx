@@ -52,6 +52,7 @@ export default function SearchBar({ data, placeholder, onSelect, icon }) {
             autoCompleteType="off"
             importantForAccessibility="no"
             textContentType="none"
+            autoCorrect={false}
         />
         {isFocused && filteredData.length > 0 && (
             <View style={[styles.dropdown, { top: searchBarHeight }]}>
@@ -86,7 +87,6 @@ const styles = StyleSheet.create({
     },
     dropdownItem: {
         padding: 10,
-        borderBottomColor: '#eee',
-        borderBottomWidth: 1,
+        marginBottom: 10
     }
 });

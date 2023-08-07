@@ -16,7 +16,8 @@ import RegisterStepOne from './src/screens/RegisterStepOne';
 import Navigation from './src/screens/Navigation';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
-import Flights from './src/screens/Flights';
+
+
 
 const Stack = createStackNavigator();
 
@@ -45,8 +46,8 @@ export default function App() {
       <FlightsContextProvider>
         <UsersContextProvider>
           <HotelsContextProvider>
+          <SafeAreaProvider style={styles.container}>
             <NavigationContainer>
-              <SafeAreaProvider style={styles.container}>
                 <Stack.Navigator>
                   <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Navigation" component={Navigation} options={{headerTransparent: true, headerTitle: '',headerLeft: null  }}/>
@@ -54,9 +55,8 @@ export default function App() {
                   <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                 </Stack.Navigator>
-              </SafeAreaProvider>
             </NavigationContainer>
-            
+            </SafeAreaProvider>            
           </HotelsContextProvider>
         </UsersContextProvider>
       </FlightsContextProvider>

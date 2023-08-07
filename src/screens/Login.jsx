@@ -2,6 +2,7 @@ import { KeyboardAvoidingView, ScrollView, Image, View, Text, StyleSheet, Toucha
 import React, { useContext, useState, useRef } from 'react';
 import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
   const { Login } = useContext(UsersContext);
@@ -24,6 +25,15 @@ export default function Login({ navigation }) {
     }
   };
 
+  const removeToken = async () => {
+    try {
+      await AsyncStorage.removeItem('userToken');
+      console.log('Token removed successfully');
+    } catch (err) {
+      console.error('An error occurred while removing the token:', err);
+    }
+  };
+
   const SignUpBtnHandler = () => {
     navigation.navigate('Register');
   };
@@ -33,6 +43,7 @@ export default function Login({ navigation }) {
   };
 
   const SkipBtnHandler = () => {
+    removeToken();
     navigation.navigate('Navigation');
   }
 

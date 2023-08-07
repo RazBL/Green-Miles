@@ -11,7 +11,9 @@ import Flights from './FlightSearch';
 import Hotels from './Hotels';
 import Save from './Save';
 import Account from './Account';
-import HotelDetails from './HotelDetails'; // יבוא הקומפוננטה
+
+//Components
+import FlightsNavigator from '../components/FlightNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -54,11 +56,14 @@ export default function Navigation() {
               height: 60,
               backgroundColor: '#1e272e',
             },
+            tabBarLabelStyle: {
+              fontFamily: 'Montserrat_Regular',
+            }
           }}
         >
           {[
             { name: "Home", component: Home, icon: "home" },
-            { name: "Flights", component: Flights, icon: "airplane" },
+            { name: "Flights", component: FlightsNavigator, icon: "airplane" },
             { name: "Hotels", component: Hotels, icon: "home" },
             { name: "Save", component: Save, icon: "heart" },
             { name: "Account", component: Account, icon: "account" }
