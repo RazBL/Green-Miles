@@ -1,5 +1,5 @@
 import React, { useEffect, useState, createContext } from 'react'
-import {base_api} from '../../utils/api' ;
+import { base_api } from '../../utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const UsersContext = createContext();
@@ -19,8 +19,8 @@ export default function UsersContextProvider({ children }) {
     }
 
     const RegisterUser = async (newUser) => {
-        try{
-            let res = await fetch(`${base_api}/users/register`,{
+        try {
+            let res = await fetch(`${base_api}/users/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -28,11 +28,11 @@ export default function UsersContextProvider({ children }) {
                 body: JSON.stringify(newUser)
             });
             let data = await res.json();
-            if(data){
+            if (data) {
                 await LoadAllUsers();
                 return true;
             }
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     }
@@ -49,28 +49,59 @@ export default function UsersContextProvider({ children }) {
                     password: password,
                 }),
             });
-    
+
             if (!res.ok) {
                 let errorData = await res.json();
                 console.error(`Error is: ${errorData.error}`);
                 return null;
             }
-    
+
             let data = await res.json();
             const { user: loggedinUser, token } = data;
 
             if (token) {
                 await AsyncStorage.setItem('userToken', token);
             }
-    
+
             return loggedinUser;
         } catch (err) {
             console.error(err);
             return null;
         }
     };
-    
-    
+
+    const GetUserProfile = async () => {
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            if (token) {
+                let res = await fetch(`${base_api}/users/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                });
+
+                if (!res.ok) {
+                    console.error('Error Getting user Profile');
+                    return null;
+                }
+
+                let data = await res.json();
+                let user = data.user;
+                return user;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        return null;
+    };
+    const RemoveToken = async () => {
+        try {
+            await AsyncStorage.removeItem('userToken');
+        } catch (error) {
+            console.error('An error occurred while removing the token:', error);
+        }
+    };
+
 
     const EmailExists = (email) => {
         let userFound = users.find(u => u.email.toLowerCase() === email.toLowerCase());
@@ -80,7 +111,7 @@ export default function UsersContextProvider({ children }) {
     const CheckValidEmail = (email) => {
         return (email.endsWith(".com") || email.endsWith(".co.il")) && /^[a-zA-Z0-9.~-]+@[a-zA-Z-]+(\.[a-zA-Z0-9-]+)*$/.test(email);
     }
-    
+
 
     useEffect(() => {
         LoadAllUsers();
@@ -92,7 +123,9 @@ export default function UsersContextProvider({ children }) {
         Login,
         EmailExists,
         CheckValidEmail,
-        RegisterUser
+        RegisterUser,
+        GetUserProfile,
+        RemoveToken
     }
 
     return (

@@ -66,7 +66,7 @@ UsersRoute.get('/profile', AuthUser, async (req, res) => {
     res.status(200).json({ user: req.user }); 
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching the profile' });
+    res.status(500).json({ error: 'An error occurred while trying to get the profile' });
   }
 });
 

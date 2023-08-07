@@ -5,7 +5,7 @@ import { UsersContext } from '../context/UsersContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Login({ navigation }) {
-  const { Login } = useContext(UsersContext);
+  const {RemoveToken,  Login } = useContext(UsersContext);
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
   const scrollRef = useRef(null);
@@ -25,15 +25,6 @@ export default function Login({ navigation }) {
     }
   };
 
-  const removeToken = async () => {
-    try {
-      await AsyncStorage.removeItem('userToken');
-      console.log('Token removed successfully');
-    } catch (err) {
-      console.error('An error occurred while removing the token:', err);
-    }
-  };
-
   const SignUpBtnHandler = () => {
     navigation.navigate('Register');
   };
@@ -43,7 +34,7 @@ export default function Login({ navigation }) {
   };
 
   const SkipBtnHandler = () => {
-    removeToken();
+    RemoveToken();
     navigation.navigate('Navigation');
   }
 
