@@ -1,10 +1,52 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { View, Text, ActivityIndicator } from 'react-native';
+import { base_api } from '../../utils/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function Account() {
+function Profile() {
+  const [user, setUser] = useState(null);
+
+  const fetchUserProfile = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token) {
+        let res = await fetch(`${base_api}/users/profile`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+        });
+
+        if (!res.ok) {
+          console.error('Error fetching profile');
+          return;
+        }
+
+        let data = await res.json();
+        setUser(data.fullUser);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, []);
+
   return (
     <View>
-      <Text>Account</Text>
+      {user ? (
+        <>
+          <Text style={{ fontSize: 24 }}>Profile</Text>
+          <Text>Name: {user.firstName}</Text>
+          <Text>Last Name: {user.lastName}</Text>
+          <Text>Email: {user.email}</Text>
+        </>
+      ) : (
+        <ActivityIndicator />
+      )}
     </View>
-  )
+  );
 }
+
+export default Profile;

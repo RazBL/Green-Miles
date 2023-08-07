@@ -39,34 +39,37 @@ export default function UsersContextProvider({ children }) {
 
     const Login = async (email, password) => {
         try {
-            let res = await fetch(`${base_api}/users/login`,{
+            let res = await fetch(`${base_api}/users/login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     email: email,
-                    password: password
-                })
+                    password: password,
+                }),
             });
-            
-            if(!res.ok) {
-                let errorData = await res.json();  
+    
+            if (!res.ok) {
+                let errorData = await res.json();
                 console.error(`Error is: ${errorData.error}`);
                 return null;
             }
-
+    
             let data = await res.json();
-            const { loggedinUser , token } = data;
-            console.log(data);
-            if(token != null)
+            const { fullUser: loggedinUser, token } = data;
+    
+            if (token) {
                 await AsyncStorage.setItem('userToken', token);
+            }
+    
             return loggedinUser;
-
-        } catch(err) {
+        } catch (err) {
             console.error(err);
+            return null;
         }
-    }
+    };
+    
     
 
     const EmailExists = (email) => {

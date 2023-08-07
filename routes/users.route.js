@@ -39,7 +39,7 @@ UsersRoute.post('/login', async (req, res) => {
     if (loggedinUser) {
       let token = await UsersModel.GenerateUserToken(loggedinUser);
       console.log(token);
-      res.status(200).json({fullUser: loggedinUser, token, }); 
+      res.status(200).json({user: loggedinUser, token, }); 
     } else {
       res.status(401).json({ message: 'Incorrect details' });
     }
@@ -61,14 +61,14 @@ UsersRoute.get('/', async (req, res) => {
     }
 })
 
-UsersRoute.get('/profile', AuthUser, async(req, res) =>{
- try{
-  res.status(200).json(req.user)
- }catch(error){
-  res.status(500).json({error});
- }
-}
-)
+router.get('/profile', AuthUser, async (req, res) => {
+  try {
+    res.status(200).json({ fullUser: req.user }); // Encapsulating the user object inside a "fullUser" property
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while fetching the profile' });
+  }
+});
 
 //UPDATE == PUT
 
