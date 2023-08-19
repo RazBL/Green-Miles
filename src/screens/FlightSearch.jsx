@@ -197,8 +197,8 @@ const styles = StyleSheet.create({
     },
     flightSearch: {
         backgroundColor: '#1e272e',
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 20,
+        marginRight: 20,
         padding: 20,
         paddingTop: 40,
         paddingBottom: 40,
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     },
     inputWrapper: {
         borderRadius: 10,
-        overflow: 'hidden', // Important to ensure the borderRadius is applied
+        overflow: 'hidden', 
     },
     centeredView: {
         flex: 1,
