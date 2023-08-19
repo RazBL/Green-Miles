@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Appbar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigationState } from '@react-navigation/native';
+import TabOffsetContext from '../context/TabOffsetContext'
 
 //screens
 import Home from './Home';
@@ -19,7 +20,7 @@ const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
 
-  const navigationState = useNavigationState(state => state.index - 1);
+  const navigationState = useNavigationState(state => state.index - 2);
 
   const tabOffSetValue = useRef(new Animated.Value(0)).current;
 
@@ -32,6 +33,14 @@ export default function Navigation() {
   const singleTabWidth = GetWidth();
   const centerOffset = (singleTabWidth - barWidth) / 2;
 
+  const moveToTab = (index) => {
+    Animated.spring(tabOffSetValue, {
+      toValue: index * singleTabWidth + centerOffset,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  };
+
   useEffect(() => {
     Animated.spring(tabOffSetValue, {
       toValue: navigationState * singleTabWidth + centerOffset,
@@ -41,6 +50,7 @@ export default function Navigation() {
   }, []);
 
   return (
+    <TabOffsetContext.Provider value={moveToTab}>
       <View style={styles.container}>
 
         <Appbar style={styles.upperBar}>
@@ -64,7 +74,7 @@ export default function Navigation() {
           {[
             { name: "Home", component: Home, icon: "home" },
             { name: "Flights", component: FlightsNavigator, icon: "airplane" },
-            { name: "Hotels", component: HotelNavigation, icon: "home" },
+            { name: "Hotels", component: HotelNavigation, icon: "bed-queen" },
             { name: "Save", component: Save, icon: "heart" },
             { name: "Account", component: Account, icon: "account" }
           ].map((item, i) => (
@@ -104,7 +114,8 @@ export default function Navigation() {
         </Animated.View>
 
       </View>
- 
+    </TabOffsetContext.Provider>
+
   );
 }
 

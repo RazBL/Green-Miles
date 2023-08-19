@@ -16,8 +16,8 @@ import RegisterStepOne from './src/screens/RegisterStepOne';
 import Navigation from './src/screens/Navigation';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
-
-
+import OnBoarding from './src/screens/OnBoarding';
+import Home from './src/screens/Home';
 
 const Stack = createStackNavigator();
 
@@ -25,6 +25,9 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
+    primary: '#1CD995',
+    actionText: '#007BFF',
+    logoBackground: '#1E272E'
     
   },
 };
@@ -49,6 +52,7 @@ export default function App() {
           <SafeAreaProvider style={styles.container}>
             <NavigationContainer>
                 <Stack.Navigator>
+                <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Navigation" component={Navigation} options={{headerTransparent: true, headerTitle: '',headerLeft: null  }}/>
                   <Stack.Screen name="Register" component={RegisterStepOne} options={{headerTransparent: true, headerTitle: '', headerLeft: null}}/>

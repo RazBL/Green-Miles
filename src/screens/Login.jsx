@@ -77,7 +77,7 @@ export default function Login({ navigation }) {
                 style={styles.loginButton}
                 onPress={LoginHandler}
               >
-                <Text style={[{ fontSize: 15, color: 'white' }, { fontFamily: 'Montserrat_Medium' }]}>Sign in</Text>
+                <Text style={[{ fontSize: 15, color: 'white',fontFamily: 'Montserrat_Bold'}]}>Sign in</Text>
               </Button>
               <View style={styles.linkTextContainer}>
                 <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={ForgotPasswordBtnHandler}>
@@ -87,7 +87,7 @@ export default function Login({ navigation }) {
               <View style={styles.linkTextContainer}>
                 <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Don't have an account? </Text>
                 <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignUpBtnHandler}>
-                  <Text style={[styles.linkText, styles.default]}>Sign Up</Text>
+                  <Text style={[ styles.default, styles.linkText]}>Sign Up</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 25,
     borderRadius: 25,
-    backgroundColor: 'black',
+    backgroundColor: '#1CD995',
     borderColor: 'transparent',
   },
   linkTextContainer: {

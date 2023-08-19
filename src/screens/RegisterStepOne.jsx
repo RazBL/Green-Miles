@@ -106,7 +106,7 @@ export default function RegisterStepOne({ navigation }) {
                 style={styles.registerButton}
                 onPress={RegisterHandler}
               >
-                <Text style={[{ fontSize: 15, color: 'white' }, styles.default]}>Sign up</Text>
+                <Text style={[{ fontSize: 15, color: '#1CD995',fontFamily: 'Montserrat_Bold'}]}>Sign up</Text>
               </Button>
               <View style={styles.linkTextContainer}>
                 <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Already have an account? </Text>
@@ -181,11 +181,12 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     borderRadius: 25,
     borderColor: 'transparent',
-    borderWidth: 1,
+    borderWidth: 2,
     justifyContent: 'center',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     alignItems: 'center',
     height: 50,
+    borderColor: '#1CD995'
   },
   linkTextContainer: {
     flexDirection: 'row',
