@@ -67,11 +67,11 @@ const styles = theme => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingVertical: 20
+    paddingVertical: 35
   },
   flightHotelSearch: {
     flexDirection: 'row',
-    marginBottom: 50
+    marginBottom: 35
   },
   hotelImageBox: {
     flex: 1,

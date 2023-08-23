@@ -76,16 +76,7 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     dropdown: {
-        position: 'absolute',
-        backgroundColor: 'white',
-        maxHeight: 200,
-        borderColor: '#ddd',
-        borderWidth: 1,
-        padding: 20,
-        width: '100%',
-        elevation: 20,
-        zIndex: 50,
-        borderRadius: 10
+
     },
     dropdownItem: {
         padding: 10,

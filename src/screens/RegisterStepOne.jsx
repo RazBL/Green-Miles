@@ -103,14 +103,19 @@ export default function RegisterStepOne({ navigation }) {
               />
               <Button
                 mode="outlined"
+                contentStyle={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  height: 50,
+                }}
                 style={styles.registerButton}
                 onPress={RegisterHandler}
               >
-                <Text style={[{ fontSize: 15, color: '#1CD995',fontFamily: 'Montserrat_Bold'}]}>Sign up</Text>
+                <Text style={[{ fontSize: 15, color: '#1CD995',fontFamily: 'Montserrat_Bold'}]}>Sign in</Text>
               </Button>
               <View style={styles.linkTextContainer}>
                 <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Already have an account? </Text>
-                <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignInBtnHandler}>
+                <TouchableOpacity  onPress={SignInBtnHandler}>
                   <Text style={styles.linkText}>Sign In</Text>
                 </TouchableOpacity>
               </View>
@@ -180,11 +185,9 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 25,
     borderRadius: 25,
-    borderColor: 'transparent',
     borderWidth: 2,
     justifyContent: 'center',
     backgroundColor: 'white',
-    alignItems: 'center',
     height: 50,
     borderColor: '#1CD995'
   },

@@ -39,7 +39,7 @@ export default function OnBoarding({ navigation }) {
     return (
         //Make bounce stop working.
         <View style={styles(theme).container}>
-            <View  style={{ flex: 3 }}>
+            <View style={{ flex: 3 }}>
                 <Animated.FlatList
                     data={slides}
                     renderItem={({ item }) => <OnBoardingElement item={item} />}
@@ -68,6 +68,13 @@ export default function OnBoarding({ navigation }) {
             <TouchableOpacity style={styles(theme).skipPrevBtn} onPress={SkipBtnHandler}>
                 <Text style={[styles(theme).skipPrevBtnText]}>Skip</Text>
             </TouchableOpacity>
+            {currentIndex === 0 ? (
+                <View></View>
+            ) : (
+                <TouchableOpacity style={styles(theme).prevBtn} onPress={SkipBtnHandler}>
+                <Text style={[styles(theme).skipPrevBtnText]}>Prev</Text>
+            </TouchableOpacity>
+            )}
         </View>
     )
 }
@@ -86,6 +93,11 @@ const styles = theme => StyleSheet.create({
     skipPrevBtn: {
         position: "absolute",
         bottom: 30,
-        left: 20
+        right: 20
     },
+    prevBtn: {
+        position: "absolute",
+        bottom: 30,
+        left: 20
+    }
 });
