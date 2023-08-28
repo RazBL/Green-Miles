@@ -52,7 +52,7 @@ export default function UsersContextProvider({ children }) {
 
             if (!res.ok) {
                 let errorData = await res.json();
-                console.error(`Error is: ${errorData.error}`);
+                console.log(`Error is: ${errorData.error}`);
                 return null;
             }
 

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Animated, View, StyleSheet, Image, Dimensions } from 'react-native';
+import { Animated, View, StyleSheet, Image, Dimensions, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Appbar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -63,7 +63,7 @@ export default function Navigation() {
             tabBarActiveTintColor: '#1CD995',
             tabBarInactiveTintColor: 'white',
             tabBarStyle: {
-              height: 60,
+              height: 65,
               backgroundColor: '#1e272e',
             },
             tabBarLabelStyle: {
@@ -74,8 +74,8 @@ export default function Navigation() {
           {[
             { name: "Home", component: Home, icon: "home" },
             { name: "Flights", component: FlightsNavigator, icon: "airplane" },
-            { name: "Hotels", component: HotelNavigation, icon: "bed-queen" },
-            { name: "Save", component: Save, icon: "heart" },
+            { name: "Hotels", component: FlightsNavigator, icon: "bed" },
+            { name: "Saved", component: Save, icon: "heart" },
             { name: "Account", component: Account, icon: "account" }
           ].map((item, i) => (
             <Tab.Screen
@@ -83,8 +83,13 @@ export default function Navigation() {
               name={item.name}
               component={item.component}
               options={{
+                tabBarLabel: ({ color }) => (
+                  <Text style={{ color: color, marginBottom: 5, fontSize: 12}}>
+                    {item.name}
+                  </Text>
+                ),
                 tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name={item.icon} color={color} size={size} />
+                  <MaterialCommunityIcons name={item.icon} style={{marginTop: 5}} color={color} size={24} />
                 ),
               }}
               listeners={() => ({
@@ -97,17 +102,20 @@ export default function Navigation() {
                 },
               })}
             />
-          ))}
 
+          ))}
 
         </Tab.Navigator>
 
         <Animated.View style={{
           width: barWidth,
           height: 2,
+          borderRadius: 20,
+          borderWidth: 1,
+          borderColor:  '#1CD995',
           backgroundColor: '#1CD995',
           position: 'absolute',
-          bottom: 60,
+          bottom: 65,
           transform: [{ translateX: tabOffSetValue }]
         }}
         >

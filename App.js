@@ -17,7 +17,6 @@ import Navigation from './src/screens/Navigation';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
 import OnBoarding from './src/screens/OnBoarding';
-import Home from './src/screens/Home';
 
 const Stack = createStackNavigator();
 
@@ -27,7 +26,8 @@ const theme = {
     ...DefaultTheme.colors,
     primary: '#1CD995',
     actionText: '#007BFF',
-    logoBackground: '#1E272E'
+    logoBackground: '#1E272E',
+    inputTextColor: '#2B3A4A'
     
   },
 };

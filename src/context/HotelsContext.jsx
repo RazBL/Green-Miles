@@ -19,6 +19,7 @@ export default function HotelsContextProvider({ children }) {
 
     useEffect(() => {
         LoadAllHotels();
+        console.log("hi");
     }, [])
 
     const value = {

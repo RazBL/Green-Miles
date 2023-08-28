@@ -62,7 +62,7 @@ export default function HotelsSearch({ navigation }) {
   return (
     <>
       <View style={styles.searchContainer}>
-        <View>
+        <View style={styles.marginHorizontalContainer}>
           <Searchbar
             placeholder="Search"
             onChangeText={onChangeSearch}
@@ -70,55 +70,59 @@ export default function HotelsSearch({ navigation }) {
             style={styles.searchBar}
           />
         </View>
-        <View style={styles.buttonContainer}>
-          <Button mode="contained" icon="filter" onPress={onFilterClicked} style={styles.filterButton} labelStyle={{fontSize:15, fontFamily:'Montserrat_Medium' }}>
+        <View style={[styles.buttonContainer, styles.marginHorizontalContainer]}>
+          <Button mode="contained" icon="filter" onPress={onFilterClicked} style={styles.filterButton} labelStyle={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
             Filter
           </Button>
-          <Button mode="contained" icon="sort" onPress={onSortClicked} style={styles.sortButton} labelStyle={{color:'black',fontSize:15, fontFamily:'Montserrat_Medium' }}>
+          <Button mode="contained" icon="sort" onPress={onSortClicked} style={styles.sortButton} labelStyle={{ color: 'black', fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
             Sort
           </Button>
         </View>
+
+        <ScrollView style={[styles.scrollViewStyle, {paddingHorizontal: 20}]}>
+          {filteredHotels.map((hotel) => (
+            <HotelCard key={hotel._id} hotelData={hotel} onMoreInfoClicked={onMoreInfoClicked} />
+          ))}
+        </ScrollView>
       </View>
 
-      <ScrollView style={styles.scrollViewStyle}>
-        {filteredHotels.map((hotel) => (
-          <HotelCard key={hotel._id} hotelData={hotel} onMoreInfoClicked={onMoreInfoClicked} />
-        ))}
-      </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   searchContainer: {
-    padding: 16,
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 15,
     backgroundColor: 'white',
+    paddingVertical: 20,
+  },
+  marginHorizontalContainer: {
+    marginHorizontal: 20
   },
   searchBar: {
     marginRight: 8,
-    width: '100%'
+    width: '100%',
   },
   buttonContainer: {
     flexDirection: 'row',
-    marginTop: 15
+    marginVertical: 25,
   },
   filterButton: {
     backgroundColor: '#1e272e',
     borderTopEndRadius: 0,
     borderBottomEndRadius: 0,
-    width:130
+    width: 130
   },
   sortButton: {
     backgroundColor: '#1CD995',
-    borderBottomStartRadius:0,
-    borderTopStartRadius:0,
-    width:130
+    borderBottomStartRadius: 0,
+    borderTopStartRadius: 0,
+    width: 130
   },
   scrollViewStyle: {
-    padding: 20
+    paddingTop: 30
   }
 });
 

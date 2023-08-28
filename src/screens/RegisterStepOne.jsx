@@ -21,17 +21,7 @@ export default function RegisterStepOne({ navigation }) {
   }
 
   const RegisterHandler = () => {
-    if (EmailExists(email)) {
-      alert('Email already exist')
-    }
-    else if (!email.trim() || !password.trim()) {
-      Alert.alert('Error', 'Input is required!');
-    }
-    else if (!CheckValidEmail(email)) {
-      alert('Invalid email')
-    }
-    else {
-
+    if (IsInputValid()) {
       let lowerCaseEmail = email.toLowerCase();
 
       let user = {
@@ -49,6 +39,35 @@ export default function RegisterStepOne({ navigation }) {
         alert('error');
       }
     }
+  }
+
+  const IsInputValid = () => {
+
+    let isValid = true;
+
+    if (!email || !password || !firstName || !lastName) {
+      alert('Input is required!');
+      isValid = false;
+
+    }
+    else if (EmailExists(email)) {
+      alert('Email already exist')
+      isValid = false;
+    }
+    else if (!CheckValidEmail(email)) {
+      alert('Invalid email');
+      isValid = false;
+    }
+    else if (!(/^(?=.*[A-Z])(?=.*[!@#$%^&*]).+$/.test(password))) {
+      alert("Ensure your password has one capital letter and one unique symbol");
+      isValid = false;
+    }
+    return isValid;
+  }
+
+
+  const SkipBtnHandler = () => {
+    navigation.navigate('Navigation');
   }
 
   const handleInputFocus = () => {
@@ -111,17 +130,20 @@ export default function RegisterStepOne({ navigation }) {
                 style={styles.registerButton}
                 onPress={RegisterHandler}
               >
-                <Text style={[{ fontSize: 15, color: '#1CD995',fontFamily: 'Montserrat_Bold'}]}>Sign in</Text>
+                <Text style={[{ fontSize: 15, color: '#1CD995', fontFamily: 'Montserrat_Bold' }]}>Sign in</Text>
               </Button>
               <View style={styles.linkTextContainer}>
                 <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Already have an account? </Text>
-                <TouchableOpacity  onPress={SignInBtnHandler}>
+                <TouchableOpacity onPress={SignInBtnHandler}>
                   <Text style={styles.linkText}>Sign In</Text>
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity style={styles.skipPrevBtn} onPress={PrevBtnHandler}>
+            <TouchableOpacity style={styles.prevBtn} onPress={PrevBtnHandler}>
               <Text style={styles.skipPrevBtnText}>Prev</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.skipBtn} onPress={SkipBtnHandler}>
+              <Text style={styles.skipPrevBtnText}>Skip</Text>
             </TouchableOpacity>
           </SafeAreaView>
         </ScrollView>
@@ -151,7 +173,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   informationBox: {
-    paddingTop: 50,
+    paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
     backgroundColor: 'white',
@@ -201,10 +223,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: "Montserrat_Medium"
   },
-  skipPrevBtn: {
+  prevBtn: {
     position: "absolute",
     bottom: 30,
     left: 20
+  },
+  skipBtn: {
+    position: "absolute",
+    bottom: 30,
+    right: 20
   },
   skipPrevBtnText: {
     color: '#007BFF',

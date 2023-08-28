@@ -10,7 +10,14 @@ export default function SearchBar({ data, placeholder, onSelect, icon }) {
     const [isFocused, SetIsFocused] = useState(false);
     const searchbarRef = useRef(null);
 
-    const onChangeSearch = query => SetSearchQuery(query);
+    const onChangeSearch = query => {
+        if (query === '') {
+            SetSearchQuery(placeholder);
+        } else {
+            SetSearchQuery(query);
+        }
+        onSelect(query);
+    };
 
     const HandleSelectItem = (item) => {
         SetSearchQuery(item);
@@ -21,6 +28,8 @@ export default function SearchBar({ data, placeholder, onSelect, icon }) {
             searchbarRef.current.blur();
         }
     };
+
+
 
     const HandleLayout = event => {
         const { height } = event.nativeEvent.layout;
@@ -38,45 +47,62 @@ export default function SearchBar({ data, placeholder, onSelect, icon }) {
         }
     }, [searchQuery, isFocused]);
 
-    return (  <>
-        <Searchbar
-          ref={searchbarRef}
-          placeholder={placeholder}
-          onChangeText={onChangeSearch}
-          value={searchQuery}
-          icon={icon}
-          style={styles.searchBar}
-          onLayout={HandleLayout}
-          onFocus={() => { SetIsFocused(true); }}
-          onBlur={() => { SetIsFocused(false); }}
-          autoCompleteType="off"
-          importantForAccessibility="no"
-          textContentType="none"
-          autoCorrect={false}
-        />
-        {isFocused && filteredData.length > 0 && (
-          <View style={[styles.dropdown, { top: searchBarHeight }]}>
-            <ScrollView showsVerticalScrollIndicator={true}>
-              {filteredData.map((item, index) => (
-                <TouchableOpacity style={styles.dropdownItem} key={index} onPress={() => HandleSelectItem(item)}>
-                  <Text>{item}</Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </View>
-        )}
-      </>
+    return (
+        <>
+            <Searchbar
+                ref={searchbarRef}
+                placeholder={placeholder}
+                onChangeText={onChangeSearch}
+                value={searchQuery}
+                placeholderTextColor={'#2B3A4A'}
+                icon={icon}
+                style={styles.searchBar}
+                inputStyle={styles.searchBarInput}
+                onLayout={HandleLayout}
+                onFocus={() => { SetIsFocused(true); }}
+                onBlur={() => { SetIsFocused(false); }}
+                autoCompleteType="off"
+                importantForAccessibility="no"
+                textContentType="none"
+                autoCorrect={false}
+            />
+            {isFocused && filteredData.length > 0 && (
+                <View style={[styles.dropdown, { top: searchBarHeight }]}>
+                    <ScrollView showsVerticalScrollIndicator={true}>
+                        {filteredData.map((item, index) => (
+                            <TouchableOpacity style={styles.dropdownItem} key={index} onPress={() => HandleSelectItem(item)}>
+                                <Text>{item}</Text>
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+                </View>
+            )}
+        </>
     );
 };
+
 const styles = StyleSheet.create({
     searchBar: {
-        borderRadius: 10,
+        borderRadius: 0,
         backgroundColor: 'white',
         elevation: 10,
         zIndex: 2,
     },
+    searchBarInput: {
+        fontFamily: 'Montserrat_Medium',
+        fontSize: 15,
+    },
     dropdown: {
-
+        position: 'absolute',
+        backgroundColor: 'white',
+        maxHeight: 200,
+        borderColor: '#ddd',
+        borderWidth: 1,
+        padding: 20,
+        width: '100%',
+        elevation: 20,
+        zIndex: 50,
+        borderRadius: 10
     },
     dropdownItem: {
         padding: 10,

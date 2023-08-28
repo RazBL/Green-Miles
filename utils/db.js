@@ -58,7 +58,7 @@ class DB {
             let document = await this.client.db(this.db_name).collection(collection).findOne(query);
             return document;
         } catch (error) {
-            throw error;
+            console.log("why not 2?");
         } finally {
             await this.client.close();
         }

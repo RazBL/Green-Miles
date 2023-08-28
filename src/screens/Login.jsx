@@ -1,28 +1,55 @@
-import { KeyboardAvoidingView, ScrollView, Image, View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Image, View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import React, { useContext, useState, useRef } from 'react';
 import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
 
 export default function Login({ navigation }) {
-  const { RemoveToken, Login } = useContext(UsersContext);
+  const { RemoveToken, Login, EmailExists } = useContext(UsersContext);
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
   const scrollRef = useRef(null);
 
-  const handleInputFocus = () => {
+  const HandleInputFocus = () => {
     scrollRef.current.scrollTo({ x: 0, y: 180, animated: true });
   };
 
   const LoginHandler = async () => {
-    let lowerCaseEmail = email.toLowerCase();
-    let user = await Login(lowerCaseEmail, password)
-    if (user) {
-      alert("Welcome back " + user.firstName + " :)");
-      navigation.navigate('Navigation');
-    } else {
-      alert("Incorect details")
+
+    if (!IsInputValid()) {
+      return;
+    }
+    else {
+      let lowerCaseEmail = email.toLowerCase();
+
+      let user = await Login(lowerCaseEmail, password)
+
+      if (user) {
+        alert("Welcome back " + user.firstName + " :)");
+        navigation.navigate('Navigation');
+      }
+      else {
+        if (EmailExists(email)) {
+          alert("Incorrect Password")
+        }
+        else {
+          alert("User does not exists")
+        }
+      }
     }
   };
+
+
+  const IsInputValid = () => {
+
+    if (!password) {
+      alert('Please fill the password in.');
+    }
+    if (!email) {
+      alert('Please fill the email in');
+    }
+
+    return true;
+  }
 
   const SignUpBtnHandler = () => {
     navigation.navigate('Register');
@@ -39,7 +66,7 @@ export default function Login({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView  style={styles.container} >
+      <KeyboardAvoidingView style={styles.container} >
         <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1 }} ref={scrollRef}>
           <View style={styles.container}>
             <View style={styles.imageFrame}>
@@ -48,24 +75,22 @@ export default function Login({ navigation }) {
                 style={styles.logo}
               />
             </View>
-
             <View style={styles.informationBox}>
               <Headline style={[styles.headline]}>Welcome back!</Headline>
               <TextInput
                 label="Email"
                 backgroundColor="white"
-                style={styles.textInput}
-                onChangeText={text => SetEmail(text)}
-                keyboardType="email-address"
-                onFocus={handleInputFocus}
+                style={[styles.textInput]}
+                onChangeText={text => { SetEmail(text); }} keyboardType="email-address"
+                onFocus={HandleInputFocus}
               />
               <TextInput
                 label="Password"
                 backgroundColor="white"
                 style={[styles.textInput]}
-                onChangeText={text => SetPassword(text)}
+                onChangeText={text => { SetPassword(text); }}
                 secureTextEntry
-                onFocus={handleInputFocus}
+                onFocus={HandleInputFocus}
               />
               <Button
                 mode="outlined"
@@ -77,7 +102,7 @@ export default function Login({ navigation }) {
                 style={styles.loginButton}
                 onPress={LoginHandler}
               >
-                <Text style={[{ fontSize: 15, color: 'white',fontFamily: 'Montserrat_Bold'}]}>Sign in</Text>
+                <Text style={[{ fontSize: 15, color: 'white', fontFamily: 'Montserrat_Bold' }]}>Sign in</Text>
               </Button>
               <View style={styles.linkTextContainer}>
                 <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={ForgotPasswordBtnHandler}>
@@ -87,11 +112,11 @@ export default function Login({ navigation }) {
               <View style={styles.linkTextContainer}>
                 <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Don't have an account? </Text>
                 <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignUpBtnHandler}>
-                  <Text style={[ styles.default, styles.linkText]}>Sign Up</Text>
+                  <Text style={[styles.default, styles.linkText]}>Sign Up</Text>
                 </TouchableOpacity>
               </View>
             </View>
-            <TouchableOpacity style={styles.skipPrevBtn} onPress={SkipBtnHandler}>
+            <TouchableOpacity style={styles.skipBtn} onPress={SkipBtnHandler}>
               <Text style={[styles.skipPrevBtnText]}>Skip</Text>
             </TouchableOpacity>
           </View>
@@ -120,7 +145,7 @@ const styles = StyleSheet.create({
     width: 130,
   },
   informationBox: {
-    paddingTop: 50,
+    paddingTop: 30,
     paddingLeft: 20,
     paddingRight: 20,
     backgroundColor: 'white',
@@ -135,11 +160,11 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderRadius: 5,
-    marginBottom: 25,
+    marginBottom: 30,
   },
   loginButton: {
-    marginTop: 15,
-    marginBottom: 25,
+    marginTop: 10,
+    marginBottom: 20,
     borderRadius: 25,
     backgroundColor: '#1CD995',
     borderColor: 'transparent',
@@ -153,15 +178,19 @@ const styles = StyleSheet.create({
     color: '#007BFF',
     fontSize: 15
   },
-  skipPrevBtn: {
+  skipBtn: {
     position: "absolute",
     bottom: 30,
-    left: 20
+    right: 20
   },
   skipPrevBtnText: {
     color: '#007BFF',
     fontSize: 18,
     textDecorationLine: 'underline',
     fontFamily: 'Montserrat_Bold'
+  },
+  errorBorder: {
+    borderColor: 'red',
+    borderWidth: 1,
   },
 });

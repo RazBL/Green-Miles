@@ -1,15 +1,17 @@
-import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { TextInput, Button } from 'react-native-paper';
-import { DefaultTheme } from 'react-native-paper';
+import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
+import { Button, Headline, DefaultTheme, useTheme } from 'react-native-paper';
 import { FlightsContext } from '../context/FlightsContext';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import SearchBar from '../components/SearchBar';
-
+import DropDownPicker from 'react-native-dropdown-picker';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 export default function FlightSearch({ navigation }) {
-    const { destinations, origins, FlightSearchResults } = useContext(FlightsContext);
+
+    const theme = useTheme();
+
+    const { destinationAirports, originAirports, FlightSearchResults } = useContext(FlightsContext);
     const [passangers, SetPassangers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
@@ -18,6 +20,11 @@ export default function FlightSearch({ navigation }) {
     const [isModalVisible, setModalVisible] = useState(false);
     const MAX_PASSENGERS = 9;
     const MIN_PASSANGERS = 1;
+    const [transformedOriginAirport, SetTransformedOriginAirports] = useState([])
+    const [transformedDestinationAirport, SetTransformedDestinationAirports] = useState([])
+    const [openOrigin, SetOpenOrigin] = useState(false);
+    const [openDestination, SetOpenDestination] = useState(false);
+
 
 
     const IncrementPassengers = () => {
@@ -28,7 +35,7 @@ export default function FlightSearch({ navigation }) {
         if (passangers > MIN_PASSANGERS) SetPassangers(passangers - 1);
     };
 
-    const OnChange = (event, selectedDate) => {
+    const DateChange = (event, selectedDate) => {
         const currentDate = selectedDate;
         SetDatePickerVisibility(Platform.OS === 'ios');
         SetDate(currentDate);
@@ -36,11 +43,13 @@ export default function FlightSearch({ navigation }) {
 
 
     const HandleFlightSearch = () => {
+        if (!isInputValid()) { return }
+
         const formattedDate = date.toISOString().split('T')[0];
 
         let query = {
-            destination: selectedDestination,
-            origin: selectedLocation,
+            destinationsAirports: selectedDestination,
+            originAirports: selectedLocation,
             date: formattedDate,
             availableSeats: passangers
         };
@@ -49,81 +58,147 @@ export default function FlightSearch({ navigation }) {
         navigation.navigate('Flight Search Results');
     }
 
-    const HandleSelectLocation = (location) => {
-        SetSelectedLocation(location);
+    const TransformAirports = () => {
+        let data = originAirports.map(airport => (
+            {
+                label: airport,
+                value: airport
+            }
+        ));
+
+        SetTransformedOriginAirports(data);
+
+        data = destinationAirports.map(airport => ({
+            label: airport,
+            value: airport
+        }));
+
+        SetTransformedDestinationAirports(data);
+    };
+
+
+    const isInputValid = () => {
+
+        if (!selectedLocation) {
+            alert('Please choose a location.');
+            return false;
+        }
+        if (!selectedDestination) {
+            alert('Please choose a destination.');
+            return false;
+        }
+
+        return true;
     }
 
-    const HandleSelectDestination = (location) => {
-        SetSelectedDestination(location);
-    }
+    useEffect(() => {
+        TransformAirports();
+    }, []);
+
+
 
     return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={styles.container}>
-                <View style={styles.flightSearch}>
-                    <View style={styles.searchSection}>
-                        <SearchBar
-                            data={origins}
-                            placeholder={"Choose a Location"}
-                            onSelect={HandleSelectLocation}
-                            icon={"map-marker"}
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); SetOpenOrigin(false); SetOpenDestination(false);
+}}>
+            <View style={styles(theme).container}>
+                <View style={styles(theme).flightSearch}>
+
+                    <Headline style={styles(theme).headline}>Search for a <Headline style={{ color: theme.colors.primary }}>Flight</Headline></Headline>
+
+                    <View style={styles(theme).searchSection}>
+                        <MaterialCommunityIcons
+                            name="map-marker"
+                            size={25}
+                            color="#2B3A4A"
+                            style={styles(theme).inputIcon}
                         />
-                    </View>
-                    <View style={styles.searchSection}>
-                        <SearchBar
-                            data={destinations}
-                            placeholder={"Choose a Destination"}
-                            onSelect={HandleSelectDestination}
-                            icon={"map-marker"}
+                        <DropDownPicker
+                            open={openOrigin}
+                            onOpen={() => {
+                                SetOpenOrigin(true);
+                                SetOpenDestination(false);
+                            }}
+                            onClose={() => SetOpenOrigin(false)}
+                            placeholder='Choose a Location'
+                            items={transformedOriginAirport}
+                            setOpen={SetOpenOrigin}
+                            value={selectedLocation}
+                            setValue={SetSelectedLocation}
+                            setItems={SetTransformedOriginAirports}
+                            onChangeItem={item => SetSelectedLocation(item.value)} 
+                            textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
+                            searchable={true}
+                            style={styles(theme).input}
                         />
                     </View>
 
-                    <TouchableOpacity style={[styles.searchSection]} onPress={() => SetDatePickerVisibility(true)}>
-                        <View style={styles.inputWrapper}>
-
+                    <View style={styles(theme).searchSection}>
+                        <MaterialCommunityIcons
+                            name="map-marker"
+                            size={25}
+                            color="#2B3A4A"
+                            style={styles(theme).inputIcon}
+                        />
+                        <DropDownPicker
+                            open={openDestination}
+                            onOpen={() => {
+                                SetOpenOrigin(false);
+                                SetOpenDestination(true);
+                            }}
+                            onClose={() =>  SetOpenDestination(false)}
+                            setOpen={SetOpenDestination}
+                            placeholder='Choose a Destination'
+                            items={transformedDestinationAirport}
+                            value={selectedDestination}
+                            textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
+                            searchable={true}
+                            style={styles(theme).input}
+                            setValue={SetSelectedDestination}
+                            onChangeItem={item => SetSelectedDestination(item.value)}
+                        />
+                    </View>
+                    <TouchableOpacity style={[styles(theme).searchSection]} onPress={() => SetDatePickerVisibility(true)}>
+                        <View style={styles(theme).inputWrapper}>
+                            <MaterialCommunityIcons
+                                name="calendar"
+                                size={25}
+                                color="#2B3A4A"
+                                style={styles(theme).inputIcon}
+                            />
                             <TextInput
                                 editable={false}
-                                icon="calendar"
                                 underlineColor="transparent"
                                 backgroundColor="white"
-                                style={styles.input}
-                                placeholder="Choose a date"
-                                theme={{
-                                    ...DefaultTheme,
-                                    colors: {
-                                        surfaceVariant: 'white',
-                                    },
-                                }}
-                                left={<TextInput.Icon icon="calendar" />}
+                                style={styles(theme).input}
+                                placeholder="Choose a Date"
                                 value={date.toDateString()}
                             />
                             {showDatePicker && (
                                 <DateTimePicker
                                     mode="date"
                                     value={date}
-                                    onChange={OnChange}
+                                    onChange={DateChange}
                                 />
                             )}
                         </View>
                     </TouchableOpacity>
 
 
-                    <TouchableOpacity style={[styles.searchSection]} onPress={() => setModalVisible(true)}>
-                        <View style={styles.inputWrapper}>
+                    <TouchableOpacity style={[styles(theme).searchSection]} onPress={() => setModalVisible(true)}>
+                        <View style={styles(theme).inputWrapper}>
+                            <MaterialCommunityIcons
+                                name="account"
+                                size={25}
+                                color="#2B3A4A"
+                                style={styles(theme).inputIcon}
+                            />
                             <TextInput
                                 editable={false}
-                                icon="account-outline"
                                 underlineColor="transparent"
                                 backgroundColor="white"
-                                style={styles.input}
+                                style={styles(theme).input}
+                                placeholderTextColor={theme.colors.inputTextColor}
                                 placeholder={`${passangers} Passenger${passangers === 1 ? '' : 's'}`}
-                                theme={{
-                                    ...DefaultTheme,
-                                    colors: {
-                                        surfaceVariant: 'white',
-                                    },
-                                }}
-                                left={<TextInput.Icon icon="account-outline" />}
                             />
                         </View>
                     </TouchableOpacity>
@@ -137,22 +212,22 @@ export default function FlightSearch({ navigation }) {
                     >
                         <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
 
-                            <View style={styles.centeredView}>
-                                <View style={styles.modalView}>
+                            <View style={styles(theme).centeredView}>
+                                <View style={styles(theme).modalView}>
                                     <View style={{ flexDirection: "column" }}>
                                         <TouchableOpacity onPress={IncrementPassengers}>
-                                            <Text style={styles.modalText}>+</Text>
+                                            <Text style={styles(theme).modalText}>+</Text>
                                         </TouchableOpacity>
-                                        <Text style={[styles.modalText]}>{passangers}</Text>
+                                        <Text style={[styles(theme).modalText]}>{passangers}</Text>
                                         <TouchableOpacity onPress={DecrementPassengers}>
-                                            <Text style={styles.modalText}>-</Text>
+                                            <Text style={styles(theme).modalText}>-</Text>
                                         </TouchableOpacity>
                                     </View>
                                     <TouchableOpacity
-                                        style={[styles.button, styles.buttonClose]}
+                                        style={[styles(theme).button, styles(theme).buttonClose]}
                                         onPress={() => setModalVisible(!isModalVisible)}
                                     >
-                                        <Text style={styles.textStyle}>Done</Text>
+                                        <Text style={styles(theme).textStyle}>Done</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -166,9 +241,9 @@ export default function FlightSearch({ navigation }) {
                             height: 50,
                         }}
                         onPress={HandleFlightSearch}
-                        style={styles.searchButton}
+                        style={styles(theme).searchButton}
                     >
-                        <Text style={[{ fontSize: 15, color: 'white' }, { fontFamily: 'Montserrat_Bold' }]}>Search</Text>
+                        <Text style={[{ fontSize: 20, color: 'white' }, { fontFamily: 'Montserrat_Bold' }]}>Search</Text>
                     </Button>
                 </View>
 
@@ -178,32 +253,59 @@ export default function FlightSearch({ navigation }) {
     )
 }
 
-const styles = StyleSheet.create({
+const styles = theme => StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20
+        padding: 20,
+        backgroundColor: 'white'
+    },
+    headline: {
+        fontSize: 25,
+        fontFamily: 'Montserrat_Bold',
+        color: 'white',
+        alignSelf: 'center',
+        marginBottom: 30
     },
     searchSection: {
-        marginBottom: 25,
+        marginBottom: 20,
+    },
+    searchInputField: {
+        height: 50
+    },
+    inputIcon: {
+        position: 'absolute',
+        left: 20,
+        zIndex: 5,
+        elevation: 10,
+        top: '50%',
+        transform: [{ translateY: -12.5 }]
     },
     searchButton: {
-        marginTop: 20,
+        marginTop: 10,
         borderRadius: 25,
         backgroundColor: '#1DBF84',
         borderColor: 'transparent',
     },
     flightSearch: {
         backgroundColor: '#1e272e',
-        padding: 30,
-        borderRadius: 10
+        paddingVertical: 30,
+        paddingHorizontal: 20,
+        borderRadius: 10,
     },
     input: {
-        borderWidth: 1,
-        borderTopStartRadius: 0,
+        paddingLeft: 60,
+        zIndex: 1,
+        borderRadius: 0,
+        borderWidth: 0,
+        fontSize: 15,
+        fontFamily: "Montserrat_Medium",
+        height: 50,
+        color: theme.colors.inputTextColor
     },
     inputWrapper: {
-        borderRadius: 10,
         overflow: 'hidden',
+        height: 50,
+        justifyContent: 'center'
     },
     centeredView: {
         flex: 1,
@@ -240,12 +342,13 @@ const styles = StyleSheet.create({
         width: 200
     },
     buttonClose: {
-        backgroundColor: '#2196F3',
+        backgroundColor: '#1DBF84',
     },
     textStyle: {
         color: 'white',
         fontWeight: 'bold',
         textAlign: 'center',
     },
+
 });
 

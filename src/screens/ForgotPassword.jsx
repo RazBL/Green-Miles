@@ -59,7 +59,7 @@ export default function ForgotPassword({ navigation }) {
             </Button>
           </View>
           <TouchableOpacity style={styles.skipPrevBtn} onPress={PrevBtnHandler}>
-            <Text style={[styles.skipPrevBtnText, styles.default]}>Prev</Text>
+            <Text style={[styles.skipPrevBtnText]}>Prev</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -119,6 +119,6 @@ const styles = StyleSheet.create({
     color: '#007BFF',
     fontSize: 18,
     textDecorationLine: 'underline',
-    fontWeight: 'bold'
+    fontFamily: 'Montserrat_Bold'
   },
 });
