@@ -17,4 +17,11 @@ function AuthUser(req, res, next) {
   });
 }
 
-module.exports = {AuthUser};
+function GenerateToken(doc) {
+  const token = jwt.sign(doc, process.env.SECRET_KEY, {
+      expiresIn: '1h'
+  });
+  return token;
+}
+
+module.exports = {AuthUser, GenerateToken};

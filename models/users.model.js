@@ -67,7 +67,6 @@ class UsersModel {
             firstName: user.firstName,
             lastName: user.lastName
         };
-        
     }
 
     static async UpdateUser(userId, user) {
