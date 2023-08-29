@@ -1,6 +1,6 @@
 const UsersModel = require('../models/users.model');
 const bcrypt = require('bcrypt');
-const {AuthUser} = require('../utils/auth');
+const {AuthUser, GenerateToken } = require('../utils/auth');
 const UsersRoute = require('express').Router();
 
 //CRUD
@@ -37,9 +37,8 @@ UsersRoute.post('/login', async (req, res) => {
     const loggedinUser = await UsersModel.Login(email, password);
     console.log(loggedinUser);
     if (loggedinUser) {
-      let token = await UsersModel.GenerateUserToken(loggedinUser);
-      console.log(token);
-      res.status(200).json({user: loggedinUser, token, }); 
+      let token = GenerateToken(loggedinUser);
+      res.status(200).json({user: loggedinUser, token}); 
     } else {
       res.status(401).json({ message: 'Incorrect details' });
     }

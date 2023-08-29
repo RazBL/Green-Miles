@@ -59,9 +59,8 @@ export default function UsersContextProvider({ children }) {
             let data = await res.json();
             const { user: loggedinUser, token } = data;
 
-            if (token) {
-                await AsyncStorage.setItem('userToken', token);
-            }
+            console.log(token);
+            await AsyncStorage.setItem('userToken', token);
 
             return loggedinUser;
         } catch (err) {
@@ -94,6 +93,7 @@ export default function UsersContextProvider({ children }) {
         }
         return null;
     };
+
     const RemoveToken = async () => {
         try {
             await AsyncStorage.removeItem('userToken');

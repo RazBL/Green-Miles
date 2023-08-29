@@ -15,10 +15,7 @@ export default function Login({ navigation }) {
 
   const LoginHandler = async () => {
 
-    if (!IsInputValid()) {
-      return;
-    }
-    else {
+    if (IsInputValid()) {
       let lowerCaseEmail = email.toLowerCase();
 
       let user = await Login(lowerCaseEmail, password)
@@ -27,28 +24,28 @@ export default function Login({ navigation }) {
         alert("Welcome back " + user.firstName + " :)");
         navigation.navigate('Navigation');
       }
+      else if (EmailExists(email)) {
+        alert("Incorrect Password")
+      }
       else {
-        if (EmailExists(email)) {
-          alert("Incorrect Password")
-        }
-        else {
-          alert("User does not exists")
-        }
+        alert("User does not exists")
       }
     }
   };
 
 
   const IsInputValid = () => {
-
+    let isValid = true;
     if (!password) {
       alert('Please fill the password in.');
+      isValid = false;
     }
     if (!email) {
       alert('Please fill the email in');
+      isValid = false;
     }
 
-    return true;
+    return isValid;
   }
 
   const SignUpBtnHandler = () => {

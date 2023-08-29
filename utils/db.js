@@ -58,7 +58,7 @@ class DB {
             let document = await this.client.db(this.db_name).collection(collection).findOne(query);
             return document;
         } catch (error) {
-            console.log("why not 2?");
+            throw error;
         } finally {
             await this.client.close();
         }
@@ -106,12 +106,6 @@ class DB {
     }
     */
 
-    async GenerateToken(doc) {
-        const token = jwt.sign(doc, process.env.SECRET_KEY, {
-            expiresIn: '1h'
-        });
-        return token;
-    }
 
     async ChangeBookingStatus(collection, id, status) {
         try {
