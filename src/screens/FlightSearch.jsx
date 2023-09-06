@@ -11,7 +11,7 @@ export default function FlightSearch({ navigation }) {
 
     const theme = useTheme();
 
-    const { destinationAirports, originAirports, FlightSearchResults } = useContext(FlightsContext);
+    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities } = useContext(FlightsContext);
     const [passangers, SetPassangers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
@@ -46,20 +46,27 @@ export default function FlightSearch({ navigation }) {
         if (!isInputValid()) { return }
 
         const formattedDate = date.toISOString().split('T')[0];
+        const originAirport = selectedLocation.split(" - ")[0];
+        const destinationAirport = selectedDestination.split(" - ")[0];
 
         let query = {
-            destinationsAirports: selectedDestination,
-            originAirports: selectedLocation,
+            destinationAirport: destinationAirport,
+            originAirport: originAirport,
             date: formattedDate,
             availableSeats: passangers
         };
 
+        console.log(query);
+        
         FlightSearchResults(query);
-        navigation.navigate('Flight Search Results');
     }
 
     const TransformAirports = () => {
-        let data = originAirports.map(airport => (
+        const originDisplayAirports = originAirports.map((airport, index) => {
+            return `${airport} - ${originCities[index]}`;
+          });
+
+        let data = originDisplayAirports.map(airport => (
             {
                 label: airport,
                 value: airport
@@ -68,7 +75,11 @@ export default function FlightSearch({ navigation }) {
 
         SetTransformedOriginAirports(data);
 
-        data = destinationAirports.map(airport => ({
+        const destinationDisplayAirport = destinationAirports.map((airport, index) => {
+            return `${airport} - ${destinationCities[index]}`;
+          });
+
+        data = destinationDisplayAirport.map(airport => ({
             label: airport,
             value: airport
         }));

@@ -27,3 +27,6 @@ Content-Type: application/json
   "email": "razraz@gmail.com",
   "password": "razraz"
 }
+
+###
+GET http://localhost:3500/api/flights/search?destinationAirport=CDG&originAirport=ATL&date=2023-08-23&availableSeats=1
