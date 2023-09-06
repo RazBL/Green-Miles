@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
-import { Button, Headline, DefaultTheme, useTheme } from 'react-native-paper';
+import { Button, Headline, useTheme } from 'react-native-paper';
 import { FlightsContext } from '../context/FlightsContext';
 import { useContext, useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -36,6 +36,7 @@ export default function FlightSearch({ navigation }) {
     };
 
     const DateChange = (event, selectedDate) => {
+        if(selectedDate < new Date()){ SetDate(new Date()); }
         const currentDate = selectedDate;
         SetDatePickerVisibility(Platform.OS === 'ios');
         SetDate(currentDate);
@@ -56,9 +57,9 @@ export default function FlightSearch({ navigation }) {
             availableSeats: passangers
         };
 
-        console.log(query);
-        
         FlightSearchResults(query);
+
+        navigation.navigate('Flight Search Results');
     }
 
     const TransformAirports = () => {

@@ -47,7 +47,6 @@ export default function FlightsContextProvider({ children }) {
         try {
             const queryString = new URLSearchParams(query).toString();
             const url = `${base_api}/flights/search?${queryString}`;
-            console.log(url);
             let res = await fetch(url);
             let data = await res.json();
             SetSearchedFlights(data);

@@ -10,7 +10,6 @@ import FlightSearchResults from '../screens/FlightSearchResults'
 export default function FlightNavigation() {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="FlightSearch" component={FlightSearch} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
             <Stack.Screen
                 name="Flight Search Results"
                 component={FlightSearchResults}
@@ -25,6 +24,7 @@ export default function FlightNavigation() {
                     },
                 }}
             />
+            <Stack.Screen name="FlightSearch" component={FlightSearch} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
         </Stack.Navigator>
     );
 }

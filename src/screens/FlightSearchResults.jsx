@@ -4,19 +4,28 @@ import React from 'react'
 
 //Component
 import FlightCard from '../components/FlightCard';
+import { ScrollView } from 'react-native';
 
 export default function FlightSearchResults() {
   return (<>
-    <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <Button mode="contained" icon="filter" style={styles.filterButton} labelStyle={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
-          Filter
-        </Button>
-        <Button mode="contained" icon="sort" style={styles.sortButton} labelStyle={{ color: 'black', fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
-          Sort
-        </Button>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.buttonContainer}>
+          <Button mode="contained" icon="filter" style={styles.filterButton} labelStyle={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
+            Filter
+          </Button>
+          <Button mode="contained" icon="sort" style={styles.sortButton} labelStyle={{ color: 'black', fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
+            Sort
+          </Button>
+        </View>
+        <View>
+          <FlightCard />
+          <FlightCard />
+          <FlightCard />
+          <FlightCard />
+        </View>
       </View>
-    </View>
+    </ScrollView>
   </>
   )
 }
@@ -25,7 +34,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 15
+    padding: 20
   },
   upperBar: {
     backgroundColor: '#1e272e',
@@ -39,7 +48,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 30
   },
   filterButton: {
     backgroundColor: '#1e272e',
