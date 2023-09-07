@@ -84,18 +84,28 @@ UsersRoute.put('/save-flight', AuthUser, async(req,res) => {
     const userEmail = req.user.email;
     const flightId = req.body.flight._id; 
 
-    console.log(userEmail);
-    console.log(flightId);
-
     const updatedUser = await UsersModel.SaveFlight(userEmail, flightId);
-
-    console.log(updatedUser);
 
     res.status(200).json({ success: true, message: 'Flight saved successfully', user: updatedUser });
 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while trying to save the flight' });
+  }
+})
+
+UsersRoute.put('/unsave-flight', AuthUser, async(req, res) => {
+  try {
+    const userEmail = req.user.email;
+    const flightId = req.body.flight._id; 
+
+    const updatedUser = await UsersModel.UnsaveFlight(userEmail, flightId);
+
+    res.status(200).json({ success: true, message: 'saved Flight was removed successfully', user: updatedUser });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying to unsave the flight' });
   }
 })
 

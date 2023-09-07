@@ -62,8 +62,7 @@ export default function UsersContextProvider({ children }) {
                 const { user: loggedinUser, token } = data;
                 console.log(token);
                 await AsyncStorage.setItem('userToken', token);
-                let updatedCurrentUser = GetUserProfile();
-                SetCurrentUser(updatedCurrentUser);
+                SetCurrentUser(loggedinUser);
                 console.log(currentUser);
                 return loggedinUser;
             }
@@ -72,6 +71,43 @@ export default function UsersContextProvider({ children }) {
             return null;
         }
     };
+
+
+    const RemoveSavedFlight = async (flight) => {
+        let token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+            alert('you must sign in to save a flight');
+            navigation.navigate('Login');
+        }
+        else{
+            try{
+                let res = await fetch(`${base_api}/users/unsave-flight`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        flight: flight,
+                    }),
+                });
+
+                if (!res.ok) {
+                    let errorData = await res.json();
+                    console.log(`Error is: ${errorData.error}`);
+                    return null;
+                }
+                    console.log("Saved Flight was removed successfully!");
+                    LoadAllUsers();
+                    const updatedUserProfile = users.find(user => currentUser._id === user._id)
+                    SetCurrentUser(updatedUserProfile);
+                    console.log(currentUser);
+
+            }catch(error){
+                console.log(error);
+            }
+        }
+    }
 
     const SaveFlight = async (flight, navigation) => {
 
@@ -101,8 +137,9 @@ export default function UsersContextProvider({ children }) {
             }
                 console.log("Flight saved successfully!");
                 LoadAllUsers();
-                const updatedUserProfile = await GetUserProfile();
-                SetLoggedInUser(updatedUserProfile);
+                const updatedUserProfile = users.find(user => currentUser._id === user._id)
+                SetCurrentUser(updatedUserProfile);
+                console.log(currentUser);
 
             } catch (error) {
                 console.log(error);
@@ -134,6 +171,12 @@ export default function UsersContextProvider({ children }) {
         }
         return null;
     };
+
+    const CheckIfFlightSaved = (flightId) => {
+        let savedFlights = currentUser.savedFlights;
+        let flightFound = savedFlights.find(id => flightId === id);
+        return flightFound
+    }
 
     const RemoveToken = async () => {
         try {
@@ -167,7 +210,9 @@ export default function UsersContextProvider({ children }) {
         RegisterUser,
         GetUserProfile,
         RemoveToken,
-        SaveFlight
+        SaveFlight,
+        CheckIfFlightSaved,
+        RemoveSavedFlight
     }
 
     return (

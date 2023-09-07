@@ -85,6 +85,13 @@ class UsersModel {
         return await new DB().FindOne({ _id: new ObjectId(userId)}, 'users');
     }
 
+    static async UnsaveFlight(userEmail, flightId) {
+        let query = { "email": userEmail };
+        let update = { "$pull": { "savedFlights": new ObjectId(flightId) } };
+        return await new DB().UpdateOne("users", query, update);
+    }
+
+
 }
 
 module.exports = UsersModel;

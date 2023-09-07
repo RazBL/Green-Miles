@@ -1,17 +1,30 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React, {useContext}from 'react'
+import React, {useContext, useState, useEffect}from 'react'
 import { Card, Button, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FlightsContext } from '../context/FlightsContext';
 import { UsersContext } from '../context/UsersContext';
+import { UnsaveFlight } from '../../models/users.model';
 
 export default function FlightCard({ flight, navigation }) {
 
     const { BookFlightPage} = useContext(FlightsContext);
-    const { SaveFlight} = useContext(UsersContext);
+    const { SaveFlight, CheckIfFlightSaved, RemoveSavedFlight} = useContext(UsersContext);
+    const [saved, SetSaved] = useState(false);
 
     const FlightSaveHandler = () => {
-        SaveFlight(flight, navigation);
+        if(saved)
+            SaveFlight(flight, navigation);
+        else
+            UnsaveFlight(flight, navigation);
+        }   
+
+    const IsFlightSaved = () => {
+        let foundFlight = CheckIfFlightSaved(flight._id);
+        if(foundFlight)
+            SetSaved(true);
+        else
+            SetSaved(false);
     }
     
     const theme = useTheme();
@@ -20,6 +33,10 @@ export default function FlightCard({ flight, navigation }) {
         BookFlightPage(navigation);
     }
 
+    useEffect(() => {
+        IsFlightSaved()
+    }, [saved])
+    
 
     return (
         <Card style={styles(theme).cardContainer}>
@@ -77,7 +94,12 @@ export default function FlightCard({ flight, navigation }) {
 
                 <Card.Actions>
                     <TouchableOpacity onPress={FlightSaveHandler}>
-                        <MaterialCommunityIcons name={'cards-heart-outline'} color={"black"} size={30} />
+                        {
+                            saved ? 
+                            <MaterialCommunityIcons name={'cards-heart-outline'} color={"black"} size={30} /> :
+                            <MaterialCommunityIcons name={'heart'} color={theme.colors.primary} size={30} />
+
+                        }
                     </TouchableOpacity>
                 </Card.Actions>
 
