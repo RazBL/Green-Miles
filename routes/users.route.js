@@ -1,5 +1,4 @@
 const UsersModel = require('../models/users.model');
-const bcrypt = require('bcrypt');
 const {AuthUser, GenerateToken } = require('../utils/auth');
 const UsersRoute = require('express').Router();
 
