@@ -66,8 +66,7 @@ export default function UsersContextProvider({ children }) {
                 // Fetch the user's full data now.
                 const userProfile = await GetUserProfile();
                 SetLoggedInUser(userProfile);
-                console.log(userProfile);
-                return userProfile;
+                return loggedinUser;
             }
         } catch (err) {
             console.error(err);

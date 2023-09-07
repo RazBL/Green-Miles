@@ -42,6 +42,6 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3500/api/users/profile
+GET https://greenmiles.onrender.com/api/users/profile
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6InJheiIsImlhdCI6MTY5NDA5MTUzNywiZXhwIjoxNjk0MDk1MTM3fQ.EmgYxiFfskTND57Rzz33TYtbBvgBCV6Uf5fA8KvhU78
 Accept: application/json
