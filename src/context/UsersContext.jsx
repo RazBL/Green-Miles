@@ -7,7 +7,7 @@ export const UsersContext = createContext();
 export default function UsersContextProvider({ children }) {
 
     const [users, SetUsers] = useState([]);
-    const [loggedInUser, SetLoggedInUser] = useState(null);
+    const [currentUser, SetCurrentUser] = useState(null);
 
     const LoadAllUsers = async () => {
         try {
@@ -62,10 +62,9 @@ export default function UsersContextProvider({ children }) {
                 const { user: loggedinUser, token } = data;
                 console.log(token);
                 await AsyncStorage.setItem('userToken', token);
-            
-                // Fetch the user's full data now.
-                const userProfile = await GetUserProfile();
-                SetLoggedInUser(userProfile);
+                let updatedCurrentUser = GetUserProfile();
+                SetCurrentUser(updatedCurrentUser);
+                console.log(currentUser);
                 return loggedinUser;
             }
         } catch (err) {
@@ -128,7 +127,6 @@ export default function UsersContextProvider({ children }) {
 
                 let data = await res.json();
                 let user = data.user;
-                console.log(user);
                 return user;
             }
         } catch (err) {

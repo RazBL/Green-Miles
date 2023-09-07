@@ -61,12 +61,7 @@ class UsersModel {
         let user = await new DB().FindOne(query, 'users');
         if(!user || !(await bcrypt.compare(password, user.password)))
             return null;
-        return {
-            _id: user._id,
-            email: user.email,
-            firstName: user.firstName,
-            lastName: user.lastName
-        };
+        return user;
     }
 
     // static async UpdateUser(userId, user) {
