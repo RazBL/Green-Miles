@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react'
 import { base_api } from '../../utils/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const FlightsContext = createContext();
 
@@ -11,7 +12,7 @@ export default function FlightsContextProvider({ children }) {
     const [searchedFlights, SetSearchedFlights] = useState([]);
     const [destinationCities, SetDestinationCities] = useState([]);
     const [originCities, SetOriginCities] = useState([]);
-
+    const [flightOrders, SetFlightOrders] = useState([]);
 
     const LoadAllFlights = async () => {
         try {
@@ -54,6 +55,19 @@ export default function FlightsContextProvider({ children }) {
             console.error(err);
         }
     };
+    
+    const BookFlightPage = async(navigation) => {
+
+        let token =   await AsyncStorage.getItem('userToken', token);
+        if(!token){
+            alert('you must sign in to book a flight')
+            navigation.navigate('Login')
+        }
+        else{
+            alert('yay you can book')
+        }
+
+    }
 
 
     useEffect(() => {
@@ -76,7 +90,9 @@ export default function FlightsContextProvider({ children }) {
         FlightSearchResults,
         searchedFlights,
         destinationCities,
-        originCities
+        originCities,
+        searchedFlights,
+        BookFlightPage,
     }
 
     return (

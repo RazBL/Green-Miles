@@ -30,3 +30,13 @@ Content-Type: application/json
 
 ###
 GET http://localhost:3500/api/flights/search?destinationAirport=CDG&originAirport=ATL&date=2023-08-23&availableSeats=1
+
+
+###
+PUT http://localhost:3500/api/users/save-flight
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6InJheiIsImlhdCI6MTY5NDA4OTI0OCwiZXhwIjoxNjk0MDkyODQ4fQ.bQBiQEZyXn1_8aEWMtmOxiquA0ayOsHoiGYrbxbZyus
+Content-Type: application/json
+
+{
+  "flightId": "645e91233fb2fbd063c199c0"
+}

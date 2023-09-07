@@ -71,6 +71,26 @@ UsersRoute.get('/profile', AuthUser, async (req, res) => {
 
 //UPDATE == PUT
 
+UsersRoute.put('/save-flight', AuthUser, async(req,res) => {
+  try {
+    const userEmail = req.user.email;
+    const flightId = req.body.flight._id; 
+
+    console.log(userEmail);
+    console.log(flightId);
+
+    const updatedUser = await UsersModel.SaveFlight(userEmail, flightId);
+
+    console.log(updatedUser);
+
+    res.status(200).json({ success: true, message: 'Flight saved successfully', user: updatedUser });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying to save the flight' });
+  }
+})
+
 //DELETE == DELETE
 
 UsersRoute.delete('delete/:id', async (req, res) => {

@@ -1,7 +1,7 @@
 const DB = require('../utils/db');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
-
+const { ObjectId } = require('mongodb');
 
 class UsersModel {
     _id;
@@ -69,12 +69,21 @@ class UsersModel {
         };
     }
 
-    static async UpdateUser(userId, user) {
-        await new DB().UpdateDocumentById(userId, user, 'users');
-    }
+    // static async UpdateUser(userId, user) {
+    //     let query = {
+    //         "_id": new ObjectId(userId)
+    //     };
+    //     await new DB().UpdateOne(user, 'users', query);
+    // }
 
     static async GenerateUserToken(user) {
         return await new DB().GenerateToken(user);
+    }
+
+    static async SaveFlight(userEmail, flightId) {
+        let query = { "email": userEmail };
+        let update = { "$addToSet": { "savedFlights": new ObjectId(flightId) } };
+        return await new DB().UpdateOne("users", query, update)
     }
 
     static async GetUserProfile(userId){

@@ -1,12 +1,25 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, {useContext}from 'react'
 import { Card, Button, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { FlightsContext } from '../context/FlightsContext';
+import { UsersContext } from '../context/UsersContext';
 
+export default function FlightCard({ flight, navigation }) {
 
-export default function FlightCard({ flight }) {
+    const { BookFlightPage} = useContext(FlightsContext);
+    const { SaveFlight} = useContext(UsersContext);
 
+    const FlightSaveHandler = () => {
+        SaveFlight(flight, navigation);
+    }
+    
     const theme = useTheme();
+
+    const CheckOutPageHandler = () => {
+        BookFlightPage(navigation);
+    }
+
 
     return (
         <Card style={styles(theme).cardContainer}>
@@ -14,12 +27,12 @@ export default function FlightCard({ flight }) {
             <Card.Content style={styles(theme).topInfoBox}>
 
                 <Card.Content>
-                    <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>A123</Text>
-                    <Text style={{ fontFamily: 'Montserrat_Boldr', color: theme.colors.cardBorder, fontSize: 12 }}>Delta Airlines</Text>
+                    <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{flight.flightNumber}</Text>
+                    <Text style={{ fontFamily: 'Montserrat_Bold', color: theme.colors.cardBorder, fontSize: 12 }}>{flight.airline}</Text>
                 </Card.Content>
 
                 <Card.Content>
-                    <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>CO₂ Emissions <Text style={{ color: theme.colors.primary }}>1.2</Text></Text>
+                    <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>CO₂ Emissions <Text style={{ color: theme.colors.primary }}>{flight.co2}</Text></Text>
                 </Card.Content>
 
             </Card.Content>
@@ -29,10 +42,10 @@ export default function FlightCard({ flight }) {
             <Card.Content style={styles(theme).midInfoBox}>
 
                 <Card.Content>
-                    <Text style={[styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', color: '#777777', fontSize: 12 }]}>12-05-2023</Text>
-                    <Text style={[styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', fontSize: 15 }]}>Paris</Text>
-                    <Text style={[styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', fontSize: 30 }]}>CDG</Text>
-                    <Text style={[styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', color: '#49657A', fontSize: 15 }]}>10:30</Text>
+                    <Text style={[styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', color: '#777777', fontSize: 12 }]}>{flight.departure.date}</Text>
+                    <Text style={[styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', fontSize: 15 }]}>{flight.origin.city}</Text>
+                    <Text style={[styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', fontSize: 30 }]}>{flight.origin.airport}</Text>
+                    <Text style={[styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', color: '#49657A', fontSize: 15 }]}>{flight.departure.time}</Text>
                 </Card.Content>
 
                 <Card.Content style={{ marginTop: 20 }}>
@@ -42,10 +55,10 @@ export default function FlightCard({ flight }) {
                 </Card.Content>
 
                 <Card.Content>
-                    <Text style={[styles(theme).alignTextRight, styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', color: '#777777', fontSize: 12 }]}>12-05-2023</Text>
-                    <Text style={[styles(theme).alignTextRight, styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', fontSize: 15 }]}>Atlanta</Text>
-                    <Text style={[styles(theme).alignTextRight, styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', fontSize: 30 }]}>ATL</Text>
-                    <Text style={[styles(theme).alignTextRight, styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', color: '#49657A', fontSize: 15, }]}>22:30</Text>
+                    <Text style={[styles(theme).alignTextRight, styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', color: '#777777', fontSize: 12 }]}>{flight.arrival.date}</Text>
+                    <Text style={[styles(theme).alignTextRight, styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', fontSize: 15 }]}>{flight.destination.city}</Text>
+                    <Text style={[styles(theme).alignTextRight, styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', fontSize: 30 }]}>{flight.destination.airport}</Text>
+                    <Text style={[styles(theme).alignTextRight, styles(theme).textSpacing, { fontFamily: 'Montserrat_Bold', color: '#49657A', fontSize: 15, }]}>{flight.arrival.time}</Text>
                 </Card.Content>
 
             </Card.Content>
@@ -53,17 +66,17 @@ export default function FlightCard({ flight }) {
             <Card.Content style={styles(theme).infoBoxAction}>
 
                 <Card.Content>
-                    <Text style={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>$420</Text>
+                    <Text style={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>${flight.price}</Text>
                 </Card.Content>
 
-                <TouchableOpacity style={styles(theme).bookNowBtn}>
+                <TouchableOpacity style={styles(theme).bookNowBtn} onPress={CheckOutPageHandler}>
                     <Text style={{ fontFamily: 'Montserrat_Bold', color: 'white', fontSize: 15 }}>
                         Book Now
                     </Text>
                 </TouchableOpacity>
 
                 <Card.Actions>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={FlightSaveHandler}>
                         <MaterialCommunityIcons name={'cards-heart-outline'} color={"black"} size={30} />
                     </TouchableOpacity>
                 </Card.Actions>
