@@ -1,7 +1,9 @@
 const DB = require('../utils/db');
-const bcrypt = require('bcrypt');
+const bcrypt = require('react-native-bcrypt');
 const jwt = require("jsonwebtoken");
-const { ObjectId } = require('mongodb');
+const {
+    ObjectId
+} = require('mongodb');
 
 class UsersModel {
     _id;
@@ -49,9 +51,10 @@ class UsersModel {
     }
 
     static async Register(user) {
-            let hashedPassword = await bcrypt.hash(user.password, 10);
-            user.password = hashedPassword;
-            return await new DB().InsertDocument(user, 'users');
+        let salt = bcrypt.genSaltSync(10);
+        let hashedPassword = bcrypt.hashSync(user.password, salt);
+        user.password = hashedPassword;
+        return await new DB().InsertDocument(user, 'users');
     }
 
     static async Login(email, password) {
@@ -59,7 +62,7 @@ class UsersModel {
             email: email
         }
         let user = await new DB().FindOne(query, 'users');
-        if(!user || !(await bcrypt.compare(password, user.password)))
+        if (!user || !bcrypt.compareSync(password, user.password))
             return null;
         return user;
     }
@@ -76,18 +79,32 @@ class UsersModel {
     }
 
     static async SaveFlight(userEmail, flightId) {
-        let query = { "email": userEmail };
-        let update = { "$addToSet": { "savedFlights": new ObjectId(flightId) } };
+        let query = {
+            "email": userEmail
+        };
+        let update = {
+            "$addToSet": {
+                "savedFlights": new ObjectId(flightId)
+            }
+        };
         return await new DB().UpdateOne("users", query, update)
     }
 
-    static async GetUserProfile(userId){
-        return await new DB().FindOne({ _id: new ObjectId(userId)}, 'users');
+    static async GetUserProfile(userId) {
+        return await new DB().FindOne({
+            _id: new ObjectId(userId)
+        }, 'users');
     }
 
     static async UnsaveFlight(userEmail, flightId) {
-        let query = { "email": userEmail };
-        let update = { "$pull": { "savedFlights": new ObjectId(flightId) } };
+        let query = {
+            "email": userEmail
+        };
+        let update = {
+            "$pull": {
+                "savedFlights": new ObjectId(flightId)
+            }
+        };
         return await new DB().UpdateOne("users", query, update);
     }
 

@@ -101,7 +101,7 @@ export default function UsersContextProvider({ children }) {
                     LoadAllUsers();
                     const updatedUserProfile = users.find(user => currentUser._id === user._id)
                     SetCurrentUser(updatedUserProfile);
-                    console.log(currentUser);
+                    await console.log(currentUser);
 
             }catch(error){
                 console.log(error);

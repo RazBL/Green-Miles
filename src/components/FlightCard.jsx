@@ -1,10 +1,9 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import React, {useContext, useState, useEffect}from 'react'
-import { Card, Button, useTheme } from 'react-native-paper';
+import { Card, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { FlightsContext } from '../context/FlightsContext';
 import { UsersContext } from '../context/UsersContext';
-import { UnsaveFlight } from '../../models/users.model';
 
 export default function FlightCard({ flight, navigation }) {
 
@@ -13,15 +12,19 @@ export default function FlightCard({ flight, navigation }) {
     const [saved, SetSaved] = useState(false);
 
     const FlightSaveHandler = () => {
-        if(saved)
+        if(!saved){
             SaveFlight(flight, navigation);
-        else
-            UnsaveFlight(flight, navigation);
-        }   
+            SetSaved(true);
+        }
+        else{
+            RemoveSavedFlight(flight, navigation);
+            SetSaved(false);
+        }
+    }
 
     const IsFlightSaved = () => {
         let foundFlight = CheckIfFlightSaved(flight._id);
-        if(foundFlight)
+        if(foundFlight != undefined)
             SetSaved(true);
         else
             SetSaved(false);
@@ -35,7 +38,8 @@ export default function FlightCard({ flight, navigation }) {
 
     useEffect(() => {
         IsFlightSaved()
-    }, [saved])
+        console.log(saved);
+    }, [])
     
 
     return (
@@ -96,8 +100,8 @@ export default function FlightCard({ flight, navigation }) {
                     <TouchableOpacity onPress={FlightSaveHandler}>
                         {
                             saved ? 
-                            <MaterialCommunityIcons name={'cards-heart-outline'} color={"black"} size={30} /> :
-                            <MaterialCommunityIcons name={'heart'} color={theme.colors.primary} size={30} />
+                            <MaterialCommunityIcons name={'heart'} color={theme.colors.primary} size={30}/> :
+                            <MaterialCommunityIcons name={'cards-heart-outline'} color={"black"} size={30} />
 
                         }
                     </TouchableOpacity>
