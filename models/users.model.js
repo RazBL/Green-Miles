@@ -87,8 +87,9 @@ class UsersModel {
     }
 
     static async GetUserProfile(userId){
-        return await new DB().GetProfile(userId);
+        return await new DB().FindOne({ _id: new ObjectId(userId)}, 'users');
     }
+
 }
 
 module.exports = UsersModel;

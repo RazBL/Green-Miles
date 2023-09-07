@@ -62,7 +62,15 @@ UsersRoute.get('/', async (req, res) => {
 
 UsersRoute.get('/profile', AuthUser, async (req, res) => {
   try {
-    res.status(200).json({ user: req.user }); 
+
+    const fullUserProfile = await UsersModel.GetUserProfile(req.user._id);
+
+    if (!fullUserProfile) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    res.status(200).json({ user: fullUserProfile });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while trying to get the profile' });
