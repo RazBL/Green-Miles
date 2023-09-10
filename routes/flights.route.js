@@ -20,8 +20,6 @@ FlightRoute.get('/', async (req, res) => {
 FlightRoute.get('/search', async (req, res) => {
     console.log("in search");
     try {
-        console.log("Query Parameters:", req.query); 
-        
         let queryObj = {
             "destination.airport": req.query.destinationAirport,
             "origin.airport": req.query.originAirport,
@@ -29,8 +27,6 @@ FlightRoute.get('/search', async (req, res) => {
             "departure.date": req.query.date
         };
         
-        console.log("MongoDB Query Object:", queryObj); 
-
         let data = await FlightModel.GetFlightSearchResult(queryObj);
 
         console.log("Data Returned:", data); 

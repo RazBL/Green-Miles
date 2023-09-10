@@ -30,4 +30,4 @@ Content-Type: application/json
 
 
 ###
-GET https://greenmiles.onrender.com/api/flights/search?destinationAirport=CDG&originAirport=ATL&date=2024-8-23&availableSeats=1
+GET https://greenmiles.onrender.com/api/flights/search?destinationAirport=CDG&originAirport=ATL&date=2024-08-22&availableSeats=1
