@@ -17,6 +17,27 @@ HotelRoute.get('/', async (req, res) => {
 
 })
 
+//Create search route.
+
+
+  HotelRoute.get('/search', async (req, res) => {
+    try {
+      let checkInDate = new Date(req.query.checkInDate);
+      let checkOutDate = new Date(req.query.checkOutDate);
+
+      let data = await HotelModel.GetHotelSearchResult({
+        country: req.query.country,
+        checkIn: checkInDate ,
+        checkOut: checkOutDate,
+      });
+
+      res.status(200).json(data);
+    } catch (error) {
+      res.status(500).json({ error });
+    }
+  });
+  
+  
 
 //UPDATE == PUT
 

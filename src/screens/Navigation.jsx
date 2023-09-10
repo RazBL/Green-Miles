@@ -74,7 +74,7 @@ export default function Navigation() {
           {[
             { name: "Home", component: Home, icon: "home" },
             { name: "Flights", component: FlightsNavigator, icon: "airplane" },
-            { name: "Hotels", component: FlightsNavigator, icon: "bed" },
+            { name: "Hotels", component: HotelNavigation, icon: "bed" },
             { name: "Saved", component: Save, icon: "heart" },
             { name: "Account", component: Account, icon: "account" }
           ].map((item, i) => (
