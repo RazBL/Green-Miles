@@ -305,7 +305,7 @@ const styles = theme => StyleSheet.create({
         borderRadius: 10,
     },
     input: {
-        paddingLeft: 60,
+        paddingHorizontal: 60,
         zIndex: 1,
         borderRadius: 0,
         borderWidth: 0,

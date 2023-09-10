@@ -72,7 +72,7 @@ export default function HotelSearch({ navigation }) {
     };
   
     HotelSearchResults(query);
-    // navigation.navigate('Hotel Search Results'); // כאן אנחנו משנים את המסך באמצעות ניווט
+    navigation.navigate('Hotel Search Results'); // כאן אנחנו משנים את המסך באמצעות ניווט
   };
   
 
@@ -325,7 +325,7 @@ const styles = (theme) =>
       borderRadius: 10,
     },
     input: {
-      paddingLeft: 60,
+      paddingHorizontal: 60,
       zIndex: 1,
       borderRadius: 0,
       borderWidth: 0,
