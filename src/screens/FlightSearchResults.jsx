@@ -11,6 +11,8 @@ export default function FlightSearchResults({navigation}) {
 
   const { searchedFlights } = useContext(FlightsContext);
 
+  console.log((searchedFlights));
+  
   const test = () => {
     navigation.navigate('Login')
   }

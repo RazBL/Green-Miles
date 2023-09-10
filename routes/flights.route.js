@@ -18,6 +18,7 @@ FlightRoute.get('/', async (req, res) => {
 
 
 FlightRoute.get('/search', async (req, res) => {
+    console.log("in search");
     try {
         console.log("Query Parameters:", req.query); 
         

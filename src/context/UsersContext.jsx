@@ -77,8 +77,8 @@ export default function UsersContextProvider({ children }) {
             alert('you must sign in to save a flight');
             navigation.navigate('Login');
         }
-        else{
-            try{
+        else {
+            try {
                 let res = await fetch(`${base_api}/users/unsave-flight`, {
                     method: 'PUT',
                     headers: {
@@ -95,12 +95,12 @@ export default function UsersContextProvider({ children }) {
                     console.log(`Error is: ${errorData.error}`);
                     return null;
                 }
-                    console.log("Saved Flight was removed successfully!");
-                    LoadAllUsers();
-                    const updatedUserProfile = users.find(user => currentUser._id === user._id)
-                    SetCurrentUser(updatedUserProfile);
+                console.log("Saved Flight was removed successfully!");
+                LoadAllUsers();
+                const updatedUserProfile = users.find(user => currentUser._id === user._id)
+                SetCurrentUser(updatedUserProfile);
 
-            }catch(error){
+            } catch (error) {
                 console.log(error);
             }
         }
@@ -125,13 +125,13 @@ export default function UsersContextProvider({ children }) {
                         flight: flight,
                     }),
                 });
-                
-                
-            if (!res.ok) {
-                let errorData = await res.json();
-                console.log(`Error is: ${errorData.error}`);
-                return null;
-            }
+
+
+                if (!res.ok) {
+                    let errorData = await res.json();
+                    console.log(`Error is: ${errorData.error}`);
+                    return null;
+                }
                 console.log("Flight saved successfully!");
                 LoadAllUsers();
                 const updatedUserProfile = users.find(user => currentUser._id === user._id)
@@ -169,51 +169,57 @@ export default function UsersContextProvider({ children }) {
     };
 
     const CheckIfFlightSaved = (flightId) => {
-        let savedFlights = currentUser.savedFlights;
-        let flightFound = savedFlights.find(id => flightId === id);
-        return flightFound
-    }
-
-    const RemoveToken = async () => {
-        try {
-            await AsyncStorage.removeItem('userToken');
-        } catch (error) {
-            console.error('An error occurred while removing the token:', error);
+        if (!currentUser || !currentUser.savedFlights) {
+            return undefined;
         }
-    };
-
-
-    const EmailExists = (email) => {
-        let userFound = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-        return userFound;
-    }
-
-    const CheckValidEmail = (email) => {
-        return (email.endsWith(".com") || email.endsWith(".co.il")) && /^[a-zA-Z0-9.~-]+@[a-zA-Z-]+(\.[a-zA-Z0-9-]+)*$/.test(email);
+        let savedFlights = currentUser.savedFlights;
+        console.log(savedFlights);
+        let flightFound = savedFlights.find(id => flightId === id);
+        return flightFound;
     }
 
 
-    useEffect(() => {
-        LoadAllUsers();
-    }, [])
 
-    const value = {
-        users,
-        SetUsers,
-        Login,
-        EmailExists,
-        CheckValidEmail,
-        RegisterUser,
-        GetUserProfile,
-        RemoveToken,
-        SaveFlight,
-        CheckIfFlightSaved,
-        RemoveSavedFlight
+const RemoveToken = async () => {
+    try {
+        await AsyncStorage.removeItem('userToken');
+    } catch (error) {
+        console.error('An error occurred while removing the token:', error);
     }
+};
 
-    return (
-        <UsersContext.Provider value={value}>
-            {children}
-        </UsersContext.Provider>
-    )
+
+const EmailExists = (email) => {
+    let userFound = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    return userFound;
+}
+
+const CheckValidEmail = (email) => {
+    return (email.endsWith(".com") || email.endsWith(".co.il")) && /^[a-zA-Z0-9.~-]+@[a-zA-Z-]+(\.[a-zA-Z0-9-]+)*$/.test(email);
+}
+
+
+useEffect(() => {
+    LoadAllUsers();
+}, [])
+
+const value = {
+    users,
+    SetUsers,
+    Login,
+    EmailExists,
+    CheckValidEmail,
+    RegisterUser,
+    GetUserProfile,
+    RemoveToken,
+    SaveFlight,
+    CheckIfFlightSaved,
+    RemoveSavedFlight
+}
+
+return (
+    <UsersContext.Provider value={value}>
+        {children}
+    </UsersContext.Provider>
+)
 }
