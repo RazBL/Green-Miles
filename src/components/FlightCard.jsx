@@ -22,6 +22,7 @@ export default function FlightCard({ flight, navigation }) {
         }
     }
 
+    //Saved Button First time viewing page.
     const IsFlightSaved = () => {
         let foundFlight = CheckIfFlightSaved(flight._id);
         if(foundFlight != undefined)
@@ -38,7 +39,6 @@ export default function FlightCard({ flight, navigation }) {
 
     useEffect(() => {
         IsFlightSaved()
-        console.log(saved);
     }, [])
     
 
