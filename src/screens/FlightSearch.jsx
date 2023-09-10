@@ -37,16 +37,17 @@ export default function FlightSearch({ navigation }) {
 
     const DateChange = (event, selectedDate) => {
         if(selectedDate < new Date()){ SetDate(new Date()); }
-        const currentDate = selectedDate;
+        else {
+            const pureDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+            SetDate(pureDate);
+        }
         SetDatePickerVisibility(Platform.OS === 'ios');
-        SetDate(currentDate);
     };
-
 
     const HandleFlightSearch = () => {
         if (!isInputValid()) { return }
 
-        const formattedDate = date.toISOString().split('T')[0];
+        const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
         const originAirport = selectedLocation.split(" - ")[0];
         const destinationAirport = selectedDestination.split(" - ")[0];
 
@@ -305,7 +306,7 @@ const styles = theme => StyleSheet.create({
         borderRadius: 10,
     },
     input: {
-        paddingHorizontal: 60,
+        paddingHorizontal:60,
         zIndex: 1,
         borderRadius: 0,
         borderWidth: 0,

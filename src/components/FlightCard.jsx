@@ -131,7 +131,7 @@ const styles = theme => StyleSheet.create({
     },
     horizontalLine: {
         borderBottomColor: theme.colors.cardBorder,
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 1,
         marginBottom: 15
     },
     midInfoBox: {
