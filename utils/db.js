@@ -75,22 +75,17 @@ class DB {
         }
     }
 
-    async UpdateDocumentById(id, doc, collection) {
+    async UpdateOne(collection, query = {}, update = {}) {
         try {
             await this.client.connect();
-            let query = {
-                "_id": new ObjectId(id)
-            };
-            let newValues = {
-                $set: doc
-            }
-            await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
+            await this.client.db(this.db_name).collection(collection).updateOne(query, update);
         } catch (error) {
             throw error;
         } finally {
             await this.client.close();
         }
     }
+    
     /*
     async ChangeBookingStatus(collection, id, status){
         try{

@@ -27,7 +27,8 @@ const theme = {
     primary: '#1CD995',
     actionText: '#007BFF',
     logoBackground: '#1E272E',
-    inputTextColor: '#2B3A4A'
+    inputTextColor: '#2B3A4A',
+    cardBorder: '#949494'
     
   },
 };

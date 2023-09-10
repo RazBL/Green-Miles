@@ -19,23 +19,27 @@ FlightRoute.get('/', async (req, res) => {
 
 FlightRoute.get('/search', async (req, res) => {
     try {
-        let dateQuery = new Date(req.query.date);
-        let nextDateQuery = new Date(dateQuery);
-        nextDateQuery.setDate(nextDateQuery.getDate() + 1);
-
-        let data = await FlightModel.GetFlightSearchResult({
-            destination: req.query.destination,
-            origin: req.query.origin,
-            availableSeats: { $gte: parseInt(req.query.availableSeats) }
-        }, dateQuery, nextDateQuery);
+        console.log("Query Parameters:", req.query); 
         
+        let queryObj = {
+            "destination.airport": req.query.destinationAirport,
+            "origin.airport": req.query.originAirport,
+            "seats.available": { $gte: parseInt(req.query.availableSeats) },
+            "departure.date": req.query.date
+        };
+        
+        console.log("MongoDB Query Object:", queryObj); 
+
+        let data = await FlightModel.GetFlightSearchResult(queryObj);
+
+        console.log("Data Returned:", data); 
+
         res.status(200).json(data);
     } catch (error) {
+        console.log("Error:", error); 
         res.status(500).json({ error });
     }
 });
-
-
 
 
 //UPDATE == PUT

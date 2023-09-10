@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, TouchableOpacity, Modal, TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
-import { Button, Headline, DefaultTheme, useTheme } from 'react-native-paper';
+import { Button, Headline, useTheme } from 'react-native-paper';
 import { FlightsContext } from '../context/FlightsContext';
 import { useContext, useState, useEffect } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -11,7 +11,7 @@ export default function FlightSearch({ navigation }) {
 
     const theme = useTheme();
 
-    const { destinationAirports, originAirports, FlightSearchResults } = useContext(FlightsContext);
+    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities } = useContext(FlightsContext);
     const [passangers, SetPassangers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
@@ -36,6 +36,7 @@ export default function FlightSearch({ navigation }) {
     };
 
     const DateChange = (event, selectedDate) => {
+        if(selectedDate < new Date()){ SetDate(new Date()); }
         const currentDate = selectedDate;
         SetDatePickerVisibility(Platform.OS === 'ios');
         SetDate(currentDate);
@@ -46,20 +47,27 @@ export default function FlightSearch({ navigation }) {
         if (!isInputValid()) { return }
 
         const formattedDate = date.toISOString().split('T')[0];
+        const originAirport = selectedLocation.split(" - ")[0];
+        const destinationAirport = selectedDestination.split(" - ")[0];
 
         let query = {
-            destinationsAirports: selectedDestination,
-            originAirports: selectedLocation,
+            destinationAirport: destinationAirport,
+            originAirport: originAirport,
             date: formattedDate,
             availableSeats: passangers
         };
 
         FlightSearchResults(query);
+
         navigation.navigate('Flight Search Results');
     }
 
     const TransformAirports = () => {
-        let data = originAirports.map(airport => (
+        const originDisplayAirports = originAirports.map((airport, index) => {
+            return `${airport} - ${originCities[index]}`;
+          });
+
+        let data = originDisplayAirports.map(airport => (
             {
                 label: airport,
                 value: airport
@@ -68,7 +76,11 @@ export default function FlightSearch({ navigation }) {
 
         SetTransformedOriginAirports(data);
 
-        data = destinationAirports.map(airport => ({
+        const destinationDisplayAirport = destinationAirports.map((airport, index) => {
+            return `${airport} - ${destinationCities[index]}`;
+          });
+
+        data = destinationDisplayAirport.map(airport => ({
             label: airport,
             value: airport
         }));

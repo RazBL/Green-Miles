@@ -42,14 +42,10 @@ class FlightModel {
         await new DB().DeleteDocument('Flights', flightId);
     }
 
-    static async GetFlightSearchResult(query, dateQuery, nextDateQuery) {
+    static async GetFlightSearchResult(query) {
         const pipeline = [{
             $match: {
-                ...query,
-                departure_time: {
-                    $gte: dateQuery,
-                    $lt: nextDateQuery
-                }
+                ...query
             }
         }];
 

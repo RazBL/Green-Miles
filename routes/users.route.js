@@ -1,5 +1,4 @@
 const UsersModel = require('../models/users.model');
-const bcrypt = require('bcrypt');
 const {AuthUser, GenerateToken } = require('../utils/auth');
 const UsersRoute = require('express').Router();
 
@@ -62,7 +61,15 @@ UsersRoute.get('/', async (req, res) => {
 
 UsersRoute.get('/profile', AuthUser, async (req, res) => {
   try {
-    res.status(200).json({ user: req.user }); 
+
+    const fullUserProfile = await UsersModel.GetUserProfile(req.user._id);
+
+    if (!fullUserProfile) {
+      return res.status(404).json({ error: 'User not found.' });
+    }
+
+    res.status(200).json({ user: fullUserProfile });
+    
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while trying to get the profile' });
@@ -70,6 +77,36 @@ UsersRoute.get('/profile', AuthUser, async (req, res) => {
 });
 
 //UPDATE == PUT
+
+UsersRoute.put('/save-flight', AuthUser, async(req,res) => {
+  try {
+    const userEmail = req.user.email;
+    const flightId = req.body.flight._id; 
+
+    const updatedUser = await UsersModel.SaveFlight(userEmail, flightId);
+
+    res.status(200).json({ success: true, message: 'Flight saved successfully', user: updatedUser });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying to save the flight' });
+  }
+})
+
+UsersRoute.put('/unsave-flight', AuthUser, async(req, res) => {
+  try {
+    const userEmail = req.user.email;
+    const flightId = req.body.flight._id; 
+
+    const updatedUser = await UsersModel.UnsaveFlight(userEmail, flightId);
+
+    res.status(200).json({ success: true, message: 'saved Flight was removed successfully', user: updatedUser });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying to unsave the flight' });
+  }
+})
 
 //DELETE == DELETE
 
