@@ -27,3 +27,12 @@ Content-Type: application/json
   "email": "razraz@gmail.com",
   "password": "razraz"
 }
+
+### 
+GET http://localhost:3500/api/hotels/search
+
+### 
+GET http://localhost:3500/api/hotels/search?destination=Tel%20Aviv&checkInDate=2023-08-01&checkOutDate=2023-08-10&guests=2
+
+### 
+http://localhost:3500/api/hotels/search?country=Israel&checkInDate=2023-08-01&checkOutDate=2023-08-10 
