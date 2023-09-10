@@ -214,7 +214,8 @@ const value = {
     RemoveToken,
     SaveFlight,
     CheckIfFlightSaved,
-    RemoveSavedFlight
+    RemoveSavedFlight,
+    currentUser
 }
 
 return (

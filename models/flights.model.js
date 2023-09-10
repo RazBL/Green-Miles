@@ -49,8 +49,6 @@ class FlightModel {
             }
         }];
 
-        console.log(pipeline);
-
         return await new DB().Aggregate('Flights', pipeline);
     }
 }

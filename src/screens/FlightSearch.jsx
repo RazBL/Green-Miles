@@ -47,7 +47,7 @@ export default function FlightSearch({ navigation }) {
     const HandleFlightSearch = () => {
         if (!isInputValid()) { return }
 
-        const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+        const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
         const originAirport = selectedLocation.split(" - ")[0];
         const destinationAirport = selectedDestination.split(" - ")[0];
 
