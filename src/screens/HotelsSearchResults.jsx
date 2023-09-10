@@ -1,22 +1,42 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native'
-import { Button } from 'react-native-paper'
-import React from 'react'
+import { View, StyleSheet, FlatList, ScrollView } from 'react-native'
+import { Button, Headline } from 'react-native-paper'
+import Reac, { useContext } from 'react'
+import { HotelsContext } from '../context/HotelsContext'
 
 //Component
-import HotelCard from '../components/HotelCard';
+import HotelCard from '../components/HotelCard'
 
-export default function HotelSearchResults() {
+
+export default function FlightSearchResults({navigation}) {
+
+  const { searchedHotels } = useContext(HotelsContext);
+
+  const test = () => {
+    navigation.navigate('Login')
+  }
+
   return (<>
-    <View style={styles.container}>
-      <View style={styles.buttonContainer}>
-        <Button mode="contained" icon="filter" style={styles.filterButton} labelStyle={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
-          Filter
-        </Button>
-        <Button mde="contained" icon="sort" style={styles.sortButton} labelStyle={{ color: 'black', fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
-          Sort
-        </Button>
+      <View style={styles.container}>
+        <View style={styles.buttonContainer}>
+          <Button onPress={test} mode="contained" icon="filter" style={styles.filterButton} labelStyle={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
+            Filter
+          </Button>
+          <Button mode="contained" icon="sort" style={styles.sortButton} labelStyle={{ color: 'black', fontSize: 15, fontFamily: 'Montserrat_Medium' }}>
+            Sort
+          </Button>
+        </View>
+        <View>
+          {searchedHotels.length === 0 ? (
+            <Headline style={styles.noFlightsText}>Sorry.. But no Hotels were found :( </Headline>
+          ) : (
+            <FlatList
+              data={searchedHotels}
+              keyExtractor={(item) => item._id}  
+              renderItem={({ item }) => <HotelCard hotel={item} navigation={navigation} />}
+            />
+          )}
+        </View>
       </View>
-    </View>
   </>
   )
 }
@@ -25,7 +45,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 15
+    padding: 20,
   },
   upperBar: {
     backgroundColor: '#1e272e',
@@ -39,7 +59,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 30
   },
   filterButton: {
     backgroundColor: '#1e272e',
@@ -53,4 +74,8 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 0,
     width: 130
   },
+  noFlightsText: {
+    textAlign: 'center',
+    fontFamily: 'Montserrat_Medium',
+  }
 });

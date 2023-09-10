@@ -3,21 +3,14 @@ import { Text, TouchableOpacity } from 'react-native'; // שינוי כאן - ה
 import { Card, Button } from 'react-native-paper';
 import { View } from 'react-native-web';
 
-const HotelCard = ({ hotelData, onMoreInfoClicked }) => { // שינוי כאן - הוספת פרמטר onMoreInfoClicked
+const HotelCard = ({ hotel, navigation }) => { // שינוי כאן - הוספת פרמטר onMoreInfoClicked
   return (
     <Card style={styles.card}>
       <Card.Cover source={{ uri: 'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg' }} />
-      <Card.Title title={hotelData.name} subtitle={hotelData.country} />
-      <Card.Content>
-        <Text style={styles.address}>{hotelData.address}</Text>
-        <Text style={styles.ecoRating}>Eco rating: {hotelData.eco_rating}</Text>
-        <Text style={styles.price}>Price per night: ${hotelData.price_per_night}</Text>
-        <Text style={styles.checkIn}>Check-in: {hotelData.checkIn}</Text>
-        <Text style={styles.checkOut}>Check-out: {hotelData.checkOut}</Text>
-          <Button mode="contained" style={{ backgroundColor: '#95a5a6', }} labelStyle={{ color: 'black' }} onPress={() => onMoreInfoClicked(hotelData)}>
-            More Info
-          </Button>
-      </Card.Content>
+      <Card.Title title={hotel.name} subtitle={hotel.country} />
+      <Card.Title title={hotel.address} subtitle={hotel.country} />
+      <Card.Title title={hotel.ecoRating} subtitle={hotel.country} />
+      
     </Card>
   );
 };
