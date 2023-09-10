@@ -60,10 +60,8 @@ export default function UsersContextProvider({ children }) {
             let data = await res.json();
             if (data) {
                 const { user: loggedinUser, token } = data;
-                console.log(token);
                 await AsyncStorage.setItem('userToken', token);
                 SetCurrentUser(loggedinUser);
-                console.log(currentUser);
                 return loggedinUser;
             }
         } catch (err) {
@@ -101,7 +99,6 @@ export default function UsersContextProvider({ children }) {
                     LoadAllUsers();
                     const updatedUserProfile = users.find(user => currentUser._id === user._id)
                     SetCurrentUser(updatedUserProfile);
-                    await console.log(currentUser);
 
             }catch(error){
                 console.log(error);
@@ -139,7 +136,6 @@ export default function UsersContextProvider({ children }) {
                 LoadAllUsers();
                 const updatedUserProfile = users.find(user => currentUser._id === user._id)
                 SetCurrentUser(updatedUserProfile);
-                console.log(currentUser);
 
             } catch (error) {
                 console.log(error);
