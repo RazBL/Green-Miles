@@ -11,7 +11,7 @@ export default function FlightSearch({ navigation }) {
 
     const theme = useTheme();
 
-    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities } = useContext(FlightsContext);
+    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities, SetPassangersContext } = useContext(FlightsContext);
     const [passangers, SetPassangers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
@@ -59,7 +59,7 @@ export default function FlightSearch({ navigation }) {
         };
 
         FlightSearchResults(query);
-
+        SetPassangersContext(passangers)
         navigation.navigate('Flight Search Results');
     }
 
@@ -111,8 +111,7 @@ export default function FlightSearch({ navigation }) {
 
 
     return (
-        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); SetOpenOrigin(false); SetOpenDestination(false);
-}}>
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); SetOpenOrigin(false); SetOpenDestination(false);}}>
             <View style={styles(theme).container}>
                 <View style={styles(theme).flightSearch}>
 

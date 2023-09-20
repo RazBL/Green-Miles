@@ -30,4 +30,19 @@ Content-Type: application/json
 
 
 ###
-http://localhost:3500/api/flights/search?destinationAirport=CDG&originAirport=ATL&date=2024-8-23&availableSeats=1
+https://greenmiles.onrender.com/api/flights/search?destinationAirport=CDG&originAirport=ATL&date=2024-08-23&availableSeats=1
+
+###
+
+POST http://localhost:3500/api/flights/booking
+Content-Type: application/json
+
+{
+    "userId": "64c9dca7e1feda9915eca2b8",
+    "flightId": "645e91233fb2fbd063c199c0",
+    "price": 450,
+    "passangers": 3,
+    "dateTime": "2023-09-20T23:21:00.000Z" ,
+    "date": "2023-09-20",
+    "time": "23:21"
+}

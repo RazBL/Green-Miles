@@ -13,7 +13,7 @@ export default function FlightsContextProvider({ children }) {
     const [destinationCities, SetDestinationCities] = useState([]);
     const [originCities, SetOriginCities] = useState([]);
     const [flightOrders, SetFlightOrders] = useState([]);
-
+    const [passangersContext, SetPassangersContext] = useState(1);
     const LoadAllFlights = async () => {
         try {
             let res = await fetch(`${base_api}/flights`);
@@ -62,11 +62,11 @@ export default function FlightsContextProvider({ children }) {
 
         let token =   await AsyncStorage.getItem('userToken', token);
         if(!token){
-            alert('you must sign in to book a flight')
-            navigation.navigate('Login')
+            alert('you must sign in to book a flight');
+            navigation.navigate('Login');
         }
         else{
-            alert('yay you can book')
+            navigation.navigate('Flight Checkout');
         }
 
     }
@@ -95,6 +95,8 @@ export default function FlightsContextProvider({ children }) {
         originCities,
         searchedFlights,
         BookFlightPage,
+        passangersContext,
+        SetPassangersContext
     }
 
     return (

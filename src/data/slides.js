@@ -8,14 +8,6 @@ export default [
     },
     {
         id: '2',
-        titleNormal: 'The world is',
-        titleHighlighted: 'Beautiful',
-        description: 'Discover the worlds most beautiful places and help keep them that way!',
-        image: require('../images/onboardingImage2.jpg')
-
-    },
-    {
-        id: '3',
         titleNormal: 'Enjoy your',
         titleHighlighted: 'Trip',
         description: 'Enjoy your travel with a piece of mind knowing you have made the right choice!',

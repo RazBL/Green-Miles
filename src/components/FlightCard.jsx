@@ -7,10 +7,10 @@ import { UsersContext } from '../context/UsersContext';
 
 export default function FlightCard({ flight, navigation }) {
 
-    const { BookFlightPage} = useContext(FlightsContext);
+    const { BookFlightPage, passangersContext} = useContext(FlightsContext);
     const { SaveFlight, CheckIfFlightSaved, RemoveSavedFlight, currentUser} = useContext(UsersContext);
     const [saved, SetSaved] = useState(false);
-
+    
     const FlightSaveHandler = () => {
         if(currentUser === null){ 
             navigation.navigate('Login');
@@ -92,7 +92,7 @@ export default function FlightCard({ flight, navigation }) {
             <Card.Content style={styles(theme).infoBoxAction}>
 
                 <Card.Content>
-                    <Text style={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>${flight.price}</Text>
+                    <Text style={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>${flight.price * passangersContext}</Text>
                 </Card.Content>
 
                 <TouchableOpacity style={styles(theme).bookNowBtn} onPress={CheckOutPageHandler}>

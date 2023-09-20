@@ -4,24 +4,26 @@ class FlightBookingModel {
     _id
     user_id
     flight_id
-    booking_time
-    booking_status
+    bookingTime
+    bookingStatus
     price
+    passangers
 
-    constructor(_id,user_id,flight_id,booking_time,booking_status,price){
+    constructor(_id,user_id,flight_id,bookingTime,bookingStatus,price, passangers){
         this._id = _id;
         this.user_id = user_id;
         this.flight_id = flight_id;
-        this.booking_time = booking_time;
-        this.booking_status = booking_status;
+        this.bookingTime = bookingTime;
+        this.bookingStatus = bookingStatus;
         this.price = price;
+        this.passangers = passangers;
     }
 
     static async GetAllFlightBookings() {
         return await new DB().FindAll('Flight_Booking');
     }
     
-    async UpdateBookingStatus(bookingId, newStatus) {
+    static async UpdateBookingStatus(bookingId, newStatus) {
         try {
             await new DB().ChangeBookingStatus('Flight_Booking', bookingId, { booking_status: newStatus });
             console.log('Booking status updated successfully.');
@@ -30,6 +32,14 @@ class FlightBookingModel {
         }
     }
 
+    static async BookAFlight(bookedFlight){
+        try {
+            await new DB().InsertDocument(bookedFlight, 'Flight_Booking');
+        } catch (error) {
+            console.log("Error from flight_booking");
+            console.log(error);
+        }
+    }
 
 
 }
