@@ -8,10 +8,10 @@ import { FlightsContext } from '../context/FlightsContext';
 import { UsersContext } from '../context/UsersContext';
 
 
-export default function FlightCheckout({ passangers, flight, navigation }) {
+export default function FlightCheckout({ navigation }) {
 
     const { currentUser } = useContext(UsersContext);
-    const { FlightBooking, passangersContext} = useContext(FlightsContext);
+    const { FlightBooking, passengersContext, FlightToBook} = useContext(FlightsContext);
     const [email, SetEmail] = useState("");
     const [country, SetCountry] = useState("");
     const [city, SetCity] = useState("");
@@ -25,8 +25,8 @@ export default function FlightCheckout({ passangers, flight, navigation }) {
     const CheckoutHandler = () => {
         let currentDate = new Date().toLocaleDateString();
         let currentTime = new Date().toLocaleTimeString();
-
-        FlightBooking(currentUser, currentTime, currentDate, flight)
+        let data = FlightBooking(currentUser, currentTime, currentDate, FlightToBook);
+        console.log(data);
     }
 
     const ValidINput = () => {
@@ -45,25 +45,25 @@ export default function FlightCheckout({ passangers, flight, navigation }) {
                     <Card style={{ backgroundColor: 'white' }}>
                         <Card.Cover style={styles(theme).imgContainer} source={require("../images/FlightSearch.png")} />
 
-                        <Headline style={[styles(theme).cardTitle, { marginTop: 5 }]}>Airline <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >Atlanta</Headline></Headline>
-                        <Headline style={styles(theme).cardTitle}>Flight Number <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >A123</Headline></Headline>
+                        <Headline style={[styles(theme).cardTitle, { marginTop: 5 }]}>Airline <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{FlightToBook.airline}</Headline></Headline>
+                        <Headline style={styles(theme).cardTitle}>Flight Number <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{FlightToBook.flightNumber}</Headline></Headline>
 
                         <Card.Content style={styles(theme).cardContentInfo}>
 
                             <View >
-                                <Text style={styles(theme).text}>Location <Text style={styles(theme).montserratBold}>Paris</Text></Text>
+                                <Text style={styles(theme).text}>Location <Text style={styles(theme).montserratBold}>{FlightToBook.origin.city}</Text></Text>
                                 <Text style={[styles(theme).montserratBold, styles(theme).text]}>Departure</Text>
-                                <Text style={styles(theme).text}>12-05-2023</Text>
-                                <Text style={styles(theme).text}>10:30</Text>
-                                <Text style={styles(theme).text}>Passangers <Text style={styles(theme).montserratBold}>2</Text></Text>
+                                <Text style={styles(theme).text}>{FlightToBook.departure.date}</Text>
+                                <Text style={styles(theme).text}>{FlightToBook.departure.time}</Text>
+                                <Text style={styles(theme).text}>Passengers <Text style={styles(theme).montserratBold}>{passengersContext}</Text></Text>
                             </View>
 
                             <View>
-                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>Destination <Text style={styles(theme).montserratBold}>Atlanta</Text></Text>
+                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.destination.city} <Text style={styles(theme).montserratBold}>Atlanta</Text></Text>
                                 <Text style={[styles(theme).alignTextRight, styles(theme).montserratBold, styles(theme).text]}>Arrival</Text>
-                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>12-05-2023</Text>
-                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>20:00</Text>
-                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>Total price <Text style={styles(theme).montserratBold}>$420</Text></Text>
+                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.arrival.date}</Text>
+                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.arrival.time}</Text>
+                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>Total price <Text style={styles(theme).montserratBold}>{FlightToBook.price}</Text></Text>
                             </View>
 
                         </Card.Content>

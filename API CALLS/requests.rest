@@ -41,7 +41,7 @@ Content-Type: application/json
     "userId": "64c9dca7e1feda9915eca2b8",
     "flightId": "645e91233fb2fbd063c199c0",
     "price": 450,
-    "passangers": 3,
+    "passengers": 3,
     "dateTime": "2023-09-20T23:21:00.000Z" ,
     "date": "2023-09-20",
     "time": "23:21"

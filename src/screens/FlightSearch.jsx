@@ -11,15 +11,15 @@ export default function FlightSearch({ navigation }) {
 
     const theme = useTheme();
 
-    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities, SetPassangersContext } = useContext(FlightsContext);
-    const [passangers, SetPassangers] = useState(1);
+    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities, SetPassengersContext } = useContext(FlightsContext);
+    const [passengers, SetPassengers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
     const [selectedLocation, SetSelectedLocation] = useState("");
     const [selectedDestination, SetSelectedDestination] = useState("");
     const [isModalVisible, setModalVisible] = useState(false);
     const MAX_PASSENGERS = 9;
-    const MIN_PASSANGERS = 1;
+    const MIN_passengerS = 1;
     const [transformedOriginAirport, SetTransformedOriginAirports] = useState([])
     const [transformedDestinationAirport, SetTransformedDestinationAirports] = useState([])
     const [openOrigin, SetOpenOrigin] = useState(false);
@@ -28,11 +28,11 @@ export default function FlightSearch({ navigation }) {
 
 
     const IncrementPassengers = () => {
-        if (passangers < MAX_PASSENGERS) SetPassangers(passangers + 1);
+        if (passengers < MAX_PASSENGERS) SetPassengers(passengers + 1);
     };
 
     const DecrementPassengers = () => {
-        if (passangers > MIN_PASSANGERS) SetPassangers(passangers - 1);
+        if (passengers > MIN_PassengerS) SetPassengers(passengers - 1);
     };
 
     const DateChange = (event, selectedDate) => {
@@ -55,11 +55,11 @@ export default function FlightSearch({ navigation }) {
             destinationAirport: destinationAirport,
             originAirport: originAirport,
             date: formattedDate,
-            availableSeats: passangers
+            availableSeats: passengers
         };
 
         FlightSearchResults(query);
-        SetPassangersContext(passangers)
+        SetPassengersContext(passengers)
         navigation.navigate('Flight Search Results');
     }
 
@@ -210,7 +210,7 @@ export default function FlightSearch({ navigation }) {
                                 backgroundColor="white"
                                 style={styles(theme).input}
                                 placeholderTextColor={theme.colors.inputTextColor}
-                                placeholder={`${passangers} Passenger${passangers === 1 ? '' : 's'}`}
+                                placeholder={`${passengers} Passenger${passengers === 1 ? '' : 's'}`}
                             />
                         </View>
                     </TouchableOpacity>
@@ -230,7 +230,7 @@ export default function FlightSearch({ navigation }) {
                                         <TouchableOpacity onPress={IncrementPassengers}>
                                             <Text style={styles(theme).modalText}>+</Text>
                                         </TouchableOpacity>
-                                        <Text style={[styles(theme).modalText]}>{passangers}</Text>
+                                        <Text style={[styles(theme).modalText]}>{passengers}</Text>
                                         <TouchableOpacity onPress={DecrementPassengers}>
                                             <Text style={styles(theme).modalText}>-</Text>
                                         </TouchableOpacity>

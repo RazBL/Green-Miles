@@ -42,6 +42,13 @@ class FlightModel {
         await new DB().DeleteDocument('Flights', flightId);
     }
 
+    static async UpdateFlightSeats(passengers, flightId){
+        let query = { _id: flightId };
+        let update = { $inc: { "seats.available": -passengers } };
+
+        await new DB().UpdateOne('Flights', query, update);
+    }
+
     static async GetFlightSearchResult(query) {
         const pipeline = [{
             $match: {

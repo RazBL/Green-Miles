@@ -18,11 +18,13 @@ FlightRoute.post('/booking', async(req,res) => {
             },
             bookingStatus: "pending",  
             price: req.body.price,      
-            passangers: req.body.passangers  
+            passangers: req.body.passengers  
         }
 
         await FlightBookingModel.BookAFlight(bookedFlight);
 
+        await FlightModel.UpdateFlightSeats(req.body.passengers, new ObjectId(req.body.flightId));
+        
         res.status(200).json("Flight booked successfully")
 
     } catch (error) {

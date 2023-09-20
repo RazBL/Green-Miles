@@ -13,7 +13,9 @@ export default function FlightsContextProvider({ children }) {
     const [destinationCities, SetDestinationCities] = useState([]);
     const [originCities, SetOriginCities] = useState([]);
     const [flightOrders, SetFlightOrders] = useState([]);
-    const [passangersContext, SetPassangersContext] = useState(1);
+    const [passengersContext, SetPassengersContext] = useState(1);
+    const [FlightToBook, SetFlightToBook] = useState([]);
+
     const LoadAllFlights = async () => {
         try {
             let res = await fetch(`${base_api}/flights`);
@@ -33,7 +35,7 @@ export default function FlightsContextProvider({ children }) {
         let data = Array.from(new Set(flights.map(flight => flight.destination.city))); // remove duplicates
         SetDestinationCities(data);
     }
-    
+
     const GetOriginCities = () => {
         let data = Array.from(new Set(flights.map(flight => flight.origin.city))); // remove duplicates
         SetOriginCities(data);
@@ -52,28 +54,61 @@ export default function FlightsContextProvider({ children }) {
             let res = await fetch(url);
             let data = await res.json();
             SetSearchedFlights(data);
-            console.log("searched flights array",searchedFlights);
+            console.log("searched flights array", searchedFlights);
         } catch (err) {
             console.error(err);
         }
     };
-    
-    const BookFlightPage = async(navigation) => {
 
-        let token =   await AsyncStorage.getItem('userToken', token);
-        if(!token){
+    const BookFlightPage = async (navigation, flight) => {
+
+        let token = await AsyncStorage.getItem('userToken', token);
+        if (!token) {
             alert('you must sign in to book a flight');
             navigation.navigate('Login');
         }
-        else{
+        else {
+            SetFlightToBook(flight);
             navigation.navigate('Flight Checkout');
         }
 
     }
 
+    const FlightBooking = async (currentUser, currentTime, currentDate, FlightToBook) => {
+        try {
+            let res = await fetch(`${base_api}/Flights/booking`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    userId: currentUser._id,
+                    flightId: FlightToBook._id,
+                    price: FlightToBook.price * passengersContext,
+                    passengers: passengersContext,
+                    date: currentDate,
+                    time: currentTime
+                }),
+            });
+
+            if (!res.ok) {
+                let errorData = await res.json();
+                console.log(`Error is: ${errorData.error}`);
+                return null;
+            }
+
+            let data = await res.json();
+
+            return(data);
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     useEffect(() => {
         LoadAllFlights();
+        console.log("hi");
     }, []);
 
     useEffect(() => {
@@ -95,8 +130,9 @@ export default function FlightsContextProvider({ children }) {
         originCities,
         searchedFlights,
         BookFlightPage,
-        passangersContext,
-        SetPassangersContext
+        passengersContext,
+        SetPassengersContext,
+        FlightToBook
     }
 
     return (

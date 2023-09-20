@@ -16,7 +16,6 @@ app.use('/api/hotels', require('./routes/hotels.route'));
 
 app.use('/api/hotel-bookings', require('./routes/hotel_booking.route'));
 
-//app.use('/api/flight-bookings', require('./routes/flight_booking.route'));
 app.use('/api/flight-bookings', require('./routes/flight_booking.route'));
 
 
