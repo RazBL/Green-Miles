@@ -175,6 +175,82 @@ export default function UsersContextProvider({ children }) {
     }
 
 
+   
+    const SaveHotel = async (hotel, navigation) => {
+
+        let token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+            alert('you must sign in to save a flight');
+            navigation.navigate('Login');
+        }
+        else {
+            try {
+                let res = await fetch(`${base_api}/users/save-hotel`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        hotel: hotel,
+                    }),
+                });
+
+
+                if (!res.ok) {
+                    let errorData = await res.json();
+                    console.log(`Error is: ${errorData.error}`);
+                    return null;
+                }
+                console.log("hotel saved successfully!");
+                LoadAllUsers();
+                const updatedUserProfile = users.find(user => currentUser._id === user._id)
+                SetCurrentUser(updatedUserProfile);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+
+    const RemoveSavedHotel = async (hotel) => {
+        let token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+            alert('you must sign in to save a flight');
+            navigation.navigate('Login');
+        }
+        else {
+            try {
+                let res = await fetch(`${base_api}/users/unsave-hotel`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        hotel: hotel,
+                    }),
+                });
+
+                if (!res.ok) {
+                    let errorData = await res.json();
+                    console.log(`Error is: ${errorData.error}`);
+                    return null;
+                }
+                console.log("Saved hotel was removed successfully!");
+                LoadAllUsers();
+                const updatedUserProfile = users.find(user => currentUser._id === user._id)
+                SetCurrentUser(updatedUserProfile);
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
+
+
     const GetUserProfile = async () => {
         try {
             const token = await AsyncStorage.getItem('userToken');
@@ -210,7 +286,26 @@ export default function UsersContextProvider({ children }) {
         return flightFound;
     }
 
+    
+    const CheckIfHotelSaved = (hotelId) => {
+        if (!currentUser || !currentUser.savedHotels) {
+            return undefined;
+        }
+        let savedHotels = currentUser.savedHotels;
+        console.log(savedHotels);
+        let HotelFound = savedHotels.find(id => hotelId === id);
+        return HotelFound;
+    }
 
+    const isHotelSaved = (currentUser, hotelId) => {
+        if (!currentUser || !currentUser.savedHotels) {
+          return false;
+        }
+        let savedHotels = currentUser.savedHotels;
+        let hotelFound = savedHotels.find(id => hotelId === id);
+        return hotelFound !== undefined;
+      };
+      
 
     const RemoveToken = async () => {
         try {
@@ -236,24 +331,26 @@ export default function UsersContextProvider({ children }) {
         GetAllCountriesAndCities();
     }, [])
 
-    const value = {
-        users,
-        SetUsers,
-        Login,
-        EmailExists,
-        CheckValidEmail,
-        RegisterUser,
-        GetUserProfile,
-        RemoveToken,
-        SaveFlight,
-        CheckIfFlightSaved,
-        RemoveSavedFlight,
-        currentUser,
+const value = {
+    users,
+    SetUsers,
+    Login,
+    EmailExists,
+    CheckValidEmail,
+    RegisterUser,
+    GetUserProfile,
+    RemoveToken,
+    SaveFlight,
+    SaveHotel,
+    CheckIfFlightSaved,
+    CheckIfHotelSaved,
+    RemoveSavedHotel,
+    RemoveSavedFlight,
         CheckValidEmail,
         countries,
         LoadSavedFlights,
         savedFlights
-    }
+}
 
     return (
         <UsersContext.Provider value={value}>

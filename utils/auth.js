@@ -21,6 +21,7 @@ function GenerateToken(doc) {
   const token = jwt.sign(doc, process.env.SECRET_KEY, {
       expiresIn: '1h'
   });
+  console.log(token);
   return token;
 }
 

@@ -127,6 +127,42 @@ UsersRoute.put('/unsave-flight', AuthUser, async(req, res) => {
   }
 })
 
+
+
+UsersRoute.put('/save-hotel',AuthUser, async(req,res) => {
+  try {
+    const userEmail = req.user.email;
+    const hotelId = req.body.hotel._id; 
+
+    const updatedUser = await UsersModel.SaveHotel(userEmail, hotelId);
+
+    res.status(200).json({ success: true, message: 'Hotel saved successfully', user: updatedUser });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying to save the Hotel' });
+  }
+})
+
+UsersRoute.put('/unsave-hotel', AuthUser, async(req, res) => {
+  try {
+    const userEmail = req.user.email;
+    const hotelId = req.body.hotel._id; 
+
+    const updatedUser = await UsersModel.UnsaveHotel(userEmail, hotelId);
+
+    res.status(200).json({ success: true, message: 'saved Hotel was removed successfully', user: updatedUser });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying to unsave the Hotel' });
+  }
+})
+
+
+
+
+
 //DELETE == DELETE
 
 UsersRoute.delete('delete/:id', async (req, res) => {

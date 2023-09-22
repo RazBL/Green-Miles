@@ -62,6 +62,7 @@ class UsersModel {
             email: email
         }
         let user = await new DB().FindOne(query, 'users');
+       
         if (!user || !bcrypt.compareSync(password, user.password))
             return null;
         return user;
@@ -116,6 +117,34 @@ class UsersModel {
         let data = await new DB().FindAll("users", query);
         return data[0].savedFlights;
     }
+
+    static async SaveHotel(userEmail, hotelId) {
+
+        console.log("save hotel");
+        let query = {
+            "email": userEmail
+        };
+        let update = {
+            "$addToSet": {
+                "savedHotels": new ObjectId(hotelId)
+            }
+        };
+        return await new DB().UpdateOne("users", query, update)
+    }
+
+    
+    static async UnsaveHotel(userEmail, hotelId) {
+        let query = {
+            "email": userEmail
+        };
+        let update = {
+            "$pull": {
+                "savedHotels": new ObjectId(hotelId)
+            }
+        };
+        return await new DB().UpdateOne("users", query, update);
+    }
+
 
 }
 

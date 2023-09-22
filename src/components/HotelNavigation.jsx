@@ -6,6 +6,11 @@ const Stack = createStackNavigator();
 //Screens
 import HotelsSearch from "../screens/HotelsSearch";
 import HotelsSearchResults from "../screens/HotelsSearchResults"
+import HotelDetails from '../screens/HotelDetails'; // וודא שאתה מייבא את מסך ה-HotelDetails
+import HotelCheckOut from '../screens/HotelCheckOut'
+
+// ...
+
 
 export default function HotelNavigation() {
     return (
@@ -25,6 +30,11 @@ export default function HotelNavigation() {
                     },
                 }}
             />
+            <Stack.Screen name="HotelDetails" component={HotelDetails} />
+            <Stack.Screen name="HotelCheckOut" component={HotelCheckOut} />
+
         </Stack.Navigator>
+
+
     );
 }
