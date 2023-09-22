@@ -17,9 +17,9 @@ export default function FlightSearch({ navigation }) {
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
     const [selectedLocation, SetSelectedLocation] = useState("");
     const [selectedDestination, SetSelectedDestination] = useState("");
-    const [isModalVisible, setModalVisible] = useState(false);
+    const [isModalVisible, SetModalVisible] = useState(false);
     const MAX_PASSENGERS = 9;
-    const MIN_passengerS = 1;
+    const MIN_PASSENGERS = 1;
     const [transformedOriginAirport, SetTransformedOriginAirports] = useState([])
     const [transformedDestinationAirport, SetTransformedDestinationAirports] = useState([])
     const [openOrigin, SetOpenOrigin] = useState(false);
@@ -32,7 +32,7 @@ export default function FlightSearch({ navigation }) {
     };
 
     const DecrementPassengers = () => {
-        if (passengers > MIN_PassengerS) SetPassengers(passengers - 1);
+        if (passengers > MIN_PASSENGERS) SetPassengers(passengers - 1);
     };
 
     const DateChange = (event, selectedDate) => {
@@ -196,7 +196,7 @@ export default function FlightSearch({ navigation }) {
                     </TouchableOpacity>
 
 
-                    <TouchableOpacity style={[styles(theme).searchSection]} onPress={() => setModalVisible(true)}>
+                    <TouchableOpacity style={[styles(theme).searchSection]} onPress={() => SetModalVisible(true)}>
                         <View style={styles(theme).inputWrapper}>
                             <MaterialCommunityIcons
                                 name="account"
@@ -219,10 +219,10 @@ export default function FlightSearch({ navigation }) {
                         transparent={true}
                         visible={isModalVisible}
                         onRequestClose={() => {
-                            setModalVisible(!isModalVisible);
+                            SetModalVisible(!isModalVisible);
                         }}
                     >
-                        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+                        <TouchableWithoutFeedback onPress={() => SetModalVisible(false)}>
 
                             <View style={styles(theme).centeredView}>
                                 <View style={styles(theme).modalView}>
@@ -237,7 +237,7 @@ export default function FlightSearch({ navigation }) {
                                     </View>
                                     <TouchableOpacity
                                         style={[styles(theme).button, styles(theme).buttonClose]}
-                                        onPress={() => setModalVisible(!isModalVisible)}
+                                        onPress={() => SetModalVisible(!isModalVisible)}
                                     >
                                         <Text style={styles(theme).textStyle}>Done</Text>
                                     </TouchableOpacity>

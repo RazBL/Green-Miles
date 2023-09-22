@@ -1,37 +1,107 @@
-import { View, Text, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback } from 'react-native'
-import React, { useState, useContext } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Keyboard, TouchableWithoutFeedback, } from 'react-native'
+import React, { useState, useContext, useEffect } from 'react'
 import { Card, useTheme, Headline, TextInput } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 //Contexts
 import { FlightsContext } from '../context/FlightsContext';
 import { UsersContext } from '../context/UsersContext';
+const cc = require('country-city');
 
+//Componenets
 
 export default function FlightCheckout({ navigation }) {
 
-    const { currentUser } = useContext(UsersContext);
-    const { FlightBooking, passengersContext, FlightToBook} = useContext(FlightsContext);
+    const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
+    const { FlightBooking, passengersContext, FlightToBook, } = useContext(FlightsContext);
+
     const [email, SetEmail] = useState("");
-    const [country, SetCountry] = useState("");
+    const [country, SetCountry] = useState("Israel");
     const [city, SetCity] = useState("");
     const [Address, SetAddress] = useState("");
     const [cardNumber, SetCardNumber] = useState("");
-    const [expirationDate, SetExpirationDate] = useState(Date);
+    const [expirationDate, SetExpirationDate] = useState("");
     const [cvv, SetCvv] = useState("");
     const [cardOwner, SetCardOwner] = useState("");
+    const [isModalVisible, SetModalVisible] = useState(false);
+    const [transformedCountries, SetTransformedCountries] = useState([]);
+    const [countryCities, SetCountryCities] = useState([]);
+    const [countryPicker, SetCountryPicker] = useState(false);
+    const [cityPicker, SetCityPicker] = useState(false);
+
     const theme = useTheme();
 
     const CheckoutHandler = () => {
-        let currentDate = new Date().toLocaleDateString();
-        let currentTime = new Date().toLocaleTimeString();
-        let data = FlightBooking(currentUser, currentTime, currentDate, FlightToBook);
-        console.log(data);
+        if (ValidInput()) {
+            let now = new Date();
+
+            let year = now.getFullYear();
+            let month = String(now.getMonth() + 1).padStart(2, '0');
+
+            let hours = String(now.getHours()).padStart(2, '0');
+            let minutes = String(now.getMinutes()).padStart(2, '0');
+            let day = String(now.getDate()).padStart(2, '0');
+
+            let localTime = `${hours}:${minutes}`;
+            let localDate = `${year}-${month}-${day}`;
+
+            let data = FlightBooking(currentUser, localTime, localDate, FlightToBook);
+            alert(data);
+        }
     }
 
-    const ValidINput = () => {
+    const TransformCountries = () => {
 
+        let data = countries.map(country => (
+            {
+                label: country,
+                value: country
+            }
+        ));
+
+        SetTransformedCountries(data);
+
+        let cities = cc.getCities(country);
+
+        data = cities.map(city => (
+            {
+                label: city,
+                value: city
+            }
+        ));
+
+        SetCountryCities(data);
+
+    };
+
+
+    const ValidInput = () => {
+        let valid = true;
+
+        if (cardOwner === "" || cvv === "" || expirationDate === "/" || Address === "" ||
+            country === "" || email === "" || city === "" || cardNumber === "") {
+            alert("Please don't leave any input field empty");
+            valid = false;
+
+        }
+        else if (!CheckValidEmail(email)) {
+            valid = false;
+            alert("Please enter a valid email.");
+        }
+        else
+
+
+            return valid;
     }
+
+    useEffect(() => {
+        TransformCountries();
+    }, [])
+
+    useEffect(() => {
+        TransformCountries();
+    }, [country])
 
     return (
         <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
@@ -41,6 +111,8 @@ export default function FlightCheckout({ navigation }) {
                 enableOnAndroid={true}
                 extraScrollHeight={200}
             >
+
+
                 <View style={styles(theme).container}>
                     <Card style={{ backgroundColor: 'white' }}>
                         <Card.Cover style={styles(theme).imgContainer} source={require("../images/FlightSearch.png")} />
@@ -59,7 +131,7 @@ export default function FlightCheckout({ navigation }) {
                             </View>
 
                             <View>
-                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.destination.city} <Text style={styles(theme).montserratBold}>Atlanta</Text></Text>
+                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>Destination <Text style={styles(theme).montserratBold}>{FlightToBook.destination.city}</Text></Text>
                                 <Text style={[styles(theme).alignTextRight, styles(theme).montserratBold, styles(theme).text]}>Arrival</Text>
                                 <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.arrival.date}</Text>
                                 <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.arrival.time}</Text>
@@ -77,18 +149,30 @@ export default function FlightCheckout({ navigation }) {
                             style={[styles(theme).textInput]}
                             onChangeText={text => SetEmail(text)}
                         />
-                        <View style={styles(theme).dualInput}>
-                            <TextInput
-                                label="Country"
-                                mode='outlined'
-                                style={[styles(theme).textInputHalf]}
-                                onChangeText={text => SetCountry(text)}
+                        <View >
+                            <DropDownPicker
+                                open={countryPicker}
+                                onOpen={() => SetCountryPicker(true)}
+                                onClose={() => SetCountryPicker(false)}
+                                placeholder='Country'
+                                items={transformedCountries}
+                                value={country}
+                                setValue={SetCountry}
+                                textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
+                                style={[styles(theme).textInput, { borderRadius: 5, borderColor: 'grey' }]}
+                                listMode="MODAL"
                             />
-                            <TextInput
-                                label="City"
-                                mode='outlined'
-                                style={[styles(theme).textInputHalf, styles(theme).textInputRight]}
-                                onChangeText={text => SetCity(text)}
+                            <DropDownPicker
+                                open={cityPicker}
+                                onOpen={() => SetCityPicker(true)}
+                                onClose={() => SetCityPicker(false)}
+                                placeholder='City'
+                                items={countryCities}
+                                value={city}
+                                setValue={SetCity}
+                                textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
+                                style={[styles(theme).textInput, { borderRadius: 5, borderColor: 'grey', marginBottom: -6 }]}
+                                listMode="MODAL"
                             />
                         </View>
                         <TextInput
@@ -119,8 +203,10 @@ export default function FlightCheckout({ navigation }) {
                                 label="Expiration Date"
                                 mode='outlined'
                                 style={[styles(theme).textInputHalf]}
-                                onChangeText={text => SetExpirationDate(text)}
+                                pointerEvents="none"
+                                value={expirationDate}
                             />
+                            
                             <TextInput
                                 label="CVV"
                                 mode='outlined'
@@ -150,6 +236,7 @@ export default function FlightCheckout({ navigation }) {
                 </View>
             </KeyboardAwareScrollView>
         </TouchableWithoutFeedback>
+
     )
 }
 
@@ -208,12 +295,12 @@ const styles = theme => StyleSheet.create({
     },
     dualInput: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 20
+        justifyContent: 'space-around',
+        marginTop: 20,
     },
     textInput: {
         marginTop: 20,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
     },
     textInputHalf: {
         width: '48%',

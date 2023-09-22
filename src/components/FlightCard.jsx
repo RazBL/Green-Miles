@@ -18,12 +18,12 @@ export default function FlightCard({ flight, navigation }) {
         }
 
         if(!saved){
-            SaveFlight(flight, navigation);
             SetSaved(true);
+            SaveFlight(flight, navigation);
         }
         else{
-            RemoveSavedFlight(flight, navigation);
             SetSaved(false);
+            RemoveSavedFlight(flight, navigation);
         }
     }
 

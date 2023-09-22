@@ -15,7 +15,7 @@ POST http://localhost:3500/api/users/login
 Content-Type: application/json
 
 {
-  "email": "razraz@gmail.com",
+  "email": "raz@gmail.com",
   "password": "razraz"
 }
 
@@ -46,3 +46,7 @@ Content-Type: application/json
     "date": "2023-09-20",
     "time": "23:21"
 }
+
+###
+
+http://localhost:3500/api/users/64c9db30e1feda9915eca2b7/saved-flights

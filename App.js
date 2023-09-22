@@ -18,6 +18,7 @@ import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
 import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
+import FlightSearchResults from './src/screens/FlightSearchResults';
 
 const Stack = createStackNavigator();
 
@@ -54,6 +55,7 @@ export default function App() {
           <SafeAreaProvider style={styles.container}>
             <NavigationContainer>
                 <Stack.Navigator>
+                {/* <Stack.Screen name="flightSearchResult" component={FlightSearchResults} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/> */}
                 <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Navigation" component={Navigation} options={{headerTransparent: true, headerTitle: '',headerLeft: null  }}/>

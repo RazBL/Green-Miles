@@ -1,6 +1,7 @@
 import React, { useEffect, useState, createContext } from 'react'
 import { base_api } from '../../utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const cc = require('country-city');
 
 export const UsersContext = createContext();
 
@@ -8,6 +9,8 @@ export default function UsersContextProvider({ children }) {
 
     const [users, SetUsers] = useState([]);
     const [currentUser, SetCurrentUser] = useState(null);
+    const [countries, SetCountries] = useState([]);
+    const [savedFlights, SetSavedFlights] = useState([]);
 
     const LoadAllUsers = async () => {
         try {
@@ -17,6 +20,11 @@ export default function UsersContextProvider({ children }) {
         } catch (err) {
             console.error(err);
         }
+    }
+
+    const GetAllCountriesAndCities = () => {
+        const countries = cc.getCountries();
+        SetCountries(countries);
     }
 
     const RegisterUser = async (newUser) => {
@@ -70,7 +78,6 @@ export default function UsersContextProvider({ children }) {
         }
     };
 
-
     const RemoveSavedFlight = async (flight) => {
         let token = await AsyncStorage.getItem('userToken');
         if (!token) {
@@ -107,7 +114,6 @@ export default function UsersContextProvider({ children }) {
     }
 
     const SaveFlight = async (flight, navigation) => {
-
         let token = await AsyncStorage.getItem('userToken');
         if (!token) {
             alert('you must sign in to save a flight');
@@ -126,22 +132,48 @@ export default function UsersContextProvider({ children }) {
                     }),
                 });
 
-
                 if (!res.ok) {
                     let errorData = await res.json();
                     console.log(`Error is: ${errorData.error}`);
                     return null;
                 }
+
                 console.log("Flight saved successfully!");
-                LoadAllUsers();
-                const updatedUserProfile = users.find(user => currentUser._id === user._id)
-                SetCurrentUser(updatedUserProfile);
+
+                if (currentUser) {
+                    SetCurrentUser(prevUser => ({
+                        ...prevUser,
+                        savedFlights: [...prevUser.savedFlights, flight._id]
+                    }));
+                }
 
             } catch (error) {
                 console.log(error);
             }
         }
     }
+
+    const LoadSavedFlights = async () => {
+        if (currentUser) {
+            try {
+                let res = await fetch(`${base_api}/users/${currentUser._id}/saved-flights`);
+
+                let data = await res.json();
+
+                res2 = await fetch(`${base_api}/Flights/`);
+
+                let data2 = await res2.json()
+
+                let savedFlightsObj = data2.filter(flight => res2.includes(flight._id) )
+
+                SetSavedFlights(savedFlightsObj);
+
+            } catch (error) {
+                console.error("There was a problem fetching saved flights:", error);
+            }
+        }
+    }
+
 
     const GetUserProfile = async () => {
         try {
@@ -201,6 +233,7 @@ export default function UsersContextProvider({ children }) {
 
     useEffect(() => {
         LoadAllUsers();
+        GetAllCountriesAndCities();
     }, [])
 
     const value = {
@@ -215,7 +248,11 @@ export default function UsersContextProvider({ children }) {
         SaveFlight,
         CheckIfFlightSaved,
         RemoveSavedFlight,
-        currentUser
+        currentUser,
+        CheckValidEmail,
+        countries,
+        LoadSavedFlights,
+        savedFlights
     }
 
     return (
