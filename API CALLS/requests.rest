@@ -20,14 +20,39 @@ Content-Type: application/json
 }
 
 ###
-POST https://greenmiles.onrender.com/api/users/login
+POST http://localhost:3500/api/users/login
 Content-Type: application/json
 
 {
-  "email": "razraz@gmail.com",
+  "email": "raz@gmail.com",
   "password": "razraz"
 }
 
 
 ###
 GET http://localhost:3500/api/flights/search?destinationAirport=CDG&originAirport=ATL&date=2024-08-23&availableSeats=1
+
+###
+GET https://greenmiles.onrender.com/api/hotels/search?country=Israel&checkInDate=2023-09-01&checkOutDate=2023-09-10
+
+###
+
+PUT https://example.com/api/resource
+Content-Type: application/json
+
+{
+  "email": "raz@gmail.com",
+  "hotel": "updatedValue2"
+}
+### 
+
+
+PUT http://localhost:3500/api/users/save-hotel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQ1NjNTMlNJSC5JWFI3MjZBSVhvUlZlRm5kOVF3akU2MWMzN3JBRzdlSVRza0FGbUZiVHBjeSIsInNhdmVkRmxpZ2h0cyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzIiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOltdLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6InJheiIsInBob25lTnVtYmVyIjpudWxsLCJpbWFnZSI6bnVsbCwiY291bnRyeSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzcyI6bnVsbCwiaWF0IjoxNjk1NDA5ODA3LCJleHAiOjE2OTU0MTM0MDd9.L-JOGwRKIL2x7oTQrmtTLuhGtnvUCUeesUYMb0tETMg
+Content-Type: application/json
+
+{
+  "hotel": {
+    "_id": "645e91233fb2fbd063c199bb"
+  }
+}
