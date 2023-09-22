@@ -70,14 +70,13 @@ export default function RegisterStepOne({ navigation }) {
     navigation.navigate('Navigation');
   }
 
-  const handleInputFocus = () => {
+  const HandleInputFocus = () => {
     scrollRef.current.scrollTo({ x: 0, y: 180, animated: true });
   };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <KeyboardAvoidingView
-        style={styles.container} >
+      <KeyboardAvoidingView style={styles.container} >
         <ScrollView keyboardShouldPersistTaps='always' contentContainerStyle={{ flexGrow: 1 }} ref={scrollRef}>
           <SafeAreaView style={styles.container}>
             <View style={styles.imageFrame}>
@@ -94,14 +93,14 @@ export default function RegisterStepOne({ navigation }) {
                   backgroundColor="white"
                   style={[styles.nameInput, styles.marginRight]}
                   onChangeText={text => SetFirstName(text)}
-                  onFocus={handleInputFocus}
+                  onFocus={HandleInputFocus}
                 />
                 <TextInput
                   label="Last Name"
                   backgroundColor="white"
                   style={[styles.nameInput, styles.marginLeft]}
                   onChangeText={text => SetLastName(text)}
-                  onFocus={handleInputFocus}
+                  onFocus={HandleInputFocus}
                 />
               </View>
               <TextInput
@@ -110,7 +109,7 @@ export default function RegisterStepOne({ navigation }) {
                 style={styles.textInput}
                 onChangeText={text => SetEmail(text)}
                 keyboardType="email-address"
-                onFocus={handleInputFocus}
+                onFocus={HandleInputFocus}
               />
               <TextInput
                 label="Password"
@@ -118,7 +117,7 @@ export default function RegisterStepOne({ navigation }) {
                 style={styles.textInput}
                 onChangeText={text => SetPassword(text)}
                 secureTextEntry
-                onFocus={handleInputFocus}
+                onFocus={HandleInputFocus}
               />
               <Button
                 mode="outlined"

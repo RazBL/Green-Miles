@@ -7,11 +7,16 @@ import { UsersContext } from '../context/UsersContext';
 
 export default function FlightCard({ flight, navigation }) {
 
-    const { BookFlightPage} = useContext(FlightsContext);
-    const { SaveFlight, CheckIfFlightSaved, RemoveSavedFlight} = useContext(UsersContext);
+    const { BookFlightPage, passengersContext} = useContext(FlightsContext);
+    const { SaveFlight, CheckIfFlightSaved, RemoveSavedFlight, currentUser} = useContext(UsersContext);
     const [saved, SetSaved] = useState(false);
-
+    
     const FlightSaveHandler = () => {
+        if(currentUser === null){ 
+            navigation.navigate('Login');
+            return;
+        }
+
         if(!saved){
             SaveFlight(flight, navigation);
             SetSaved(true);
@@ -34,7 +39,7 @@ export default function FlightCard({ flight, navigation }) {
     const theme = useTheme();
 
     const CheckOutPageHandler = () => {
-        BookFlightPage(navigation);
+        BookFlightPage(navigation, flight);
     }
 
     useEffect(() => {
@@ -87,7 +92,7 @@ export default function FlightCard({ flight, navigation }) {
             <Card.Content style={styles(theme).infoBoxAction}>
 
                 <Card.Content>
-                    <Text style={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>${flight.price}</Text>
+                    <Text style={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>${flight.price * passengersContext}</Text>
                 </Card.Content>
 
                 <TouchableOpacity style={styles(theme).bookNowBtn} onPress={CheckOutPageHandler}>
@@ -131,7 +136,7 @@ const styles = theme => StyleSheet.create({
     },
     horizontalLine: {
         borderBottomColor: theme.colors.cardBorder,
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 1,
         marginBottom: 15
     },
     midInfoBox: {

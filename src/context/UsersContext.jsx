@@ -275,28 +275,28 @@ export default function UsersContextProvider({ children }) {
       };
       
 
-const RemoveToken = async () => {
-    try {
-        await AsyncStorage.removeItem('userToken');
-    } catch (error) {
-        console.error('An error occurred while removing the token:', error);
+    const RemoveToken = async () => {
+        try {
+            await AsyncStorage.removeItem('userToken');
+        } catch (error) {
+            console.error('An error occurred while removing the token:', error);
+        }
+    };
+
+
+    const EmailExists = (email) => {
+        let userFound = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        return userFound;
     }
-};
+
+    const CheckValidEmail = (email) => {
+        return (email.endsWith(".com") || email.endsWith(".co.il")) && /^[a-zA-Z0-9.~-]+@[a-zA-Z-]+(\.[a-zA-Z0-9-]+)*$/.test(email);
+    }
 
 
-const EmailExists = (email) => {
-    let userFound = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-    return userFound;
-}
-
-const CheckValidEmail = (email) => {
-    return (email.endsWith(".com") || email.endsWith(".co.il")) && /^[a-zA-Z0-9.~-]+@[a-zA-Z-]+(\.[a-zA-Z0-9-]+)*$/.test(email);
-}
-
-
-useEffect(() => {
-    LoadAllUsers();
-}, [])
+    useEffect(() => {
+        LoadAllUsers();
+    }, [])
 
 const value = {
     users,
@@ -315,9 +315,9 @@ const value = {
     RemoveSavedFlight
 }
 
-return (
-    <UsersContext.Provider value={value}>
-        {children}
-    </UsersContext.Provider>
-)
+    return (
+        <UsersContext.Provider value={value}>
+            {children}
+        </UsersContext.Provider>
+    )
 }

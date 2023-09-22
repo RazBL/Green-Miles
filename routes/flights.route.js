@@ -1,10 +1,36 @@
 const FlightModel = require('../models/flights.model');
-
+const FlightBookingModel = require('../models/flight_booking.model');
 const FlightRoute = require('express').Router();
-
+const { ObjectId } = require('mongodb');
 //CRUD
 
 //CREATE == POST
+
+FlightRoute.post('/booking', async(req,res) => {
+    try {
+        console.log(req.body.time);
+        let bookedFlight = {
+            user_id: new ObjectId(req.body.userId),      
+            flight_id: new ObjectId(req.body.flightId),   
+            bookingTime: {
+                date: req.body.date,
+                time: req.body.time   
+            },
+            bookingStatus: "pending",  
+            price: req.body.price,      
+            passangers: req.body.passengers  
+        }
+
+        await FlightBookingModel.BookAFlight(bookedFlight);
+
+        await FlightModel.UpdateFlightSeats(req.body.passengers, new ObjectId(req.body.flightId));
+        
+        res.status(200).json("Flight booked successfully")
+
+    } catch (error) {
+        res.status(500).json({error});
+    }
+});
 
 //READ == GET
 FlightRoute.get('/', async (req, res) => {
@@ -18,10 +44,7 @@ FlightRoute.get('/', async (req, res) => {
 
 
 FlightRoute.get('/search', async (req, res) => {
-    console.log("in search");
     try {
-        console.log("Query Parameters:", req.query); 
-        
         let queryObj = {
             "destination.airport": req.query.destinationAirport,
             "origin.airport": req.query.originAirport,
@@ -29,8 +52,6 @@ FlightRoute.get('/search', async (req, res) => {
             "departure.date": req.query.date
         };
         
-        console.log("MongoDB Query Object:", queryObj); 
-
         let data = await FlightModel.GetFlightSearchResult(queryObj);
 
         console.log("Data Returned:", data); 

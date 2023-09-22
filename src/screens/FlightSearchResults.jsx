@@ -1,6 +1,6 @@
 import { View, StyleSheet, FlatList, ScrollView } from 'react-native'
 import { Button, Headline } from 'react-native-paper'
-import Reac, { useContext } from 'react'
+import React, { useContext } from 'react'
 import { FlightsContext } from '../context/FlightsContext';
 
 //Component
@@ -10,8 +10,6 @@ import FlightCard from '../components/FlightCard';
 export default function FlightSearchResults({navigation}) {
 
   const { searchedFlights } = useContext(FlightsContext);
-
-  console.log((searchedFlights));
   
   const test = () => {
     navigation.navigate('Login')
@@ -48,16 +46,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     padding: 20,
-  },
-  upperBar: {
-    backgroundColor: '#1e272e',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-
-  },
-  image: {
-    width: 70,
   },
   buttonContainer: {
     flexDirection: 'row',

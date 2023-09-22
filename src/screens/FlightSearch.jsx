@@ -11,15 +11,15 @@ export default function FlightSearch({ navigation }) {
 
     const theme = useTheme();
 
-    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities } = useContext(FlightsContext);
-    const [passangers, SetPassangers] = useState(1);
+    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities, SetPassengersContext } = useContext(FlightsContext);
+    const [passengers, SetPassengers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
     const [selectedLocation, SetSelectedLocation] = useState("");
     const [selectedDestination, SetSelectedDestination] = useState("");
     const [isModalVisible, setModalVisible] = useState(false);
     const MAX_PASSENGERS = 9;
-    const MIN_PASSANGERS = 1;
+    const MIN_passengerS = 1;
     const [transformedOriginAirport, SetTransformedOriginAirports] = useState([])
     const [transformedDestinationAirport, SetTransformedDestinationAirports] = useState([])
     const [openOrigin, SetOpenOrigin] = useState(false);
@@ -28,25 +28,26 @@ export default function FlightSearch({ navigation }) {
 
 
     const IncrementPassengers = () => {
-        if (passangers < MAX_PASSENGERS) SetPassangers(passangers + 1);
+        if (passengers < MAX_PASSENGERS) SetPassengers(passengers + 1);
     };
 
     const DecrementPassengers = () => {
-        if (passangers > MIN_PASSANGERS) SetPassangers(passangers - 1);
+        if (passengers > MIN_PassengerS) SetPassengers(passengers - 1);
     };
 
     const DateChange = (event, selectedDate) => {
         if(selectedDate < new Date()){ SetDate(new Date()); }
-        const currentDate = selectedDate;
+        else {
+            const pureDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+            SetDate(pureDate);
+        }
         SetDatePickerVisibility(Platform.OS === 'ios');
-        SetDate(currentDate);
     };
-
 
     const HandleFlightSearch = () => {
         if (!isInputValid()) { return }
 
-        const formattedDate = date.toISOString().split('T')[0];
+        const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
         const originAirport = selectedLocation.split(" - ")[0];
         const destinationAirport = selectedDestination.split(" - ")[0];
 
@@ -54,11 +55,11 @@ export default function FlightSearch({ navigation }) {
             destinationAirport: destinationAirport,
             originAirport: originAirport,
             date: formattedDate,
-            availableSeats: passangers
+            availableSeats: passengers
         };
 
         FlightSearchResults(query);
-
+        SetPassengersContext(passengers)
         navigation.navigate('Flight Search Results');
     }
 
@@ -110,8 +111,7 @@ export default function FlightSearch({ navigation }) {
 
 
     return (
-        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); SetOpenOrigin(false); SetOpenDestination(false);
-}}>
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); SetOpenOrigin(false); SetOpenDestination(false);}}>
             <View style={styles(theme).container}>
                 <View style={styles(theme).flightSearch}>
 
@@ -210,7 +210,7 @@ export default function FlightSearch({ navigation }) {
                                 backgroundColor="white"
                                 style={styles(theme).input}
                                 placeholderTextColor={theme.colors.inputTextColor}
-                                placeholder={`${passangers} Passenger${passangers === 1 ? '' : 's'}`}
+                                placeholder={`${passengers} Passenger${passengers === 1 ? '' : 's'}`}
                             />
                         </View>
                     </TouchableOpacity>
@@ -230,7 +230,7 @@ export default function FlightSearch({ navigation }) {
                                         <TouchableOpacity onPress={IncrementPassengers}>
                                             <Text style={styles(theme).modalText}>+</Text>
                                         </TouchableOpacity>
-                                        <Text style={[styles(theme).modalText]}>{passangers}</Text>
+                                        <Text style={[styles(theme).modalText]}>{passengers}</Text>
                                         <TouchableOpacity onPress={DecrementPassengers}>
                                             <Text style={styles(theme).modalText}>-</Text>
                                         </TouchableOpacity>
@@ -305,7 +305,7 @@ const styles = theme => StyleSheet.create({
         borderRadius: 10,
     },
     input: {
-        paddingHorizontal: 60,
+        paddingHorizontal:60,
         zIndex: 1,
         borderRadius: 0,
         borderWidth: 0,

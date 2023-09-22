@@ -17,6 +17,7 @@ import Navigation from './src/screens/Navigation';
 import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
 import OnBoarding from './src/screens/OnBoarding';
+import FlightCheckout from './src/screens/FlightCheckout';
 
 const Stack = createStackNavigator();
 
@@ -24,11 +25,11 @@ const theme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#1CD995',
-    actionText: '#007BFF',
-    logoBackground: '#1E272E',
-    inputTextColor: '#2B3A4A',
-    cardBorder: '#949494'
+    primary: '#1CD995', //Logo green
+    actionText: '#007BFF', // a shade of blue
+    logoBackground: '#1E272E', //super dark blue
+    inputTextColor: '#2B3A4A', // light grey
+    cardBorder: '#949494' //light grey 2
     
   },
 };
@@ -59,6 +60,7 @@ export default function App() {
                   <Stack.Screen name="Register" component={RegisterStepOne} options={{headerTransparent: true, headerTitle: '', headerLeft: null}}/>
                   <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
+                  <Stack.Screen name="Flight Checkout" component={FlightCheckout} options={{headerTitleAlign: 'center'}}/>
                 </Stack.Navigator>
             </NavigationContainer>
             </SafeAreaProvider>            
