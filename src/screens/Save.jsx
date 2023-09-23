@@ -34,7 +34,6 @@ export default function Save({ navigation }) {
   }, [currentUser, flights]);
 
   useEffect(() => {
-    console.log(savedFlights, "Updated savedFlights");
   }, [savedFlights]);
 
 

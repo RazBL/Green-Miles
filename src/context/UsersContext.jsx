@@ -69,8 +69,9 @@ export default function UsersContextProvider({ children }) {
             if (data) {
                 const { user: loggedinUser, token } = data;
                 await AsyncStorage.setItem('userToken', token);
-                console.log(loggedinUser);
                 SetCurrentUser(loggedinUser);
+                console.log("loggedin user", loggedinUser);
+                console.log("current user", loggedinUser);
                 return loggedinUser;
             }
         } catch (err) {
@@ -267,38 +268,40 @@ export default function UsersContextProvider({ children }) {
     }
 
     const CheckTokenExpiry = async () => {
+        const token = await AsyncStorage.getItem('userToken');
+        if(!token){ return}
         const hasTokenExpired = await IsTokenExpired();
         if (hasTokenExpired) {
             alert('The token has expired, please log in again');
-            currentUser
+            SetCurrentUser(null);
             await AsyncStorage.removeItem('userToken');
         }
     }
 
-    // const GetUserProfile = async () => {
-    //     try {
-    //         const token = await AsyncStorage.getItem('userToken');
-    //         if (token) {
-    //             let res = await fetch(`${base_api}/users/profile`, {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${token}`
-    //                 },
-    //             });
+    const GetUserProfile = async () => {
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            if (token) {
+                let res = await fetch(`${base_api}/users/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                });
 
-    //             if (!res.ok) {
-    //                 console.error('Error Getting user Profile');
-    //                 return null;
-    //             }
+                if (!res.ok) {
+                    console.error('Error Getting user Profile');
+                    return null;
+                }
 
-    //             let data = await res.json();
-    //             let user = data.user;
-    //             return user;
-    //         }
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    //     return null;
-    // };
+                let data = await res.json();
+                let user = data.user;
+                return user;
+            }
+        } catch (err) {
+            console.error(err);
+        }
+        return null;
+    };
 
     const CheckIfFlightSaved = (flightId) => {
         if (!currentUser || !currentUser.savedFlights) {
@@ -357,7 +360,7 @@ export default function UsersContextProvider({ children }) {
 
     useEffect(() => {
         CheckTokenExpiry();
-        // Set an interval to check every 5 minutes
+        // Set an interval to check every 5
         const intervalId = setInterval(CheckTokenExpiry, 5 * 60 * 1000);
 
         // Cleanup
