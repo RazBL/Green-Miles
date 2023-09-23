@@ -18,6 +18,8 @@ import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
 import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
+// SECRET_KEY=1b56e1a1e49c2bc4ab5bbf3b302040628c20c4e9e3cd3cacc263cf7e0163d6089c5d80837e227a3bcf933219bf7a4d9df2ec0965977be3b9d64da72d527adc9b
+// SECRET_KEY=1b56e1a1e49c2bc4ab5bbf3b302040628c20c4e9e3cd3cacc263cf7e0163d6089c5d80837e227a3bcf933219bf7a4d9df2ec0965977be3b9d64da72d527adc9b
 
 const Stack = createStackNavigator();
 

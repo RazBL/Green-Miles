@@ -15,12 +15,12 @@ POST http://localhost:3500/api/users/login
 Content-Type: application/json
 
 {
-  "email": "razraz@gmail.com",
+  "email": "raz@gmail.com",
   "password": "razraz"
 }
 
 ###
-POST http://localhost:3500/api/users/login
+POST https://greenmiles.onrender.com/api/users/login
 Content-Type: application/json
 
 {
@@ -45,4 +45,30 @@ Content-Type: application/json
     "dateTime": "2023-09-20T23:21:00.000Z" ,
     "date": "2023-09-20",
     "time": "23:21"
+}
+
+
+###
+
+PUT https://greenmiles.onrender.com/api/users/save-hotel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQ1NjNTMlNJSC5JWFI3MjZBSVhvUlZlRm5kOVF3akU2MWMzN3JBRzdlSVRza0FGbUZiVHBjeSIsInNhdmVkRmxpZ2h0cyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiLCI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJiIiwiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJjIl0sImZpcnN0TmFtZSI6InJheiIsImxhc3ROYW1lIjoicmF6IiwicGhvbmVOdW1iZXIiOm51bGwsImltYWdlIjpudWxsLCJjb3VudHJ5IjpudWxsLCJjaXR5IjpudWxsLCJhZGRyZXNzIjpudWxsLCJpYXQiOjE2OTU0OTYxMjgsImV4cCI6MTY5NTQ5OTcyOH0.9Elw0kXO9He6kUnSvthTMvAfDGLNx5MCHyr2oymE_DA
+Content-Type: application/json
+
+{
+  "hotel": {
+    "_id": "645e91233fb2fbd063c199bd"
+  }
+}
+
+
+###
+
+PUT http://localhost:3500/api/users/unsave-hotel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQ1NjNTMlNJSC5JWFI3MjZBSVhvUlZlRm5kOVF3akU2MWMzN3JBRzdlSVRza0FGbUZiVHBjeSIsInNhdmVkRmxpZ2h0cyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiLCI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJiIiwiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJjIl0sImZpcnN0TmFtZSI6InJheiIsImxhc3ROYW1lIjoicmF6IiwicGhvbmVOdW1iZXIiOm51bGwsImltYWdlIjpudWxsLCJjb3VudHJ5IjpudWxsLCJjaXR5IjpudWxsLCJhZGRyZXNzIjpudWxsLCJpYXQiOjE2OTU0OTYxMjgsImV4cCI6MTY5NTQ5OTcyOH0.9Elw0kXO9He6kUnSvthTMvAfDGLNx5MCHyr2oymE_DA
+Content-Type: application/json
+
+{
+  "hotel": {
+    "_id": "645e91233fb2fbd063c199bd"
+  }
 }

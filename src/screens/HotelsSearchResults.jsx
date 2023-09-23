@@ -58,13 +58,15 @@ const styles = theme => StyleSheet.create({
     backgroundColor: theme.colors.logoBackground,
     borderTopEndRadius: 0,
     borderBottomEndRadius: 0,
-    width: 130
+    width: 130,
+    borderRadius: 10
   },
   sortButton: {
     backgroundColor: theme.colors.primary,
     borderBottomStartRadius: 0,
     borderTopStartRadius: 0,
-    width: 130
+    width: 130,
+    borderRadius: 10
   },
   noFlightsText: {
     textAlign: 'center',

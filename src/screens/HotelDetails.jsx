@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native'; // ייבוא
+import { useNavigation } from '@react-navigation/native';
 
 const HotelDetails = ({ route }) => {
   const { hotel } = route.params;
-  const navigation = useNavigation(); // השמת המשתנה navigation
+  const navigation = useNavigation();
 
   const handleBookNow = () => {
-    // השתמש במשתנה navigation כדי לנווט למסך החדש
     navigation.navigate('HotelCheckOut', { hotel });
   };
 
@@ -22,28 +21,35 @@ const HotelDetails = ({ route }) => {
                 'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg',
             }}
           />
-          <Text style={styles.ecoRating}>
-            <Text style={[styles.ecoText, { color: '#38DDA2', fontWeight: 'bold' }]}>Eco</Text> Rating: {hotel.eco_rating} - <Text style={{ color: '#38DDA2', fontWeight: 'bold' }}>Excellent</Text>
-          </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{hotel.name}</Text>
+            <Text style={styles.ecoRating}>
+              <Text style={[styles.ecoText, { color: '#38DDA2', fontWeight: 'bold' }]}>
+                Eco
+              </Text>{' '}
+              Rating: {hotel.eco_rating} -{' '}
+              <Text style={{ color: '#38DDA2', fontWeight: 'bold' }}>Excellent</Text>
+            </Text>
+          </View>
         </View>
         <Card.Content>
-          <Text>{hotel.name}</Text>
-          <Text>Country: {hotel.country}</Text>
-          <Text>Country: {hotel.city}</Text>
-          <Text>Address: {hotel.address}</Text>
-          <Text>Price per night: ${hotel.price_per_night}</Text>
-          <Text>Description: {hotel.description}</Text>
-          <Text>Total Rooms: {hotel.rooms.totalRooms}</Text>
-          <Text>Available Rooms: {hotel.rooms.availability.availableRooms}</Text>
-          <Text>Check-in: {hotel.rooms.availability.from}</Text>
-          <Text>Check-out: {hotel.rooms.availability.to}</Text>
+          <Text style={styles.info}>Country: {hotel.country}</Text>
+          <Text style={styles.info}>City: {hotel.city}</Text>
+          <Text style={styles.info}>Address: {hotel.address}</Text>
+          <Text style={styles.info}>Price per night: ${hotel.price_per_night}</Text>
+          <Text style={styles.info}>Description: {hotel.description}</Text>
+          <Text style={styles.info}>Total Rooms: {hotel.rooms.totalRooms}</Text>
+          <Text style={styles.info}>Available Rooms: {hotel.rooms.availability.availableRooms}</Text>
+          <Text style={styles.info}>Check-in: {hotel.rooms.availability.from}</Text>
+          <Text style={styles.info}>Check-out: {hotel.rooms.availability.to}</Text>
+          
           <Button
-            style={{ backgroundColor: '#38DDA2', fontWeight: 'bold' }}
-            labelStyle={{ color: 'white' }}
-            onPress={handleBookNow} // הפעל את הפונקציה handleBookNow כאשר לוחצים על הכפתור
-          >
-            Book Now
-          </Button>
+    style={{ backgroundColor: '#38DDA2', borderColor: 'transparent' }}
+    onPress={handleBookNow}
+    contentStyle={{ width: '100%' }} // כאן תגדיר את הרוחב של התוכן של הכפתור
+  >
+    <Text style={{ color: 'white', fontWeight: 'bold' }}>Book Now</Text>
+  </Button>
         </Card.Content>
       </Card>
     </View>
@@ -58,18 +64,34 @@ const styles = StyleSheet.create({
   card: {
     elevation: 4,
     marginBottom: 16,
+    fontFamily: 'Montserrat_Bold',
+  },
+  textContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    padding: 16,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    fontFamily: 'Montserrat_Bold',
+    color: 'white',
+  },
+  info: {
+    fontSize: 15,
+    marginBottom: 10,
+    fontFamily: 'Montserrat_Bold',
   },
   ecoRating: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    color: 'white',
-    padding: 8,
-    borderRadius: 4,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
-    position: 'absolute',
-    top: 16,
-    left: 16,
-    zIndex: 1,
+    fontFamily: 'Montserrat_Bold',
+    color: 'white',
   },
   ecoText: {
     fontWeight: 'normal',

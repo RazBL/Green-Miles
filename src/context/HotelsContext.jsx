@@ -20,6 +20,27 @@ export default function HotelsContextProvider({ children }) {
     }
   }
   
+  const HotelRatingText = (hotel) => {
+    let ratingText = ""
+    if(hotel.eco_rating > 4.5){
+      ratingText = "Excellent"
+    }
+    else if(hotel.eco_rating > 4){
+      ratingText = "Very Good"
+    }
+    else if(hotel.eco_rating > 3){
+      ratingText = "Good"
+    }
+    else if(hotel.eco_rating > 2){
+      ratingText = "Fair"
+    }
+    else{
+      ratingText = 'Poor'
+    }
+
+    return ratingText;
+  }
+
   /*
   const searchHotels = async (query) => {
     try {
@@ -78,7 +99,8 @@ export default function HotelsContextProvider({ children }) {
     getHotelCheckInDates,
     getHotelCheckOutDates,
     getHotelLocations,
-    HotelSearchResults
+    HotelSearchResults,
+    HotelRatingText
   };
 
   return (
