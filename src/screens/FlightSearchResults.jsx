@@ -73,7 +73,7 @@ export default function FlightSearchResults({ navigation }) {
 
   useEffect(() => {
     SetDisplayedFlights(FilterAndSortFlights());
-  }, [searchedFlights, selectedPriceOptionIndex, co2StateFilter, selectedSorteOptionIndex]);
+  }, [searchedFlights, selectedPriceOptionIndex, co2StateFilter, selectedSorteOptionIndex,]);
 
 
   return (<>
@@ -168,7 +168,7 @@ export default function FlightSearchResults({ navigation }) {
         </View>
       </View>
 
-      <View style={{paddingBottom: 50}}>
+      <View>
         {searchedFlights.length === 0 ? (
           <Headline style={styles.noFlightsText}>Sorry.. But no Flights were found :( </Headline>
         ) : (
@@ -177,6 +177,7 @@ export default function FlightSearchResults({ navigation }) {
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => <FlightCard flight={item} navigation={navigation} />}
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={{ paddingBottom: 65}}
           />
         )}
       </View>

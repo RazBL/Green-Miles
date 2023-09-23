@@ -2,7 +2,7 @@ import React, { useEffect, useState, createContext } from 'react'
 import { base_api } from '../../utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const cc = require('country-city');
-
+import jwtDecode from "jwt-decode";
 export const UsersContext = createContext();
 
 export default function UsersContextProvider({ children }) {
@@ -69,6 +69,7 @@ export default function UsersContextProvider({ children }) {
             if (data) {
                 const { user: loggedinUser, token } = data;
                 await AsyncStorage.setItem('userToken', token);
+                console.log(loggedinUser);
                 SetCurrentUser(loggedinUser);
                 return loggedinUser;
             }
@@ -78,78 +79,81 @@ export default function UsersContextProvider({ children }) {
         }
     };
 
-    const RemoveSavedFlight = async (flight) => {
+    const GetTokenAndNavigate = async (navigation) => {
         let token = await AsyncStorage.getItem('userToken');
         if (!token) {
-            alert('you must sign in to save a flight');
+            alert('You must sign in to save a flight');
             navigation.navigate('Login');
+            throw new Error('User not authenticated');
         }
-        else {
-            try {
-                let res = await fetch(`${base_api}/users/unsave-flight`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        flight: flight,
-                    }),
-                });
+        return token;
+    }
 
-                if (!res.ok) {
-                    let errorData = await res.json();
-                    console.log(`Error is: ${errorData.error}`);
-                    return null;
+
+    const UpdateUserFlightsInState = (flightId, action) => {
+        const updatedUsers = users.map(user => {
+            if (user._id === currentUser._id) {
+                let updatedUser = { ...user };
+                if (action === 'save') {
+                    updatedUser.savedFlights.push(flightId);
+                } else if (action === 'remove') {
+                    updatedUser.savedFlights = updatedUser.savedFlights.filter(id => id !== flightId);
                 }
-                console.log("Saved Flight was removed successfully!");
-                LoadAllUsers();
-                const updatedUserProfile = users.find(user => currentUser._id === user._id)
-                SetCurrentUser(updatedUserProfile);
-
-            } catch (error) {
-                console.log(error);
+                SetCurrentUser(updatedUser);
+                return updatedUser;
             }
-        }
+            return user;
+        });
+        SetUsers(updatedUsers);
     }
 
     const SaveFlight = async (flight, navigation) => {
-        let token = await AsyncStorage.getItem('userToken');
-        if (!token) {
-            alert('you must sign in to save a flight');
-            navigation.navigate('Login');
-        }
-        else {
-            try {
-                let res = await fetch(`${base_api}/users/save-flight`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        flight: flight,
-                    }),
-                });
+        try {
+            const token = await GetTokenAndNavigate(navigation);
+            let res = await fetch(`${base_api}/users/save-flight`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ flight }),
+            });
 
-                if (!res.ok) {
-                    let errorData = await res.json();
-                    console.log(`Error is: ${errorData.error}`);
-                    return null;
-                }
-
-                console.log("Flight saved successfully!");
-
-                if (currentUser) {
-                    SetCurrentUser(prevUser => ({
-                        ...prevUser,
-                        savedFlights: [...prevUser.savedFlights, flight._id]
-                    }));
-                }
-
-            } catch (error) {
-                console.log(error);
+            if (!res.ok) {
+                const errorData = await res.json();
+                console.error(`Error is: ${errorData.error}`);
+                return;
             }
+
+            console.log("Flight saved successfully!");
+            UpdateUserFlightsInState(flight._id, 'save');
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const RemoveSavedFlight = async (flight, navigation) => {
+        try {
+            const token = await GetTokenAndNavigate(navigation);
+            let res = await fetch(`${base_api}/users/unsave-flight`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ flight }),
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                console.error(`Error is: ${errorData.error}`);
+                return;
+            }
+
+            console.log("Saved Flight was removed successfully!");
+            UpdateUserFlightsInState(flight._id, 'remove');
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -164,7 +168,7 @@ export default function UsersContextProvider({ children }) {
 
                 let data2 = await res2.json()
 
-                let savedFlightsObj = data2.filter(flight => res2.includes(flight._id) )
+                let savedFlightsObj = data2.filter(flight => data.includes(flight._id))
 
                 SetSavedFlights(savedFlightsObj);
 
@@ -175,7 +179,7 @@ export default function UsersContextProvider({ children }) {
     }
 
 
-   
+
     const SaveHotel = async (hotel, navigation) => {
 
         let token = await AsyncStorage.getItem('userToken');
@@ -250,31 +254,51 @@ export default function UsersContextProvider({ children }) {
     }
 
 
-
-    const GetUserProfile = async () => {
+    const IsTokenExpired = async () => {
         try {
             const token = await AsyncStorage.getItem('userToken');
-            if (token) {
-                let res = await fetch(`${base_api}/users/profile`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
-                });
-
-                if (!res.ok) {
-                    console.error('Error Getting user Profile');
-                    return null;
-                }
-
-                let data = await res.json();
-                let user = data.user;
-                return user;
-            }
-        } catch (err) {
-            console.error(err);
+            if (!token) return true;
+            const decoded = jwtDecode(token);
+            return decoded.exp * 1000 < Date.now();
+        } catch (error) {
+            console.log(error);
+            return false;
         }
-        return null;
-    };
+    }
+
+    const CheckTokenExpiry = async () => {
+        const hasTokenExpired = await IsTokenExpired();
+        if (hasTokenExpired) {
+            alert('The token has expired, please log in again');
+            currentUser
+            await AsyncStorage.removeItem('userToken');
+        }
+    }
+
+    // const GetUserProfile = async () => {
+    //     try {
+    //         const token = await AsyncStorage.getItem('userToken');
+    //         if (token) {
+    //             let res = await fetch(`${base_api}/users/profile`, {
+    //                 headers: {
+    //                     'Authorization': `Bearer ${token}`
+    //                 },
+    //             });
+
+    //             if (!res.ok) {
+    //                 console.error('Error Getting user Profile');
+    //                 return null;
+    //             }
+
+    //             let data = await res.json();
+    //             let user = data.user;
+    //             return user;
+    //         }
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    //     return null;
+    // };
 
     const CheckIfFlightSaved = (flightId) => {
         if (!currentUser || !currentUser.savedFlights) {
@@ -286,7 +310,7 @@ export default function UsersContextProvider({ children }) {
         return flightFound;
     }
 
-    
+
     const CheckIfHotelSaved = (hotelId) => {
         if (!currentUser || !currentUser.savedHotels) {
             return undefined;
@@ -299,13 +323,13 @@ export default function UsersContextProvider({ children }) {
 
     const isHotelSaved = (currentUser, hotelId) => {
         if (!currentUser || !currentUser.savedHotels) {
-          return false;
+            return false;
         }
         let savedHotels = currentUser.savedHotels;
         let hotelFound = savedHotels.find(id => hotelId === id);
         return hotelFound !== undefined;
-      };
-      
+    };
+
 
     const RemoveToken = async () => {
         try {
@@ -329,28 +353,38 @@ export default function UsersContextProvider({ children }) {
     useEffect(() => {
         LoadAllUsers();
         GetAllCountriesAndCities();
-    }, [])
+    }, []);
 
-const value = {
-    users,
-    SetUsers,
-    Login,
-    EmailExists,
-    CheckValidEmail,
-    RegisterUser,
-    GetUserProfile,
-    RemoveToken,
-    SaveFlight,
-    SaveHotel,
-    CheckIfFlightSaved,
-    CheckIfHotelSaved,
-    RemoveSavedHotel,
-    RemoveSavedFlight,
+    useEffect(() => {
+        CheckTokenExpiry();
+        // Set an interval to check every 5 minutes
+        const intervalId = setInterval(CheckTokenExpiry, 5 * 60 * 1000);
+
+        // Cleanup
+        return () => clearInterval(intervalId);
+    }, []);
+
+    const value = {
+        users,
+        SetUsers,
+        Login,
+        EmailExists,
+        CheckValidEmail,
+        RegisterUser,
+        GetUserProfile,
+        RemoveToken,
+        SaveFlight,
+        SaveHotel,
+        CheckIfFlightSaved,
+        CheckIfHotelSaved,
+        RemoveSavedHotel,
+        RemoveSavedFlight,
         CheckValidEmail,
         countries,
         LoadSavedFlights,
-        savedFlights
-}
+        savedFlights,
+        currentUser
+    }
 
     return (
         <UsersContext.Provider value={value}>

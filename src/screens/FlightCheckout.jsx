@@ -158,6 +158,7 @@ export default function FlightCheckout({ navigation }) {
                                 items={transformedCountries}
                                 value={country}
                                 setValue={SetCountry}
+                                searchable={true}
                                 textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
                                 style={[styles(theme).textInput, { borderRadius: 5, borderColor: 'grey' }]}
                                 listMode="MODAL"
@@ -170,6 +171,7 @@ export default function FlightCheckout({ navigation }) {
                                 items={countryCities}
                                 value={city}
                                 setValue={SetCity}
+                                searchable={true}
                                 textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
                                 style={[styles(theme).textInput, { borderRadius: 5, borderColor: 'grey', marginBottom: -6 }]}
                                 listMode="MODAL"
