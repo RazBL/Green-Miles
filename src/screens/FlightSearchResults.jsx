@@ -242,7 +242,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 30,
     right: 0,
-    borderTopStartRadius: 0,
     zIndex: 4,
     borderRadius: 10,
     borderBottomLeftRadius: 25,

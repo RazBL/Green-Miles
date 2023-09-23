@@ -143,7 +143,7 @@ const styles = theme => StyleSheet.create({
     },
     midInfoBox: {
         flexDirection: 'row',
-        justifyContent: 'right',
+        justifyContent: 'space-between',
         alignItems: 'center',
     },
     alignTextRight: {
