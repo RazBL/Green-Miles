@@ -76,6 +76,25 @@ UsersRoute.get('/profile', AuthUser, async (req, res) => {
   }
 });
 
+UsersRoute.get('/:id/saved-flights', async(req, res) =>{
+  try {
+    console.log("i am in ");
+    const userId = req.params.id;
+    console.log(userId);
+    const savedFlights = await UsersModel.GetSavedFlights(userId);
+    if (!savedFlights) {
+      return res.status(404).json({ error: 'No saved flights found for user' });
+  }
+
+  console.log(savedFlights);
+
+  return res.status(200).json(savedFlights);
+
+  } catch (error) {
+    res.status(500).json({error: "An error occured while trying to get the saved flights data"});
+  }
+})
+
 //UPDATE == PUT
 
 UsersRoute.put('/save-flight', AuthUser, async(req,res) => {

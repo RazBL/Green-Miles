@@ -4,28 +4,12 @@ import { UsersContext } from '../context/UsersContext';
 
 export default function Account() {
 
-  const { GetUserProfile } = useContext(UsersContext);
-  const [user, SetUser] = useState(null); 
-
-  
-  const GetUser = async () => {
-    let checkUser = await GetUserProfile();
-    if (checkUser) {
-      SetUser(checkUser);
-    } else {
-      console.log("not logged in");
-    }
-  }
-
-
-  useEffect(() => {
-    GetUser();
-  }, []);
+  const { currentUser } = useContext(UsersContext);
 
   return (
     <View>
-      {user ? (
-        <Text>{user.firstName}</Text>
+      {currentUser ? (
+        <Text>{currentUser.lastName}</Text>
       ) : (
         <Text>Please log in</Text>
       )}

@@ -109,6 +109,14 @@ class UsersModel {
         return await new DB().UpdateOne("users", query, update);
     }
 
+    static async GetSavedFlights(userId) {
+        let query = {
+            _id: new ObjectId(userId)
+        }
+
+        let data = await new DB().FindAll("users", query);
+        return data[0].savedFlights;
+    }
 
     static async SaveHotel(userEmail, hotelId) {
 

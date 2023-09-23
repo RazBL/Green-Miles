@@ -108,7 +108,6 @@ export default function FlightsContextProvider({ children }) {
 
     useEffect(() => {
         LoadAllFlights();
-        console.log("hi");
     }, []);
 
     useEffect(() => {
@@ -132,7 +131,9 @@ export default function FlightsContextProvider({ children }) {
         BookFlightPage,
         passengersContext,
         SetPassengersContext,
-        FlightToBook
+        FlightToBook,
+        FlightBooking,
+        SetFlightToBook,        
     }
 
     return (

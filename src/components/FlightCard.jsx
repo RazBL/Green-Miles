@@ -17,9 +17,11 @@ export default function FlightCard({ flight, navigation }) {
             return;
         }
 
-        if(!saved){
+        let isSaved = currentUser.savedFlights.find(item => item == flight._id);
+
+        if(!isSaved){
             SaveFlight(flight, navigation);
-            SetSaved(true);
+            SetSaved(true)
         }
         else{
             RemoveSavedFlight(flight, navigation);
@@ -43,8 +45,8 @@ export default function FlightCard({ flight, navigation }) {
     }
 
     useEffect(() => {
-        IsFlightSaved()
-    }, [])
+        IsFlightSaved();
+    }, [currentUser]);
     
 
     return (
