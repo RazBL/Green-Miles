@@ -13,9 +13,6 @@ export default function FlightSearchResults({ navigation }) {
 
   const { searchedFlights } = useContext(FlightsContext);
 
-
-  const filterPriceOptions = ['Under $150', '$150 to $300', 'Over 300$']
-
   const [selectedPriceOptionIndex, SetSelectedPriceOptionIndex] = useState(null);
   const [selectedSorteOptionIndex, SetSelectedSortOptionIndex] = useState(null);
   const [displayedFlights, SetDisplayedFlights] = useState(searchedFlights);
@@ -97,7 +94,7 @@ export default function FlightSearchResults({ navigation }) {
                 <View>
                   <Text style={{ color: 'white', fontFamily: 'Montserrat_Bold', fontSize: 15 }}>Price</Text>
                   {
-                    filterPriceOptions.map((option, index) => {
+                    filterPriceConditions.map((option, index) => {
                       const isSelected = selectedPriceOptionIndex === index;
                       return (
                         <CheckBox
@@ -106,7 +103,7 @@ export default function FlightSearchResults({ navigation }) {
                           style={styles.dropdownItem}
                           onClick={() => SetSelectedPriceOptionIndex(isSelected ? null : index)}
                           rightTextStyle={styles.dropdownItemText}
-                          rightText={option}
+                          rightText={option.label}
                           checkBoxColor='white'
                         />
                       );
