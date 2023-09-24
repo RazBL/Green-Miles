@@ -20,7 +20,7 @@ const HotelCard = ({ hotel, navigation }) => {
   };
 
   const [saved, SetSaved] = useState(false);
-  const [disableBtn, SetDisableBtn] = useState(false);
+
   //Start state of the heart icon.
   const isHotelSaved = (currentUser, hotelId) => {
     if (!currentUser || !currentUser.savedHotels) {
@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
     top: 0, // אנחנו מציינים שהאייקון יהיה באותו גובה כמו הכפתור
     right: 10, // מיקום אופקי בצד הימני
   },
-  favoriteIcon: {},
 });
 
 export default HotelCard;

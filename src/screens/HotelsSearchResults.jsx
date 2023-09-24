@@ -34,7 +34,11 @@ export default function FlightSearchResults({navigation}) {
             <FlatList
               data={searchedHotels}
               keyExtractor={(item) => item._id}  
-              renderItem={({ item }) => <HotelCard hotel={item} navigation={navigation} />}
+              renderItem={({ item }) => <HotelCard hotel={item} navigation={navigation} 
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{ paddingBottom: 65}}
+              />       
+            }
             />
           )}
         </View>
@@ -48,6 +52,7 @@ const styles = theme => StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     padding: 20,
+    paddingBottom: 65
   },
   buttonContainer: {
     flexDirection: 'row',
