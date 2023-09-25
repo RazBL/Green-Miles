@@ -10,17 +10,20 @@ import HotelCard from '../components/HotelCard';
 // Context
 import { FlightsContext } from '../context/FlightsContext';
 import { UsersContext } from '../context/UsersContext';
+import { HotelsContext } from '../context/HotelsContext';
 
 export default function Save({ navigation }) {
 
   const theme = useTheme();
 
   const { flights } = useContext(FlightsContext);
+  const { hotels} = useContext(HotelsContext)
   const { currentUser } = useContext(UsersContext);
 
   const [flightsButton, SetFlightsButton] = useState(true);
   const [hotelsButton, SetHotelsButton] = useState(false);
   const [savedFlights, SetSavedFlights] = useState([]);
+  const [savedHotels, SetSavedHotels] = useState([]);
   const flightTextColor = flightsButton ? theme.colors.primary : 'white';
   const HotelTextColor = hotelsButton ? theme.colors.primary : 'white';
 
@@ -30,11 +33,14 @@ export default function Save({ navigation }) {
     if (currentUser) {
       let filteredFlights = flights.filter(flight => currentUser.savedFlights.includes(flight._id));
       SetSavedFlights(filteredFlights);
+      let filteredHotels = hotels.filter(hotel => currentUser.savedHotels.includes(hotel._id));
+      console.log("hotels", filteredHotels);
+      SetSavedHotels(filteredHotels);
     }
-  }, [currentUser, flights]);
+  }, [currentUser, flights,]);
 
   useEffect(() => {
-  }, [savedFlights]);
+  }, [savedFlights, savedHotels]);
 
 
   return (
@@ -70,16 +76,12 @@ export default function Save({ navigation }) {
       </View>
 
       <View>
-        {
-          flightsButton ?
-            (<FlatList
-              data={savedFlights}
+            <FlatList
+              data={flightsButton ? savedFlights : savedHotels}
               keyExtractor={(item) => item._id}
-              renderItem={({ item }) => <FlightCard flight={item} navigation={navigation} />}
+              renderItem={({ item }) => flightsButton ? (<FlightCard flight={item} navigation={navigation} />) : (<HotelCard  hotel={item} navigation={navigation}/>)}
               showsVerticalScrollIndicator={false} 
-              contentContainerStyle={{ paddingBottom: 120}}/>) :
-            (<Text>Hotels</Text>)
-        }
+              contentContainerStyle={{ paddingBottom: 120}}/>
       </View>
     </View>
   )
