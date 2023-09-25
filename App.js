@@ -20,6 +20,8 @@ import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
 import FlightSearchResults from './src/screens/FlightSearchResults';
 import HotelDetails from './src/screens/HotelDetails';
+import HotelsSearchResults from './src/screens/HotelsSearchResults';
+import Test_Design from './src/screens/Test_Design';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +49,9 @@ export default function App() {
   if (!loaded) {
     return null;
   }
+//                 <Stack.Screen name="hotelsearchresult" component={HotelsSearchResults} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
+//                 <Stack.Screen name="yay" component={Test_Design} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
+
 
   return (
     <PaperProvider theme={theme}>
@@ -56,7 +61,7 @@ export default function App() {
           <SafeAreaProvider style={styles.container}>
             <NavigationContainer>
                 <Stack.Navigator>
-                <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
+                  <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Navigation" component={Navigation} options={{headerTransparent: true, headerTitle: '',headerLeft: null  }}/>
                   <Stack.Screen name="Register" component={RegisterStepOne} options={{headerTransparent: true, headerTitle: '', headerLeft: null}}/>

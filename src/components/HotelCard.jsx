@@ -6,13 +6,13 @@ import { UsersContext } from '../context/UsersContext'; // Import the UsersConte
 import { HotelsContext } from '../context/HotelsContext';
 
 const HotelCard = ({ hotel, navigation }) => {
-  const { SaveHotel, RemoveSavedHotel, CheckIfHotelSaved, currentUser } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
+  const { SaveHotel, RemoveSavedHotel, currentUser } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
   const { HotelRatingText } = useContext(HotelsContext);
   const [hotelRating, SetHotelRating] = useState("")
 
   const navigateToHotelDetails = () => {
     if (currentUser)
-      navigation.navigate('HotelDetails', { hotel });
+      navigation.navigate('Hotel', { hotel });
     else {
       navigation.navigate('Login');
       alert("You must login in order to book");

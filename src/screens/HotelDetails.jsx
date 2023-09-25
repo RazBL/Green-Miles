@@ -1,24 +1,67 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext,useState, useEffect } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Card, Text, Button, useTheme, Headline } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import { UsersContext } from '../context/UsersContext'; 
+import { HotelsContext } from '../context/HotelsContext';
+
+
 
 const HotelDetails = ({ route }) => {
+  const { SaveHotel, RemoveSavedHotel, currentUser } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
   const { hotel } = route.params;
-  const navigation = useNavigation(); 
-  const [saved, setSaved] = useState(false);
+  const navigation = useNavigation();
   const theme = useTheme();
 
   const handleBookNow = () => {
- navigation.navigate('HotelCheckOut', { hotel });
+    navigation.navigate('HotelCheckOut', { hotel });
+  };
+
+
+  const [saved, SetSaved] = useState(false);
+
+  //Start state of the heart icon.
+  const isHotelSaved = (currentUser, hotelId) => {
+    if (!currentUser || !currentUser.savedHotels) {
+      return false;
+    }
+    let savedHotels = currentUser.savedHotels;
+    let hotelFound = savedHotels.find(id => hotelId === id);
+    if (hotelFound) {
+      SetSaved(true);
+    }
+    else
+      SetSaved(false);
+  };
+
+  const hotelSaveHandler = () => {
+
+    if (!currentUser){
+      alert("You must login in order to save");
+      return;
+    }
+
+    let isSaved = currentUser.savedHotels.find(item => item == hotel._id)
+
+    if (!isSaved) {
+      SaveHotel(hotel, navigation);
+      console.log('Hotel saved successfully!');
+      SetSaved(true); // שנה את הערך ל־true כאשר משתמש לוחץ לשמור את המלון
+    } else {
+      RemoveSavedHotel(hotel);
+      console.log('Hotel removed from favorites.');
+      SetSaved(false); // שנה את הערך ל־false כאשר משתמש לוחץ להסיר את המלון
+    }
   };
 
 
   useEffect(() => {
     console.log(hotel);
-  }, [])
-  
+   isHotelSaved()
+
+  }, [currentUser])
+
   return (
     <View style={styles(theme).container}>
       <View style={styles(theme).imageContainer}>
@@ -33,6 +76,7 @@ const HotelDetails = ({ route }) => {
 
         <TouchableOpacity style={styles(theme).heartContainer} onPress={() => setSaved(!saved)}>
           <MaterialCommunityIcons
+             onPress={hotelSaveHandler}
             name={saved ? 'heart' : 'heart-outline'}
             color={saved ? '#1CD995' : 'white'}
             size={30}
@@ -41,13 +85,48 @@ const HotelDetails = ({ route }) => {
 
         <View style={styles(theme).hotelTitleBox}>
           <Headline style={styles(theme).hotelTitle}>{hotel.name} - {hotel.city}</Headline>
-          <View>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Text style={styles(theme).hotelMiniTitle}>
-              <Text style={[styles(theme).hotelMiniTitle, { color: theme.colors.primary }]}>Eco</Text> rating {hotel.eco_rating}/5
-            </Text>
+              <Text style={[styles(theme).hotelMiniTitle, { color: theme.colors.primary }]}>Eco</Text> rating {hotel.eco_rating}/5</Text>
+            <MaterialCommunityIcons
+              name={'leaf'}
+              color={theme.colors.primary}
+              size={17}
+              style={{ marginLeft: 5, transform: [{ rotate: '-17deg' }] }}
+            />
+              <MaterialCommunityIcons
+                name={'leaf'}
+                color={theme.colors.primary}
+                size={17}
+                style={{ transform: [{ rotate: '-17deg' }] }}
+              />
+            <MaterialCommunityIcons
+              name={'leaf'}
+              color={theme.colors.primary}
+              size={17}
+              style={{ transform: [{ rotate: '-17deg' }] }}
+            />
+            <MaterialCommunityIcons
+              name={'leaf'}
+              color={theme.colors.primary}
+              size={17}
+              style={{ transform: [{ rotate: '-17deg' }] }}
+            />
+            <MaterialCommunityIcons
+              name={'leaf'}
+              color={theme.colors.primary}
+              size={17}
+              style={{ transform: [{ rotate: '-17deg' }] }}
+            />
+            <MaterialCommunityIcons
+              name={'leaf'}
+              color={'white'}
+              size={17}
+              style={{ transform: [{ rotate: '-17deg' }] }}
+            />
           </View>
         </View>
-        
+
         <View style={styles(theme).infoContainer}>
           <Text style={styles(theme).infoTitle}>Address </Text>
           <Text style={styles(theme).info}>{hotel.address}</Text>
@@ -56,11 +135,11 @@ const HotelDetails = ({ route }) => {
           <Text style={styles(theme).info}>{hotel.description}</Text>
 
           <Text style={styles(theme).price}>Price per night</Text>
-          <Text style={[styles(theme).price, {fontFamily: 'Montserrat_Medium', fontSize: 17}]}>${hotel.price_per_night}</Text>
+          <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${hotel.price_per_night}</Text>
         </View>
       </View>
       <Button
-        style={styles(theme).bookNowButton} 
+        style={styles(theme).bookNowButton}
         labelStyle={{ color: 'white', fontFamily: 'Montserrat_Bold', fontSize: 15 }}
         onPress={handleBookNow}
       >
@@ -118,13 +197,13 @@ const styles = (theme) =>
     },
     infoContainer: {
       marginTop: 50,
-      alignItems: 'flex-start', 
+      alignItems: 'flex-start',
     },
     infoTitle: {
       fontSize: 15,
       fontFamily: 'Montserrat_Bold',
       marginBottom: 10,
-      textAlign: 'left', 
+      textAlign: 'left',
     },
     info: {
       fontSize: 12,
@@ -141,7 +220,7 @@ const styles = (theme) =>
     },
     bookNowButton: {
       position: 'absolute',
-      bottom: 20,      
+      bottom: 20,
       left: 20,
       right: 20,
       backgroundColor: '#38DDA2',

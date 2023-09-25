@@ -91,12 +91,13 @@ const styles = theme => StyleSheet.create({
     backgroundColor: 'white',
     height: '100%',
     padding: 20,
-    paddingVertical: 30,
+    paddingVertical: 10,
     flex: 1,
   },
   headline: {
     fontSize: 20,
     fontFamily: 'Montserrat_Bold',
+    color:"black",
     marginBottom: 30,
     alignSelf: 'center'
   },
