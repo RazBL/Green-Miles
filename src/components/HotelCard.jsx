@@ -6,29 +6,25 @@ import { UsersContext } from '../context/UsersContext'; // Import the UsersConte
 import { HotelsContext } from '../context/HotelsContext';
 
 const HotelCard = ({ hotel, navigation }) => {
-  const { SaveHotel, RemoveSavedHotel, CheckIfHotelSaved, currentUser } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
+  const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
   const { HotelRatingText } = useContext(HotelsContext);
   const [hotelRating, SetHotelRating] = useState("")
+  const [saved, SetSaved] = useState(false);
 
   const navigateToHotelDetails = () => {
     if (currentUser)
-      navigation.navigate('HotelDetails', { hotel });
+      navigation.navigate('Hotel', { hotel });
     else {
       navigation.navigate('Login');
       alert("You must login in order to book");
     }
   };
 
-  const [saved, SetSaved] = useState(false);
-
   //Start state of the heart icon.
-  const isHotelSaved = (currentUser, hotelId) => {
-    if (!currentUser || !currentUser.savedHotels) {
-      return false;
-    }
-    let savedHotels = currentUser.savedHotels;
-    let hotelFound = savedHotels.find(id => hotelId === id);
-    if (hotelFound) {
+  const isHotelSaved = () => {
+    let foundHotel = CheckIfHotelSaved(hotel._id);
+    console.log('found hotel', foundHotel);
+    if (foundHotel) {
       SetSaved(true);
     }
     else
@@ -36,8 +32,7 @@ const HotelCard = ({ hotel, navigation }) => {
   };
 
   const hotelSaveHandler = () => {
-
-    if (!currentUser){
+    if (!currentUser) {
       alert("You must login in order to save");
       return;
     }
@@ -46,26 +41,24 @@ const HotelCard = ({ hotel, navigation }) => {
 
     if (!isSaved) {
       SaveHotel(hotel, navigation);
-      console.log('Hotel saved successfully!');
       SetSaved(true); // שנה את הערך ל־true כאשר משתמש לוחץ לשמור את המלון
+      console.log("hotel was saved");
     } else {
       RemoveSavedHotel(hotel);
-      console.log('Hotel removed from favorites.');
       SetSaved(false); // שנה את הערך ל־false כאשר משתמש לוחץ להסיר את המלון
     }
   };
 
   useEffect(() => {
     SetHotelRating(HotelRatingText(hotel));
-    isHotelSaved()
-    console.log("current user", currentUser);
-  }, [currentUser])
+    isHotelSaved();
+  }, [currentUser]);
 
 
   return (
     <View style={styles.card}>
       <View>
-        <Card.Cover style={{ borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, height: 158}}
+        <Card.Cover style={{ borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, height: 158 }}
           source={{
             uri:
               'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg',
@@ -130,7 +123,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     color: 'white',
     padding: 8,
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     borderRadius: 25,
     fontSize: 15,
     fontWeight: 'bold',

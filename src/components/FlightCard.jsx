@@ -7,12 +7,12 @@ import { UsersContext } from '../context/UsersContext';
 
 export default function FlightCard({ flight, navigation }) {
 
-    const { BookFlightPage, passengersContext} = useContext(FlightsContext);
     const { SaveFlight, CheckIfFlightSaved, RemoveSavedFlight, currentUser} = useContext(UsersContext);
+    const { BookFlightPage, passengersContext} = useContext(FlightsContext);
     const [saved, SetSaved] = useState(false);
     
     const FlightSaveHandler = () => {
-        if(currentUser === null){ 
+        if(!currentUser){ 
             navigation.navigate('Login');
             return;
         }
