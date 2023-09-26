@@ -4,17 +4,8 @@ import { Text, TextInput, Button, Headline } from 'react-native-paper';
 
 export default function Support() {
   return (
-    <View style={styles.container}>
-      <View style={styles.imageFrame}>
-        <Image
-          source={require('../images/LogoPng.png')}
-          style={styles.logo}
-        />
-      </View>
+      <View style={styles.container}>
       <View style={styles.informationBox}>
-        <Headline style={styles.headline}>Support</Headline>
-
-        <Text style={styles.label}>Name</Text>
         <View style={styles.nameContainer}>
           <TextInput
             label="First Name"
@@ -27,8 +18,6 @@ export default function Support() {
             style={styles.nameInput}
           />
         </View>
-
-        <Text style={styles.label}>Email</Text>
         <TextInput
           label="Email"
           mode="outlined"
@@ -36,12 +25,11 @@ export default function Support() {
           style={styles.textInput}
         />
 
-        <Text style={styles.label}>Additional Details</Text>
         <TextInput
           label="Additional Details"
           mode="outlined"
           multiline
-          numberOfLines={4}
+          numberOfLines={7}
           style={styles.textInput}
         />
 
@@ -49,6 +37,7 @@ export default function Support() {
           mode="contained"
           style={styles.button}
           onPress={() => console.log('Submit Button pressed!')}
+          labelStyle={{fontFamily: 'Montserrat_Bold', fontSize: 15}}
         >
           Submit
         </Button>
@@ -62,13 +51,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
-  imageFrame: {
-    height: 160,
-    alignItems: 'center',
-    backgroundColor: '#1e272e',
-    justifyContent: 'center',
-  },
-  logo: {
+  logo: 'https://example.com/path/to/your/logo.png', // שנה לכתובת ה-URL של התמונה
+  logoImage: {
     height: 80,
     width: 130,
     alignSelf: 'center',
@@ -99,6 +83,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     height: 50,
     borderRadius: 5,
+    backgroundColor: 'white'
   },
   label: {
     fontSize: 18,
@@ -108,12 +93,13 @@ const styles = StyleSheet.create({
   textInput: {
     borderRadius: 5,
     marginBottom: 25,
+    backgroundColor: 'white'
   },
   button: {
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-    backgroundColor: '#1e272e',
+    backgroundColor: '#1CD995',
   },
 });
