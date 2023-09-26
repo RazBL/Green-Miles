@@ -29,6 +29,19 @@ Content-Type: application/json
   "password": "razraz"
 }
 
+###
+
+POST https://greenmiles.onrender.com/api/users/register
+Content-Type: application/json
+
+{
+  "email": "basel@gmail.com",
+  "password": "baselbasel",
+  "firstName": "basel",
+  "lastName": "basel"
+}
+
+
 
 ###
 https://greenmiles.onrender.com/api/flights/search?destinationAirport=CDG&originAirport=ATL&date=2024-08-23&availableSeats=1

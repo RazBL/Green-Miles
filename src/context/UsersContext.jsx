@@ -308,7 +308,6 @@ export default function UsersContextProvider({ children }) {
             return undefined;
         }
         let savedFlights = currentUser.savedFlights;
-        console.log(savedFlights);
         let flightFound = savedFlights.find(id => flightId === id);
         return flightFound;
     }

@@ -36,7 +36,7 @@ export default function FlightSearch({ navigation }) {
     };
 
     const DateChange = (event, selectedDate) => {
-        if(selectedDate < new Date()){ SetDate(new Date()); }
+        if (selectedDate < new Date()) { SetDate(new Date()); }
         else {
             const pureDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
             SetDate(pureDate);
@@ -66,7 +66,7 @@ export default function FlightSearch({ navigation }) {
     const TransformAirports = () => {
         const originDisplayAirports = originAirports.map((airport, index) => {
             return `${airport} - ${originCities[index]}`;
-          });
+        });
 
         let data = originDisplayAirports.map(airport => (
             {
@@ -79,7 +79,7 @@ export default function FlightSearch({ navigation }) {
 
         const destinationDisplayAirport = destinationAirports.map((airport, index) => {
             return `${airport} - ${destinationCities[index]}`;
-          });
+        });
 
         data = destinationDisplayAirport.map(airport => ({
             label: airport,
@@ -111,7 +111,7 @@ export default function FlightSearch({ navigation }) {
 
 
     return (
-        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); SetOpenOrigin(false); SetOpenDestination(false);}}>
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); SetOpenOrigin(false); SetOpenDestination(false); }}>
             <View style={styles(theme).container}>
                 <View style={styles(theme).flightSearch}>
 
@@ -137,10 +137,11 @@ export default function FlightSearch({ navigation }) {
                             value={selectedLocation}
                             setValue={SetSelectedLocation}
                             setItems={SetTransformedOriginAirports}
-                            onChangeItem={item => SetSelectedLocation(item.value)} 
+                            onChangeItem={item => SetSelectedLocation(item.value)}
                             textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
                             searchable={true}
                             style={styles(theme).input}
+                            showArrowIcon={false}
                         />
                     </View>
 
@@ -157,7 +158,7 @@ export default function FlightSearch({ navigation }) {
                                 SetOpenOrigin(false);
                                 SetOpenDestination(true);
                             }}
-                            onClose={() =>  SetOpenDestination(false)}
+                            onClose={() => SetOpenDestination(false)}
                             setOpen={SetOpenDestination}
                             placeholder='Choose a Destination'
                             items={transformedDestinationAirport}
@@ -167,6 +168,7 @@ export default function FlightSearch({ navigation }) {
                             style={styles(theme).input}
                             setValue={SetSelectedDestination}
                             onChangeItem={item => SetSelectedDestination(item.value)}
+                            showArrowIcon={false}
                         />
                     </View>
                     <TouchableOpacity style={[styles(theme).searchSection]} onPress={() => SetDatePickerVisibility(true)}>
@@ -305,7 +307,7 @@ const styles = theme => StyleSheet.create({
         borderRadius: 10,
     },
     input: {
-        paddingHorizontal:60,
+        paddingHorizontal: 60,
         zIndex: 1,
         borderRadius: 0,
         borderWidth: 0,

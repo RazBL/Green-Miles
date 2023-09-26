@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { Headline, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabOffsetContext from '../context/TabOffsetContext'
@@ -30,6 +30,11 @@ export default function Home({ navigation }) {
     <View style={styles(theme).container}>
       <View style={styles(theme).flightHotelSearch}>
         <View style={styles(theme).hotelImageBox}>
+          <Image
+            source={require('../images/hotels2.jpg')}
+            resizeMode="contain"
+            style={{ height: '100%', opacity: 0.77 }}
+          />
           <TouchableOpacity style={styles(theme).hotelFlightButton} onPress={ToHotelButtnHandler}>
             <View style={styles(theme).iconTextBox} >
               <MaterialCommunityIcons name={'bed-queen'} color={'white'} size={20} />
@@ -38,6 +43,11 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         </View>
         <View style={styles(theme).flightImageBox}>
+          <Image
+            source={require('../images/Logo.png')}
+            resizeMode="contain"
+            style={{ height: '100%', opacity: 0.77}}
+          />
           <TouchableOpacity style={styles(theme).hotelFlightButton} onPress={ToFlightButtnHandler}>
             <View style={styles(theme).iconTextBox} >
               <MaterialCommunityIcons name={'airplane'} color={'white'} size={22} />
@@ -76,16 +86,18 @@ const styles = theme => StyleSheet.create({
   hotelImageBox: {
     flex: 1,
     height: 280,
-    backgroundColor: theme.colors.logoBackground,
+    backgroundColor: 'white',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'relative'
   },
   flightImageBox: {
     flex: 1,
     height: 280,
     backgroundColor: theme.colors.primary,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'relative'
   },
   SaveFlightHotelSection: {
     height: 280,
@@ -118,6 +130,7 @@ const styles = theme => StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
+    position: 'absolute'
   },
   iconTextBox: {
     flexDirection: 'row',
@@ -130,8 +143,8 @@ const styles = theme => StyleSheet.create({
     fontFamily: 'Montserrat_Medium',
     fontSize: 20,
   },
-  saveTextButtonBox:{
-    justifyContent:"center",
+  saveTextButtonBox: {
+    justifyContent: "center",
     alignItems: 'center',
     position: 'absolute'
   }

@@ -139,6 +139,7 @@ export default function HotelSearch({ navigation }) {
               textStyle={{ fontSize: 15, color: '#2B3A4A', fontFamily: 'Montserrat_Medium' }}
               searchable={true}
               style={styles(theme).input}
+              showArrowIcon={false}
             />
           </View>
 

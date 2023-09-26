@@ -34,7 +34,6 @@ export default function Save({ navigation }) {
       let filteredFlights = flights.filter(flight => currentUser.savedFlights.includes(flight._id));
       SetSavedFlights(filteredFlights);
       let filteredHotels = hotels.filter(hotel => currentUser.savedHotels.includes(hotel._id));
-      console.log("hotels", filteredHotels);
       SetSavedHotels(filteredHotels);
     }
   }, [currentUser, flights,]);
