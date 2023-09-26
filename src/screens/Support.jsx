@@ -4,11 +4,11 @@ import { Text, TextInput, Button, Headline } from 'react-native-paper';
 
 export default function Support() {
   return (
-    <View style={styles.container}>
+      <View style={styles.container}>
       <View style={styles.imageFrame}>
         <Image
-          source={require('../images/LogoPng.png')}
-          style={styles.logo}
+          source={{ uri: styles.logo }}
+          style={styles.logoImage}
         />
       </View>
       <View style={styles.informationBox}>
@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e272e',
     justifyContent: 'center',
   },
-  logo: {
+  logo: 'https://example.com/path/to/your/logo.png', // שנה לכתובת ה-URL של התמונה
+  logoImage: {
     height: 80,
     width: 130,
     alignSelf: 'center',

@@ -15,6 +15,7 @@ import Account from './Account';
 //Components
 import FlightsNavigator from '../components/FlightNavigation';
 import HotelNavigation from '../components/HotelNavigation'
+import AccountNavigation from '../components/AccountNavigation';
 
 const Tab = createBottomTabNavigator();
 
@@ -76,7 +77,7 @@ export default function Navigation() {
             { name: "Flights", component: FlightsNavigator, icon: "airplane" },
             { name: "Hotels", component: HotelNavigation, icon: "bed" },
             { name: "Saved", component: Save, icon: "heart" },
-            { name: "Account", component: Account, icon: "account" }
+            { name: "Account", component: AccountNavigation, icon: "account" }
           ].map((item, i) => (
             <Tab.Screen
               key={i}
