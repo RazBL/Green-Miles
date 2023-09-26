@@ -64,7 +64,7 @@ export default function FlightsContextProvider({ children }) {
 
         let token = await AsyncStorage.getItem('userToken', token);
         if (!token) {
-            alert('you must sign in to book a flight');
+            alert('you must sign in order to book a flight');
             navigation.navigate('Login');
         }
         else {

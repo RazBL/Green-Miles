@@ -336,6 +336,7 @@ export default function UsersContextProvider({ children }) {
     const RemoveToken = async () => {
         try {
             await AsyncStorage.removeItem('userToken');
+            SetCurrentUser(null);
         } catch (error) {
             console.error('An error occurred while removing the token:', error);
         }

@@ -6,7 +6,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { useNavigation } from '@react-navigation/native';
 
 export default function Account() {
-  const { currentUser } = useContext(UsersContext);
+  const { currentUser, RemoveToken } = useContext(UsersContext);
   const navigation = useNavigation();
   const navigateToSupport = () => {
     navigation.navigate('Support');
@@ -20,17 +20,29 @@ export default function Account() {
     navigation.navigate('Delete Your Account');
   };
 
+  const ToLoginPage = () => {
+    navigation.navigate('Login');
+  }
+
+  const SignOut = () => {
+    RemoveToken();
+    ToLoginPage();
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.leftColumn}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <Headline style={styles.headerText}>Account</Headline>
           <View style={styles.imageContainer}>
-            <Image
-              source={require('../images/Account.png')}
-              resizeMode="contain"
-              style={{height: '100%', width: '100%'}}
-            />
+            {
+              currentUser ? (<Image
+                source={require('../images/Account.png')}
+                resizeMode="contain"
+                style={{ height: '100%', width: '100%' }}
+              />) :
+                <View></View>
+            }
           </View>
         </View>
 
@@ -92,8 +104,8 @@ export default function Account() {
             ) :
             (
               <View style={styles.loginContainer}>
-                <Headline style={styles.loginMessage.leftColumn}>
-                  You must log in to view your account
+                <Headline style={styles.loginMessage}>
+                  You must be logged in to access this page. Please log in and try again.
                 </Headline>
               </View>
             )
@@ -104,14 +116,15 @@ export default function Account() {
         !currentUser ? (
           <Button
             mode="contained"
-            onPress={() => {/* הוסף פעולה להתנהל למסך התחברות */ }}
+            onPress={ToLoginPage}
             style={{ backgroundColor: 'black', position: 'absolute', bottom: 50, left: 20, right: 20, padding: 5 }}
-            labelStyle={{ fontFamily: 'Montserrat_Bold' }}> Sign in </Button>
+            labelStyle={{ fontFamily: 'Montserrat_Bold' }}> Sign in
+             </Button>
         ) :
           (
             <Button
               mode="contained"
-              onPress={() => {/* הוסף פעולה להתנהל למסך התחברות */ }}
+              onPress={SignOut}
               style={styles.buttonStyle}
               labelStyle={{ fontFamily: 'Montserrat_Bold', color: 'black' }}>Sign out</Button>
           )
@@ -146,7 +159,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   loginMessage: {
-    fontSize: 15,
+    fontSize: 18,
     marginBottom: 15,
     fontFamily: 'Montserrat_Bold',
   },
