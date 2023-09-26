@@ -11,12 +11,13 @@ GET https://greenmiles.onrender.com/api/flights/search?destination=City%20B&orig
 
 ###
 
+//Login
 POST http://localhost:3500/api/users/login
 Content-Type: application/json
 
 {
   "email": "raz@gmail.com",
-  "password": "razraz"
+  "password": "raz"
 }
 
 ###
@@ -80,5 +81,21 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzM
 Content-Type: application/json
 
 {
-  "password":  "raz"
+  "password":  "razraz"
+}
+
+###
+
+PUT http://localhost:3500/api/users/edit-profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQ1NjNTMlNJSC5JWFI3MjZBSVhvUlZlRm5kOVF3akU2MWMzN3JBRzdlSVRza0FGbUZiVHBjeSIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOltdLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6InJheiIsInBob25lTnVtYmVyIjpudWxsLCJpbWFnZSI6bnVsbCwiY291bnRyeSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzcyI6bnVsbCwiaWF0IjoxNjk1NzYzNDczLCJleHAiOjE2OTU3NjcwNzN9.N1uBADXBjhEi0Ig2A6HRJTqOlJejOPwjdjlRPrhKlIc
+Content-Type: application/json
+
+{
+  "firstName": "Razzy",
+  "lastName": "Raz",
+  "email": "raz@gmail.com",
+  "phoneNumber": "054-0421-421",
+  "country": "Israel",
+  "city": "holon",
+  "address": "somewhere in holon"
 }

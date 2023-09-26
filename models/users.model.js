@@ -150,6 +150,23 @@ class UsersModel {
         return await new DB().UpdateOne("users", query, update);
     }
 
+    
+    static async UpdateUserDetails(currentEmail, editedUser) {
+
+        let query = {
+            "email": currentEmail
+        }
+    
+        let update = {
+            $set: {
+                ...editedUser
+            }
+        }
+    
+        return await new DB().UpdateOne("users", query, update);
+    }
+    
+
     static async UnsaveHotel(userEmail, hotelId) {
         let query = {
             "email": userEmail

@@ -79,7 +79,8 @@ class DB {
         console.log("hi from updateone");
         try {
             await this.client.connect();
-            await this.client.db(this.db_name).collection(collection).updateOne(query, update);
+            const data =  await this.client.db(this.db_name).collection(collection).updateOne(query, update);
+            return data;
         } catch (error) {
             throw error;
         } finally {
