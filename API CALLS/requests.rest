@@ -72,3 +72,13 @@ Content-Type: application/json
     "_id": "645e91233fb2fbd063c199bd"
   }
 }
+
+###
+
+PUT http://localhost:3500/api/users/change-password
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQ1NjNTMlNJSC5JWFI3MjZBSVhvUlZlRm5kOVF3akU2MWMzN3JBRzdlSVRza0FGbUZiVHBjeSIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOltdLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6InJheiIsInBob25lTnVtYmVyIjpudWxsLCJpbWFnZSI6bnVsbCwiY291bnRyeSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzcyI6bnVsbCwiaWF0IjoxNjk1NzYzNDczLCJleHAiOjE2OTU3NjcwNzN9.N1uBADXBjhEi0Ig2A6HRJTqOlJejOPwjdjlRPrhKlIc
+Content-Type: application/json
+
+{
+  "password":  "raz"
+}

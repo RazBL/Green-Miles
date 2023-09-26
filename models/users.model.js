@@ -62,7 +62,7 @@ class UsersModel {
             email: email
         }
         let user = await new DB().FindOne(query, 'users');
-       
+
         if (!user || !bcrypt.compareSync(password, user.password))
             return null;
         return user;
@@ -132,7 +132,24 @@ class UsersModel {
         return await new DB().UpdateOne("users", query, update)
     }
 
-    
+    static async ChangePassword(userEmail, newPassword) {
+
+        let salt = bcrypt.genSaltSync(10);
+        let hashedPassword = bcrypt.hashSync(newPassword, salt);
+
+        let query = {
+            "email": userEmail
+        }
+
+        let update = {
+            $set: {
+                "password": hashedPassword
+            }
+        }
+
+        return await new DB().UpdateOne("users", query, update);
+    }
+
     static async UnsaveHotel(userEmail, hotelId) {
         let query = {
             "email": userEmail
