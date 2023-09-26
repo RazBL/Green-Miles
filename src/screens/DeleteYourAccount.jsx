@@ -5,8 +5,6 @@ import { Button, Headline } from 'react-native-paper';
 export default function DeleteAccount() {
   return (
     <View style={styles.container}>
-      <Headline style={styles.title}>Delete Your Account</Headline>
-
       <View style={styles.textContainer}>
         <Text style={styles.text}>
           Are you sure you want to delete your Green Miles account? If you are having problems, please contact our support who can help.
@@ -20,10 +18,10 @@ export default function DeleteAccount() {
       <Button
         mode="contained"
         style={styles.button}
-        color="white"
+        labelStyle={{fontFamily: 'Montserrat_Bold', color: 'black', fontSize: 15}}
         onPress={() => console.log('Delete your account Button pressed!')}
       >
-        Delete your account
+        Delete account
       </Button>
     </View>
   );
@@ -33,14 +31,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    justifyContent: 'center',
     padding: 20,
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: 20,
-    fontFamily: 'Montserrat_Bold', // גופן Montserrat_Bold
-    fontSize: 24,
   },
   textContainer: {
     marginBottom: 20,
@@ -50,14 +41,14 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat_Bold', // גופן Montserrat_Bold
   },
   button: {
-    width: 349,
+    width: '100%',
     height: 50,
-    alignSelf: 'center',
-    backgroundColor: 'black',
+    justifyContent: 'center',
+    backgroundColor: 'white',
     borderColor: 'white',
-    borderWidth: 1,
+    borderWidth: 0.8,
     marginBottom: 25,
     borderRadius: 25,
-    fontFamily: 'Montserrat_Bold', // גופן Montserrat_Bold
+    borderColor: 'black'
   },
 });

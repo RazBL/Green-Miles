@@ -9,7 +9,6 @@ import TabOffsetContext from '../context/TabOffsetContext'
 //screens
 import Home from './Home';
 import Save from './Save';
-import Account from './Account';
 
 
 //Components
@@ -77,7 +76,7 @@ export default function Navigation() {
             { name: "Flights", component: FlightsNavigator, icon: "airplane" },
             { name: "Hotels", component: HotelNavigation, icon: "bed" },
             { name: "Saved", component: Save, icon: "heart" },
-            { name: "Account", component: AccountNavigation, icon: "account" }
+            { name: "Accountt", component: AccountNavigation, icon: "account" }
           ].map((item, i) => (
             <Tab.Screen
               key={i}

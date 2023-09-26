@@ -79,7 +79,8 @@ export default function Save({ navigation }) {
             <FlatList
               data={flightsButton ? savedFlights : savedHotels}
               keyExtractor={(item) => item._id}
-              renderItem={({ item }) => flightsButton ? (<FlightCard flight={item} navigation={navigation} />) : (<HotelCard  hotel={item} navigation={navigation}/>)}
+              renderItem={({ item }) => flightsButton ? (<FlightCard flight={item} navigation={navigation} />) :
+               (<HotelCard  hotel={item} navigation={navigation}/>)}
               showsVerticalScrollIndicator={false} 
               contentContainerStyle={{ paddingBottom: 120}}/>
       </View>
