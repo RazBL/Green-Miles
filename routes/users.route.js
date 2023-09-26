@@ -112,6 +112,21 @@ UsersRoute.put('/save-flight', AuthUser, async(req,res) => {
   }
 })
 
+UsersRoute.put('/change-password', AuthUser, async(req, res) => {
+try {
+  const userEmail = req.user.email;
+  const newPassword = req.body.password
+
+  const updatedUser = await UsersModel.ChangePassword(userEmail, newPassword)
+
+  res.status(200).json({ message: 'Password was changed successfully', user: updatedUser });
+  
+} catch (error) {
+  console.error(error);
+    res.status(500).json({ error: 'An error occurred while trying change the password' });
+}
+})
+
 UsersRoute.put('/unsave-flight', AuthUser, async(req, res) => {
   try {
     const userEmail = req.user.email;
