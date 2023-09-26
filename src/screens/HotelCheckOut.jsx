@@ -27,7 +27,6 @@ const HotelCheckOut = ({ route }) => {
             <View style={styles.textContainer}>
               <Text style={styles.title}>{hotel?.name}</Text>
               <Text style={styles.info}>Country: {hotel?.country}</Text>
-              <Text style={styles.info}>Address: {hotel?.address}</Text>
               <Text style={styles.info}>Price per night: ${hotel?.price_per_night}</Text>
               <Text style={styles.info}>Check-in: {hotel?.rooms.availability.from}</Text>
               <Text style={styles.info}>Check-out: {hotel?.rooms.availability.to}</Text>

@@ -100,6 +100,7 @@ const styles = theme => StyleSheet.create({
   headline: {
     fontSize: 20,
     fontFamily: 'Montserrat_Bold',
+    color:"black",
     marginBottom: 30,
     alignSelf: 'center'
   },

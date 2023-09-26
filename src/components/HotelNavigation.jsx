@@ -21,16 +21,23 @@ export default function HotelNavigation() {
                 component={HotelsSearchResults}
                 options={{
                     headerTitleAlign: 'center',
-                    headerStyle: {
-                        shadowColor: '#000',
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 2,
-                        elevation: 5,
+                    headerTitleStyle: {
+                        fontFamily: 'Montserrat_Bold',
+                        fontSize: 20, 
+                        elevation: 0
                     },
                 }}
             />
-            <Stack.Screen name="HotelDetails" component={HotelDetails} />
+            <Stack.Screen name="Hotel" component={HotelDetails}
+                options={{
+                    headerTitleAlign: 'center',
+                    headerTitleStyle: {
+                        fontFamily: 'Montserrat_Bold',
+                        fontSize: 20,
+                        elevation: 0
+                    },
+                }}
+            />
             <Stack.Screen name="HotelCheckOut" component={HotelCheckOut} />
 
         </Stack.Navigator>
