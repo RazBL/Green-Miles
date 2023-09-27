@@ -33,7 +33,7 @@ export default function Home({ navigation }) {
           <Image
             source={require('../images/hotels2.jpg')}
             resizeMode="contain"
-            style={{ height: '100%', opacity: 0.77 }}
+            style={{ height: '100%', width: '100%',  opacity: 0.77 }}
           />
           <TouchableOpacity style={styles(theme).hotelFlightButton} onPress={ToHotelButtnHandler}>
             <View style={styles(theme).iconTextBox} >
@@ -44,9 +44,9 @@ export default function Home({ navigation }) {
         </View>
         <View style={styles(theme).flightImageBox}>
           <Image
-            source={require('../images/Logo.png')}
-            resizeMode="contain"
-            style={{ height: '100%', opacity: 0.77}}
+            source={require('../images/flight2.jpg')}
+            resizeMode="cover"
+            style={{ height: '100%', width: '100%',opacity: 0.85}}
           />
           <TouchableOpacity style={styles(theme).hotelFlightButton} onPress={ToFlightButtnHandler}>
             <View style={styles(theme).iconTextBox} >
@@ -94,10 +94,10 @@ const styles = theme => StyleSheet.create({
   flightImageBox: {
     flex: 1,
     height: 280,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative'
+    position: 'relative',
   },
   SaveFlightHotelSection: {
     height: 280,

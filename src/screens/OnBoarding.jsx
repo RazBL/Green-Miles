@@ -71,7 +71,7 @@ export default function OnBoarding({ navigation }) {
             {currentIndex === 0 ? (
                 <View></View>
             ) : (
-                <TouchableOpacity style={styles(theme).prevBtn} onPress={SkipBtnHandler}>
+                <TouchableOpacity style={styles(theme).prevBtn} onPress={() => {setCurrentIndex(0)}}>
                 <Text style={[styles(theme).skipPrevBtnText]}>Prev</Text>
             </TouchableOpacity>
             )}

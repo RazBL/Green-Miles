@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Button, Headline } from 'react-native-paper';
+import { Button, Headline, useTheme} from 'react-native-paper';
 
 export default function DeleteAccount() {
+  const theme = useTheme();
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>

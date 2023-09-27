@@ -28,5 +28,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 2,
         marginTop: -50,
+        
     },
 });
