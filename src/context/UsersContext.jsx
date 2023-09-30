@@ -98,8 +98,6 @@ export default function UsersContextProvider({ children }) {
                 const { user: loggedinUser, token } = data;
                 await AsyncStorage.setItem('userToken', token);
                 SetCurrentUser(loggedinUser);
-                console.log("loggedin user", loggedinUser);
-                console.log("current user", loggedinUser);
                 return loggedinUser;
             }
         } catch (err) {

@@ -151,17 +151,17 @@ class UsersModel {
     }
 
 
-    static async GetUser(userEmail){
+    static async GetUser(currentUserId){
         let query = {
-            "email": userEmail
+            "_id": new ObjectId(currentUserId)
         }
         return await new DB().FindOne(query, "users");
     }
     
-    static async UpdateUserDetails(currentEmail, editedUser) {
+    static async UpdateUserDetails(currentUserId, editedUser) {
 
         let query = {
-            "email": currentEmail
+            "_id": new ObjectId(currentUserId)
         }
     
         let update = {
@@ -171,7 +171,6 @@ class UsersModel {
         }
     
         await new DB().UpdateOne("users", query, update);
-
     }
     
 

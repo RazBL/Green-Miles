@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
   "email": "raz@gmail.com",
-  "password": "raz"
+  "password": "razraz"
 }
 
 ###
@@ -101,15 +101,17 @@ Content-Type: application/json
 
 
 PUT http://localhost:3500/api/users/edit-profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQ1NjNTMlNJSC5JWFI3MjZBSVhvUlZlRm5kOVF3akU2MWMzN3JBRzdlSVRza0FGbUZiVHBjeSIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOltdLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6InJheiIsInBob25lTnVtYmVyIjpudWxsLCJpbWFnZSI6bnVsbCwiY291bnRyeSI6bnVsbCwiY2l0eSI6bnVsbCwiYWRkcmVzcyI6bnVsbCwiaWF0IjoxNjk1NzYzNDczLCJleHAiOjE2OTU3NjcwNzN9.N1uBADXBjhEi0Ig2A6HRJTqOlJejOPwjdjlRPrhKlIc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRIVUlMRXBpSXdxUTlYaGdsNUI2MWp1YlJmVEw3Mzk3UFd2QTBtZHpCS3p1UXA3Z3VQTzhjTyIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJjIl0sImZpcnN0TmFtZSI6IlJheiIsImxhc3ROYW1lIjoiUmF6IiwicGhvbmVOdW1iZXIiOiIwNTQ1ODQ4NTkyIiwiaW1hZ2UiOm51bGwsImNvdW50cnkiOiJpc3JhZWwiLCJjaXR5IjoiaG9sb24iLCJhZGRyZXNzIjoic29tZXdoZXJlIGluIGhvbG9uIiwiaWF0IjoxNjk2MTEzMTExLCJleHAiOjE2OTYxMTY3MTF9.cwUzyKZsnPOzuNUBMcHo-H4RHRxkM01wy2S79Iee2zY
 Content-Type: application/json
 
 {
-  "firstName": "Razzy",
-  "lastName": "Raz",
-  "email": "raz@gmail.com",
-  "phoneNumber": "054-0421-421",
-  "country": "Israel",
-  "city": "holon",
-  "address": "somewhere in holon"
+  "editedUser": {
+            "firstName": "Raz",
+            "lastName": "Raz",
+            "email": "raz@gmail.com",
+            "phoneNumber": "0545848592",
+            "country": "israel",
+            "city": "holon",
+            "address": "somewhere in holon"
+  }
 }

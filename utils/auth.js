@@ -18,10 +18,10 @@ function AuthUser(req, res, next) {
 }
 
 function GenerateToken(doc) {
+  console.log("This is the user doccument", doc);
   const token = jwt.sign(doc, process.env.SECRET_KEY, {
       expiresIn: '1H'
   });
-  console.log(token);
   return token;
 }
 

@@ -45,7 +45,7 @@ UsersRoute.post('/login', async (req, res) => {
       password
     } = req.body;
     const loggedinUser = await UsersModel.Login(email, password);
-    console.log(loggedinUser);
+    console.log("This is the user doccument", loggedinUser);
     if (loggedinUser) {
       let token = GenerateToken(loggedinUser);
       res.status(200).json({
@@ -176,13 +176,12 @@ UsersRoute.put('/change-password', AuthUser, async (req, res) => {
 UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
   try {
 
-    currentEmail = req.user.email;
-
+    const currentUserId = req.user._id;
     const editedUser = req.body.editedUser
 
-    await UsersModel.UpdateUserDetails(currentEmail, editedUser);
+    await UsersModel.UpdateUserDetails(currentUserId, editedUser);
 
-    const updatedUser = await UsersModel.GetUser(currentEmail);
+    const updatedUser = await UsersModel.GetUser(currentUserId);
 
     if (updatedUser)
       res.status(200).json({
@@ -201,7 +200,7 @@ UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
       error: 'An error occurred while trying updating the user'
     });
   }
-})
+});
 
 UsersRoute.put('/unsave-flight', AuthUser, async (req, res) => {
   try {
