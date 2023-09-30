@@ -26,6 +26,35 @@ export default function UsersContextProvider({ children }) {
         SetCountries(countries);
     }
 
+    const EditProfile = async (editedUser) => {
+        try {
+            const token = await GetTokenAndNavigate(navigation);
+            let res = await fetch(`${base_api}/users/edit-profile`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(editedUser),
+            });
+            
+            console.log("hi");
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                console.error(`Error is: ${errorData.error}`);
+                return;
+            }
+
+            let data = await res.json();
+            SetCurrentUser(data);
+            console.log(data);
+
+        } catch (error) {
+
+        }
+    }
+
     const RegisterUser = async (newUser) => {
         try {
             let res = await fetch(`${base_api}/users/register`, {
@@ -178,31 +207,6 @@ export default function UsersContextProvider({ children }) {
         }
     }
 
-
-    const SaveFlight2 = async (flight, navigation) => {
-        try {
-            const token = await GetTokenAndNavigate(navigation);
-            let res = await fetch(`${base_api}/users/save-flight`, {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ flight }),
-            });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                console.error(`Error is: ${errorData.error}`);
-                return;
-            }
-
-            console.log("Flight saved successfully!");
-            UpdateUserFlightsInState(flight._id, 'save');
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
 
     const SaveHotel = async (hotel, navigation) => {
@@ -378,7 +382,8 @@ export default function UsersContextProvider({ children }) {
         countries,
         LoadSavedFlights,
         savedFlights,
-        currentUser
+        currentUser,
+        EditProfile
     }
 
     return (

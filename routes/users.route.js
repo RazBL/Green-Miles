@@ -153,7 +153,11 @@ UsersRoute.put('/change-password', AuthUser, async (req, res) => {
     const userEmail = req.user.email;
     const newPassword = req.body.password
 
-    const updatedUser = await UsersModel.ChangePassword(userEmail, newPassword)
+    await UsersModel.ChangePassword(userEmail, newPassword);
+
+    const updatedUser = await UsersModel.GetUser(userEmail);
+
+    console.log(updatedUser);
 
     res.status(200).json({
       message: 'Password was changed successfully',
@@ -175,22 +179,31 @@ UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
     currentEmail = req.user.email;
 
     const editedUser = {
-       firstName: req.body.firstName,
-       lastName: req.body.lastName,
-       email: req.body.email,
-       phoneNumber: req.body.phoneNumber,
-       country: req.body.country,
-       city: req.body.city,
-       address: req.body.address,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
+      country: req.body.country,
+      city: req.body.city,
+      address: req.body.address,
     }
 
-    const updatedUser = await UsersModel.UpdateUserDetails(currentEmail, editedUser);
-    console.log(updatedUser);
+    console.log(currentEmail);
 
-    if(updatedUser)
-    res.status(200).json({message: 'user details were updated successfully', user: updatedUser});
+    await UsersModel.UpdateUserDetails(currentEmail, editedUser);
+
+    const updatedUser = await UsersModel.GetUser(currentEmail)
+    console.log(updatedUser);
+    if (updatedUser)
+      res.status(200).json({
+        message: 'user details were updated successfully',
+        user: updatedUser
+      });
     else
-    res.status(401).json({message: 'user could not be found', user: updatedUser});
+      res.status(401).json({
+        message: 'user could not be found',
+        user: updatedUser
+      });
 
   } catch (error) {
     console.error(error);

@@ -22,6 +22,10 @@ export default function Account() {
     navigation.navigate('Delete Your Account');
   };
 
+  const navigateToEditProfilet = () => {
+    navigation.navigate('Edit Profile');
+  };
+
   const ToLoginPage = () => {
     navigation.navigate('Login');
   }
@@ -53,10 +57,12 @@ export default function Account() {
             (
               <View style={{ marginTop: 40 }}>
                 <View style={styles(theme).optionBox}>
-                  <View style={styles(theme).optionContainer}>
-                    <MaterialCommunityIcons name="account" size={20} color="black" />
-                    <Text style={styles(theme).optionText}>Edit Profile</Text>
-                  </View>
+                  <TouchableOpacity onPress={navigateToEditProfilet}>
+                    <View style={styles(theme).optionContainer}>
+                      <MaterialCommunityIcons name="account" size={20} color="black" />
+                      <Text style={styles(theme).optionText}>Edit Profile</Text>
+                    </View>
+                  </TouchableOpacity>
                   <View style={styles(theme).underline}></View>
                 </View>
 

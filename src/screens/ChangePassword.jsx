@@ -36,7 +36,7 @@ export default function ChangePassword() {
           <Button
             mode="contained"
             style={styles.button}
-            labelStyle={{fontFamily: 'Montserrat_Bold'}}
+            labelStyle={{fontFamily: 'Montserrat_Bold', color: 'white', fontSize: 15}}
             onPress={() => console.log('Update Password Button pressed!')}
           >
             Update Password
@@ -63,5 +63,9 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     backgroundColor: '#38DDA2',
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    borderRadius: 25
   },
 });

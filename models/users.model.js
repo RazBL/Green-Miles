@@ -147,9 +147,16 @@ class UsersModel {
             }
         }
 
-        return await new DB().UpdateOne("users", query, update);
+        await new DB().UpdateOne("users", query, update);
     }
 
+
+    static async GetUser(userEmail){
+        let query = {
+            "email": userEmail
+        }
+        return await new DB().FindOne(query, "users");
+    }
     
     static async UpdateUserDetails(currentEmail, editedUser) {
 
@@ -163,7 +170,8 @@ class UsersModel {
             }
         }
     
-        return await new DB().UpdateOne("users", query, update);
+        await new DB().UpdateOne("users", query, update);
+
     }
     
 

@@ -3,11 +3,11 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Card, useTheme, Headline, TextInput } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DropDownPicker from 'react-native-dropdown-picker';
+const cc = require('country-city');
 
 //Contexts
 import { FlightsContext } from '../context/FlightsContext';
 import { UsersContext } from '../context/UsersContext';
-const cc = require('country-city');
 
 //Componenets
 
@@ -297,7 +297,7 @@ const styles = theme => StyleSheet.create({
     },
     dualInput: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         marginTop: 20,
     },
     textInput: {
