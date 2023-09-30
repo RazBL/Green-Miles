@@ -28,7 +28,7 @@ export default function UsersContextProvider({ children }) {
 
     const EditProfile = async (editedUser) => {
         try {
-            const token = await GetTokenAndNavigate(navigation);
+            let token = await AsyncStorage.getItem('userToken');
             let res = await fetch(`${base_api}/users/edit-profile`, {
                 method: 'PUT',
                 headers: {

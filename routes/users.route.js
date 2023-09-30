@@ -178,22 +178,12 @@ UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
 
     currentEmail = req.user.email;
 
-    const editedUser = {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      country: req.body.country,
-      city: req.body.city,
-      address: req.body.address,
-    }
-
-    console.log(currentEmail);
+    const editedUser = req.body.editedUser
 
     await UsersModel.UpdateUserDetails(currentEmail, editedUser);
 
-    const updatedUser = await UsersModel.GetUser(currentEmail)
-    console.log(updatedUser);
+    const updatedUser = await UsersModel.GetUser(currentEmail);
+
     if (updatedUser)
       res.status(200).json({
         message: 'user details were updated successfully',

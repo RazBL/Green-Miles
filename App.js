@@ -62,7 +62,6 @@ export default function App() {
           <SafeAreaProvider style={styles.container}>
             <NavigationContainer>
                 <Stack.Navigator>
-                <Stack.Screen name="Edit Profile" component={EditProfile} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Navigation" component={Navigation} options={{headerTransparent: true, headerTitle: '',headerLeft: null  }}/>
