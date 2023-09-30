@@ -1,8 +1,10 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Keyboard, TouchableWithoutFeedback } from 'react-native'
 import { useTheme, TextInput, Button } from 'react-native-paper';
 import React, { useState, useEffect, useContext } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker';
 const cc = require('country-city');
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 //Contexts
 import { UsersContext } from '../context/UsersContext';
@@ -10,7 +12,7 @@ import { UsersContext } from '../context/UsersContext';
 export default function EditProfile() {
 
     //Context
-    const {countries, currentUser, EditProfile} = useContext(UsersContext)
+    const { countries, currentUser, EditProfile } = useContext(UsersContext)
 
     const theme = useTheme();
     const [countryPicker, SetCountryPicker] = useState(false);
@@ -63,15 +65,15 @@ export default function EditProfile() {
             address: address
         }
 
-        console.log(updatedUser);
+        console.log("this is the updated user", updatedUser);
 
 
         EditProfile(updatedUser);
 
     }
 
-    
-    
+
+
     useEffect(() => {
         TransformCountries();
     }, [])
@@ -82,89 +84,90 @@ export default function EditProfile() {
 
 
     return (
-        <View style={styles(theme).container}>
-            <View style={styles(theme).dualInput}>
-                <TextInput
-                    label="First name"
-                    mode="outlined"
-                    secureTextEntry={true}
-                    style={[styles(theme).textInputHalf]}
-                    onChange={(text) => SetFirstName(text)}
-                />
-                <TextInput
-                    label="Last name"
-                    mode="outlined"
-                    secureTextEntry={true}
-                    style={[styles(theme).textInputHalf]} 
-                    onChange={(text) => SetLastName(text)}
-                    />
-                    
-            </View>
-
-            <TextInput
-                label="Email"
-                mode="outlined"
-                secureTextEntry={true}
-                style={styles(theme).textInput}
-                onChange={(text) => SetEmail(text)}
-
-            />
-
-            <TextInput
-                label="Phone"
-                mode="outlined"
-                secureTextEntry={true}
-                style={styles(theme).textInput}
-                onChange={(text) => SetPhoneNumber(text)}
-
-            />
-
-            <DropDownPicker
-                open={countryPicker}
-                onOpen={() => SetCountryPicker(true)}
-                onClose={() => SetCountryPicker(false)}
-                placeholder='Country'
-                items={transformedCountries}
-                value={country}
-                setValue={SetCountry}
-                searchable={true}
-                textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
-                style={[styles(theme).textInput, { borderRadius: 5, borderColor: 'grey' }]}
-                listMode="MODAL"
-            />
-            <DropDownPicker
-                open={cityPicker}
-                onOpen={() => SetCityPicker(true)}
-                onClose={() => SetCityPicker(false)}
-                placeholder='City'
-                items={countryCities}
-                value={city}
-                setValue={SetCity}
-                searchable={true}
-                textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
-                style={[styles(theme).textInput, { borderRadius: 5, borderColor: 'grey', marginBottom: -6 }]}
-                listMode="MODAL"
-            />
-
-            <TextInput
-                label="Address"
-                mode="outlined"
-                secureTextEntry={true}
-                style={styles(theme).textInput}
-                onChange={(text) => SetAddress(text)}
-
-            />
-
-            <Button
-                mode="contained"
-                style={styles(theme).button}
-                labelStyle={{ fontFamily: 'Montserrat_Bold', color: 'white', fontSize: 15 }}
-                onPress={EditProfileHandler}
+        <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
+            <KeyboardAwareScrollView
+                style={styles(theme).container}
+                scrollEnabled
+                enableOnAndroid={true}
+                extraScrollHeight={150}
             >
-                Edit Profile
-            </Button>
+                <View style={styles(theme).dualInput}>
+                    <TextInput
+                        label="First name"
+                        mode="outlined"
+                        style={[styles(theme).textInputHalf]}
+                        onChange={(text) => SetFirstName(text)}
+                    />
+                    <TextInput
+                        label="Last name"
+                        mode="outlined"
+                        style={[styles(theme).textInputHalf]}
+                        onChange={(text) => SetLastName(text)}
+                    />
 
-        </View>
+                </View>
+
+                <TextInput
+                    label="Email"
+                    mode="outlined"
+                    style={styles(theme).textInput}
+                    onChange={(text) => SetEmail(text)}
+
+                />
+
+                <TextInput
+                    label="Phone"
+                    mode="outlined"
+                    style={styles(theme).textInput}
+                    onChange={(text) => SetPhoneNumber(text)}
+
+                />
+
+                <DropDownPicker
+                    open={countryPicker}
+                    onOpen={() => SetCountryPicker(true)}
+                    onClose={() => SetCountryPicker(false)}
+                    placeholder='Country'
+                    items={transformedCountries}
+                    value={country}
+                    setValue={SetCountry}
+                    searchable={true}
+                    textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
+                    style={[styles(theme).textInput, { borderRadius: 5, borderColor: 'grey' }]}
+                    listMode="MODAL"
+                />
+                <DropDownPicker
+                    open={cityPicker}
+                    onOpen={() => SetCityPicker(true)}
+                    onClose={() => SetCityPicker(false)}
+                    placeholder='City'
+                    items={countryCities}
+                    value={city}
+                    setValue={SetCity}
+                    searchable={true}
+                    textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}
+                    style={[styles(theme).textInput, { borderRadius: 5, borderColor: 'grey', marginBottom: -6 }]}
+                    listMode="MODAL"
+                />
+
+                <TextInput
+                    label="Address"
+                    mode="outlined"
+                    style={styles(theme).textInput}
+                    onChange={(text) => SetAddress(text)}
+
+                />
+
+                <Button
+                    mode="contained"
+                    style={styles(theme).button}
+                    labelStyle={{ fontFamily: 'Montserrat_Bold', color: 'white', fontSize: 15 }}
+                    onPress={EditProfileHandler}
+                >
+                    Edit Profile
+                </Button>
+            </KeyboardAwareScrollView>
+        </TouchableWithoutFeedback>
     )
 }
 

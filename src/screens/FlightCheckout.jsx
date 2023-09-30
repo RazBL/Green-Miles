@@ -97,16 +97,12 @@ export default function FlightCheckout({ navigation }) {
 
     useEffect(() => {
         TransformCountries();
-    }, [])
+    }, [country]);
 
-    useEffect(() => {
-        TransformCountries();
-    }, [country])
-
+    
     return (
         <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
             <KeyboardAwareScrollView
-                contentContainerStyle={{ flexGrow: 1 }}
                 scrollEnabled
                 enableOnAndroid={true}
                 extraScrollHeight={200}
