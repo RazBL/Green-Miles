@@ -1,6 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-
 const Stack = createStackNavigator();
 
 //Screens
@@ -11,6 +10,7 @@ import HotelCheckOut from '../screens/HotelCheckOut'
 
 // ...
 
+import HotelPreviewCard from './HotelPreviewCard';
 
 export default function HotelNavigation() {
     return (
@@ -23,7 +23,7 @@ export default function HotelNavigation() {
                     headerTitleAlign: 'center',
                     headerTitleStyle: {
                         fontFamily: 'Montserrat_Bold',
-                        fontSize: 20, 
+                        fontSize: 20,
                         elevation: 0
                     },
                 }}
@@ -39,6 +39,8 @@ export default function HotelNavigation() {
                 }}
             />
             <Stack.Screen name="HotelCheckOut" component={HotelCheckOut} />
+            <Stack.Screen name="HotelPreviewCard" component={HotelPreviewCard} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
+
 
         </Stack.Navigator>
 

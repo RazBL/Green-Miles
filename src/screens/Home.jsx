@@ -4,7 +4,17 @@ import { Headline, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabOffsetContext from '../context/TabOffsetContext'
 
+//Screens
+
+//Componenets
+import HotelPreviewCard from '../components/HotelPreviewCard';
+
+//Contexts
+import { HotelsContext } from '../context/HotelsContext';
+
 export default function Home({ navigation }) {
+
+  const {hotels} = useContext(HotelsContext)
 
   const moveToTab = useContext(TabOffsetContext);
 
@@ -20,11 +30,6 @@ export default function Home({ navigation }) {
     navigation.navigate('Flights', { screen: 'Flights' });
   };
 
-
-  const ToSaveButtnHandler = () => {
-    moveToTab(3);
-    navigation.navigate('Save', { screen: 'Save' });
-  };
 
   return (
     <View style={styles(theme).container}>
@@ -56,19 +61,13 @@ export default function Home({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles(theme).SaveFlightHotelSection}>
-        <Image
-          source={require('../images/data-roaming-article.jpg')}
-          style={{ height: '100%', width: '100%', opacity: 0.7 }}
-        />
-        <View style={styles(theme).saveTextButtonBox}>
-          <Headline style={{ color: 'white', fontFamily: 'Montserrat_Bold', fontSize: 30, textAlign: 'center', maxWidth: 380 }}>Save the planet and your travel plans</Headline>
-          <TouchableOpacity style={styles(theme).toSavePage} onPress={ToSaveButtnHandler}>
-            <Text style={styles(theme).saveButtonText}>To Save</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={styles(theme).HighestEcoRatedHotels}>
+        <Headline style={styles(theme).headline}>Highest <Headline style={[styles(theme).headline, {color: theme.colors.primary}]}>Eco</Headline> rated Hotels</Headline>
       </View>
 
+        <HotelPreviewCard hotel={hotels[0]} navigation={navigation}/>
+
+    
     </View>
   )
 }
@@ -82,6 +81,12 @@ const styles = theme => StyleSheet.create({
   flightHotelSearch: {
     flexDirection: 'row',
     marginBottom: 35
+  },
+  headline: {
+    fontSize: 20,
+    fontFamily: 'Montserrat_Bold',
+    alignSelf: 'center',
+    color: 'black'
   },
   hotelImageBox: {
     flex: 1,
@@ -147,5 +152,8 @@ const styles = theme => StyleSheet.create({
     justifyContent: "center",
     alignItems: 'center',
     position: 'absolute'
+  },
+  HighestEcoRatedHotels: {
+
   }
 });

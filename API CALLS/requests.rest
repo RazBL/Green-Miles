@@ -100,13 +100,13 @@ Content-Type: application/json
 ###
 
 
-PUT http://localhost:3500/api/users/edit-profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRIVUlMRXBpSXdxUTlYaGdsNUI2MWp1YlJmVEw3Mzk3UFd2QTBtZHpCS3p1UXA3Z3VQTzhjTyIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJjIl0sImZpcnN0TmFtZSI6IlJheiIsImxhc3ROYW1lIjoiUmF6IiwicGhvbmVOdW1iZXIiOiIwNTQ1ODQ4NTkyIiwiaW1hZ2UiOm51bGwsImNvdW50cnkiOiJpc3JhZWwiLCJjaXR5IjoiaG9sb24iLCJhZGRyZXNzIjoic29tZXdoZXJlIGluIGhvbG9uIiwiaWF0IjoxNjk2MTEzMTExLCJleHAiOjE2OTYxMTY3MTF9.cwUzyKZsnPOzuNUBMcHo-H4RHRxkM01wy2S79Iee2zY
+PUT https://greenmiles.onrender.com/api/users/edit-profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRIVUlMRXBpSXdxUTlYaGdsNUI2MWp1YlJmVEw3Mzk3UFd2QTBtZHpCS3p1UXA3Z3VQTzhjTyIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJjIl0sImZpcnN0TmFtZSI6IlJheiIsImxhc3ROYW1lIjoiUmF6IiwicGhvbmVOdW1iZXIiOiIwNTQ1ODQ4NTkyIiwiaW1hZ2UiOm51bGwsImNvdW50cnkiOiJpc3JhZWwiLCJjaXR5IjoiaG9sb24iLCJhZGRyZXNzIjoic29tZXdoZXJlIGluIGhvbG9uIiwiaWF0IjoxNjk2MTIyMDAwLCJleHAiOjE2OTYxMjU2MDB9.DzKXtHesOTruPzfoMwsavGVcDNZm3MPPm3iBDNAIFY8
 Content-Type: application/json
 
 {
   "editedUser": {
-            "firstName": "Raz",
+            "firstName": "Razzy",
             "lastName": "Raz",
             "email": "raz@gmail.com",
             "phoneNumber": "0545848592",

@@ -17,7 +17,7 @@ export default function Save({ navigation }) {
   const theme = useTheme();
 
   const { flights } = useContext(FlightsContext);
-  const { hotels} = useContext(HotelsContext)
+  const { hotels } = useContext(HotelsContext)
   const { currentUser } = useContext(UsersContext);
 
   const [flightsButton, SetFlightsButton] = useState(true);
@@ -30,9 +30,11 @@ export default function Save({ navigation }) {
 
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && currentUser.savedFlights) {
       let filteredFlights = flights.filter(flight => currentUser.savedFlights.includes(flight._id));
       SetSavedFlights(filteredFlights);
+    }
+    if (currentUser && currentUser.savedHotels) {
       let filteredHotels = hotels.filter(hotel => currentUser.savedHotels.includes(hotel._id));
       SetSavedHotels(filteredHotels);
     }
@@ -75,13 +77,13 @@ export default function Save({ navigation }) {
       </View>
 
       <View>
-            <FlatList
-              data={flightsButton ? savedFlights : savedHotels}
-              keyExtractor={(item) => item._id}
-              renderItem={({ item }) => flightsButton ? (<FlightCard flight={item} navigation={navigation} />) :
-               (<HotelCard  hotel={item} navigation={navigation}/>)}
-              showsVerticalScrollIndicator={false} 
-              contentContainerStyle={{ paddingBottom: 120}}/>
+        <FlatList
+          data={flightsButton ? savedFlights : savedHotels}
+          keyExtractor={(item) => item._id}
+          renderItem={({ item }) => flightsButton ? (<FlightCard flight={item} navigation={navigation} />) :
+            (<HotelCard hotel={item} navigation={navigation} />)}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 120 }} />
       </View>
     </View>
   )
@@ -99,7 +101,7 @@ const styles = theme => StyleSheet.create({
   headline: {
     fontSize: 20,
     fontFamily: 'Montserrat_Bold',
-    color:"black",
+    color: "black",
     marginBottom: 30,
     alignSelf: 'center'
   },

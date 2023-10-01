@@ -18,6 +18,9 @@ import AccountNavigation from '../components/AccountNavigation';
 
 const Tab = createBottomTabNavigator();
 
+const MainTab = createBottomTabNavigator();
+
+
 export default function Navigation() {
 
   const navigationState = useNavigationState(state => state.index - 2);
@@ -56,7 +59,6 @@ export default function Navigation() {
         <Appbar style={styles.upperBar}>
           <Image source={require('../images/Logo.png')} resizeMode="contain" style={styles.image} />
         </Appbar>
-
         <Tab.Navigator
           screenOptions={{
             headerShown: false,
@@ -84,12 +86,12 @@ export default function Navigation() {
               component={item.component}
               options={{
                 tabBarLabel: ({ color }) => (
-                  <Text style={{ color: color, marginBottom: 5, fontSize: 12}}>
+                  <Text style={{ color: color, marginBottom: 5, fontSize: 12 }}>
                     {item.name}
                   </Text>
                 ),
                 tabBarIcon: ({ color, size }) => (
-                  <MaterialCommunityIcons name={item.icon} style={{marginTop: 5}} color={color} size={24} />
+                  <MaterialCommunityIcons name={item.icon} style={{ marginTop: 5 }} color={color} size={24} />
                 ),
               }}
               listeners={() => ({
@@ -106,23 +108,22 @@ export default function Navigation() {
           ))}
 
         </Tab.Navigator>
+      <Animated.View style={{
+        width: barWidth,
+        height: 2,
+        borderRadius: 20,
+        borderWidth: 1,
+        borderColor: '#1CD995',
+        backgroundColor: '#1CD995',
+        position: 'absolute',
+        bottom: 65,
+        transform: [{ translateX: tabOffSetValue }]
+      }}
+      >
+      </Animated.View>
 
-        <Animated.View style={{
-          width: barWidth,
-          height: 2,
-          borderRadius: 20,
-          borderWidth: 1,
-          borderColor:  '#1CD995',
-          backgroundColor: '#1CD995',
-          position: 'absolute',
-          bottom: 65,
-          transform: [{ translateX: tabOffSetValue }]
-        }}
-        >
-        </Animated.View>
-
-      </View>
-    </TabOffsetContext.Provider>
+    </View>
+    </TabOffsetContext.Provider >
 
   );
 }

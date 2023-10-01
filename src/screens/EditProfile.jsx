@@ -9,20 +9,20 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 //Contexts
 import { UsersContext } from '../context/UsersContext';
 
-export default function EditProfile() {
+export default function EditProfile({navigation}) {
 
     //Context
-    const { countries, currentUser, EditProfile } = useContext(UsersContext)
+    const { countries, currentUser, EditProfile, CheckValidEmail, EmailExists } = useContext(UsersContext)
 
     const theme = useTheme();
     const [countryPicker, SetCountryPicker] = useState(false);
     const [cityPicker, SetCityPicker] = useState(false);
     const [transformedCountries, SetTransformedCountries] = useState([]);
     const [countryCities, SetCountryCities] = useState([]);
-    const [firstNmae, SetFirstName] = useState("");
-    const [lastName, SetLastName] = useState("");
-    const [email, SetEmail] = useState("");
-    const [phoneNumber, SetPhoneNumber] = useState("");
+    const [firstName, SetFirstName] = useState(currentUser.firstName);
+    const [lastName, SetLastName] = useState(currentUser.lastName);
+    const [email, SetEmail] = useState(currentUser.email);
+    const [phoneNumber, SetPhoneNumber] = useState(currentUser.phoneNumber);
     const [country, SetCountry] = useState("");
     const [city, SetCity] = useState("");
     const [address, SetAddress] = useState("");
@@ -54,22 +54,44 @@ export default function EditProfile() {
 
 
     const EditProfileHandler = () => {
+        if (InputHandler()) {
+            let updatedUser = {
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phoneNumber: phoneNumber,
+                country: country,
+                city: city,
+                address: address
+            }
 
-        let updatedUser = {
-            firstNmae: firstNmae,
-            lastName: lastName,
-            email: email,
-            phoneNumber: phoneNumber,
-            country: country,
-            city: city,
-            address: address
+            EditProfile(updatedUser);
+
+            alert("Account details were changd successfully");
+
+            navigation.navigate("Account")
         }
 
-        console.log("this is the updated user", updatedUser);
+    }
 
 
-        EditProfile(updatedUser);
+    const InputHandler = () => {
+        let valid = true;
 
+        if (firstName == "" || lastName == "" || email == "") {
+            alert("Please do no leave first name, last name and email input empty.");
+            valid = false;
+        }
+        else if (!CheckValidEmail(email)) {
+            alert("Please enter a valid email.");
+            valid = false;
+        }
+        else if (EmailExists(email) && email != currentUser.email){
+            alert("Email already exists.");
+            valid = false;
+        }
+
+        return valid;
     }
 
 
@@ -96,13 +118,15 @@ export default function EditProfile() {
                         label="First name"
                         mode="outlined"
                         style={[styles(theme).textInputHalf]}
-                        onChange={(text) => SetFirstName(text)}
+                        value={firstName}
+                        onChangeText={(text) => SetFirstName(text)}
                     />
                     <TextInput
                         label="Last name"
                         mode="outlined"
                         style={[styles(theme).textInputHalf]}
-                        onChange={(text) => SetLastName(text)}
+                        value={lastName}
+                        onChangeText={(text) => SetLastName(text)}
                     />
 
                 </View>
@@ -111,7 +135,8 @@ export default function EditProfile() {
                     label="Email"
                     mode="outlined"
                     style={styles(theme).textInput}
-                    onChange={(text) => SetEmail(text)}
+                    value={email}
+                    onChangeText={(text) => SetEmail(text)}
 
                 />
 
@@ -119,7 +144,8 @@ export default function EditProfile() {
                     label="Phone"
                     mode="outlined"
                     style={styles(theme).textInput}
-                    onChange={(text) => SetPhoneNumber(text)}
+                    value={phoneNumber}
+                    onChangeText={(text) => SetPhoneNumber(text)}
 
                 />
 
@@ -154,7 +180,8 @@ export default function EditProfile() {
                     label="Address"
                     mode="outlined"
                     style={styles(theme).textInput}
-                    onChange={(text) => SetAddress(text)}
+                    value={address}
+                    onChangeText={(text) => SetAddress(text)}
 
                 />
 

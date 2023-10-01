@@ -176,11 +176,6 @@ const styles = theme => StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10
   },
-  optionText: {
-    fontSize: 20, // גודל הגופן
-    marginLeft: 10,
-    fontFamily: 'Montserrat_Bold',
-  },
   underline: {
     borderBottomWidth: 1, // רוחב הקו
     borderBottomColor: theme.colors.cardBorder, // צבע הקו

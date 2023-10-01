@@ -178,6 +178,7 @@ UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
 
     const currentUserId = req.user._id;
     const editedUser = req.body.editedUser
+    
 
     await UsersModel.UpdateUserDetails(currentUserId, editedUser);
 

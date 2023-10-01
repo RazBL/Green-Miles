@@ -27,6 +27,9 @@ export default function UsersContextProvider({ children }) {
     }
 
     const EditProfile = async (editedUser) => {
+        if(editedUser){
+            console.log(editedUser);
+        }
         try {
             let token = await AsyncStorage.getItem('userToken');
             let res = await fetch(`${base_api}/users/edit-profile`, {
@@ -35,11 +38,9 @@ export default function UsersContextProvider({ children }) {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(editedUser),
+                body: JSON.stringify({ editedUser: editedUser }),
             });
             
-            console.log("hi");
-
             if (!res.ok) {
                 const errorData = await res.json();
                 console.error(`Error is: ${errorData.error}`);
@@ -47,8 +48,9 @@ export default function UsersContextProvider({ children }) {
             }
 
             let data = await res.json();
-            SetCurrentUser(data);
             console.log(data);
+            LoadAllUsers();
+            SetCurrentUser(data);
 
         } catch (error) {
 
