@@ -39,8 +39,6 @@ export default function HotelNavigation() {
                 }}
             />
             <Stack.Screen name="HotelCheckOut" component={HotelCheckOut} />
-            <Stack.Screen name="HotelPreviewCard" component={HotelPreviewCard} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
-
 
         </Stack.Navigator>
 

@@ -18,11 +18,7 @@ import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
 import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
-import FlightSearchResults from './src/screens/FlightSearchResults';
-import HotelDetails from './src/screens/HotelDetails';
-import HotelsSearchResults from './src/screens/HotelsSearchResults';
-import Test_Design from './src/screens/Test_Design';
-import EditProfile from './src/screens/EditProfile';
+
 
 const Stack = createStackNavigator();
 
@@ -50,9 +46,6 @@ export default function App() {
   if (!loaded) {
     return null;
   }
-//                 <Stack.Screen name="hotelsearchresult" component={HotelsSearchResults} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
-//                 <Stack.Screen name="yay" component={Test_Design} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
-
 
   return (
     <PaperProvider theme={theme}>

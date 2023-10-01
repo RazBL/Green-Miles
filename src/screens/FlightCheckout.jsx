@@ -4,6 +4,7 @@ import { Card, useTheme, Headline, TextInput } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DropDownPicker from 'react-native-dropdown-picker';
 const cc = require('country-city');
+import { CreditCardInput, LiteCreditCardInput } from "react-native-credit-card-input";
 
 //Contexts
 import { FlightsContext } from '../context/FlightsContext';
@@ -111,7 +112,7 @@ export default function FlightCheckout({ navigation }) {
 
                 <View style={styles(theme).container}>
                     <Card style={{ backgroundColor: 'white' }}>
-                        <Card.Cover style={styles(theme).imgContainer} source={require("../images/FlightSearch.png")} />
+                        <Card.Cover style={styles(theme).imgContainer} source={require("../images/flight2.jpg")}/>
 
                         <Headline style={[styles(theme).cardTitle, { marginTop: 5 }]}>Airline <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{FlightToBook.airline}</Headline></Headline>
                         <Headline style={styles(theme).cardTitle}>Flight Number <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{FlightToBook.flightNumber}</Headline></Headline>
@@ -226,6 +227,8 @@ export default function FlightCheckout({ navigation }) {
                             onChangeText={text => SetCardOwner((text))}
                         />
                     </View>
+
+                                <CreditCardInput />
 
                     <TouchableOpacity style={styles(theme).bookingBtn} onPress={CheckoutHandler}>
                         <Text style={styles(theme).btnText}>Confirm Booking</Text>

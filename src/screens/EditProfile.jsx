@@ -98,12 +98,7 @@ export default function EditProfile({navigation}) {
 
     useEffect(() => {
         TransformCountries();
-    }, [])
-
-    useEffect(() => {
-        TransformCountries();
     }, [country])
-
 
     return (
         <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>

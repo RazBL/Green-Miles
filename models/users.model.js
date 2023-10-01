@@ -132,13 +132,13 @@ class UsersModel {
         return await new DB().UpdateOne("users", query, update)
     }
 
-    static async ChangePassword(userEmail, newPassword) {
+    static async ChangePassword(userId, newPassword) {
 
         let salt = bcrypt.genSaltSync(10);
         let hashedPassword = bcrypt.hashSync(newPassword, salt);
 
         let query = {
-            "email": userEmail
+            "_id": new ObjectId(userId)
         }
 
         let update = {
