@@ -1,4 +1,8 @@
 const DB = require('../utils/db');
+const {
+    ObjectId
+} = require('mongodb');
+
 
 class FlightBookingModel {
     _id
@@ -19,8 +23,11 @@ class FlightBookingModel {
         this.passangers = passangers;
     }
 
-    static async GetAllFlightBookings() {
-        return await new DB().FindAll('Flight_Booking');
+    static async GetAllBookedFlights(useId) {
+        let query = {
+            "user_id": new ObjectId(useId)
+        }
+        return await new DB().FindAll('Flight_Booking', query);
     }
     
     static async UpdateBookingStatus(bookingId, newStatus) {

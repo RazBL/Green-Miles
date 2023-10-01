@@ -97,17 +97,36 @@ export default function FlightsContextProvider({ children }) {
                 return null;
             }
 
-            let data = await res.json();
-
-            return(data);
+            GetAllFlightOrders();
 
         } catch (error) {
             console.log(error);
         }
     }
 
+    const GetAllFlightOrders = async () => {
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            const res = await fetch(`${base_api}/flights`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            if (res.ok) {
+                const data = await res.json();
+                SetFlightOrders(data);
+            } 
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+
     useEffect(() => {
         LoadAllFlights();
+        GetAllFlightOrders();
     }, []);
 
     useEffect(() => {
@@ -133,7 +152,8 @@ export default function FlightsContextProvider({ children }) {
         SetPassengersContext,
         FlightToBook,
         FlightBooking,
-        SetFlightToBook,        
+        SetFlightToBook,
+        flightOrders
     }
 
     return (

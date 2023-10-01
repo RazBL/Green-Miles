@@ -18,7 +18,7 @@ import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
 import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
-
+import BookedPage from './src/screens/BookedPage';
 
 const Stack = createStackNavigator();
 
@@ -62,6 +62,7 @@ export default function App() {
                   <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Flight Checkout" component={FlightCheckout} options={{headerTitleAlign: 'center'}}/>
+                  <Stack.Screen name="Booking was Successful" component={BookedPage} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                 </Stack.Navigator>
             </NavigationContainer>
             </SafeAreaProvider>            

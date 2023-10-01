@@ -11,7 +11,6 @@ import HotelPreviewCard from '../components/HotelPreviewCard';
 
 //Contexts
 import { HotelsContext } from '../context/HotelsContext';
-import { useSafeAreaFrame } from 'react-native-safe-area-context';
 
 export default function Home({ navigation }) {
   //Context
@@ -49,7 +48,7 @@ export default function Home({ navigation }) {
         <View style={styles(theme).hotelImageBox}>
           <Image
             source={require('../images/hotels2.jpg')}
-            resizeMode="strech"
+            resizeMode="stretch"
             style={{ height: '100%', width: '100%', opacity: 0.77 }}
           />
           <TouchableOpacity style={styles(theme).hotelFlightButton} onPress={ToHotelButtnHandler}>
