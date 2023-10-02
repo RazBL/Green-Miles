@@ -34,6 +34,7 @@ const HotelCard = ({ hotel, navigation }) => {
   const hotelSaveHandler = () => {
     if (!currentUser) {
       alert("You must login in order to save");
+      navigation.navigate('Login');
       return;
     }
 

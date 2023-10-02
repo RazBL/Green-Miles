@@ -11,11 +11,12 @@ import HotelPreviewCard from '../components/HotelPreviewCard';
 
 //Contexts
 import { HotelsContext } from '../context/HotelsContext';
+import { UsersContext } from '../context/UsersContext';
 
 export default function Home({ navigation }) {
   //Context
-  const { hotels } = useContext(HotelsContext)
-
+  const { hotels } = useContext(HotelsContext);
+  const {} = useContext(UsersContext);
   const moveToTab = useContext(TabOffsetContext);
 
   const theme = useTheme();
@@ -49,7 +50,7 @@ export default function Home({ navigation }) {
           <Image
             source={require('../images/hotels2.jpg')}
             resizeMode="stretch"
-            style={{ height: '100%', width: '100%', opacity: 0.77 }}
+            style={{ height: '100%', width: '100%', opacity: 0.95 }}
           />
           <TouchableOpacity style={styles(theme).hotelFlightButton} onPress={ToHotelButtnHandler}>
             <View style={styles(theme).iconTextBox} >
@@ -62,7 +63,7 @@ export default function Home({ navigation }) {
           <Image
             source={require('../images/flight2.jpg')}
             resizeMode="cover"
-            style={{ height: '100%', width: '100%', opacity: 0.85 }}
+            style={{ height: '100%', width: '100%', opacity: 0.95}}
           />
           <TouchableOpacity style={styles(theme).hotelFlightButton} onPress={ToFlightButtnHandler}>
             <View style={styles(theme).iconTextBox} >
@@ -98,7 +99,7 @@ const styles = theme => StyleSheet.create({
   },
   flightHotelSearch: {
     flexDirection: 'row',
-    marginBottom: 35
+    marginBottom: 30
   },
   headline: {
     fontSize: 20,
@@ -109,7 +110,7 @@ const styles = theme => StyleSheet.create({
   hotelImageBox: {
     flex: 1,
     height: 280,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
@@ -117,7 +118,7 @@ const styles = theme => StyleSheet.create({
   flightImageBox: {
     flex: 1,
     height: 280,
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
@@ -149,7 +150,7 @@ const styles = theme => StyleSheet.create({
     color: 'white',
     width: 160,
     height: 45,
-    backgroundColor: 'black',
+    backgroundColor: '#36BD8D',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
@@ -172,8 +173,8 @@ const styles = theme => StyleSheet.create({
     position: 'absolute'
   },
   hotelsCardContainer: {
-    marginVertical: 20,
+    marginVertical: 30,
     flexDirection: 'row',
     marginLeft: 20
-  }
+  },
 });

@@ -10,6 +10,7 @@ import Support from '../screens/Support';
 import ChangePassword from '../screens/ChangePassword';
 import DeleteYourAccount from '../screens/DeleteYourAccount';
 import EditProfile from '../screens/EditProfile';
+import BookingsPage from '../screens/BookingsPage';
 
 export default function AccountNavigation() {
     return (
@@ -40,6 +41,14 @@ export default function AccountNavigation() {
                 },
             }} />
             <Stack.Screen name="Edit Profile" component={EditProfile} options={{
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontFamily: 'Montserrat_Bold',
+                    fontSize: 20,
+                    elevation: 0
+                },
+            }} />
+            <Stack.Screen name="Booking History" component={BookingsPage} options={{
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
                     fontFamily: 'Montserrat_Bold',

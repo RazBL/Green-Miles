@@ -4,7 +4,9 @@ import { Card, useTheme, Headline, TextInput } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DropDownPicker from 'react-native-dropdown-picker';
 const cc = require('country-city');
-import { CreditCardInput, LiteCreditCardInput } from 'react-native-credit-card-input';
+import { LiteCreditCardInput } from "react-native-credit-card-input";
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: componentWillReceiveProps has been renamed']);
 
 //Contexts
 import { FlightsContext } from '../context/FlightsContext';
@@ -15,7 +17,7 @@ import { UsersContext } from '../context/UsersContext';
 export default function FlightCheckout({ navigation }) {
 
     const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
-    const { FlightBooking, passengersContext, FlightToBook, } = useContext(FlightsContext);
+    const { FlightBooking, passengersContext, FlightToBook } = useContext(FlightsContext);
 
     const [email, SetEmail] = useState(currentUser.email);
     const [country, SetCountry] = useState("Israel");
@@ -24,7 +26,6 @@ export default function FlightCheckout({ navigation }) {
     const [cardNumber, SetCardNumber] = useState("");
     const [expirationDate, SetExpirationDate] = useState("");
     const [cvv, SetCvv] = useState("");
-    const [isModalVisible, SetModalVisible] = useState(false);
     const [transformedCountries, SetTransformedCountries] = useState([]);
     const [countryCities, SetCountryCities] = useState([]);
     const [countryPicker, SetCountryPicker] = useState(false);
@@ -47,12 +48,9 @@ export default function FlightCheckout({ navigation }) {
             let localTime = `${hours}:${minutes}`;
             let localDate = `${year}-${month}-${day}`;
 
-            console.log(localDate);
-            console.log(localTime);
-
             FlightBooking(currentUser, localTime, localDate, FlightToBook);
 
-            alert("Booking was ")
+            navigation.navigate("BookedMessage");
         }
     }
 
@@ -143,7 +141,7 @@ export default function FlightCheckout({ navigation }) {
                                 <Text style={[styles(theme).alignTextRight, styles(theme).montserratBold, styles(theme).text]}>Arrival</Text>
                                 <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.arrival.date}</Text>
                                 <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.arrival.time}</Text>
-                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>Total price <Text style={styles(theme).montserratBold}>{FlightToBook.price}</Text></Text>
+                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>Total price <Text style={styles(theme).montserratBold}>${FlightToBook.price}</Text></Text>
                             </View>
 
                         </Card.Content>

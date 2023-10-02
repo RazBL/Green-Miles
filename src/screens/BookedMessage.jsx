@@ -4,11 +4,15 @@ import React, { useContext } from 'react';
 import { UsersContext } from '../context/UsersContext';
 import { FlightsContext } from '../context/FlightsContext';
 
-export default function BookedPage() {
+export default function BookedMessage({navigation}) {
     const theme = useTheme();
 
     const {currentUser} = useContext(UsersContext);
     const {flightOrders} = useContext(FlightsContext);
+
+    const BtnHandler = () => {
+        navigation.navigate("Navigation");
+    }
 
     return (
         <View style={styles(theme).container}>
@@ -16,13 +20,13 @@ export default function BookedPage() {
                 <Card.Content>
                     <Text style={styles(theme).title}>Booking Pending</Text>
                     <Text style={styles(theme).message}>
-                        Hello, ,
+                        Hello {currentUser.firstName} {currentUser.lastName},
                     </Text>
                     <Text style={styles(theme).message}>
-                        Thank you for booking  on . Your booking is currently pending and will be confirmed shortly.
+                        Thank you for your booking. Your booking is currently pending and will be confirmed shortly.
                     </Text>
                     <Text style={styles(theme).message}>
-                        Booking Reference:
+                        Booking Reference: <Text style={[styles(theme).message, {fontFamily: 'Montserrat_Bold', color: theme.colors.primary}]}>{flightOrders[flightOrders.length -1]._id}</Text>
                     </Text>
                     <Text style={styles(theme).message}>
                         Once your booking is confirmed, you will receive a confirmation notification.
@@ -34,7 +38,7 @@ export default function BookedPage() {
                 <Button
                     style={styles(theme).button}
                     labelStyle={{color: 'white', fontFamily: 'Montserrat_Bold', fontSize: 15}}
-                    onPress={() => {}}>
+                    onPress={BtnHandler}>
                     Back to Home
                 </Button>
             </Card>
