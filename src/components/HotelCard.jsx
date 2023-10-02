@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { UsersContext } from '../context/UsersContext'; // Import the UsersContext
+import { UsersContext } from '../context/UsersContext'; 
 import { HotelsContext } from '../context/HotelsContext';
 
 const HotelCard = ({ hotel, navigation }) => {

@@ -16,7 +16,6 @@ import { UsersContext } from '../context/UsersContext';
 export default function Home({ navigation }) {
   //Context
   const { hotels } = useContext(HotelsContext);
-  const {} = useContext(UsersContext);
   const moveToTab = useContext(TabOffsetContext);
 
   const theme = useTheme();
@@ -123,29 +122,6 @@ const styles = theme => StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  SaveFlightHotelSection: {
-    height: 280,
-    backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative'
-  },
-  toSavePage: {
-    width: 175,
-    height: 45,
-    backgroundColor: 'black',
-    borderColor: 'white',
-    borderWidth: 1,
-    marginTop: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10
-  },
-  saveButtonText: {
-    color: 'white',
-    fontFamily: 'Montserrat_Bold',
-    fontSize: 20,
-  },
   hotelFlightButton: {
     color: 'white',
     width: 160,
@@ -164,7 +140,7 @@ const styles = theme => StyleSheet.create({
   hotelFlightButtonText: {
     marginLeft: 10,
     color: 'white',
-    fontFamily: 'Montserrat_Medium',
+    fontFamily: 'Montserrat_Bold',
     fontSize: 20,
   },
   saveTextButtonBox: {

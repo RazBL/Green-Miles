@@ -3,22 +3,31 @@ import { useTheme, Card } from 'react-native-paper'
 import React, { useContext, useState, useEffect } from 'react'
 //Context
 import { HotelsContext } from '../context/HotelsContext';
+import TabOffsetContext from '../context/TabOffsetContext'
 
-//Component
+
+
 export default function HotelPreviewCard({ hotel, navigation }) {
   const theme = useTheme();
   const { HotelRatingText } = useContext(HotelsContext);
-  const [hotelRating, SetHotelRating] = useState("")
+  const [hotelRating, SetHotelRating] = useState("");
+
+  const moveToTab = useContext(TabOffsetContext);
+
 
   const NavigateToHotelDetails = () => {
-    navigation.navigate('Tab', {
+    navigation.navigate('Navigation', {
       screen: 'Hotels',
       params: {
         screen: 'Hotel',
         params: { hotel }
       }
     });
-  };
+
+    moveToTab(2);
+};
+
+
 
   useEffect(() => {
     SetHotelRating(HotelRatingText(hotel));

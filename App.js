@@ -20,6 +20,10 @@ import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
 import BookedMessage from './src/screens/BookedMessage';
 
+//Component
+import HotelNavigation from './src/components/HotelNavigation';
+
+
 const Stack = createStackNavigator();
 
 const theme = {
