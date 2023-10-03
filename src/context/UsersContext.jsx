@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext } from 'react'
+import React, { useEffect, useState, createContext, useContext } from 'react'
 import { base_api } from '../../utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const cc = require('country-city');
@@ -27,9 +27,6 @@ export default function UsersContextProvider({ children }) {
     }
 
     const EditProfile = async (editedUser) => {
-        if(editedUser){
-            console.log(editedUser);
-        }
         try {
             let token = await AsyncStorage.getItem('userToken');
             let res = await fetch(`${base_api}/users/edit-profile`, {
@@ -40,7 +37,7 @@ export default function UsersContextProvider({ children }) {
                 },
                 body: JSON.stringify({ editedUser: editedUser }),
             });
-            
+
             if (!res.ok) {
                 const errorData = await res.json();
                 console.error(`Error is: ${errorData.error}`);
@@ -117,6 +114,54 @@ export default function UsersContextProvider({ children }) {
         }
         return token;
     }
+
+    const ChangeUserPassword = async (newPassword) => {
+        try {
+            let token = await AsyncStorage.getItem('userToken');
+            console.log(token);
+            let res = await fetch(`${base_api}/users/change-password`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: newPassword }),
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json();
+                console.error(`Error is: ${errorData.error}`);
+                return;
+            }
+
+            let data = await res.json();
+            console.log(data);
+
+            LoadAllUsers();
+            SetCurrentUser(data);
+        } catch (error) {
+            console.error(error.message);
+            return false;
+        }
+    };
+
+    async function GetUserByEmail(email) {
+        try {
+            // כאן יש להשתמש בלוגיקת מסד נתונים שלך לחיפוש אחר המשתמש לפי האימייל
+            const user = await UserModel.findOne({ email });
+
+            return user; // יחזיר את המשתמש או null אם לא נמצא
+        } catch (error) {
+            console.error("Error finding user by email:", error);
+            throw error;
+        }
+    }
+
+    // פונקציה לבדיקת תוקפנות הסיסמה
+    const ValidatePassword = async (inputPassword, hashedPassword) => {
+        return await bcrypt.compare(inputPassword, hashedPassword);
+    };
+
 
 
     const UpdateUserFlightsInState = (flightId, action) => {
@@ -383,7 +428,8 @@ export default function UsersContextProvider({ children }) {
         LoadSavedFlights,
         savedFlights,
         currentUser,
-        EditProfile
+        EditProfile,
+        ChangeUserPassword
     }
 
     return (

@@ -85,6 +85,23 @@ export default function HotelsContextProvider({ children }) {
     let data = Array.from(new Set(hotels.map(hotel => hotel.city)));
     setLocations(data);
   }
+/*
+  const HotelBooking = async (currentUser, checkin, checkOut, HoteloToBook) => {
+    try {
+        let res = await fetch(`${base_api}/hotels/booking`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userId: currentUser._id,
+                hotelId: HoteloToBook._id,
+                price_per_night: HoteloToBook.price_per_night,
+                to:checkOut,
+                from: checkin,
+            }),
+        });
+*/ 
 
   useEffect(() => {
     loadAllHotels();

@@ -37,6 +37,30 @@ HotelRoute.get('/', async (req, res) => {
     }
   });
   
+  HotelRoute.post('/booking', async(req,res) => {
+    try {
+        console.log(req.body.time);
+        let bookedHotel = {
+            user_id: new ObjectId(req.body.userId),      
+            hotel_id: new ObjectId(req.body.flightId),   
+            bookingTime: {
+                from: req.body.date,
+                to: req.body.time   
+            },
+            price_per_night: req.body.price_per_night,      
+        }
+
+        await HotelBookingModel.BookAFlight(bookedFlight);
+
+        await HotelModel.UpdateFlightSeats(req.body.passengers, new ObjectId(req.body.flightId));
+        
+        res.status(200).json("Flight booked successfully")
+
+    } catch (error) {
+        res.status(500).json({error});
+    }
+});
+
   
 
 //UPDATE == PUT

@@ -1,18 +1,54 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, Button, Headline } from 'react-native-paper';
+import { UsersContext } from '../context/UsersContext';
 
 export default function ChangePassword() {
+  const [currentPassword, SetCurrentPassword] = useState("");
+  const [newPassword, SetnewPassword] = useState("");
+  const [confirmPassword, SetconfirmPassword] = useState("");
+  const { ChangeUserPassword, currentUser } = useContext(UsersContext);
+
+  const handleUpdatePassword = async () => {
+    if(InputHandler())
+      await ChangeUserPassword(newPassword);
+  };
+
+  const InputHandler = () => {
+    let valid = true;
+
+    if(currentPassword == "" || newPassword == "" || confirmPassword == ""){
+      valid = false;
+      alert("Please don't leave any of the input fields empty");
+    }
+    else if(currentPassword != currentUser.password){
+      valid = false;
+      alert("Current password is incorect");
+    }
+    else if (newPassword != confirmPassword){
+      valid = false;
+      alert("passwords are not the same.")
+    }
+    else if (currentPassword == newPassword){
+      valid = false;
+      alert("New password cannot be the same as current password.")
+    }
+
+    return valid;
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.box}>
-        <View style={{marginTop: 10}}>
+        <View style={{ marginTop: 10 }}>
           <View style={styles.inputContainer}>
             <TextInput
               label="Current Password"
               mode="outlined"
               secureTextEntry={true}
               style={styles.textInput}
+              onChangeText={(text) => SetCurrentPassword(text)}
+
             />
           </View>
 
@@ -22,6 +58,7 @@ export default function ChangePassword() {
               mode="outlined"
               secureTextEntry={true}
               style={styles.textInput}
+              onChangeText={(text) => SetnewPassword(text)}
             />
           </View>
 
@@ -31,16 +68,18 @@ export default function ChangePassword() {
               mode="outlined"
               secureTextEntry={true}
               style={styles.textInput}
+              onChangeText={(text) => SetconfirmPassword(text)}
             />
           </View>
           <Button
             mode="contained"
             style={styles.button}
-            labelStyle={{fontFamily: 'Montserrat_Bold', color: 'white', fontSize: 15}}
-            onPress={() => console.log('Update Password Button pressed!')}
+            labelStyle={{ fontFamily: 'Montserrat_Bold', color: 'white', fontSize: 15 }}
+            onPress={handleUpdatePassword}
           >
             Update Password
           </Button>
+
         </View>
 
       </View>

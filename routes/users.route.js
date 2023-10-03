@@ -150,12 +150,12 @@ UsersRoute.put('/save-flight', AuthUser, async (req, res) => {
 
 UsersRoute.put('/change-password', AuthUser, async (req, res) => {
   try {
-    const userEmail = req.user.email;
+    const userId = req.user._id;
     const newPassword = req.body.password
 
-    await UsersModel.ChangePassword(userEmail, newPassword);
+    await UsersModel.ChangePassword(userId, newPassword);
 
-    const updatedUser = await UsersModel.GetUser(userEmail);
+    const updatedUser = await UsersModel.GetUser(userId);
 
     console.log(updatedUser);
 
@@ -171,7 +171,6 @@ UsersRoute.put('/change-password', AuthUser, async (req, res) => {
     });
   }
 })
-
 
 UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
   try {
