@@ -27,8 +27,8 @@ export default function Login({ navigation }) {
         } else {
           alert("Welcome back " + user.firstName + " :)");
           navigation.reset({
-            routes: [{ name: 'Navigation' }],
             index: 0,
+            routes: [{ name: 'Navigation' }],
           });
         }
       }
@@ -67,8 +67,8 @@ export default function Login({ navigation }) {
   const SkipBtnHandler = () => {
     RemoveToken();
     navigation.reset({
-      routes: [{ name: 'Navigation' }],
       index: 0,
+      routes: [{ name: 'Navigation' }],
     });
   }
 
