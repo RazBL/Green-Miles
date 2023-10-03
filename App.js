@@ -60,8 +60,8 @@ export default function App() {
             <NavigationContainer>
                 <Stack.Navigator>
                   <Stack.Screen name="OnBoarding" component={OnBoarding} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
-                  <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Navigation" component={Navigation} options={{headerTransparent: true, headerTitle: '',headerLeft: null  }}/>
+                  <Stack.Screen name="Login" component={Login} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="Register" component={RegisterStepOne} options={{headerTransparent: true, headerTitle: '', headerLeft: null}}/>
                   <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>

@@ -12,12 +12,8 @@ const HotelCard = ({ hotel, navigation }) => {
   const [saved, SetSaved] = useState(false);
 
   const navigateToHotelDetails = () => {
-    if (currentUser)
       navigation.navigate('Hotel', { hotel });
-    else {
-      navigation.navigate('Login');
-      alert("You must login in order to book");
-    }
+
   };
 
   //Start state of the heart icon.

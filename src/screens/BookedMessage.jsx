@@ -1,49 +1,67 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet , ActivityIndicator} from 'react-native';
 import { useTheme, Card, Button } from 'react-native-paper';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { UsersContext } from '../context/UsersContext';
 import { FlightsContext } from '../context/FlightsContext';
+import TabOffsetContext from '../context/TabOffsetContext';
 
-export default function BookedMessage({navigation}) {
+export default function BookedMessage({ navigation }) {
     const theme = useTheme();
+    const moveToTab = useContext(TabOffsetContext);
 
-    const {currentUser} = useContext(UsersContext);
-    const {flightOrders} = useContext(FlightsContext);
+    const { currentUser } = useContext(UsersContext);
+    const { flightOrders } = useContext(FlightsContext);
+
 
     const BtnHandler = () => {
         navigation.navigate("Navigation");
+        navigation.navigate('Navigation', {
+            screen: 'Home'
+        });
+
+        moveToTab(0);
     }
+
+    useEffect(() => {
+    }, [flightOrders])
+
 
     return (
         <View style={styles(theme).container}>
-            <Card style={styles(theme).card}>
-                <Card.Content>
-                    <Text style={styles(theme).title}>Booking Pending</Text>
-                    <Text style={styles(theme).message}>
-                        Hello {currentUser.firstName} {currentUser.lastName},
-                    </Text>
-                    <Text style={styles(theme).message}>
-                        Thank you for your booking. Your booking is currently pending and will be confirmed shortly.
-                    </Text>
-                    <Text style={styles(theme).message}>
-                        Booking Reference: <Text style={[styles(theme).message, {fontFamily: 'Montserrat_Bold', color: theme.colors.primary}]}>{flightOrders[flightOrders.length -1]._id}</Text>
-                    </Text>
-                    <Text style={styles(theme).message}>
-                        Once your booking is confirmed, you will receive a confirmation notification.
-                    </Text>
-                    <Text style={styles(theme).footer}>
-                        Safe travels and thank you for choosing <Text style={{color: theme.colors.primary, fontFamily: 'Montserrat_Bold'}}>Green</Text><Text style={{fontFamily: 'Montserrat_Bold'}}> Miles!</Text>
-                    </Text>
-                </Card.Content>
-                <Button
-                    style={styles(theme).button}
-                    labelStyle={{color: 'white', fontFamily: 'Montserrat_Bold', fontSize: 15}}
-                    onPress={BtnHandler}>
-                    Back to Home
-                </Button>
-            </Card>
-        </View>
-    );
+            {
+                flightOrders.length > 0 ? (
+                    <Card style={styles(theme).card}>
+                        <Card.Content>
+                            <Text style={styles(theme).title}>Booking Pending</Text>
+                            <Text style={styles(theme).message}>
+                                Hello {currentUser.firstName} {currentUser.lastName},
+                            </Text>
+                            <Text style={styles(theme).message}>
+                                Thank you for your booking. Your booking is currently pending and will be confirmed shortly.
+                            </Text>
+                            <Text style={styles(theme).message}>
+                                Booking Reference: <Text style={[styles(theme).message, { fontFamily: 'Montserrat_Bold', color: theme.colors.primary }]}>{flightOrders[flightOrders.length - 1]._id}</Text>
+                            </Text>
+                            <Text style={styles(theme).message}>
+                                Once your booking is confirmed, you will receive a confirmation notification.
+                            </Text>
+                            <Text style={styles(theme).footer}>
+                                Safe travels and thank you for choosing <Text style={{ color: theme.colors.primary, fontFamily: 'Montserrat_Bold' }}>Green</Text><Text style={{ fontFamily: 'Montserrat_Bold' }}> Miles!</Text>
+                            </Text>
+                        </Card.Content>
+                        <Button
+                            style={styles(theme).button}
+                            labelStyle={{ color: 'white', fontFamily: 'Montserrat_Bold', fontSize: 15 }}
+                            onPress={BtnHandler}>
+                            Back to Home
+                        </Button>
+                    </Card>
+                ) :
+                    (
+                        <ActivityIndicator size="large" color={theme.colors.primary} />
+                    )
+            }
+        </View>)
 }
 
 const styles = theme => StyleSheet.create({
@@ -84,5 +102,5 @@ const styles = theme => StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         borderRadius: 25
-      },
+    },
 });

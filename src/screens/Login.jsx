@@ -1,5 +1,5 @@
 import { KeyboardAvoidingView, ScrollView, Image, View, Text, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
 
@@ -21,8 +21,16 @@ export default function Login({ navigation }) {
       let user = await Login(lowerCaseEmail, password)
 
       if (user) {
-        alert("Welcome back " + user.firstName + " :)");
-        navigation.navigate('Navigation');
+
+        if (navigation.canGoBack()) {
+          navigation.goBack();
+        } else {
+          alert("Welcome back " + user.firstName + " :)");
+          navigation.reset({
+            routes: [{ name: 'Navigation' }],
+            index: 0,
+          });
+        }
       }
       else if (EmailExists(email)) {
         alert("Incorrect Password")
@@ -58,7 +66,10 @@ export default function Login({ navigation }) {
 
   const SkipBtnHandler = () => {
     RemoveToken();
-    navigation.navigate('Navigation');
+    navigation.reset({
+      routes: [{ name: 'Navigation' }],
+      index: 0,
+    });
   }
 
   return (

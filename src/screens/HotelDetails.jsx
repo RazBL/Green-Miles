@@ -15,7 +15,12 @@ const HotelDetails = ({ route }) => {
   const theme = useTheme();
 
   const handleBookNow = () => {
-    navigation.navigate('HotelCheckOut', { hotel });
+    if(currentUser)
+      navigation.navigate('HotelCheckOut', { hotel });
+    else{
+      alert('You must login in order to book');
+      navigation.navigate('Login');
+    }
   };
 
 

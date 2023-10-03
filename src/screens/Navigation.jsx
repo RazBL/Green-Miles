@@ -50,6 +50,7 @@ export default function Navigation() {
       duration: 500,
       useNativeDriver: true
     }).start();
+    moveToTab(0);
   }, []);
 
   return (
