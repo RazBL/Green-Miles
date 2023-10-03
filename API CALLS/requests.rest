@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
   "email": "raz@gmail.com",
-  "password": "razraz"
+  "password": "razraz2"
 }
 
 ###
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 {
   "email": "raz@gmail.com",
-  "password": "razraz"
+  "password": "razraz2"
 }
 
 ###
@@ -91,6 +91,8 @@ Content-Type: application/json
 
 PUT https://greenmiles.onrender.com/api/users/change-password
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRwclYwVUpNdjZjZlovbzdqakNJcXZldHp5N2E2NURuUlN2VVRQNUFtVHAwTTBZL3hKTE9tSyIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJjIl0sImZpcnN0TmFtZSI6InJheiIsImxhc3ROYW1lIjoicmF6IiwicGhvbmVOdW1iZXIiOiIwNTQ1ODQ5MjgxIiwiaW1hZ2UiOm51bGwsImNvdW50cnkiOiIiLCJjaXR5IjoiIiwiYWRkcmVzcyI6IiIsImlhdCI6MTY5NjE3MjYwMywiZXhwIjoxNjk2MTc2MjAzfQ.GLQFJrFSUQolzTAC-vmBFK3_r-ChFc_cJUTRYXDquHA
+PUT http://localhost:3500/api/users/change-password
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCQvMGx6L0RidEFNSWF3NVFOcmF4eWdPQlREQnk5dDRDTi4yRkZ2RUNrZVlMWFBRRy9qRkV5VyIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJjIl0sImZpcnN0TmFtZSI6InJheiIsImxhc3ROYW1lIjoicmF6IiwicGhvbmVOdW1iZXIiOiIwNTQ1ODQ5MjgxIiwiaW1hZ2UiOm51bGwsImNvdW50cnkiOiIiLCJjaXR5IjoiIiwiYWRkcmVzcyI6IiIsImlhdCI6MTY5NjE3MjIwOSwiZXhwIjoxNjk2MTc1ODA5fQ.HSwxNlhRm7ldkMoGr2un8HSDfcOJYSECpW3faLhuXhk
 Content-Type: application/json
 
 {
@@ -116,3 +118,9 @@ Content-Type: application/json
   }
 }
 
+
+
+###
+
+GET  http://localhost:3500/api/flights/bookings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCR1UkJjd3o5Q3NUeGRCMWo1MDZyNjAud0IzUmNWdUlzYmdWM3cxWnFxTVZnZk1QNmFpT2xTQyIsInNhdmVkRmxpZ2h0cyI6W10sInNhdmVkSG90ZWxzIjpbIjY0NWU5MTIzM2ZiMmZiZDA2M2MxOTliYyJdLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6InJheiIsInBob25lTnVtYmVyIjoiMDU0NTg0OTI4MSIsImltYWdlIjpudWxsLCJjb3VudHJ5IjoiIiwiY2l0eSI6IiIsImFkZHJlc3MiOiIiLCJpYXQiOjE2OTYxODQ1OTIsImV4cCI6MTY5NjE4ODE5Mn0.nVXt5LT8PrZKEci7-Cu4Co94Rn9Ss__9T9LqN6rTZJY

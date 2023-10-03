@@ -13,6 +13,7 @@ export default function FlightCard({ flight, navigation }) {
     
     const FlightSaveHandler = () => {
         if(!currentUser){ 
+            alert("You must login in order to save");
             navigation.navigate('Login');
             return;
         }

@@ -64,6 +64,8 @@ export default function FlightSearchResults({ navigation }) {
         break;
     }
 
+    SetToggleSortDropdown(false);
+    
     return filteredFlights;
   }
 

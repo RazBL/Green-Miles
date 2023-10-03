@@ -15,7 +15,7 @@ export default function FlightsContextProvider({ children }) {
     const [flightOrders, SetFlightOrders] = useState([]);
     const [passengersContext, SetPassengersContext] = useState(1);
     const [FlightToBook, SetFlightToBook] = useState([]);
-
+    
     const LoadAllFlights = async () => {
         try {
             let res = await fetch(`${base_api}/flights`);
@@ -97,10 +97,27 @@ export default function FlightsContextProvider({ children }) {
                 return null;
             }
 
-            let data = await res.json();
+            GetAllFlightOrders();
 
-            return(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
+    const GetAllFlightOrders = async () => {
+        try {
+            const token = await AsyncStorage.getItem('userToken');
+            const res = await fetch(`${base_api}/flights/bookings`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            if (res.ok) {
+                const data = await res.json();
+                SetFlightOrders(data);
+            } 
         } catch (error) {
             console.log(error);
         }
@@ -133,7 +150,9 @@ export default function FlightsContextProvider({ children }) {
         SetPassengersContext,
         FlightToBook,
         FlightBooking,
-        SetFlightToBook,        
+        SetFlightToBook,
+        flightOrders,
+        GetAllFlightOrders
     }
 
     return (

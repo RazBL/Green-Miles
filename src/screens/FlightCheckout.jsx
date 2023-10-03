@@ -4,6 +4,9 @@ import { Card, useTheme, Headline, TextInput } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DropDownPicker from 'react-native-dropdown-picker';
 const cc = require('country-city');
+import { LiteCreditCardInput } from "react-native-credit-card-input";
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: componentWillReceiveProps has been renamed']);
 
 //Contexts
 import { FlightsContext } from '../context/FlightsContext';
@@ -14,21 +17,20 @@ import { UsersContext } from '../context/UsersContext';
 export default function FlightCheckout({ navigation }) {
 
     const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
-    const { FlightBooking, passengersContext, FlightToBook, } = useContext(FlightsContext);
+    const { FlightBooking, passengersContext, FlightToBook } = useContext(FlightsContext);
 
-    const [email, SetEmail] = useState("");
+    const [email, SetEmail] = useState(currentUser.email);
     const [country, SetCountry] = useState("Israel");
     const [city, SetCity] = useState("");
     const [Address, SetAddress] = useState("");
     const [cardNumber, SetCardNumber] = useState("");
     const [expirationDate, SetExpirationDate] = useState("");
     const [cvv, SetCvv] = useState("");
-    const [cardOwner, SetCardOwner] = useState("");
-    const [isModalVisible, SetModalVisible] = useState(false);
     const [transformedCountries, SetTransformedCountries] = useState([]);
     const [countryCities, SetCountryCities] = useState([]);
     const [countryPicker, SetCountryPicker] = useState(false);
     const [cityPicker, SetCityPicker] = useState(false);
+
 
     const theme = useTheme();
 
@@ -46,8 +48,9 @@ export default function FlightCheckout({ navigation }) {
             let localTime = `${hours}:${minutes}`;
             let localDate = `${year}-${month}-${day}`;
 
-            let data = FlightBooking(currentUser, localTime, localDate, FlightToBook);
-            alert(data);
+            FlightBooking(currentUser, localTime, localDate, FlightToBook);
+
+            navigation.navigate("BookedMessage");
         }
     }
 
@@ -79,7 +82,7 @@ export default function FlightCheckout({ navigation }) {
     const ValidInput = () => {
         let valid = true;
 
-        if (cardOwner === "" || cvv === "" || expirationDate === "/" || Address === "" ||
+        if (cvv === "" || expirationDate === "/" || Address === "" ||
             country === "" || email === "" || city === "" || cardNumber === "") {
             alert("Please don't leave any input field empty");
             valid = false;
@@ -90,20 +93,27 @@ export default function FlightCheckout({ navigation }) {
             alert("Please enter a valid email.");
         }
         else
-
-
             return valid;
+    }
+
+
+    const CreditCardDetails = (cardData) => {
+        if (cardData.valid) {
+            SetCardNumber(cardData.values.number);
+            SetExpirationDate(cardData.values.expiry);
+            SetCvv(cardData.values.cvc);
+        }
     }
 
     useEffect(() => {
         TransformCountries();
     }, [country]);
 
-    
+
     return (
         <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>
             <KeyboardAwareScrollView
-                scrollEnabled
+                style={{ backgroundColor: 'white' }}
                 enableOnAndroid={true}
                 extraScrollHeight={200}
             >
@@ -111,7 +121,7 @@ export default function FlightCheckout({ navigation }) {
 
                 <View style={styles(theme).container}>
                     <Card style={{ backgroundColor: 'white' }}>
-                        <Card.Cover style={styles(theme).imgContainer} source={require("../images/FlightSearch.png")} />
+                        <Card.Cover style={styles(theme).imgContainer} source={require("../images/flight2.jpg")} />
 
                         <Headline style={[styles(theme).cardTitle, { marginTop: 5 }]}>Airline <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{FlightToBook.airline}</Headline></Headline>
                         <Headline style={styles(theme).cardTitle}>Flight Number <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{FlightToBook.flightNumber}</Headline></Headline>
@@ -131,17 +141,31 @@ export default function FlightCheckout({ navigation }) {
                                 <Text style={[styles(theme).alignTextRight, styles(theme).montserratBold, styles(theme).text]}>Arrival</Text>
                                 <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.arrival.date}</Text>
                                 <Text style={[styles(theme).alignTextRight, styles(theme).text]}>{FlightToBook.arrival.time}</Text>
-                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>Total price <Text style={styles(theme).montserratBold}>{FlightToBook.price}</Text></Text>
+                                <Text style={[styles(theme).alignTextRight, styles(theme).text]}>Total price <Text style={styles(theme).montserratBold}>${FlightToBook.price}</Text></Text>
                             </View>
 
                         </Card.Content>
                     </Card>
+
+                    <View style={styles(theme).payment}>
+                        <Headline style={styles(theme).headline} >Payment Information</Headline>
+
+                        <View style={{ marginTop: 20 }}>
+                            <LiteCreditCardInput
+                                inputStyle={{ fontFamily: 'Montserrat_Medium' }}
+                                validColor='green'
+                                invalidColor='red'
+                                onChange={CreditCardDetails}
+                            />
+                        </View>
+                    </View>
 
                     <View style={styles(theme).billingAddress}>
                         <Headline style={styles(theme).headline} >Billing Address</Headline>
                         <TextInput
                             label="Email"
                             mode='outlined'
+                            value={email}
                             style={[styles(theme).textInput]}
                             onChangeText={text => SetEmail(text)}
                         />
@@ -181,51 +205,6 @@ export default function FlightCheckout({ navigation }) {
                         />
                     </View>
 
-                    <View style={styles(theme).payment}>
-                        <Headline style={styles(theme).headline} >Payment Information</Headline>
-                        <TextInput
-                            label="Credit Card Number"
-                            keyboardType="numeric"
-                            mode='outlined'
-                            style={[styles(theme).textInput]}
-                            onChangeText={(text) => {
-                                if (/^[0-9]*$/.test(text)) {
-                                    SetCardNumber(text);
-                                }
-                            }}
-                            value={cardNumber}
-                            maxLength={16}
-                        />
-                        <View style={styles(theme).dualInput}>
-                            <TextInput
-                                label="Expiration Date"
-                                mode='outlined'
-                                style={[styles(theme).textInputHalf]}
-                                pointerEvents="none"
-                                value={expirationDate}
-                            />
-                            
-                            <TextInput
-                                label="CVV"
-                                mode='outlined'
-                                keyboardType="numeric"
-                                style={[styles(theme).textInputHalf, styles(theme).textInputRight]}
-                                onChangeText={(text) => {
-                                    if (/^[0-9]*$/.test(text)) {
-                                        SetCvv(text);
-                                    }
-                                }}
-                                value={cvv}
-                                maxLength={3}
-                            />
-                        </View>
-                        <TextInput
-                            label="Credit Card Owner Name"
-                            mode='outlined'
-                            style={[styles(theme).textInput]}
-                            onChangeText={text => SetCardOwner((text))}
-                        />
-                    </View>
 
                     <TouchableOpacity style={styles(theme).bookingBtn} onPress={CheckoutHandler}>
                         <Text style={styles(theme).btnText}>Confirm Booking</Text>

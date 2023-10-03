@@ -3,22 +3,31 @@ import { useTheme, Card } from 'react-native-paper'
 import React, { useContext, useState, useEffect } from 'react'
 //Context
 import { HotelsContext } from '../context/HotelsContext';
+import TabOffsetContext from '../context/TabOffsetContext'
 
-//Component
+
+
 export default function HotelPreviewCard({ hotel, navigation }) {
   const theme = useTheme();
   const { HotelRatingText } = useContext(HotelsContext);
-  const [hotelRating, SetHotelRating] = useState("")
+  const [hotelRating, SetHotelRating] = useState("");
+
+  const moveToTab = useContext(TabOffsetContext);
+
 
   const NavigateToHotelDetails = () => {
-    navigation.navigate('Tab', {
+    navigation.navigate('Navigation', {
       screen: 'Hotels',
       params: {
         screen: 'Hotel',
         params: { hotel }
       }
     });
-  };
+
+    moveToTab(2);
+};
+
+
 
   useEffect(() => {
     SetHotelRating(HotelRatingText(hotel));
@@ -26,35 +35,33 @@ export default function HotelPreviewCard({ hotel, navigation }) {
 
 
   return (
-    <View style={styles(theme).cardContainer}>
-      <TouchableOpacity onPress={NavigateToHotelDetails}>
-        <View style={styles(theme).imageContainer}>
-          <Card.Cover
-            source={{
-              uri:
-                'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg',
-            }}
-          />
-          <View style={styles(theme).ecoRating}>
-            <Text style={[styles(theme).ecoText, { color: 'white' }]}>
-              <Text style={[styles(theme).ecoText, { color: theme.colors.primary }]}>Eco</Text> Rating: {hotel.eco_rating}/5 - <Text style={[styles(theme).ecoText, { color: '#38DDA2', }]}>{hotelRating}</Text>
-            </Text>
-          </View>
+    <TouchableOpacity style={styles(theme).cardContainer} onPress={NavigateToHotelDetails}>
+      <View style={styles(theme).imageContainer}>
+        <Card.Cover
+          source={{
+            uri:
+              'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg',
+          }}
+        />
+        <View style={styles(theme).ecoRating}>
+          <Text style={[styles(theme).ecoText, { color: 'white' }]}>
+            <Text style={[styles(theme).ecoText, { color: theme.colors.primary }]}>Eco</Text> Rating: {hotel.eco_rating}/5 - <Text style={[styles(theme).ecoText, { color: '#38DDA2', }]}>{hotelRating}</Text>
+          </Text>
         </View>
-      </ TouchableOpacity>
-      <View>
-        <Text style={styles(theme).headline}>{hotel.name}</Text>
-        <Text style={styles(theme).text}>{hotel.address}</Text>
       </View>
-    </View>
+      <Text style={styles(theme).headline}>{hotel.name}</Text>
+      <Text style={styles(theme).text}>{hotel.address}</Text>
+    </ TouchableOpacity >
+
   )
 }
 
 
 const styles = theme => StyleSheet.create({
   cardContainer: {
-    width: '50%',
-    flex: 1
+    width:  200,
+    flex: 1,
+    marginRight: 15
   },
   imageContainer: {
     position: 'relative'
@@ -76,12 +83,12 @@ const styles = theme => StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
     color: 'white',
     padding: 8,
-    paddingHorizontal: 5,
+    paddingHorizontal: 7,
     borderRadius: 25,
     zIndex: 1,
   },
   ecoText: {
-    fontSize: 11,
+    fontSize: 10,
     fontFamily: 'Montserrat_Bold',
     alignSelf: 'center'
   }

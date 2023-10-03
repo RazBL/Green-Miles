@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { UsersContext } from '../context/UsersContext';
 import { Button, Headline, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import { FlightsContext } from '../context/FlightsContext'
 
 export default function Account() {
 
   const theme = useTheme();
   const { currentUser, RemoveToken } = useContext(UsersContext);
+  const {flightOrders, GetAllFlightOrders} = useContext(FlightsContext)
   const navigation = useNavigation();
   const navigateToSupport = () => {
     navigation.navigate('Support');
@@ -30,10 +32,19 @@ export default function Account() {
     navigation.navigate('Login');
   }
 
+  const ToBookingPage = () => {
+    navigation.navigate('Booking History');
+  }
+
   const SignOut = () => {
     RemoveToken();
     ToLoginPage();
   }
+
+  useEffect(() => {
+      GetAllFlightOrders();
+  }, [flightOrders])
+  
 
   return (
     <View style={styles(theme).container}>
@@ -78,11 +89,13 @@ export default function Account() {
 
 
                 <View style={styles(theme).optionBox}>
+                <TouchableOpacity onPress={ToBookingPage}>
                   <View style={styles(theme).optionContainer}>
                     <MaterialCommunityIcons name="book" size={20} color="black" />
                     <Text style={styles(theme).optionText}>Booking</Text>
                   </View>
                   <View style={styles(theme).underline}></View>
+                  </TouchableOpacity>
                 </View>
 
 

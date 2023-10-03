@@ -2,6 +2,9 @@ const FlightModel = require('../models/flights.model');
 const FlightBookingModel = require('../models/flight_booking.model');
 const FlightRoute = require('express').Router();
 const { ObjectId } = require('mongodb');
+const {
+    AuthUser,
+  } = require('../utils/auth');
 //CRUD
 
 //CREATE == POST
@@ -42,6 +45,16 @@ FlightRoute.get('/', async (req, res) => {
     }
 });
 
+
+FlightRoute.get('/bookings',AuthUser, async(req, res) => {
+    try {
+        let useId = req.user._id;
+        let data = await FlightBookingModel.GetAllBookedFlights(useId);
+        res.status(200).json(data);
+    } catch (error) {
+        res.status(500).json({error});
+    }
+})
 
 FlightRoute.get('/search', async (req, res) => {
     try {

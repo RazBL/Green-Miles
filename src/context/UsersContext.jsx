@@ -181,6 +181,23 @@ export default function UsersContextProvider({ children }) {
         SetUsers(updatedUsers);
     }
 
+    const UpdateUserHotelsInState = (hotelId, action) => {
+        const updatedUsers = users.map(user => {
+            if (user._id === currentUser._id) {
+                let updatedUser = { ...user };
+                if (action === 'save') {
+                    updatedUser.savedHotels.push(hotelId);
+                } else if (action === 'remove') {
+                    updatedUser.savedHotels = updatedUser.savedHotels.filter(id => id !== hotelId);
+                }
+                SetCurrentUser(updatedUser);
+                return updatedUser;
+            }
+            return user;
+        });
+        SetUsers(updatedUsers);
+    }
+
     const SaveFlight = async (flight, navigation) => {
         try {
             const token = await GetTokenAndNavigate(navigation);
@@ -231,63 +248,31 @@ export default function UsersContextProvider({ children }) {
         }
     }
 
-    const LoadSavedFlights = async () => {
-        if (currentUser) {
-            try {
-                let res = await fetch(`${base_api}/users/${currentUser._id}/saved-flights`);
-
-                let data = await res.json();
-
-                res2 = await fetch(`${base_api}/Flights/`);
-
-                let data2 = await res2.json()
-
-                let savedFlightsObj = data2.filter(flight => data.includes(flight._id))
-
-                SetSavedFlights(savedFlightsObj);
-
-            } catch (error) {
-                console.error("There was a problem fetching saved flights:", error);
-            }
-        }
-    }
-
-
-
     const SaveHotel = async (hotel, navigation) => {
-
-        const token = await AsyncStorage.getItem('userToken');
-        if (!token) {
-            alert('you must sign in to save a flight');
-            navigation.navigate('Login');
-        }
-        else {
-            try {
-                let res = await fetch(`${base_api}/users/save-hotel`, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        hotel: hotel,
-                    }),
-                });
+        try {
+            const token = await GetTokenAndNavigate(navigation);
+            let res = await fetch(`${base_api}/users/save-hotel`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    hotel: hotel,
+                }),
+            });
 
 
-                if (!res.ok) {
-                    let errorData = await res.json();
-                    console.log(`Error is: ${errorData.error}`);
-                    return null;
-                }
-                console.log("hotel saved successfully!");
-                LoadAllUsers();
-                const updatedUserProfile = users.find(user => currentUser._id === user._id)
-                SetCurrentUser(updatedUserProfile);
-
-            } catch (error) {
-                console.log(error);
+            if (!res.ok) {
+                let errorData = await res.json();
+                console.log(`Error is: ${errorData.error}`);
+                return null;
             }
+            console.log("hotel saved successfully!");
+            UpdateUserHotelsInState(hotel._id, 'save');
+
+        } catch (error) {
+            console.log(error);
         }
     }
 
@@ -317,15 +302,35 @@ export default function UsersContextProvider({ children }) {
                     return null;
                 }
                 console.log("Saved hotel was removed successfully!");
-                LoadAllUsers();
-                const updatedUserProfile = users.find(user => currentUser._id === user._id)
-                SetCurrentUser(updatedUserProfile);
+                UpdateUserHotelsInState(hotel._id, 'remove');
 
             } catch (error) {
                 console.log(error);
             }
         }
     }
+
+    const LoadSavedFlights = async () => {
+        if (currentUser) {
+            try {
+                let res = await fetch(`${base_api}/users/${currentUser._id}/saved-flights`);
+
+                let data = await res.json();
+
+                res2 = await fetch(`${base_api}/Flights/`);
+
+                let data2 = await res2.json()
+
+                let savedFlightsObj = data2.filter(flight => data.includes(flight._id))
+
+                SetSavedFlights(savedFlightsObj);
+
+            } catch (error) {
+                console.error("There was a problem fetching saved flights:", error);
+            }
+        }
+    }
+
 
     const GetUserProfile = async () => {
         try {
@@ -372,15 +377,6 @@ export default function UsersContextProvider({ children }) {
         return HotelFound;
     }
 
-    const isHotelSaved = (currentUser, hotelId) => {
-        if (!currentUser || !currentUser.savedHotels) {
-            return false;
-        }
-        let savedHotels = currentUser.savedHotels;
-        let hotelFound = savedHotels.find(id => hotelId === id);
-        return hotelFound !== undefined;
-    };
-
 
     const RemoveToken = async () => {
         try {
@@ -406,6 +402,7 @@ export default function UsersContextProvider({ children }) {
         LoadAllUsers();
         GetAllCountriesAndCities();
     }, []);
+
 
 
     const value = {

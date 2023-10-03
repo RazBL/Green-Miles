@@ -18,11 +18,11 @@ import ForgotPassword from './src/screens/ForgotPassword';
 import Support from './src/screens/Support';
 import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
-import FlightSearchResults from './src/screens/FlightSearchResults';
-import HotelDetails from './src/screens/HotelDetails';
-import HotelsSearchResults from './src/screens/HotelsSearchResults';
-import Test_Design from './src/screens/Test_Design';
-import EditProfile from './src/screens/EditProfile';
+import BookedMessage from './src/screens/BookedMessage';
+
+//Component
+import HotelNavigation from './src/components/HotelNavigation';
+
 
 const Stack = createStackNavigator();
 
@@ -50,9 +50,6 @@ export default function App() {
   if (!loaded) {
     return null;
   }
-//                 <Stack.Screen name="hotelsearchresult" component={HotelsSearchResults} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
-//                 <Stack.Screen name="yay" component={Test_Design} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
-
 
   return (
     <PaperProvider theme={theme}>
@@ -69,6 +66,7 @@ export default function App() {
                   <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Flight Checkout" component={FlightCheckout} options={{headerTitleAlign: 'center'}}/>
+                  <Stack.Screen name="BookedMessage" component={BookedMessage} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                 </Stack.Navigator>
             </NavigationContainer>
             </SafeAreaProvider>            
