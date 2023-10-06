@@ -11,11 +11,11 @@ export default function ChangePassword() {
   const { ChangeUserPassword, currentUser } = useContext(UsersContext);
 
   const handleUpdatePassword = async () => {
-    if(InputHandler()){
-      console.log(currentPassword);
-     const changed =  await ChangeUserPassword(newPassword,confirmPassword);
-     if(changed)
-      alert("The Passwords is changed!")
+    if (InputHandler()) {
+      const changed = await ChangeUserPassword(newPassword, confirmPassword);
+      console.log(changed);
+      if (changed)
+        alert("The Passwords is changed!")
     }
   };
 
@@ -23,18 +23,18 @@ export default function ChangePassword() {
   const InputHandler = () => {
     let valid = true;
 
-    if(currentPassword == "" || newPassword == "" || confirmPassword == ""){
+    if (currentPassword == "" || newPassword == "" || confirmPassword == "") {
       valid = false;
       alert("Please don't leave any of the input fields empty");
     }
-    else if (newPassword != confirmPassword){
+    else if (newPassword != confirmPassword) {
       valid = false;
       alert("passwords are not the same.")
     }
 
     return valid;
   }
-  
+
 
   return (
     <View style={styles.container}>

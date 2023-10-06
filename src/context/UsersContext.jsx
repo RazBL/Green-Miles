@@ -117,8 +117,6 @@ export default function UsersContextProvider({ children }) {
 
     const ChangeUserPassword = async (newPassword, currentPassword) => {
         try {
-            console.log(newPassword);
-            console.log(currentPassword);
             let token = await AsyncStorage.getItem('userToken');
             let res = await fetch(`${base_api}/users/change-password`, {
                 method: 'PUT',

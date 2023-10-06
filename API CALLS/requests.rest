@@ -94,13 +94,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzM
 ####
 
 
-PUT http://localhost:3500/api/users/change-password
+PUT https://greenmiles.onrender.com/api/users/change-password
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4YTAyNzAwZWQ1ODU1Y2E1NmUwMGYiLCJlbWFpbCI6ImJhc2VsQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJFFDUzZtZEFlM3FUN0ZXZ21SS3Yzd2VNTk5MTFYvTFY4TmtSem9wWFRPeDV3U04yYlhUdVpLIiwic2F2ZWRGbGlnaHRzIjpbIjY0NWU5MTIzM2ZiMmZiZDA2M2MxOTljMCIsIjY1MGRmZjI2Y2UwMTI1OTU2NDdkNzFiYSJdLCJzYXZlZEhvdGVscyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmUiXSwiZmlyc3ROYW1lIjoiYmFzZWwiLCJsYXN0TmFtZSI6ImJlbiIsInBob25lTnVtYmVyIjoiIiwiaW1hZ2UiOiIiLCJjb3VudHJ5IjoiIiwiY2l0eSI6IiIsImFkZHJlc3MiOiIiLCJpYXQiOjE2OTY2MTY1NDcsImV4cCI6MTY5NjYyMDE0N30.SjPGpyq8Y7w_P_6LmE7efK9k83VRToo2hGYaazatM_0
 Content-Type: application/json
 
 {
   "password":  "razraz",
-  "newPassword": "baselbasel"
+  "newPassword": "razraz"
 }
 
 ###
