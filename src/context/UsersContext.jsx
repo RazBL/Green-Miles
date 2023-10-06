@@ -129,20 +129,20 @@ export default function UsersContextProvider({ children }) {
                     newPassword: newPassword
                 }),
             });
+    
 
             let data = await res.json();
 
             if (!res.ok) {
-                const errorData = await res.json();
-                console.error(`Error is: ${errorData.error}`);
-                alert(data)
+                alert(data.error); 
                 return null;
             }
-            console.log("passwrd first worked");
-
+    
+            console.log("Password change worked");
             LoadAllUsers();
             SetCurrentUser(data);
             return true;
+    
         } catch (error) {
             console.error(error.message);
             return false;
