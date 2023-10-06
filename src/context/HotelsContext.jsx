@@ -111,13 +111,7 @@ export default function HotelsContextProvider({ children }) {
 
 const HotelBooking = async (currentUser, currentTime, currentDate, HotelToBook) => {
   try {
-      console.log("Before ValidInput - HotelToBook:", HotelToBook);
-      console.log('Before request - userId:', currentUser?._id);
-      console.log('Before request - hotelId:', HotelToBook?.hotel_id);
-      console.log('Before request - price_per_night:', HotelToBook?.total_price);
-      console.log('Before request - to:', currentDate);
-      console.log('Before request - from:', currentTime);
-      console.log('Current user before hotel booking==Context!:', currentUser);
+
       let res = await fetch(`${base_api}/hotels/booking`, {
           method: 'POST',
           headers: {
@@ -126,9 +120,10 @@ const HotelBooking = async (currentUser, currentTime, currentDate, HotelToBook) 
           body: JSON.stringify({
               userId: currentUser._id,
               hotelId: HotelToBook._id,
-              total_price: HotelToBook.total_price,
+              totalPrice: HotelToBook.total_price,
               date: currentDate,
               time: currentTime,
+              nightsStay: 3
           }),
       });
 
@@ -188,7 +183,8 @@ const GetAllHotelBookings = async () => {
     GetAllHotelBookings,
     HotelBooking,
     HotelToBook,
-    SetHotelToBook
+    SetHotelToBook,
+    HotelBookings
   };
 
   return (

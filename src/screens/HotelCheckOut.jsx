@@ -18,7 +18,7 @@ const HotelCheckOut = ({ route,navigation }) => {
   const theme = useTheme();
   const { hotel } = route.params;
   const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
-  const { HotelBooking, HotelToBook, setHotelToBookData } = useContext(HotelsContext);
+  const { HotelBooking} = useContext(HotelsContext);
 
   const [email, SetEmail] = useState("");
   const [country, SetCountry] = useState("Israel");
@@ -37,7 +37,7 @@ const HotelCheckOut = ({ route,navigation }) => {
   
   const CheckoutHandler = () => {
     console.log("Before ValidInput - currentUser:", currentUser);
-    console.log("Before ValidInput - HotelToBook:", HotelToBook);
+    console.log("Before ValidInput - HotelToBook:", hotel);
 
     if (ValidInput()) {
         let now = new Date();
@@ -56,7 +56,7 @@ const HotelCheckOut = ({ route,navigation }) => {
         console.log("Before HotelBooking - localTime:", localTime);
         console.log("Before HotelBooking - localDate:", localDate);
         console.log("Before HotelBooking - HotelToBook:", HotelToBook);
-        HotelBooking(currentUser, localTime, localDate, HotelToBook);
+        HotelBooking(currentUser, localTime, localDate, hotel);
 
         console.log("After HotelBooking");
 

@@ -2,6 +2,9 @@ const HotelModel = require('../models/hotels.model');
 const HotelBookingModel = require('../models/hotel_booking.model');
 const HotelRoute = require('express').Router();
 const { ObjectId } = require('mongodb');
+const {
+  AuthUser,
+} = require('../utils/auth');
 
 // //CRUD
 
@@ -18,6 +21,17 @@ HotelRoute.get('/', async (req, res) => {
 
 })
 
+
+HotelRoute.get('/bookings',AuthUser, async(req, res) => {
+  try {
+      let useId = req.user._id;
+      let data = await HotelBookingModel.GetAllHotelBookings(useId);
+      res.status(200).json(data);
+  } catch (error) {
+      console.log("there was an error fetching htoels bookings");
+      res.status(500).json({error});
+  }
+})
 //Create search route.
 
 
@@ -40,15 +54,16 @@ HotelRoute.get('/', async (req, res) => {
   
   HotelRoute.post('/booking', async(req,res) => {
     try {
-        console.log(req.body.time);
         let bookedHotel = {
             user_id: new ObjectId(req.body.userId),      
             hotel_id: new ObjectId(req.body.hotelId),   
             bookingTime: {
-              date: req.body.date,
-              time: req.body.time   
+                date: req.body.date ,
+                time: req.body.time
             },
-            total_price: req.body.total_price,      
+            booking_status: "pending",
+            nights_stay: req.body.nightsStay,
+            total_price: req.body.totalPrice
         }
 
         await HotelBookingModel.BookAHotel(bookedHotel);        
