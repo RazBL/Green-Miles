@@ -4,6 +4,7 @@ import { Card, Text, Button } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UsersContext } from '../context/UsersContext'; 
 import { HotelsContext } from '../context/HotelsContext';
+import TabOffsetContext from '../context/TabOffsetContext';
 
 const HotelCard = ({ hotel, navigation }) => {
   const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
@@ -11,9 +12,11 @@ const HotelCard = ({ hotel, navigation }) => {
   const [hotelRating, SetHotelRating] = useState("")
   const [saved, SetSaved] = useState(false);
 
+  const moveToTab = useContext(TabOffsetContext);
+
   const navigateToHotelDetails = () => {
       navigation.navigate('Hotel', { hotel });
-
+      moveToTab(2);
   };
 
   //Start state of the heart icon.
