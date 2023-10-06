@@ -118,12 +118,6 @@ const HotelDetails = ({ route }) => {
               size={17}
               style={{ transform: [{ rotate: '-17deg' }] }}
             />
-            <MaterialCommunityIcons
-              name={'leaf'}
-              color={'white'}
-              size={17}
-              style={{ transform: [{ rotate: '-17deg' }] }}
-            />
           </View>
         </View>
 
@@ -167,20 +161,26 @@ const styles = (theme) =>
     },
     hotelTitleBox: {
       backgroundColor: '#1E272E',
-      width: '85%',
+      width: '90%',
       padding: 10,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 15,
       position: 'absolute',
       alignSelf: 'center',
-      top: 170,
+      top: 160,
     },
+
+
     hotelTitle: {
       fontSize: 20,
       fontFamily: 'Montserrat_Bold',
       color: 'white',
+      lineHeight: 26,  
     },
+
+
+
     hotelMiniTitle: {
       fontSize: 15,
       fontFamily: 'Montserrat_Bold',

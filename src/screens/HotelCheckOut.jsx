@@ -4,16 +4,21 @@ import { Button,Card, useTheme, Headline, TextInput } from 'react-native-paper';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import DropDownPicker from 'react-native-dropdown-picker';
 const cc = require('country-city');
+import { LiteCreditCardInput } from "react-native-credit-card-input";
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: componentWillReceiveProps has been renamed']);
+
 
 // Import the necessary contexts
 import { UsersContext } from '../context/UsersContext';
 import { HotelsContext } from '../context/HotelsContext';
+import { toUpper } from 'lodash';
 
-const HotelCheckOut = ({ route }) => {
+const HotelCheckOut = ({ route,navigation }) => {
   const theme = useTheme();
   const { hotel } = route.params;
   const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
- // const { FlightBooking, passengersContext, HoteloToBook, } = useContext(HotelsContext);
+  const { HotelBooking, HotelToBook, setHotelToBookData } = useContext(HotelsContext);
 
   const [email, SetEmail] = useState("");
   const [country, SetCountry] = useState("Israel");
@@ -29,7 +34,11 @@ const HotelCheckOut = ({ route }) => {
   const [countryPicker, SetCountryPicker] = useState(false);
   const [cityPicker, SetCityPicker] = useState(false);
 
+  
   const CheckoutHandler = () => {
+    console.log("Before ValidInput - currentUser:", currentUser);
+    console.log("Before ValidInput - HotelToBook:", HotelToBook);
+
     if (ValidInput()) {
         let now = new Date();
 
@@ -43,10 +52,19 @@ const HotelCheckOut = ({ route }) => {
         let localTime = `${hours}:${minutes}`;
         let localDate = `${year}-${month}-${day}`;
 
-        let data = FlightBooking(currentUser, localTime, localDate, FlightToBook);
-        alert(data);
+        console.log("Before HotelBooking - currentUser:", currentUser);
+        console.log("Before HotelBooking - localTime:", localTime);
+        console.log("Before HotelBooking - localDate:", localDate);
+        console.log("Before HotelBooking - HotelToBook:", HotelToBook);
+        HotelBooking(currentUser, localTime, localDate, HotelToBook);
+
+        console.log("After HotelBooking");
+
+        navigation.navigate("BookedMessage");
     }
-}
+};
+
+  
 
 const TransformCountries = () => {
 
@@ -70,24 +88,34 @@ const TransformCountries = () => {
 
     SetCountryCities(data);
 };
+
 const ValidInput = () => {
-  let valid = true;
+    let valid = true;
 
-  if (cardOwner === "" || cvv === "" || expirationDate === "/" || Address === "" ||
-      country === "" || email === "" || city === "" || cardNumber === "") {
-      alert("Please don't leave any input field empty");
-      valid = false;
+    if (cvv === "" || expirationDate === "" || Address === "" ||
+        country === "" || email === "" || city === "" || cardNumber === "") {
+        alert("Please don't leave any input field empty");
+        valid = false;
+    } else if (!CheckValidEmail(email)) {
+        valid = false;
+        alert("Please enter a valid email.");
+        return false;  // הוספת פקודה זו כדי להחזיר false
+    }
 
-  }
-  else if (!CheckValidEmail(email)) {
-      valid = false;
-      alert("Please enter a valid email.");
-  }
-  else
-
-
-      return valid;
+    return valid;
 }
+
+
+
+
+const CreditCardDetails = (cardData) => {
+    if (cardData.valid) {
+        SetCardNumber(cardData.values.number);
+        SetExpirationDate(cardData.values.expiry);
+        SetCvv(cardData.values.cvc);
+    }
+}
+
 
 useEffect(() => {
   TransformCountries();
@@ -122,6 +150,19 @@ useEffect(() => {
                 </Card.Content>
             </Card>
 
+            <View style={styles(theme).payment}>
+                        <Headline style={styles(theme).headline} >Payment Information</Headline>
+
+                        <View style={{ marginTop: 20 }}>
+                            <LiteCreditCardInput
+                                inputStyle={{ fontFamily: 'Montserrat_Medium' }}
+                                validColor='green'
+                                invalidColor='red'
+                                onChange={CreditCardDetails}
+                            />
+                        </View>
+                    </View>
+                    
             <View style={styles(theme).billingAddress}>
                 <Headline style={styles(theme).headline} >Billing Address</Headline>
                 <TextInput
@@ -164,52 +205,6 @@ useEffect(() => {
                     mode='outlined'
                     style={[styles(theme).textInput]}
                     onChangeText={text => SetAddress(text)}
-                />
-            </View>
-
-            <View style={styles(theme).payment}>
-                <Headline style={styles(theme).headline} >Payment Information</Headline>
-                <TextInput
-                            label="Credit Card Number"
-                            keyboardType="numeric"
-                            mode='outlined'
-                            style={[styles(theme).textInput]}
-                            onChangeText={(text) => {
-                                if (/^[0-9]*$/.test(text)) {
-                                    SetCardNumber(text);
-                                }
-                            }}
-                            value={cardNumber}
-                            maxLength={16}
-                        />
-                <View style={styles(theme).dualInput}>
-                    <TextInput
-                        label="Expiration Date"
-                        mode='outlined'
-                        style={[styles(theme).textInputHalf]}
-                        pointerEvents="none"
-                        value={expirationDate}
-                    />
-                    
-                    <TextInput
-                        label="CVV"
-                        mode='outlined'
-                        keyboardType="numeric"
-                        style={[styles(theme).textInputHalf, styles(theme).textInputRight]}
-                        onChangeText={(text) => {
-                            if (/^[0-9]*$/.test(text)) {
-                                SetCvv(text);
-                            }
-                        }}
-                        value={cvv}
-                        maxLength={3}
-                    />
-                </View>
-                <TextInput
-                    label="Credit Card Owner Name"
-                    mode='outlined'
-                    style={[styles(theme).textInput]}
-                    onChangeText={text => SetCardOwner((text))}
                 />
             </View>
 

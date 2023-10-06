@@ -1,6 +1,7 @@
 const HotelModel = require('../models/hotels.model');
-
+const HotelBookingModel = require('../models/hotel_booking.model');
 const HotelRoute = require('express').Router();
+const { ObjectId } = require('mongodb');
 
 // //CRUD
 
@@ -42,21 +43,19 @@ HotelRoute.get('/', async (req, res) => {
         console.log(req.body.time);
         let bookedHotel = {
             user_id: new ObjectId(req.body.userId),      
-            hotel_id: new ObjectId(req.body.flightId),   
+            hotel_id: new ObjectId(req.body.hotelId),   
             bookingTime: {
-                from: req.body.date,
-                to: req.body.time   
+              date: req.body.date,
+              time: req.body.time   
             },
-            price_per_night: req.body.price_per_night,      
+            total_price: req.body.total_price,      
         }
 
-        await HotelBookingModel.BookAFlight(bookedFlight);
-
-        await HotelModel.UpdateFlightSeats(req.body.passengers, new ObjectId(req.body.flightId));
-        
-        res.status(200).json("Flight booked successfully")
+        await HotelBookingModel.BookAHotel(bookedHotel);        
+        res.status(200).json("Hotel booked successfully")
 
     } catch (error) {
+      console.log('Error:', error);
         res.status(500).json({error});
     }
 });

@@ -23,10 +23,12 @@ class HotelBookingModel{
 
     }
 
+
+    
+
     static async GetAllHotelBookings() {
         return await new DB().FindAll('Hotel_Booking');
     }
-    
     
     async UpdateBookingStatus(bookingId, newStatus) {
         try {
@@ -37,8 +39,27 @@ class HotelBookingModel{
         }
     }
 
+    static async BookAHotel(bookedHotel){
+        try {
+            await new DB().InsertDocument(bookedHotel, 'Hotel_Booking');
+        } catch (error) {
+            console.log("Error from Hotel_booking");
+            console.log(error);
+        }
+    }
 
-
+   
+    
+/*
+    static async BookAFlight(bookedHotel){
+        try {
+            await new DB().InsertDocument(bookedHotel, 'Hotel_Booking');
+        } catch (error) {
+            console.log("Error from Hotel_Booking");
+            console.log(error);
+        }
+    }
+*/
 
 }
 

@@ -68,6 +68,7 @@ class HotelModel {
     return await new DB().Aggregate('Hotels', pipeline);
   }
 
+  
 
 
 

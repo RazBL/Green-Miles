@@ -35,4 +35,6 @@ HotelBookingRoute.post('/:bookingId/update-status', async (req, res) => {
 });
 
 
+
+
 module.exports = HotelBookingRoute;

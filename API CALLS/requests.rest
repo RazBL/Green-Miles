@@ -124,3 +124,15 @@ Content-Type: application/json
 
 GET  http://localhost:3500/api/flights/bookings
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCR1UkJjd3o5Q3NUeGRCMWo1MDZyNjAud0IzUmNWdUlzYmdWM3cxWnFxTVZnZk1QNmFpT2xTQyIsInNhdmVkRmxpZ2h0cyI6W10sInNhdmVkSG90ZWxzIjpbIjY0NWU5MTIzM2ZiMmZiZDA2M2MxOTliYyJdLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6InJheiIsInBob25lTnVtYmVyIjoiMDU0NTg0OTI4MSIsImltYWdlIjpudWxsLCJjb3VudHJ5IjoiIiwiY2l0eSI6IiIsImFkZHJlc3MiOiIiLCJpYXQiOjE2OTYxODQ1OTIsImV4cCI6MTY5NjE4ODE5Mn0.nVXt5LT8PrZKEci7-Cu4Co94Rn9Ss__9T9LqN6rTZJY
+
+###
+POST http://localhost:3500/api/hotels/booking
+Content-Type: application/json
+
+{
+    "userId": "645e90a0d0cf8513c646ba72",
+    "hotelId": "645e91233fb2fbd063c199bd",
+    "total_price": 450,
+    "date": "2023-05-12T19:38:11.264Z",
+    "time": "2023-05-12T19:38:11.264Z"
+}

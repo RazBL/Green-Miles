@@ -1,5 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
 import { base_api } from '../../utils/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const HotelsContext = createContext();
 
@@ -9,6 +10,10 @@ export default function HotelsContextProvider({ children }) {
   const [checkInDates, setCheckInDates] = useState([]);
   const [checkOutDates, setCheckOutDates] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [HotelBookings, SetHotelBookings] = useState([]);
+  const [HotelToBook, SetHotelToBook] = useState([]);
+
+
 
   const loadAllHotels = async () => {
     try {
@@ -103,6 +108,68 @@ export default function HotelsContextProvider({ children }) {
         });
 */ 
 
+
+const HotelBooking = async (currentUser, currentTime, currentDate, HotelToBook) => {
+  try {
+      console.log("Before ValidInput - HotelToBook:", HotelToBook);
+      console.log('Before request - userId:', currentUser?._id);
+      console.log('Before request - hotelId:', HotelToBook?.hotel_id);
+      console.log('Before request - price_per_night:', HotelToBook?.total_price);
+      console.log('Before request - to:', currentDate);
+      console.log('Before request - from:', currentTime);
+      console.log('Current user before hotel booking==Context!:', currentUser);
+      let res = await fetch(`${base_api}/hotels/booking`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              userId: currentUser._id,
+              hotelId: HotelToBook._id,
+              total_price: HotelToBook.total_price,
+              date: currentDate,
+              time: currentTime,
+          }),
+      });
+
+      if (!res.ok) {
+          let errorData = await res.json();
+          console.log(`Error is: ${errorData.error}`);
+          return null;
+      }
+
+      // אם ההזמנה התבצעה בהצלחה, עדכן רשימת ההזמנות שלך
+      GetAllHotelBookings();
+  } catch (error) {
+      console.log(error);
+  }
+};
+
+
+const GetAllHotelBookings = async () => {
+  try {
+    const token = await AsyncStorage.getItem('userToken');
+    console.log('Token:', token); // הדפס את ה-Token
+    const res = await fetch(`${base_api}/hotels/bookings`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    console.log('Response:', res); // הדפס את התגובה
+    if (res.ok) {
+      const data = await res.json();
+      console.log('Data:', data); // הדפס את הנתונים
+      SetHotelBookings(data);
+    }
+  } catch (error) {
+    console.log('Error:', error);
+  }
+};
+
+
+
+
   useEffect(() => {
     loadAllHotels();
   }, []);
@@ -117,7 +184,11 @@ export default function HotelsContextProvider({ children }) {
     getHotelCheckOutDates,
     getHotelLocations,
     HotelSearchResults,
-    HotelRatingText
+    HotelRatingText,
+    GetAllHotelBookings,
+    HotelBooking,
+    HotelToBook,
+    SetHotelToBook
   };
 
   return (
