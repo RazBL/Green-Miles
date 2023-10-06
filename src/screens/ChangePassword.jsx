@@ -12,12 +12,12 @@ export default function ChangePassword() {
 
   const handleUpdatePassword = async () => {
     if(InputHandler()){
+      console.log(currentPassword);
      const changed =  await ChangeUserPassword(newPassword,confirmPassword);
      if(changed)
       alert("The Passwords is changed!")
     }
   };
-
 
 
   const InputHandler = () => {
@@ -30,10 +30,6 @@ export default function ChangePassword() {
     else if (newPassword != confirmPassword){
       valid = false;
       alert("passwords are not the same.")
-    }
-    else if (currentPassword == newPassword){
-      valid = false;
-      alert("New password cannot be the same as current password.")
     }
 
     return valid;

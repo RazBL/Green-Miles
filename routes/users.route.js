@@ -157,25 +157,29 @@ UsersRoute.put('/change-password', AuthUser, async (req, res) => {
     const newPassword = req.body.newPassword;
     const currentPassword = req.body.password
 
+    console.log(userId);
+    console.log(newPassword);
+    console.log(currentPassword);
+
     const isCurrentPasswordCorrect = await UsersModel.VerifyCurrentPassword(userId, currentPassword);
 
+    console.log(isCurrentPasswordCorrect);
     if (!isCurrentPasswordCorrect) {
       return res.status(400).json({ error: 'Current password is incorrect' });
     }
 
    const differntPassword = await UsersModel.VerifyCurrentPassword(userId,  newPassword)
+   console.log(differntPassword);
 
     if(differntPassword){
       return res.status(400).json({ error: 'New password must be different from current password' });
 
     }
 
-    console.log("3");
     await UsersModel.ChangePassword(userId, newPassword);
 
     let updatedUser = await UsersModel.GetUser(userId);
 
-    console.log("4");
     res.status(200).json({
       message: 'Password was changed successfully',
       user: updatedUser
