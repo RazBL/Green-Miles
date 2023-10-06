@@ -95,12 +95,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzM
 
 
 PUT https://greenmiles.onrender.com/api/users/change-password
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4YTAyNzAwZWQ1ODU1Y2E1NmUwMGYiLCJlbWFpbCI6ImJhc2VsQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJFFDUzZtZEFlM3FUN0ZXZ21SS3Yzd2VNTk5MTFYvTFY4TmtSem9wWFRPeDV3U04yYlhUdVpLIiwic2F2ZWRGbGlnaHRzIjpbIjY0NWU5MTIzM2ZiMmZiZDA2M2MxOTljMCIsIjY1MGRmZjI2Y2UwMTI1OTU2NDdkNzFiYSJdLCJzYXZlZEhvdGVscyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmUiXSwiZmlyc3ROYW1lIjoiYmFzZWwiLCJsYXN0TmFtZSI6ImJlbiIsInBob25lTnVtYmVyIjoiIiwiaW1hZ2UiOiIiLCJjb3VudHJ5IjoiIiwiY2l0eSI6IiIsImFkZHJlc3MiOiIiLCJpYXQiOjE2OTY2MTY1NDcsImV4cCI6MTY5NjYyMDE0N30.SjPGpyq8Y7w_P_6LmE7efK9k83VRToo2hGYaazatM_0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4YTAyNzAwZWQ1ODU1Y2E1NmUwMGYiLCJlbWFpbCI6ImJhc2VsQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJDM1d1lWcDc4N1VUbGM1Q0lxcWI0TXVSMFl6OWdhRzVLWUtrZndyb0dtcmMxVC8vODA3R2tTIiwic2F2ZWRGbGlnaHRzIjpbIjY0NWU5MTIzM2ZiMmZiZDA2M2MxOTljMCIsIjY1MGRmZjI2Y2UwMTI1OTU2NDdkNzFiYSJdLCJzYXZlZEhvdGVscyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmUiXSwiZmlyc3ROYW1lIjoiYmFzZWwiLCJsYXN0TmFtZSI6ImJlbiIsInBob25lTnVtYmVyIjoiIiwiaW1hZ2UiOiIiLCJjb3VudHJ5IjoiIiwiY2l0eSI6IiIsImFkZHJlc3MiOiIiLCJpYXQiOjE2OTY2MTg0MDEsImV4cCI6MTY5NjYyMjAwMX0.hr0a5QVrqhAbXTiv5hyeEOoI4DGiaEYMMcMyI_MCg7I
 Content-Type: application/json
 
 {
-  "password":  "razraz",
-  "newPassword": "razraz"
+  "password":  "baselbasel",
+  "newPassword": "basel"
 }
 
 ###
@@ -155,7 +155,7 @@ Content-Type: application/json
 
 {
   "email": "basel@gmail.com",
-  "password": "baselbasel"
+  "password": "basel"
 }
 
 
@@ -167,7 +167,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzM
 
 ###
 
-POST https://greenmiles.onrender.com/api/image/upload
+POST http://localhost:3500/api/image/upload
 Content-Type: application/json
 
 {

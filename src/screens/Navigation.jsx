@@ -18,10 +18,7 @@ import AccountNavigation from '../components/AccountNavigation';
 
 const Tab = createBottomTabNavigator();
 
-const MainTab = createBottomTabNavigator();
-
-
-export default function Navigation() {
+export default function Navigation({route}) {
 
   const navigationState = useNavigationState(state => state.index - 2);
 
@@ -50,8 +47,16 @@ export default function Navigation() {
       duration: 500,
       useNativeDriver: true
     }).start();
-    moveToTab(0);
   }, []);
+
+
+  useEffect(() => {
+    if(route.params && route.params.fromBookedMessage){
+      moveToTab(0);
+      route.params.fromBookedMessage = false;
+    }
+  }, [route]);
+  
 
   return (
     <TabOffsetContext.Provider value={moveToTab}>

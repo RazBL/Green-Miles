@@ -3,23 +3,20 @@ import { useTheme, Card, Button } from 'react-native-paper';
 import React, { useContext, useEffect } from 'react';
 import { UsersContext } from '../context/UsersContext';
 import { FlightsContext } from '../context/FlightsContext';
-import TabOffsetContext from '../context/TabOffsetContext';
 
 export default function BookedMessage({ navigation }) {
     const theme = useTheme();
-    const moveToTab = useContext(TabOffsetContext);
 
     const { currentUser } = useContext(UsersContext);
     const { flightOrders } = useContext(FlightsContext);
 
 
     const BtnHandler = () => {
-        navigation.navigate("Navigation");
         navigation.navigate('Navigation', {
-            screen: 'Home'
+            screen: 'Home',
+            fromBookedMessage: true
         });
 
-        moveToTab(0);
     }
 
     useEffect(() => {

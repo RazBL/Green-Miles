@@ -6,6 +6,7 @@ const Stack = createStackNavigator();
 //Screens
 import FlightSearch from "../screens/FlightSearch";
 import FlightSearchResults from '../screens/FlightSearchResults'
+
 export default function FlightNavigation() {
     return (
         <Stack.Navigator>

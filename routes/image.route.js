@@ -11,6 +11,7 @@ const ImageRoute = require('express').Router();
 
 
 ImageRoute.post("/", async (req, res) => {
+    console.log(process.env.CLOUD_NAME, process.env.API_KEY, process.env.API_SECRET);
     try {
         let {image} = req.body;
         let imageStr = `data:image/jpg;base64,${image}`;
@@ -22,6 +23,7 @@ ImageRoute.post("/", async (req, res) => {
         res.status(500).json({ error });
     }
 });
+
 module.exports = ImageRoute;
 
 

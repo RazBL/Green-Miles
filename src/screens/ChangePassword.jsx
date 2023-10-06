@@ -4,18 +4,20 @@ import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
 
 
-export default function ChangePassword() {
+export default function ChangePassword({navigation}) {
   const [currentPassword, SetCurrentPassword] = useState("");
   const [newPassword, SetnewPassword] = useState("");
   const [confirmPassword, SetconfirmPassword] = useState("");
-  const { ChangeUserPassword, currentUser } = useContext(UsersContext);
+  const { ChangeUserPassword } = useContext(UsersContext);
 
   const handleUpdatePassword = async () => {
     if (InputHandler()) {
-      const changed = await ChangeUserPassword(newPassword, confirmPassword);
-      console.log(changed);
-      if (changed)
-        alert("The Passwords is changed!")
+      const changed = await ChangeUserPassword(currentPassword, newPassword);
+      
+      if (changed){
+        alert("The Passwords is changed!");
+        navigation.navigate("Account");
+      }
     }
   };
 
