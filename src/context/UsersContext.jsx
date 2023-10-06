@@ -115,17 +115,16 @@ export default function UsersContextProvider({ children }) {
         return token;
     }
 
-    const ChangeUserPassword = async (newPassword, confirmPassword) => {
+    const ChangeUserPassword = async (newPassword, currentPassword) => {
         try {
             let token = await AsyncStorage.getItem('userToken');
-            console.log(token);
             let res = await fetch(`${base_api}/users/change-password`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ password: newPassword, confirmPassword: confirmPassword }),
+                body: JSON.stringify({ password: currentPassword, newPassword: newPassword }),
             });
 
             if (!res.ok) {
@@ -137,10 +136,6 @@ export default function UsersContextProvider({ children }) {
             let data = await res.json();
             console.log(data);
 
-        
-            if(!data){
-                return data;
-            }
             LoadAllUsers();
             SetCurrentUser(data);
         } catch (error) {

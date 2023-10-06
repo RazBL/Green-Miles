@@ -164,7 +164,6 @@ class UsersModel {
             "_id": new ObjectId(currentUserId)
         }
         let user =  await new DB().FindOne(query, "users");
-
         return bcrypt.compareSync(password, user.password)
 
     }
