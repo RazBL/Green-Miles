@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Keyboard, TouchableWithoutFeedback } from 'react-native'
+import { View, Text, StyleSheet, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 import { useTheme, TextInput, Button } from 'react-native-paper';
 import React, { useState, useEffect, useContext } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -9,7 +9,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 //Contexts
 import { UsersContext } from '../context/UsersContext';
 
-export default function EditProfile({navigation}) {
+export default function EditProfile({ navigation }) {
 
     //Context
     const { countries, currentUser, EditProfile, CheckValidEmail, EmailExists } = useContext(UsersContext)
@@ -86,7 +86,7 @@ export default function EditProfile({navigation}) {
             alert("Please enter a valid email.");
             valid = false;
         }
-        else if (EmailExists(email) && email != currentUser.email){
+        else if (EmailExists(email) && email != currentUser.email) {
             alert("Email already exists.");
             valid = false;
         }
@@ -108,6 +108,7 @@ export default function EditProfile({navigation}) {
                 enableOnAndroid={true}
                 extraScrollHeight={150}
             >
+            
                 <View style={styles(theme).dualInput}>
                     <TextInput
                         label="First name"
@@ -219,6 +220,24 @@ const styles = theme => StyleSheet.create({
     textInput: {
         marginTop: 20,
         backgroundColor: 'white'
-    }
+    },
+    imageContainer: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        overflow: 'hidden',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: '#ccc',
+        borderWidth: 1,
+        marginBottom: 20,
+    },
+    profileImage: {
+        width: '100%',
+        height: '100%',
+    },
+    imagePlaceholderText: {
+        color: '#888',
+    },
 
 })

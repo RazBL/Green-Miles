@@ -1,4 +1,4 @@
-import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList } from 'react-native'
+import { View, StyleSheet, Text, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import React, { useContext, useState, useEffect } from 'react'
 import { Headline, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -41,7 +41,7 @@ export default function Home({ navigation, route}) {
   }, [])
 
   return (
-    <View style={styles(theme).container}>
+    <ScrollView style={styles(theme).container}>
       <View style={styles(theme).flightHotelSearch}>
         <View style={styles(theme).hotelImageBox}>
           <Image
@@ -83,8 +83,7 @@ export default function Home({ navigation, route}) {
           horizontal={true}
         />
       </View>
-
-    </View>
+    </ScrollView>
   )
 }
 
@@ -92,7 +91,7 @@ const styles = theme => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingVertical: 35
+    paddingVertical: 35,
   },
   flightHotelSearch: {
     flexDirection: 'row',
@@ -149,6 +148,7 @@ const styles = theme => StyleSheet.create({
   hotelsCardContainer: {
     marginVertical: 30,
     flexDirection: 'row',
-    marginLeft: 20
+    marginLeft: 20,
+    marginBottom: 60,
   },
 });

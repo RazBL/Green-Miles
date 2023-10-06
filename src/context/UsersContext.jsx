@@ -129,26 +129,34 @@ export default function UsersContextProvider({ children }) {
                     newPassword: newPassword
                 }),
             });
-    
+
 
             let data = await res.json();
 
             if (!res.ok) {
-                alert(data.error); 
+                alert(data.error);
                 return null;
             }
-    
+
             console.log("Password change worked");
             LoadAllUsers();
             SetCurrentUser(data);
             return true;
-    
+
         } catch (error) {
             console.error(error.message);
             return false;
         }
     };
 
+
+    const UploadProfilePicture = async () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
 
     async function GetUserByEmail(email) {
         try {

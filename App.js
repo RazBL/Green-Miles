@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import {Cloudinary} from "@cloudinary/url-gen";
 
 //Contexts
 import UsersContextProvider from './src/context/UsersContext';
@@ -20,8 +21,6 @@ import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
 import BookedMessage from './src/screens/BookedMessage';
 
-//Component
-import HotelNavigation from './src/components/HotelNavigation';
 
 
 const Stack = createStackNavigator();
