@@ -10,7 +10,7 @@ export default function HotelsContextProvider({ children }) {
   const [checkInDates, setCheckInDates] = useState([]);
   const [checkOutDates, setCheckOutDates] = useState([]);
   const [locations, setLocations] = useState([]);
-  const [HotelBookings, SetHotelBookings] = useState([]);
+  const [hotelBookings, SetHotelBookings] = useState([]);
   const [HotelToBook, SetHotelToBook] = useState([]);
 
 
@@ -112,6 +112,7 @@ export default function HotelsContextProvider({ children }) {
 const HotelBooking = async (currentUser, currentTime, currentDate, HotelToBook) => {
   try {
 
+    console.log(HotelToBook.total_price);
       let res = await fetch(`${base_api}/hotels/booking`, {
           method: 'POST',
           headers: {
@@ -151,12 +152,12 @@ const GetAllHotelBookings = async () => {
         'Authorization': `Bearer ${token}`
       }
     });
-    console.log('Response:', res); // הדפס את התגובה
     if (res.ok) {
       const data = await res.json();
       console.log('Data:', data); // הדפס את הנתונים
       SetHotelBookings(data);
     }
+    await console.log((hotelBookings));
   } catch (error) {
     console.log('Error:', error);
   }
@@ -184,7 +185,7 @@ const GetAllHotelBookings = async () => {
     HotelBooking,
     HotelToBook,
     SetHotelToBook,
-    HotelBookings
+    hotelBookings
   };
 
   return (

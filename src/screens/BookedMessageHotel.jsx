@@ -1,16 +1,16 @@
-import { View, Text, StyleSheet , ActivityIndicator} from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useTheme, Card, Button } from 'react-native-paper';
 import React, { useContext, useEffect } from 'react';
 import { UsersContext } from '../context/UsersContext';
-import { FlightsContext } from '../context/FlightsContext';
 import TabOffsetContext from '../context/TabOffsetContext';
+import { HotelsContext } from '../context/HotelsContext';
 
 export default function BookedMessage({ navigation }) {
     const theme = useTheme();
     const moveToTab = useContext(TabOffsetContext);
 
     const { currentUser } = useContext(UsersContext);
-    const { hotelH } = useContext(FlightsContext);
+    const { hotelBookings } = useContext(HotelsContext);
 
 
     const BtnHandler = () => {
@@ -23,13 +23,13 @@ export default function BookedMessage({ navigation }) {
     }
 
     useEffect(() => {
-    }, [flightOrders])
+    }, [hotelBookings])
 
 
     return (
         <View style={styles(theme).container}>
             {
-                flightOrders.length > 0 ? (
+                hotelBookings.length > 0 ? (
                     <Card style={styles(theme).card}>
                         <Card.Content>
                             <Text style={styles(theme).title}>Booking Pending</Text>
@@ -40,7 +40,7 @@ export default function BookedMessage({ navigation }) {
                                 Thank you for your booking. Your booking is currently pending and will be confirmed shortly.
                             </Text>
                             <Text style={styles(theme).message}>
-                                Booking Reference: <Text style={[styles(theme).message, { fontFamily: 'Montserrat_Bold', color: theme.colors.primary }]}>{flightOrders[flightOrders.length - 1]._id}</Text>
+                                Booking Reference: <Text style={[styles(theme).message, { fontFamily: 'Montserrat_Bold', color: theme.colors.primary }]}>{HotelBookings[HotelBookings.length - 1]._id}</Text>
                             </Text>
                             <Text style={styles(theme).message}>
                                 Once your booking is confirmed, you will receive a confirmation notification.

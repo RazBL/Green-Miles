@@ -14,6 +14,8 @@ export default function ChangePassword() {
       await ChangeUserPassword(newPassword);
   };
 
+
+
   const InputHandler = () => {
     let valid = true;
 
@@ -36,6 +38,7 @@ export default function ChangePassword() {
 
     return valid;
   }
+  
 
   return (
     <View style={styles.container}>

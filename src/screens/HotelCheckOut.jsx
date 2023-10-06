@@ -14,13 +14,13 @@ import { UsersContext } from '../context/UsersContext';
 import { HotelsContext } from '../context/HotelsContext';
 import { toUpper } from 'lodash';
 
-const HotelCheckOut = ({ route,navigation }) => {
+const HotelCheckOut = ({ route, navigation }) => {
   const theme = useTheme();
   const { hotel } = route.params;
   const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
-  const { HotelBooking} = useContext(HotelsContext);
+  const { HotelBooking } = useContext(HotelsContext);
 
-  const [email, SetEmail] = useState("");
+  const [email, SetEmail] = useState(currentUser.email);
   const [country, SetCountry] = useState("Israel");
   const [city, SetCity] = useState("");
   const [Address, SetAddress] = useState("");
@@ -52,15 +52,13 @@ const HotelCheckOut = ({ route,navigation }) => {
         let localTime = `${hours}:${minutes}`;
         let localDate = `${year}-${month}-${day}`;
 
-        console.log("Before HotelBooking - currentUser:", currentUser);
-        console.log("Before HotelBooking - localTime:", localTime);
-        console.log("Before HotelBooking - localDate:", localDate);
-        console.log("Before HotelBooking - HotelToBook:", HotelToBook);
+
+        console.log("before ordering the hotel")
         HotelBooking(currentUser, localTime, localDate, hotel);
+        navigation.navigate("BookedMessageHotel");
 
         console.log("After HotelBooking");
 
-        navigation.navigate("BookedMessage");
     }
 };
 
@@ -170,6 +168,7 @@ useEffect(() => {
                     mode='outlined'
                     style={[styles(theme).textInput]}
                     onChangeText={text => SetEmail(text)}
+                    value={email}
                 />
                  <View >
                             <DropDownPicker

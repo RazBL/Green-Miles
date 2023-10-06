@@ -66,6 +66,7 @@ export default function App() {
                   <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Flight Checkout" component={FlightCheckout} options={{headerTitleAlign: 'center'}}/>
+                  <Stack.Screen name="BookedMessageHotel" component={BookedMessage} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="BookedMessage" component={BookedMessage} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                 </Stack.Navigator>
             </NavigationContainer>
