@@ -115,24 +115,28 @@ export default function UsersContextProvider({ children }) {
         return token;
     }
 
-    const ChangeUserPassword = async (newPassword) => {
+    const ChangeUserPassword = async (newPassword, currentPassword) => {
         try {
             let token = await AsyncStorage.getItem('userToken');
-            console.log(token);
             let res = await fetch(`${base_api}/users/change-password`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ password: newPassword }),
+                body: JSON.stringify({
+                    password: currentPassword,
+                    newPassword: newPassword
+                }),
             });
 
+            console.log("passwrd first try");
             if (!res.ok) {
                 const errorData = await res.json();
                 console.error(`Error is: ${errorData.error}`);
-                return;
+                return null;
             }
+            console.log("data is correct");
 
             let data = await res.json();
             console.log(data);
@@ -144,6 +148,7 @@ export default function UsersContextProvider({ children }) {
             return false;
         }
     };
+
 
     async function GetUserByEmail(email) {
         try {

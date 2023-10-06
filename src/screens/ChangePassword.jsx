@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
 
+
 export default function ChangePassword() {
   const [currentPassword, SetCurrentPassword] = useState("");
   const [newPassword, SetnewPassword] = useState("");
@@ -10,35 +11,30 @@ export default function ChangePassword() {
   const { ChangeUserPassword, currentUser } = useContext(UsersContext);
 
   const handleUpdatePassword = async () => {
-    if(InputHandler())
-      await ChangeUserPassword(newPassword);
+    if (InputHandler()) {
+      const changed = await ChangeUserPassword(newPassword, confirmPassword);
+      console.log(changed);
+      if (changed)
+        alert("The Passwords is changed!")
+    }
   };
-
 
 
   const InputHandler = () => {
     let valid = true;
 
-    if(currentPassword == "" || newPassword == "" || confirmPassword == ""){
+    if (currentPassword == "" || newPassword == "" || confirmPassword == "") {
       valid = false;
       alert("Please don't leave any of the input fields empty");
     }
-    else if(currentPassword != currentUser.password){
-      valid = false;
-      alert("Current password is incorect");
-    }
-    else if (newPassword != confirmPassword){
+    else if (newPassword != confirmPassword) {
       valid = false;
       alert("passwords are not the same.")
-    }
-    else if (currentPassword == newPassword){
-      valid = false;
-      alert("New password cannot be the same as current password.")
     }
 
     return valid;
   }
-  
+
 
   return (
     <View style={styles.container}>

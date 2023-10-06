@@ -158,6 +158,16 @@ class UsersModel {
         return await new DB().FindOne(query, "users");
     }
     
+
+    static async VerifyCurrentPassword(currentUserId, password){
+        let query = {
+            "_id": new ObjectId(currentUserId)
+        }
+        let user =  await new DB().FindOne(query, "users");
+        return bcrypt.compareSync(password, user.password)
+
+    }
+
     static async UpdateUserDetails(currentUserId, editedUser) {
 
         let query = {
