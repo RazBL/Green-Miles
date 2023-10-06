@@ -11,9 +11,8 @@ import HotelPreviewCard from '../components/HotelPreviewCard';
 
 //Contexts
 import { HotelsContext } from '../context/HotelsContext';
-import { UsersContext } from '../context/UsersContext';
 
-export default function Home({ navigation }) {
+export default function Home({ navigation, route}) {
   //Context
   const { hotels } = useContext(HotelsContext);
   const moveToTab = useContext(TabOffsetContext);
@@ -41,7 +40,6 @@ export default function Home({ navigation }) {
     GetHighestEcoRatedHotels();
   }, [])
 
-
   return (
     <View style={styles(theme).container}>
       <View style={styles(theme).flightHotelSearch}>
@@ -62,7 +60,7 @@ export default function Home({ navigation }) {
           <Image
             source={require('../images/flight2.jpg')}
             resizeMode="cover"
-            style={{ height: '100%', width: '100%', opacity: 0.95}}
+            style={{ height: '100%', width: '100%', opacity: 0.95 }}
           />
           <TouchableOpacity style={styles(theme).hotelFlightButton} onPress={ToFlightButtnHandler}>
             <View style={styles(theme).iconTextBox} >

@@ -6,6 +6,7 @@ import slides from '../data/slides';
 import OnBoardingElement from '../components/OnBoardingElement';
 import Paginator from '../components/Paginator';
 import OnboardingButton from '../components/onBoardingButton';
+import TabOffsetContext from '../context/TabOffsetContext'
 
 export default function OnBoarding({ navigation }) {
     const theme = useTheme();
