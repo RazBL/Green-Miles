@@ -5,6 +5,7 @@ const {
 } = require('../utils/auth');
 const UsersRoute = require('express').Router();
 
+
 //CRUD
 
 
@@ -64,6 +65,8 @@ UsersRoute.post('/login', async (req, res) => {
     });
   }
 });
+
+
 
 
 
@@ -151,13 +154,24 @@ UsersRoute.put('/save-flight', AuthUser, async (req, res) => {
 UsersRoute.put('/change-password', AuthUser, async (req, res) => {
   try {
     const userId = req.user._id;
-    const newPassword = req.body.password
+    const newPassword = req.body.newPassword;
+    const currentPassword = req.body.password
+
+    const isCurrentPasswordCorrect = await UsersModel.VerifyCurrentPassword(userId, currentPassword);
+
+    if (!isCurrentPasswordCorrect) {
+      return res.status(400).json({ error: 'Current password is incorrect' });
+    }
+
+   const differntPassword = await UsersModel.VerifyCurrentPassword(userId,  newPassword)
+
+    if(differntPassword){
+      return res.status(400).json({ error: 'New password must be different from current password' });
+    }
 
     await UsersModel.ChangePassword(userId, newPassword);
 
     const updatedUser = await UsersModel.GetUser(userId);
-
-    console.log(updatedUser);
 
     res.status(200).json({
       message: 'Password was changed successfully',
@@ -170,14 +184,15 @@ UsersRoute.put('/change-password', AuthUser, async (req, res) => {
       error: 'An error occurred while trying change the password'
     });
   }
-})
+});
+
 
 UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
   try {
 
     const currentUserId = req.user._id;
     const editedUser = req.body.editedUser
-    
+
 
     await UsersModel.UpdateUserDetails(currentUserId, editedUser);
 

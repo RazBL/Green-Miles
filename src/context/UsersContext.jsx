@@ -115,7 +115,7 @@ export default function UsersContextProvider({ children }) {
         return token;
     }
 
-    const ChangeUserPassword = async (newPassword) => {
+    const ChangeUserPassword = async (newPassword, confirmPassword) => {
         try {
             let token = await AsyncStorage.getItem('userToken');
             console.log(token);
@@ -125,18 +125,22 @@ export default function UsersContextProvider({ children }) {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ password: newPassword }),
+                body: JSON.stringify({ password: newPassword, confirmPassword: confirmPassword }),
             });
 
             if (!res.ok) {
                 const errorData = await res.json();
                 console.error(`Error is: ${errorData.error}`);
-                return;
+                return null ;
             }
 
             let data = await res.json();
             console.log(data);
 
+        
+            if(!data){
+                return data;
+            }
             LoadAllUsers();
             SetCurrentUser(data);
         } catch (error) {
@@ -144,6 +148,7 @@ export default function UsersContextProvider({ children }) {
             return false;
         }
     };
+
 
     async function GetUserByEmail(email) {
         try {
