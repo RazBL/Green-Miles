@@ -97,6 +97,7 @@ export default function FlightsContextProvider({ children }) {
                 return null;
             }
 
+            console.log("Getting all flight orders");
             GetAllFlightOrders();
 
         } catch (error) {
@@ -117,7 +118,9 @@ export default function FlightsContextProvider({ children }) {
             if (res.ok) {
                 const data = await res.json();
                 SetFlightOrders(data);
+                console.log("All flight orders were fetched");
             } 
+            
         } catch (error) {
             console.log(error);
         }

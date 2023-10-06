@@ -52,6 +52,7 @@ FlightRoute.get('/bookings',AuthUser, async(req, res) => {
         let data = await FlightBookingModel.GetAllBookedFlights(useId);
         res.status(200).json(data);
     } catch (error) {
+        console.log("there was an error fetching flight bookings");
         res.status(500).json({error});
     }
 })

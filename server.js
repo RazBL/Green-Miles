@@ -14,6 +14,8 @@ app.use('/api/flights', require('./routes/flights.route'));
 
 app.use('/api/hotels', require('./routes/hotels.route'));
 
+app.use('/api/image/upload', require('./routes/image.route.js'));
+
 
 app.get('/', (req, res) => {
   res.send('Mashrmellow')

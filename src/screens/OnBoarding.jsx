@@ -25,14 +25,20 @@ export default function OnBoarding({ navigation }) {
     }, []);
 
     const SkipBtnHandler = () => {
-        navigation.navigate('Login');
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }], 
+          });
     }
 
     const NextOrSkipBtnHandler = () => {
         if (currentIndex < slides.length - 1) {
             slideRef.current.scrollToIndex({ index: currentIndex + 1 });
         } else {
-            navigation.navigate('Login');
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'Login' }], 
+              });
         }
     };
 

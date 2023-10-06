@@ -19,14 +19,14 @@ export default function HotelPreviewCard({ hotel, navigation }) {
     navigation.navigate('Navigation', {
       screen: 'Hotels',
       params: {
-        screen: 'Hotel',
-        params: { hotel }
+        screen: 'HotelsSearch',
+        params: {
+          hotel: hotel
+        }
       }
     });
-
     moveToTab(2);
 };
-
 
 
   useEffect(() => {

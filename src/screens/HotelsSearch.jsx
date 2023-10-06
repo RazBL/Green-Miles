@@ -8,7 +8,7 @@ import { HotelsContext } from '../context/HotelsContext';
 import { useNavigation } from '@react-navigation/native';
 
 
-export default function HotelSearch({ navigation }) {
+export default function HotelSearch({route,  navigation }) {
   const {HotelSearchResults, hotels} = useContext(HotelsContext);
   const theme = useTheme();
   const [passengers, setPassengers] = useState(1);
@@ -103,10 +103,12 @@ export default function HotelSearch({ navigation }) {
   
 
   useEffect(() => {
+    console.log(route.params);
+    if(route.params && route.params.hotel){
+      navigation.navigate('Hotel', { hotel: route.params.hotel });
+    }
     TransformHotels();
-    console.log("Hello this is hotel text!");
-    console.log(transformedHotelCountries);
-  }, [])
+  }, [route]);
   
 
   return (

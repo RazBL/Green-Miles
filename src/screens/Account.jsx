@@ -42,8 +42,11 @@ export default function Account() {
   }
 
   useEffect(() => {
-      GetAllFlightOrders();
   }, [flightOrders])
+
+  useEffect(() => {
+    GetAllFlightOrders();
+  }, [])
   
 
   return (
