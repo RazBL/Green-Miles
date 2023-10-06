@@ -157,10 +157,6 @@ UsersRoute.put('/change-password', AuthUser, async (req, res) => {
     const newPassword = req.body.newPassword;
     const currentPassword = req.body.password
 
-    console.log(userId);
-    console.log(newPassword);
-    console.log(currentPassword);
-
     const isCurrentPasswordCorrect = await UsersModel.VerifyCurrentPassword(userId, currentPassword);
 
     console.log(isCurrentPasswordCorrect);
