@@ -100,7 +100,7 @@ Content-Type: application/json
 
 {
   "password":  "baselbasel",
-  "newPassword": "basel"
+  "newPassword": "base"
 }
 
 ###
@@ -155,7 +155,7 @@ Content-Type: application/json
 
 {
   "email": "basel@gmail.com",
-  "password": "basel"
+  "password": "baselbasel"
 }
 
 
@@ -178,3 +178,13 @@ Content-Type: application/json
 
 GET http://localhost:3500/api/users?razrazf/password
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCR1UkJjd3o5Q3NUeGRCMWo1MDZyNjAud0IzUmNWdUlzYmdWM3cxWnFxTVZnZk1QNmFpT2xTQyIsInNhdmVkRmxpZ2h0cyI6WyI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJlIl0sImZpcnN0TmFtZSI6InJheiIsImxhc3ROYW1lIjoicmF6IiwicGhvbmVOdW1iZXIiOiIwNTQ1ODQ5MjgxIiwiaW1hZ2UiOm51bGwsImNvdW50cnkiOiIiLCJjaXR5IjoiIiwiYWRkcmVzcyI6IiIsImlhdCI6MTY5NjM2NTU1NSwiZXhwIjoxNjk2MzY5MTU1fQ.9hmkly87yi5k6zb2qqUaDfMyGgFoLRTg9J90-uwU3kU
+
+###
+
+PUT http://localhost:3500/api/users/upload-image
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4YTAyNzAwZWQ1ODU1Y2E1NmUwMGYiLCJlbWFpbCI6ImJhc2VsQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHNrN0dNWHlwTTNUVi94R2F3cHRWMWU1VUpIVFUwaHgvaDI5MDBuTGNFMC40akU0bjV0WTBTIiwic2F2ZWRGbGlnaHRzIjpbIjY0NWU5MTIzM2ZiMmZiZDA2M2MxOTljMCIsIjY1MGRmZjI2Y2UwMTI1OTU2NDdkNzFiYSJdLCJzYXZlZEhvdGVscyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmUiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmYiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmMiXSwiZmlyc3ROYW1lIjoiYmFzZWwiLCJsYXN0TmFtZSI6ImJlbiIsInBob25lTnVtYmVyIjoiIiwiaW1hZ2UiOiIiLCJjb3VudHJ5IjoiIiwiY2l0eSI6IiIsImFkZHJlc3MiOiIiLCJpYXQiOjE2OTY2MzAzNDYsImV4cCI6MTY5NjYzMzk0Nn0.ww7buuILdb-QauftgsBsQrWfJ3Z54WReJ4nRYX4u0cs
+Content-Type: application/json
+
+{
+  "image": "https://res.cloudinary.com/dh8cvol5m/image/upload/v1696630469/rigx788shazeefiwspvj.png"
+}

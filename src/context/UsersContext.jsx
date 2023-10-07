@@ -50,9 +50,10 @@ export default function UsersContextProvider({ children }) {
             SetCurrentUser(data);
 
         } catch (error) {
-
+            console.log(error);
         }
     }
+
 
     const RegisterUser = async (newUser) => {
         try {
@@ -134,7 +135,8 @@ export default function UsersContextProvider({ children }) {
             let data = await res.json();
 
             if (!res.ok) {
-                alert(data.error);
+                let errorData = await res.json();
+                console.log(`Error is: ${errorData.error}`);
                 return null;
             }
 
@@ -150,11 +152,41 @@ export default function UsersContextProvider({ children }) {
     };
 
 
-    const UploadProfilePicture = async () => {
+    const UploadProfilePicture = async (image) => {
         try {
-            
+            let token = await AsyncStorage.getItem('userToken');
+            let res = await fetch(`${base_api}/users/upload-image`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    image: image
+                }),
+            });
+            ;
+
+
+            if (!res.ok) {
+                let errorData = await res.json();
+                console.log(`Error is: ${errorData.error}`);
+                return null;
+            }
+
+            const updatedUsers = users.map(user => {
+                if (user._id === currentUser._id) {
+                    let updatedUser = { ...user };
+                    updatedUser.image.push(image)
+                    SetCurrentUser(updatedUser);
+                    return updatedUser;
+                }
+                return user;
+            });
+            SetUsers(updatedUsers);
+
         } catch (error) {
-            
+            console.log(error);
         }
     }
 
@@ -439,7 +471,8 @@ export default function UsersContextProvider({ children }) {
         savedFlights,
         currentUser,
         EditProfile,
-        ChangeUserPassword
+        ChangeUserPassword,
+        UploadProfilePicture
     }
 
     return (

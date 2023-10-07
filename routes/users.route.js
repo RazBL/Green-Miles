@@ -38,6 +38,22 @@ UsersRoute.post('/register', async (req, res) => {
   }
 });
 
+UsersRoute.put('/upload-image', AuthUser, async (req, res) => {
+  try {
+    const image = req.body.image;
+    const userId = req.user._id;
+
+   await UsersModel.SetUserImage(userId, image);
+  
+   res.status(200).json({ message: 'Image was uploaded successfully',});
+
+  } catch (error) {
+    res.status(500).json({
+      error: 'Failed to uploaded image to database'
+    });
+  }
+})
+
 
 UsersRoute.post('/login', async (req, res) => {
   try {

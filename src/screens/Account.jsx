@@ -46,7 +46,7 @@ export default function Account() {
   }
 
   useEffect(() => {
-  }, [flightOrders])
+  }, [flightOrders, currentUser])
 
   useEffect(() => {
     GetAllFlightOrders();
@@ -61,7 +61,8 @@ export default function Account() {
           <View style={styles(theme).imageContainer}>
             {
               currentUser ? (<Image
-                source={require('../images/Account.png')}
+                source={currentUser ? { uri: currentUser.image } :
+                require('../images/Account.png')}
                 resizeMode="contain"
                 style={{ height: '100%', width: '100%' }}
               />) :

@@ -68,12 +68,7 @@ class UsersModel {
         return user;
     }
 
-    // static async UpdateUser(userId, user) {
-    //     let query = {
-    //         "_id": new ObjectId(userId)
-    //     };
-    //     await new DB().UpdateOne(user, 'users', query);
-    // }
+
 
     static async GenerateUserToken(user) {
         return await new DB().GenerateToken(user);
@@ -88,7 +83,21 @@ class UsersModel {
                 "savedFlights": new ObjectId(flightId)
             }
         };
-        return await new DB().UpdateOne("users", query, update)
+        return await new DB().UpdateOne("users", query, update);
+    }
+
+    static async SetUserImage(userId, image){
+        let query = {
+            "_id": new ObjectId(userId)
+        }
+
+        let update = {
+            $set: {
+                "image": image
+            }
+        }
+
+        return await new DB().UpdateOne("users", query, update);
     }
 
     static async GetUserProfile(userId) {
