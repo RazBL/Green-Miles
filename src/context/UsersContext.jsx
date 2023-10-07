@@ -174,10 +174,11 @@ export default function UsersContextProvider({ children }) {
                 return null;
             }
 
-            
             let data = await res.json();
 
-            console.log(data);
+            console.log("this is data", data);
+
+            SetCurrentUser(data.updatedUser)
 
         } catch (error) {
             console.log(error);

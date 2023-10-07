@@ -64,7 +64,7 @@ export default function Account() {
                 source={currentUser ? { uri: currentUser.image } :
                 require('../images/Account.png')}
                 resizeMode="contain"
-                style={{ height: '100%', width: '100%' }}
+                style={{ height: '100%', width: '100%', borderRadius: 30 }}
               />) :
                 <View></View>
             }

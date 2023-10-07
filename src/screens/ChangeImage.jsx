@@ -23,27 +23,35 @@ export default function ChangeImage() {
     const handleImagePick = async () => {
         let pickerResult = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
-            quality: 0.7,
+            aspect: [1, 1],
+            width: 800,
+            quality: 0.5,
             base64: true
         });
-
+    
         if (!pickerResult.canceled && pickerResult.assets && pickerResult.assets.length > 0) {
-            const base64image = pickerResult.assets[0].base64;
             SetSelectedImage(pickerResult.assets[0].uri);
-            await uploadToCloudinary(base64image);
+            await uploadToCloudinary(pickerResult.assets[0].uri);
         }
     };
 
-    const uploadToCloudinary = async (base64Image) => {
+    const uploadToCloudinary = async (imageUri) => {
+        let formData = new FormData();
+        formData.append('image', {
+            uri: imageUri,
+            name: 'profile.jpg',
+            type: 'image/jpg'
+        });
+    
         try {
             const response = await fetch(`https://greenmiles.onrender.com/api/image/upload`, {
                 method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "multipart/form-data",
                 },
-                body: JSON.stringify({ image: base64Image }),
+                body: formData
             });
-
+    
             if (!response.ok) {
                 throw new Error("Failed to upload image");
             } else {
