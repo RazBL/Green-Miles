@@ -174,16 +174,10 @@ export default function UsersContextProvider({ children }) {
                 return null;
             }
 
-            const updatedUsers = users.map(user => {
-                if (user._id === currentUser._id) {
-                    let updatedUser = { ...user };
-                    updatedUser.image.push(image)
-                    SetCurrentUser(updatedUser);
-                    return updatedUser;
-                }
-                return user;
-            });
-            SetUsers(updatedUsers);
+            
+            let data = await res.json();
+
+            console.log(data);
 
         } catch (error) {
             console.log(error);

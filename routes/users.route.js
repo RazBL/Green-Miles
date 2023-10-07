@@ -44,8 +44,12 @@ UsersRoute.put('/upload-image', AuthUser, async (req, res) => {
     const userId = req.user._id;
 
    await UsersModel.SetUserImage(userId, image);
-  
-   res.status(200).json({ message: 'Image was uploaded successfully',});
+
+   let updatedUser = await UsersModel.GetUser(userId);
+
+   console.log(updatedUser);
+    
+   res.status(200).json({ message: 'Image was uploaded successfully', updatedUser: updatedUser});
 
   } catch (error) {
     res.status(500).json({

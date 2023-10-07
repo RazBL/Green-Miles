@@ -97,7 +97,7 @@ class UsersModel {
             }
         }
 
-        return await new DB().UpdateOne("users", query, update);
+        await new DB().UpdateOne("users", query, update);
     }
 
     static async GetUserProfile(userId) {
