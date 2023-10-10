@@ -14,17 +14,17 @@ export default function BookingsPage() {
     // יצירת מערך שמכיל את ההזמנות משני המקורות
     const allBookings = [...flightOrders, ...hotelBookings];
 
-    console.log('All Bookings:', allBookings);
-
     // סדרה לפי תאריך ההזמנה
-    allBookings.sort((a, b) => new Date(b.bookingTime) - new Date(a.bookingTime));
+    
+    allBookings.sort((a, b) => {
+        const dateA = new Date(`${a.bookingTime.date} ${a.bookingTime.time}`);
+        const dateB = new Date(`${b.bookingTime.date} ${b.bookingTime.time}`);
+        return dateB - dateA;
+    });
 
-    console.log('Sorted Bookings:', allBookings);
-
+    
     // הצגת חמש ההזמנות האחרונות
     const displayedBookings = allBookings.slice(0, 5);
-
-    console.log("booked flights:",flightOrders.length);
 
     const isEmpty = !displayedBookings || displayedBookings.length === 0;
 

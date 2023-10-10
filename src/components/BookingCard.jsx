@@ -5,12 +5,11 @@ import React from 'react'
 
 export default function BookingCard({ item }) {
     const theme = useTheme();
-    console.log(item.image);
     return (
         <Card style={styles(theme).cardContainer}>
            <Card.Cover
                  style={styles(theme).imgContainer}
-                  source={item.passangers ? require('../images/flight2.jpg') : { uri: item.image }}
+                  source={item.passangers ? require('../images/flight2.jpg') : { uri: item.hotelImage }}
             />
 
             <Card.Content style={{ margin: 10 }}>

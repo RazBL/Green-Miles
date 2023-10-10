@@ -153,9 +153,10 @@ const GetAllHotelBookings = async () => {
         'Authorization': `Bearer ${token}`
       }
     });
+    
     if (res.ok) {
       const data = await res.json();
-      console.log('Data:', data); // הדפס את הנתונים
+      console.log('Hotels booked:', data); // הדפס את הנתונים
       SetHotelBookings(data);
     }
     await console.log((hotelBookings));

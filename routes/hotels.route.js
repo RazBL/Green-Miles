@@ -62,9 +62,9 @@ HotelRoute.get('/bookings',AuthUser, async(req, res) => {
                 date: req.body.date ,
                 time: req.body.time
             },
-            booking_status: "pending",
+            bookingStatus: "pending",
             nights_stay: req.body.nightsStay,
-            price: req.body.totalPrice
+            price: req.body.total_price
         }
 
         await HotelBookingModel.BookAHotel(bookedHotel);        
