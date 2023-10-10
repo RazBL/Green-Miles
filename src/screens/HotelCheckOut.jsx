@@ -55,9 +55,10 @@ const HotelCheckOut = ({ route, navigation }) => {
         let localTime = `${hours}:${minutes}`;
         let localDate = `${year}-${month}-${day}`;
 
-
+        totalPrice = totalNights*hotel.price_per_night
+        console.log("this is the total price", totalPrice);
         console.log("before ordering the hotel")
-        HotelBooking(currentUser, localTime, localDate, hotel);
+        HotelBooking(totalPrice, currentUser, localTime, localDate, hotel);
         navigation.navigate("BookedMessageHotel");
 
         console.log("After HotelBooking");
@@ -92,16 +93,6 @@ const TransformCountries = () => {
 
 const ValidInput = () => {
     let valid = true;
-
-    if (cvv === "" || expirationDate === "" || Address === "" ||
-        country === "" || email === "" || city === "" || cardNumber === "") {
-        alert("Please don't leave any input field empty");
-        valid = false;
-    } else if (!CheckValidEmail(email)) {
-        valid = false;
-        alert("Please enter a valid email.");
-        return false;  // הוספת פקודה זו כדי להחזיר false
-    }
 
     return valid;
 }

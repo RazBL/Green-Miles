@@ -109,10 +109,9 @@ export default function HotelsContextProvider({ children }) {
 */ 
 
 
-const HotelBooking = async (currentUser, currentTime, currentDate, HotelToBook) => {
+const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, HotelToBook) => {
   try {
-
-    console.log(HotelToBook.total_price);
+    console.log("Total price", totalPrice);
       let res = await fetch(`${base_api}/hotels/booking`, {
           method: 'POST',
           headers: {
@@ -122,7 +121,7 @@ const HotelBooking = async (currentUser, currentTime, currentDate, HotelToBook) 
               userId: currentUser._id,
               hotelId: HotelToBook._id,
               hotelImage: HotelToBook.image,
-              price: HotelToBook.total_price,
+              price: totalPrice,
               date: currentDate,
               time: currentTime,
               nightsStay: 3
@@ -156,10 +155,8 @@ const GetAllHotelBookings = async () => {
     
     if (res.ok) {
       const data = await res.json();
-      console.log('Hotels booked:', data); // הדפס את הנתונים
       SetHotelBookings(data);
     }
-    await console.log((hotelBookings));
   } catch (error) {
     console.log('Error:', error);
   }
