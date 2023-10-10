@@ -145,7 +145,6 @@ const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, H
 const GetAllHotelBookings = async () => {
   try {
     const token = await AsyncStorage.getItem('userToken');
-    console.log('Token:', token); // הדפס את ה-Token
     const res = await fetch(`${base_api}/hotels/bookings`, {
       method: 'GET',
       headers: {

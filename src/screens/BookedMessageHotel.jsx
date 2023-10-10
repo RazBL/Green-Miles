@@ -2,24 +2,19 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { useTheme, Card, Button } from 'react-native-paper';
 import React, { useContext, useEffect } from 'react';
 import { UsersContext } from '../context/UsersContext';
-import TabOffsetContext from '../context/TabOffsetContext';
 import { HotelsContext } from '../context/HotelsContext';
 
-export default function BookedMessage({ navigation }) {
+export default function BookedMessageHotel({ navigation }) {
     const theme = useTheme();
-    const moveToTab = useContext(TabOffsetContext);
 
     const { currentUser } = useContext(UsersContext);
     const { hotelBookings } = useContext(HotelsContext);
 
-
     const BtnHandler = () => {
-        navigation.navigate("Navigation");
         navigation.navigate('Navigation', {
-            screen: 'Home'
+            screen: 'Home',
+            fromBookedMessage: true
         });
-
-        moveToTab(0);
     }
 
     useEffect(() => {
@@ -40,7 +35,7 @@ export default function BookedMessage({ navigation }) {
                                 Thank you for your booking. Your booking is currently pending and will be confirmed shortly.
                             </Text>
                             <Text style={styles(theme).message}>
-                                Booking Reference: <Text style={[styles(theme).message, { fontFamily: 'Montserrat_Bold', color: theme.colors.primary }]}>{HotelBookings[HotelBookings.length - 1]._id}</Text>
+                                Booking Reference: <Text style={[styles(theme).message, { fontFamily: 'Montserrat_Bold', color: theme.colors.primary }]}>{hotelBookings[hotelBookings.length - 1]._id}</Text>
                             </Text>
                             <Text style={styles(theme).message}>
                                 Once your booking is confirmed, you will receive a confirmation notification.

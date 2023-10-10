@@ -82,8 +82,16 @@ export default function FlightCheckout({ navigation }) {
     const ValidInput = () => {
         let valid = true;
 
+        if (cvv === "" || expirationDate === "" || Address === "" ||
+            country === "" || email === "" || city === "" || cardNumber === "") {
+            alert("Please don't leave any input field empty");
+            valid = false;
+        } else if (!CheckValidEmail(email)) {
+            valid = false;
+            alert("Please enter a valid email.");
+        }
 
-            return valid;
+        return valid;
     }
 
 

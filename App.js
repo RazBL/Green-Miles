@@ -20,6 +20,7 @@ import Support from './src/screens/Support';
 import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
 import BookedMessage from './src/screens/BookedMessage';
+import BookedMessageHotel from './src/screens/BookedMessageHotel';
 
 
 
@@ -65,7 +66,7 @@ export default function App() {
                   <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Support" component={Support} options={{headerTransparent: true, headerTitle: '' ,headerLeft: null}}/>
                   <Stack.Screen name="Flight Checkout" component={FlightCheckout} options={{headerTitleAlign: 'center'}}/>
-                  <Stack.Screen name="BookedMessageHotel" component={BookedMessage} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
+                  <Stack.Screen name="BookedMessageHotel" component={BookedMessageHotel} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="BookedMessage" component={BookedMessage} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                 </Stack.Navigator>
             </NavigationContainer>
