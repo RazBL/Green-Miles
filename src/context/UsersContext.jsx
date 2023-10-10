@@ -50,9 +50,10 @@ export default function UsersContextProvider({ children }) {
             SetCurrentUser(data);
 
         } catch (error) {
-
+            console.log(error);
         }
     }
+
 
     const RegisterUser = async (newUser) => {
         try {
@@ -129,26 +130,60 @@ export default function UsersContextProvider({ children }) {
                     newPassword: newPassword
                 }),
             });
-    
+
 
             let data = await res.json();
 
             if (!res.ok) {
-                alert(data.error); 
+                let errorData = await res.json();
+                console.log(`Error is: ${errorData.error}`);
                 return null;
             }
-    
+
             console.log("Password change worked");
             LoadAllUsers();
             SetCurrentUser(data);
             return true;
-    
+
         } catch (error) {
             console.error(error.message);
             return false;
         }
     };
 
+
+    const UploadProfilePicture = async (image) => {
+        try {
+            let token = await AsyncStorage.getItem('userToken');
+            let res = await fetch(`${base_api}/users/upload-image`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    image: image
+                }),
+            });
+            ;
+
+
+            if (!res.ok) {
+                let errorData = await res.json();
+                console.log(`Error is: ${errorData.error}`);
+                return null;
+            }
+
+            let data = await res.json();
+
+            console.log("this is data", data);
+
+            SetCurrentUser(data.updatedUser)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async function GetUserByEmail(email) {
         try {
@@ -431,7 +466,8 @@ export default function UsersContextProvider({ children }) {
         savedFlights,
         currentUser,
         EditProfile,
-        ChangeUserPassword
+        ChangeUserPassword,
+        UploadProfilePicture
     }
 
     return (

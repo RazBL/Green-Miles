@@ -11,6 +11,7 @@ import ChangePassword from '../screens/ChangePassword';
 import DeleteYourAccount from '../screens/DeleteYourAccount';
 import EditProfile from '../screens/EditProfile';
 import BookingsPage from '../screens/BookingsPage';
+import ChangeImage from '../screens/ChangeImage';
 
 export default function AccountNavigation() {
     return (
@@ -49,6 +50,14 @@ export default function AccountNavigation() {
                 },
             }} />
             <Stack.Screen name="Booking History" component={BookingsPage} options={{
+                headerTitleAlign: 'center',
+                headerTitleStyle: {
+                    fontFamily: 'Montserrat_Bold',
+                    fontSize: 20,
+                    elevation: 0
+                },
+            }} />
+            <Stack.Screen name="Profile Picture" component={ChangeImage} options={{
                 headerTitleAlign: 'center',
                 headerTitleStyle: {
                     fontFamily: 'Montserrat_Bold',
