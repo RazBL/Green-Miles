@@ -7,7 +7,6 @@ import HotelsSearch from "../screens/HotelsSearch";
 import HotelsSearchResults from "../screens/HotelsSearchResults"
 import HotelDetails from '../screens/HotelDetails'; // וודא שאתה מייבא את מסך ה-HotelDetails
 import HotelCheckOut from '../screens/HotelCheckOut'
-import Home from '../screens/Home';
 // ...
 
 import HotelPreviewCard from './HotelPreviewCard';
@@ -40,9 +39,6 @@ export default function HotelNavigation() {
             />
             <Stack.Screen name="HotelCheckOut" component={HotelCheckOut} />
             <Stack.Screen name="HotelPreviewCard" component={HotelPreviewCard} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
-
-
-
         </Stack.Navigator>
 
 

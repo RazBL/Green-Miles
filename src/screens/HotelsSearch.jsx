@@ -173,7 +173,6 @@ export default function HotelSearch({route,  navigation }) {
               {showDatePicker.checkIn && (
                 <DateTimePicker
                   mode="date"
-                  display="spinner"
                   value={checkInDate}
                   onChange={(event, selectedDate) => DateChange(event, selectedDate)}
                   onConfirm={handleConfirm}
@@ -210,7 +209,6 @@ export default function HotelSearch({route,  navigation }) {
               {showDatePicker.checkOut && (
                 <DateTimePicker
                   mode="date"
-                  display="spinner"
                   value={checkOutDate}
                   onChange={(event, selectedDate) => DateChange(event, selectedDate)}
                   onConfirm={handleConfirm}

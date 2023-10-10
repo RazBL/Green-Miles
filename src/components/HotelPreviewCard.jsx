@@ -39,8 +39,7 @@ export default function HotelPreviewCard({ hotel, navigation }) {
       <View style={styles(theme).imageContainer}>
         <Card.Cover
           source={{
-            uri:
-              'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg',
+            uri: hotel.image,
           }}
         />
         <View style={styles(theme).ecoRating}>

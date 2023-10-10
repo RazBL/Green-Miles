@@ -25,6 +25,10 @@ const HotelDetails = ({ route }) => {
 
 
   const [saved, SetSaved] = useState(false);
+  const fromDate = new Date(hotel.rooms.availability.from);
+  const toDate = new Date(hotel.rooms.availability.to);
+  const timeDiff = Math.abs(toDate.getTime() - fromDate.getTime());
+  const totalNights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
   //Start state of the heart icon.
   const isHotelSaved = (currentUser, hotelId) => {
@@ -72,8 +76,7 @@ const HotelDetails = ({ route }) => {
       <View style={styles(theme).imageContainer}>
         <Image
           source={{
-            uri:
-              'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg',
+            uri: hotel.image,
           }}
           resizeMode="contain"
           style={styles(theme).image}
@@ -133,8 +136,17 @@ const HotelDetails = ({ route }) => {
           <Text style={styles(theme).infoTitle}>Description</Text>
           <Text style={styles(theme).info}>{hotel.description}</Text>
 
-          <Text style={styles(theme).price}>Price per night</Text>
-          <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${hotel.price_per_night}</Text>
+       {/*  <Text style={styles(theme).infoTitle}>From{hotel.rooms.availability.from} To {hotel.rooms.availability.to} </Text> */}
+
+          <Text style={styles(theme).infoTitle}>
+            From {fromDate.toISOString().split('T')[0]} To {toDate.toISOString().split('T')[0]}
+          </Text>
+        {/* <Text style={styles(theme).infoTitle}> Total Price: {totalNights*hotel.price_per_night}</Text>*/}
+
+        <Text style={styles(theme).infoTitle}>Price per night <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${hotel.price_per_night}</Text></Text>
+
+
+      {/*   <Text style={styles(theme).infoTitle}> Total Nights: {totalNights}</Text>*/}
         </View>
       </View>
       <Button
@@ -207,7 +219,7 @@ const styles = (theme) =>
     infoTitle: {
       fontSize: 15,
       fontFamily: 'Montserrat_Bold',
-      marginBottom: 10,
+      marginBottom: 5,
       textAlign: 'left',
     },
     info: {
@@ -219,7 +231,7 @@ const styles = (theme) =>
     price: {
       fontSize: 15,
       fontFamily: 'Montserrat_Bold',
-      marginBottom: 10,
+      marginBottom: 5,
       textAlign: 'left',
       color: '#02304B',
     },

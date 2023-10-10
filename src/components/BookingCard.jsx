@@ -1,17 +1,21 @@
 import { Text, StyleSheet } from 'react-native'
 import { Card, useTheme } from 'react-native-paper'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
+import { HotelsContext } from '../context/HotelsContext';
+import { UsersContext } from '../context/UsersContext'; 
 
 export default function BookingCard({ item }) {
     const theme = useTheme();
+    const navigation = useNavigation();
+
     return (
         <Card style={styles(theme).cardContainer}>
-            <Card.Cover style={{ borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0,}}
-                source={{
-                    uri:
-                        'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg',
-                }}
+           <Card.Cover
+                 style={styles(theme).imgContainer}
+                  source={item.passangers ? require('../images/flight2.jpg') : { uri: item.image }}
             />
+
             <Card.Content style={{ margin: 10 }}>
                 <Text style={styles(theme).headline}>Order Number: <Text style={styles(theme).boldText}>{item._id}</Text></Text>
                 <Text style={styles(theme).text}>Status: <Text style={styles(theme).boldText}>{item.bookingStatus}</Text></Text>
