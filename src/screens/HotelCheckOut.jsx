@@ -19,7 +19,10 @@ const HotelCheckOut = ({ route, navigation }) => {
   const { hotel } = route.params;
   const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
   const { HotelBooking } = useContext(HotelsContext);
-
+  const fromDate = new Date(hotel.rooms.availability.from);
+  const toDate = new Date(hotel.rooms.availability.to);
+  const timeDiff = Math.abs(toDate.getTime() - fromDate.getTime());
+  const totalNights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
   const [email, SetEmail] = useState(currentUser.email);
   const [country, SetCountry] = useState("Israel");
   const [city, SetCity] = useState("");
@@ -52,9 +55,9 @@ const HotelCheckOut = ({ route, navigation }) => {
         let localTime = `${hours}:${minutes}`;
         let localDate = `${year}-${month}-${day}`;
 
-
+        totalPrice = totalNights*hotel.price_per_night;
         console.log("before ordering the hotel")
-        HotelBooking(currentUser, localTime, localDate, hotel);
+        HotelBooking(totalPrice ,currentUser, localTime, localDate, hotel);
         navigation.navigate("BookedMessageHotel");
 
         console.log("After HotelBooking");
@@ -132,7 +135,7 @@ useEffect(() => {
 
         <View style={styles(theme).container}>
             <Card style={{ backgroundColor: 'white' }}>
-                <Card.Cover style={styles(theme).imgContainer} source={require("../images/hotels2.jpg")} />
+            <Card.Cover style={styles(theme).imgContainer} source={{ uri: hotel.image }} />
 
                 <Headline style={[styles(theme).cardTitle, { marginTop: 5 }]}>Hotel <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{hotel.name}</Headline></Headline>
               {/* <Headline style={styles(theme).cardTitle}> Hotel Number <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{hotel.name}</Headline></Headline> */}
@@ -144,6 +147,9 @@ useEffect(() => {
                         <Text style={[styles(theme).montserratBold, styles(theme).text]}>Checkin: {hotel.rooms.availability.from} </Text>
                         <Text style={[styles(theme).montserratBold, styles(theme).text]}>CheckOut: {hotel.rooms.availability.to} </Text>
                         <Text style={styles(theme).text}> Price :  <Text style={styles(theme).montserratBold}>{hotel.price_per_night} $ </Text></Text>
+                        <Text style={styles(theme).text}> Total Nights: {totalNights}</Text>
+                        <Text style={styles(theme).text}> Total Price: {totalNights*hotel.price_per_night}</Text>
+
                     </View>
                 </Card.Content>
             </Card>

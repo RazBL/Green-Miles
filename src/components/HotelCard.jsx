@@ -9,7 +9,7 @@ import TabOffsetContext from '../context/TabOffsetContext';
 const HotelCard = ({ hotel, navigation }) => {
   const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
   const { HotelRatingText } = useContext(HotelsContext);
-  const [hotelRating, SetHotelRating] = useState("")
+  const [hotelRating, SetHotelRating] = useState("");
   const [saved, SetSaved] = useState(false);
 
   const moveToTab = useContext(TabOffsetContext);
@@ -19,15 +19,15 @@ const HotelCard = ({ hotel, navigation }) => {
       moveToTab(2);
   };
 
-  //Start state of the heart icon.
+  // Start state of the heart icon.
   const isHotelSaved = () => {
     let foundHotel = CheckIfHotelSaved(hotel._id);
     console.log('found hotel', foundHotel);
     if (foundHotel) {
       SetSaved(true);
-    }
-    else
+    } else {
       SetSaved(false);
+    }
   };
 
   const hotelSaveHandler = () => {
@@ -37,15 +37,15 @@ const HotelCard = ({ hotel, navigation }) => {
       return;
     }
 
-    let isSaved = currentUser.savedHotels.find(item => item == hotel._id)
+    let isSaved = currentUser.savedHotels.find(item => item == hotel._id);
 
     if (!isSaved) {
       SaveHotel(hotel, navigation);
-      SetSaved(true); // שנה את הערך ל־true כאשר משתמש לוחץ לשמור את המלון
+      SetSaved(true); // Change the value to true when the user clicks to save the hotel
       console.log("hotel was saved");
     } else {
       RemoveSavedHotel(hotel);
-      SetSaved(false); // שנה את הערך ל־false כאשר משתמש לוחץ להסיר את המלון
+      SetSaved(false); // Change the value to false when the user clicks to remove the hotel
     }
   };
 
@@ -54,14 +54,13 @@ const HotelCard = ({ hotel, navigation }) => {
     isHotelSaved();
   }, [currentUser]);
 
-
   return (
     <View style={styles.card}>
       <View>
-        <Card.Cover style={{ borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, height: 158 }}
+        <Card.Cover
+          style={{ borderRadius: 10, borderBottomLeftRadius: 0, borderBottomRightRadius: 0, height: 158 }}
           source={{
-            uri:
-              'https://c4.wallpaperflare.com/wallpaper/624/380/1000/life-resort-hotel-resort-hotel-wallpaper-preview.jpg',
+            uri: hotel.image,
           }}
         />
         <Text style={styles.ecoRating}>
@@ -104,7 +103,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Montserrat_Bold',
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: '#A2A2A2'
+    borderColor: '#A2A2A2',
   },
   title: {
     fontSize: 20,
@@ -140,8 +139,8 @@ const styles = StyleSheet.create({
   },
   favoriteIconContainer: {
     position: 'absolute',
-    top: 0, // אנחנו מציינים שהאייקון יהיה באותו גובה כמו הכפתור
-    right: 10, // מיקום אופקי בצד הימני
+    top: 0, // We specify that the icon will be at the same height as the button
+    right: 10, // Horizontal position on the right side
   },
 });
 
