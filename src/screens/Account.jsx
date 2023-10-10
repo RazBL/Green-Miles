@@ -5,12 +5,15 @@ import { Button, Headline, useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { FlightsContext } from '../context/FlightsContext'
+import { HotelsContext } from '../context/HotelsContext';
 
 export default function Account() {
 
   const theme = useTheme();
   const { currentUser, RemoveToken } = useContext(UsersContext);
-  const {flightOrders, GetAllFlightOrders} = useContext(FlightsContext)
+  const {flightOrders, GetAllFlightOrders} = useContext(FlightsContext);
+  const {hotelBookings, GetAllHotelBookings} = useContext(HotelsContext)
+
   const navigation = useNavigation();
   const navigateToSupport = () => {
     navigation.navigate('Support');
@@ -46,9 +49,10 @@ export default function Account() {
   }
 
   useEffect(() => {
-  }, [flightOrders, currentUser])
+  }, [flightOrders, currentUser, hotelBookings])
 
   useEffect(() => {
+    GetAllHotelBookings();
     GetAllFlightOrders();
   }, [])
   

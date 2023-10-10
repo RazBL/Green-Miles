@@ -121,7 +121,8 @@ const HotelBooking = async (currentUser, currentTime, currentDate, HotelToBook) 
           body: JSON.stringify({
               userId: currentUser._id,
               hotelId: HotelToBook._id,
-              totalPrice: HotelToBook.total_price,
+              hotelImage: HotelToBook.image,
+              price: HotelToBook.total_price,
               date: currentDate,
               time: currentTime,
               nightsStay: 3

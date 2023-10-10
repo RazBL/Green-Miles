@@ -1,14 +1,11 @@
 import { Text, StyleSheet } from 'react-native'
 import { Card, useTheme } from 'react-native-paper'
 import React from 'react'
-import { useNavigation } from '@react-navigation/native';
-import { HotelsContext } from '../context/HotelsContext';
-import { UsersContext } from '../context/UsersContext'; 
+
 
 export default function BookingCard({ item }) {
     const theme = useTheme();
-    const navigation = useNavigation();
-
+    console.log(item.image);
     return (
         <Card style={styles(theme).cardContainer}>
            <Card.Cover
