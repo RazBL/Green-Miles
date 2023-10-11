@@ -21,6 +21,7 @@ import OnBoarding from './src/screens/OnBoarding';
 import FlightCheckout from './src/screens/FlightCheckout';
 import BookedMessage from './src/screens/BookedMessage';
 import BookedMessageHotel from './src/screens/BookedMessageHotel';
+import HotelCheckOut from './src/screens/HotelCheckOut';
 
 
 
@@ -68,6 +69,15 @@ export default function App() {
                   <Stack.Screen name="Flight Checkout" component={FlightCheckout} options={{headerTitleAlign: 'center'}}/>
                   <Stack.Screen name="BookedMessageHotel" component={BookedMessageHotel} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
                   <Stack.Screen name="BookedMessage" component={BookedMessage} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
+                  <Stack.Screen name="Hotel Checkout" component={HotelCheckOut}
+                  options={{
+                      headerTitleAlign: 'center',
+                      headerTitleStyle: {
+                        fontFamily: 'Montserrat_Bold',
+                        fontSize: 20,
+                        elevation: 0
+                    },
+                }} />
                 </Stack.Navigator>
             </NavigationContainer>
             </SafeAreaProvider>            
