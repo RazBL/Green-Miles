@@ -1,8 +1,12 @@
-import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
-import { Text, TextInput, Button, Headline } from 'react-native-paper';
+import React, { useContext } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
+import { UsersContext } from '../context/UsersContext';
 
 export default function Support() {
+
+  const {currentUser} = useContext(UsersContext)
+
   return (
       <View style={styles.container}>
       <View style={styles.informationBox}>
@@ -11,11 +15,13 @@ export default function Support() {
             label="First Name"
             mode="outlined"
             style={styles.nameInput}
+            value={currentUser.firstName}
           />
           <TextInput
             label="Last Name"
             mode="outlined"
             style={styles.nameInput}
+            value={currentUser.lastName}
           />
         </View>
         <TextInput
@@ -23,6 +29,7 @@ export default function Support() {
           mode="outlined"
           keyboardType="email-address"
           style={styles.textInput}
+          value={currentUser.email}
         />
 
         <TextInput

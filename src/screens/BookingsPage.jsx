@@ -32,7 +32,7 @@ export default function BookingsPage() {
         <View style={styles.container}>
             {
                 isEmpty ? 
-                (<Headline>No bookings were made..</Headline>) :
+                (<Headline style={{alignSelf: 'center'}}>No booking were made..</Headline>) :
                 (
                     <FlatList
                         data={displayedBookings}

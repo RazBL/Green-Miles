@@ -62,6 +62,10 @@ export default function RegisterStepOne({ navigation }) {
       alert("Ensure your password has one capital letter and one unique symbol");
       isValid = false;
     }
+    else if(password.length < 7){
+      alert("Password length has to contain 7 letters or more.");
+      isValid = false;
+    }
     return isValid;
   }
 

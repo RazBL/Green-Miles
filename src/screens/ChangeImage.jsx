@@ -16,9 +16,10 @@ export default function ChangeImage() {
                 alert('Sorry, we need media library permissions to make this work!');
             }
         })();
-        if(currentUser)
+        if(currentUser.image)
             SetSelectedImage(currentUser.image)
     }, [currentUser]);
+
 
     const handleImagePick = async () => {
         let pickerResult = await ImagePicker.launchImageLibraryAsync({
@@ -60,7 +61,7 @@ export default function ChangeImage() {
     return (
         <View style={styles(theme).container}>
             <TouchableOpacity style={styles(theme).imageContainer} onPress={handleImagePick}>
-                    <Image source={{ uri: selectedImage }} style={styles(theme).profileImage} />
+                    <Image source={{uri: selectedImage}} style={styles(theme).profileImage} />
                     <Text style={styles(theme).imagePlaceholderText}>Tap to select an image...</Text>
             </TouchableOpacity>
         </View>

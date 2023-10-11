@@ -65,7 +65,7 @@ export default function Account() {
           <View style={styles(theme).imageContainer}>
             {
               currentUser ? (<Image
-                source={currentUser ? { uri: currentUser.image } :
+                source={currentUser.image ? { uri: currentUser.image } :
                 require('../images/Account.png')}
                 resizeMode="contain"
                 style={{ height: '100%', width: '100%', borderRadius: 30 }}
