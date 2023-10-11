@@ -16,12 +16,10 @@ export default function FlightNavigation() {
                 component={FlightSearchResults}
                 options={{
                     headerTitleAlign: 'center',
-                    headerStyle: {
-                        shadowColor: '#000',
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: 0.1,
-                        shadowRadius: 2,
-                        elevation: 5,
+                    headerTitleStyle: {
+                        fontFamily: 'Montserrat_Bold',
+                        fontSize: 20,
+                        elevation: 0
                     },
                 }}
             />
