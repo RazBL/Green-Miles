@@ -1,23 +1,22 @@
-import React, { useContext,useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { Card, Text, Button, useTheme, Headline } from 'react-native-paper';
+import { Text, Button, useTheme, Headline } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-import { UsersContext } from '../context/UsersContext'; 
-import { HotelsContext } from '../context/HotelsContext';
+import { UsersContext } from '../context/UsersContext';
 
 
 
 const HotelDetails = ({ route }) => {
-  const { SaveHotel, RemoveSavedHotel, currentUser } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
+  const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
   const { hotel } = route.params;
   const navigation = useNavigation();
   const theme = useTheme();
 
   const handleBookNow = () => {
-    if(currentUser)
-      navigation.navigate('HotelCheckOut', { hotel });
-    else{
+    if (currentUser)
+      navigation.navigate('Hotel Checkout', { hotel });
+    else {
       alert('You must login in order to book');
       navigation.navigate('Login');
     }
@@ -31,22 +30,18 @@ const HotelDetails = ({ route }) => {
   const totalNights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
   //Start state of the heart icon.
-  const isHotelSaved = (currentUser, hotelId) => {
-    if (!currentUser || !currentUser.savedHotels) {
-      return false;
-    }
-    let savedHotels = currentUser.savedHotels;
-    let hotelFound = savedHotels.find(id => hotelId === id);
-    if (hotelFound) {
+  const isHotelSaved = () => {
+    let foundHotel = CheckIfHotelSaved(hotel._id);
+    if (foundHotel) {
       SetSaved(true);
-    }
-    else
+    } else {
       SetSaved(false);
+    }
   };
 
   const hotelSaveHandler = () => {
 
-    if (!currentUser){
+    if (!currentUser) {
       alert("You must login in order to save");
       return;
     }
@@ -66,9 +61,7 @@ const HotelDetails = ({ route }) => {
 
 
   useEffect(() => {
-    console.log(hotel);
-   isHotelSaved()
-
+    isHotelSaved();
   }, [currentUser])
 
   return (
@@ -84,7 +77,7 @@ const HotelDetails = ({ route }) => {
 
         <TouchableOpacity style={styles(theme).heartContainer} onPress={() => setSaved(!saved)}>
           <MaterialCommunityIcons
-             onPress={hotelSaveHandler}
+            onPress={hotelSaveHandler}
             name={saved ? 'heart' : 'heart-outline'}
             color={saved ? '#1CD995' : 'white'}
             size={30}
@@ -93,40 +86,25 @@ const HotelDetails = ({ route }) => {
 
         <View style={styles(theme).hotelTitleBox}>
           <Headline style={styles(theme).hotelTitle}>{hotel.name} - {hotel.city}</Headline>
+
+          {/*icon for rating ! */}
           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Text style={styles(theme).hotelMiniTitle}>
-              <Text style={[styles(theme).hotelMiniTitle, { color: theme.colors.primary }]}>Eco</Text> rating {hotel.eco_rating}/5</Text>
-            <MaterialCommunityIcons
-              name={'leaf'}
-              color={theme.colors.primary}
-              size={17}
-              style={{ marginLeft: 5, transform: [{ rotate: '-17deg' }] }}
-            />
+              <Text style={[styles(theme).hotelMiniTitle, { color: theme.colors.primary }]}>Eco</Text> rating {hotel.eco_rating}/5
+            </Text>
+            <View style={{marginLeft: 7, flexDirection: 'row'}}>
+            {Array.from({ length: 5 }).map((_, index) => (
               <MaterialCommunityIcons
+                key={index}
                 name={'leaf'}
-                color={theme.colors.primary}
+                color={index < Math.floor(hotel.eco_rating) ? theme.colors.primary : (index === Math.floor(hotel.eco_rating) && hotel.eco_rating % 1 >= 0.5) ? theme.colors.primary : 'white'}
                 size={17}
-                style={{ transform: [{ rotate: '-17deg' }] }}
+                style={{ transform: [{ rotate: '-17deg' }]}}
               />
-            <MaterialCommunityIcons
-              name={'leaf'}
-              color={theme.colors.primary}
-              size={17}
-              style={{ transform: [{ rotate: '-17deg' }] }}
-            />
-            <MaterialCommunityIcons
-              name={'leaf'}
-              color={theme.colors.primary}
-              size={17}
-              style={{ transform: [{ rotate: '-17deg' }] }}
-            />
-            <MaterialCommunityIcons
-              name={'leaf'}
-              color={theme.colors.primary}
-              size={17}
-              style={{ transform: [{ rotate: '-17deg' }] }}
-            />
+            ))}
+            </View>
           </View>
+
         </View>
 
         <View style={styles(theme).infoContainer}>
@@ -136,17 +114,17 @@ const HotelDetails = ({ route }) => {
           <Text style={styles(theme).infoTitle}>Description</Text>
           <Text style={styles(theme).info}>{hotel.description}</Text>
 
-       {/*  <Text style={styles(theme).infoTitle}>From{hotel.rooms.availability.from} To {hotel.rooms.availability.to} </Text> */}
+          {/*  <Text style={styles(theme).infoTitle}>From{hotel.rooms.availability.from} To {hotel.rooms.availability.to} </Text> */}
 
           <Text style={styles(theme).infoTitle}>
             From {fromDate.toISOString().split('T')[0]} To {toDate.toISOString().split('T')[0]}
           </Text>
-        {/* <Text style={styles(theme).infoTitle}> Total Price: {totalNights*hotel.price_per_night}</Text>*/}
+          {/* <Text style={styles(theme).infoTitle}> Total Price: {totalNights*hotel.price_per_night}</Text>*/}
 
-        <Text style={styles(theme).infoTitle}>Price per night <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${hotel.price_per_night}</Text></Text>
+          <Text style={styles(theme).infoTitle}>Price per night <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${hotel.price_per_night}</Text></Text>
 
 
-      {/*   <Text style={styles(theme).infoTitle}> Total Nights: {totalNights}</Text>*/}
+          {/*   <Text style={styles(theme).infoTitle}> Total Nights: {totalNights}</Text>*/}
         </View>
       </View>
       <Button
@@ -193,7 +171,7 @@ const styles = (theme) =>
       fontSize: 20,
       fontFamily: 'Montserrat_Bold',
       color: 'white',
-      lineHeight: 26,  
+      lineHeight: 26,
     },
 
 

@@ -19,10 +19,7 @@ export default function BookedMessage({ navigation }) {
 
     }
 
-    alert('THIS IS FLIGHT CHECKOUT MESSAGE!')
     useEffect(() => {
-        alert('THIS IS FLIGHT CHECKOUT MESSAGE!')
-
     }, [flightOrders])
 
 

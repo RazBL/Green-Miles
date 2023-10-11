@@ -139,15 +139,13 @@ const HotelCheckOut = ({ route, navigation }) => {
                         {/* <Headline style={styles(theme).cardTitle}> Hotel Number <Headline style={[styles(theme).cardTitle, styles(theme).montserratBold]} >{hotel.name}</Headline></Headline> */}
 
                         <Card.Content style={styles(theme).cardContentInfo}>
-
                             <View >
                                 <Text style={styles(theme).text}>Location <Text style={styles(theme).montserratBold}>{hotel.city}</Text></Text>
-                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>Checkin: {hotel.rooms.availability.from} </Text>
-                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>CheckOut: {hotel.rooms.availability.to} </Text>
+                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>Checkin: {hotel.rooms.availability.from.substring(0, 10)} </Text>
+                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>CheckOut: {hotel.rooms.availability.to.substring(0, 10)} </Text>
                                 <Text style={styles(theme).text}> Price :  <Text style={styles(theme).montserratBold}>{hotel.price_per_night} $ </Text></Text>
                                 <Text style={styles(theme).text}> Total Nights: {totalNights}</Text>
                                 <Text style={styles(theme).text}> Total Price: {totalNights * hotel.price_per_night}</Text>
-
                             </View>
                         </Card.Content>
                     </Card>
