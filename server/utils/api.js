@@ -1,0 +1,1 @@
+export const base_api = 'https://greenmiles.onrender.com/api'

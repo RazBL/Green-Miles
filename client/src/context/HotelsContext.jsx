@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
-import { base_api } from '../../utils/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { base_api } from '../../utilis/api'
 
 export const HotelsContext = createContext();
 

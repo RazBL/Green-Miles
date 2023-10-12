@@ -5,10 +5,10 @@ import { UsersContext } from '../context/UsersContext';
 
 export default function Support() {
 
-  const {currentUser} = useContext(UsersContext)
+  const { currentUser } = useContext(UsersContext)
 
   return (
-      <View style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.informationBox}>
         <View style={styles.nameContainer}>
           <TextInput
@@ -31,7 +31,11 @@ export default function Support() {
           style={styles.textInput}
           value={currentUser.email}
         />
-
+        <TextInput
+          label="Subject"
+          mode="outlined"
+          style={styles.textInput}
+        />
         <TextInput
           label="Additional Details"
           mode="outlined"
@@ -44,7 +48,7 @@ export default function Support() {
           mode="contained"
           style={styles.button}
           onPress={() => console.log('Submit Button pressed!')}
-          labelStyle={{fontFamily: 'Montserrat_Bold', fontSize: 15}}
+          labelStyle={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}
         >
           Submit
         </Button>
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   nameContainer: {
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 25,
   },

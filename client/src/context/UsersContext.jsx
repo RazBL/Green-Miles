@@ -1,6 +1,6 @@
-import React, { useEffect, useState, createContext, useContext } from 'react'
-import { base_api } from '../../utils/api';
+import React, { useEffect, useState, createContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { base_api } from '../../utilis/api'
 const cc = require('country-city');
 export const UsersContext = createContext();
 
