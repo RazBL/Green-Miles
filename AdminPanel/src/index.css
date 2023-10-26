@@ -1,0 +1,16 @@
+:root {
+  
+  --font-montserrat-bold: 'Montserrat_Bold', sans-serif;
+  --font-montserrat-medium: 'Montserrat_Medium', sans-serif;
+  --color-primary: #38DDA2;
+  --color-background: #1E272E;
+
+  font-family: var(--font-montserrat-bold);
+}
+
+body {
+  font-family: var(--font-montserrat-medium);
+  background-color: var(--color-background);
+  color: var(--color-primary);
+}
+
