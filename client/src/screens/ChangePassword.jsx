@@ -33,6 +33,14 @@ export default function ChangePassword({navigation}) {
       valid = false;
       alert("passwords are not the same.")
     }
+    else if (!(/^(?=.*[A-Z])(?=.*[!@#$%^&*]).+$/.test(password))) {
+      alert("Ensure your password has one capital letter and one unique symbol");
+      valid = false;
+    }
+    else if(password.length < 7){
+      alert("Password length has to contain 7 letters or more.");
+      valid = false;
+    }
 
     return valid;
   }

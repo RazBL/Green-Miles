@@ -39,6 +39,8 @@ const HotelDetails = ({ route }) => {
     }
   };
 
+
+  //Make sure to transfer the empty arrays of flights and hotels
   const hotelSaveHandler = () => {
 
     if (!currentUser) {
@@ -46,6 +48,8 @@ const HotelDetails = ({ route }) => {
       return;
     }
 
+    console.log(currentUser);
+    console.log(currentUser.savedHotels);
     let isSaved = currentUser.savedHotels.find(item => item == hotel._id)
 
     if (!isSaved) {
