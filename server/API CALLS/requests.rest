@@ -188,3 +188,14 @@ Content-Type: application/json
 {
   "image": "https://res.cloudinary.com/dh8cvol5m/image/upload/v1696630469/rigx788shazeefiwspvj.png"
 }
+
+
+###
+
+POST http://localhost:3500/api/admins/login
+Content-Type: application/json
+
+{
+  "email": "adminBasel@GMAdmin.com",
+  "password": "baselbasel"
+}
