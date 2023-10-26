@@ -12,7 +12,7 @@ const {
         password
       } = req.body;
       const loggedinAdmin = await AdminModel.Login(email, password);
-      console.log("This is the user doccument", loggedinAdmin);
+      console.log("This is the admin doccument", loggedinAdmin);
       if (loggedinAdmin) {
         let token = GenerateToken(loggedinAdmin);
         res.status(200).json({

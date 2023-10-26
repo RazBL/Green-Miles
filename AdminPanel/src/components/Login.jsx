@@ -1,23 +1,45 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { AdminContext } from '../contexts/AdminContext';
+import Admin from './admin';
+
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { Login } = useContext(AdminContext);
   const navigate = useNavigate();
 
-  const handleLogin = () => {
-    // בדיקה ישירה של יוזר וסיסמה
-    if (email === 'admin@gmail.com' && password === 'adminadmin') {
-      // כאן תבצע פעולות נוספות לאחר התחברות מוצלחת
-      console.log('התחברות מוצלחת!');
-    } else {
-      // התחברות נכשלה
-      console.log('התחברות נכשלה. אנא בדוק את המשתמש והסיסמה.');
+  const LoginHandler = async () => {
+
+    if (IsInputValid()) {
+      let lowerCaseEmail = email.toLowerCase();
+      let admin = await Login(lowerCaseEmail, password);
+
+      if (admin) {
+          navigate("/admin");
+      }
+      else {
+        alert("admin does not exists")
+      }
     }
-    navigate('/admin');
   };
+
+  const IsInputValid = () => {
+    let isValid = true;
+    if (!password) {
+      alert('Please fill the password in.');
+      isValid = false;
+    }
+    if (!email) {
+      alert('Please fill the email in');
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
 
   return (
     <div className="flex-container">
@@ -50,7 +72,7 @@ export default function Login() {
                   <Button
                     variant="primary"
                     type="button"
-                    onClick={handleLogin}
+                    onClick={LoginHandler}
                     style={{ backgroundColor: '#38DDA2', width: '100%', marginTop: 10 }}
                   >
                     Login
