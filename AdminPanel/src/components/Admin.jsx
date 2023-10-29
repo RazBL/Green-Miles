@@ -13,10 +13,17 @@ const categories = [
 export default function Admin() {
   return (
     <Container fluid className="admin-container">
+      <Col md={2} className="sidebar">
+      <img src="Logo.png" alt="Logo" width={'50%'} />
+      <Nav className="flex-column">
+       </Nav>
+      </Col>
+
+
       <Row>
         <Col md={2} className="sidebar">
           <Nav className="flex-column">
-            <h5>GreenMilles</h5>
+            <h5></h5>
             {categories.map((category, index) => (
               <div key={index}>
                 <Nav.Item>
