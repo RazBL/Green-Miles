@@ -30,8 +30,10 @@ export default function AdminContextProvider({ children }) {
     
             if (data) {
                 const { admin: loggedinAdmin, token } = data;
-                localStorage.setItem('adminToken', token); 
+                localStorage.setItem('adminToken', token);
                 SetCurrentAdmin(loggedinAdmin);
+                console.log(currentAdmin);
+                console.log("this is logged in admin", loggedinAdmin);
                 return loggedinAdmin;
             }
         } catch (err) {

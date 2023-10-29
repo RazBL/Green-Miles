@@ -30,6 +30,29 @@ class AdminModel {
             return null;
         return admin;
     }
+
+    static async DeleteUser(userId){
+        let query ={
+            _id: new ObjectId(userId)
+        }
+
+        await new DB().DeleteOne('users', query)
+    }
+
+    static async UpdateUserDetails(currentUserId, editedUser) {
+
+        let query = {
+            "_id": new ObjectId(currentUserId)
+        }
+    
+        let update = {
+            $set: {
+                ...editedUser
+            }
+        }
+
+        await new DB().UpdateOne("users", query, update);
+    }
 }
 
 module.exports = AdminModel;

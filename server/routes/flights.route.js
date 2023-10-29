@@ -82,7 +82,7 @@ FlightRoute.get('/search', async (req, res) => {
 
 //DELETE == DELETE
 
-FlightRoute.delete('/:id', async (req, res) => {
+FlightRoute.delete('/delete/:id', async (req, res) => {
     try{
         let flightId = req.params.id;
         await FlightModel.DeleteFlight(flightId);

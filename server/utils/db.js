@@ -32,14 +32,11 @@ class DB {
 
 
 
-    async DeleteDocument(collection, id) {
+    async DeleteOne(collection, query) {
         try {
             await this.client.connect();
-            let objectId = new ObjectId(id);
             let result = await this.client
-            await this.client.db(this.db_name).collection(collection).deleteOne({
-                _id: objectId
-            });
+            await this.client.db(this.db_name).collection(collection).deleteOne(query);
             if (result.deletedCount === 1) {
                 console.log('Document deleted successfully.');
             } else {

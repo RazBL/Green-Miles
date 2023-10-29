@@ -47,7 +47,10 @@ class UsersModel {
     }
 
     static async DeleteUser(userId) {
-        await new DB().DeleteDocument('users', userId);
+        let query ={
+            _id: new ObjectId(userId)
+        }
+        await new DB().DeleteOne('users', query);
     }
 
     static async Register(user) {

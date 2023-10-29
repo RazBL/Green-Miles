@@ -199,3 +199,24 @@ Content-Type: application/json
   "email": "adminbasel@gmadmin.com",
   "password": "baselbasel"
 }
+
+###
+
+DELETE http://localhost:3500/api/admins/delete/64cbe244d364c86966203540
+
+###
+
+PUT http://localhost:3500/api/admins/edit-profile/65284108d49273d84b19ae26
+Content-Type: application/json
+
+{
+  "editedUser": {
+            "firstName": "newer",
+            "lastName": "Raz",
+            "email": "newer@gmail.com",
+            "phoneNumber": "0545848592",
+            "country": "israel",
+            "city": "holon",
+            "address": "somewhere in holon"
+  }
+}

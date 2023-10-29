@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const DB = require('../utils/db');
 
 class HotelModel {
@@ -33,8 +34,12 @@ class HotelModel {
   static async GetAllHotels() {
     return await new DB().FindAll('Hotels');
   }
+
   static async DeleteHotel(hotelId) {
-    await new DB().DeleteDocument('Hotels', hotelId);
+    let query ={
+      _id: new ObjectId(hotelId)
+    }
+    await new DB().DeleteOne('Hotels', query);
   }
 
   static async SearchHotel(query) {

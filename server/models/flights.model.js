@@ -1,3 +1,4 @@
+const { ObjectId } = require('mongodb');
 const DB = require('../utils/db');
 
 class FlightModel {
@@ -39,7 +40,10 @@ class FlightModel {
     }
 
     static async DeleteFlight(flightId) {
-        await new DB().DeleteDocument('Flights', flightId);
+        let query ={
+            _id: new ObjectId(flightId)
+        }
+        await new DB().DeleteOne('Flights', query);
     }
 
     static async UpdateFlightSeats(passengers, flightId){
