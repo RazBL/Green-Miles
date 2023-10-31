@@ -15,8 +15,11 @@ export default function ChangePassword({navigation}) {
       const changed = await ChangeUserPassword(currentPassword, newPassword);
       
       if (changed){
-        alert("The Passwords is changed!");
+        alert("The Passwords has been changed!");
         navigation.navigate("Account");
+      }
+      else{
+        alert("Current password is incorrect")
       }
     }
   };
@@ -24,6 +27,7 @@ export default function ChangePassword({navigation}) {
 
   const InputHandler = () => {
     let valid = true;
+
 
     if (currentPassword == "" || newPassword == "" || confirmPassword == "") {
       valid = false;
@@ -33,11 +37,11 @@ export default function ChangePassword({navigation}) {
       valid = false;
       alert("passwords are not the same.")
     }
-    else if (!(/^(?=.*[A-Z])(?=.*[!@#$%^&*]).+$/.test(password))) {
+    else if (!(/^(?=.*[A-Z])(?=.*[!@#$%^&*]).+$/.test(newPassword))) {
       alert("Ensure your password has one capital letter and one unique symbol");
       valid = false;
     }
-    else if(password.length < 7){
+    else if(newPassword.length < 7){
       alert("Password length has to contain 7 letters or more.");
       valid = false;
     }

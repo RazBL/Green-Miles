@@ -23,9 +23,9 @@ export default function EditProfile({ navigation }) {
     const [lastName, SetLastName] = useState(currentUser.lastName);
     const [email, SetEmail] = useState(currentUser.email);
     const [phoneNumber, SetPhoneNumber] = useState(currentUser.phoneNumber);
-    const [country, SetCountry] = useState("");
-    const [city, SetCity] = useState("");
-    const [address, SetAddress] = useState("");
+    const [country, SetCountry] = useState(currentUser.country || "");
+    const [city, SetCity] = useState(currentUser.city || "");
+    const [address, SetAddress] = useState(currentUser.address || "");
 
 
     const TransformCountries = () => {
@@ -151,7 +151,7 @@ export default function EditProfile({ navigation }) {
                     onClose={() => SetCountryPicker(false)}
                     placeholder='Country'
                     items={transformedCountries}
-                    value={country}
+                    value={ country}
                     setValue={SetCountry}
                     searchable={true}
                     textStyle={{ fontSize: 15, color: "#2B3A4A", fontFamily: 'Montserrat_Medium' }}

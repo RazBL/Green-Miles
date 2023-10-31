@@ -77,17 +77,27 @@ class UsersModel {
         return await new DB().GenerateToken(user);
     }
 
-    static async SaveFlight(userEmail, flightId) {
+    static async SaveFlight(userEmail, flightId, passengers) {
         let query = {
             "email": userEmail
         };
+    
+        let flightObject = {
+            _id: flightId,
+            passengers: passengers
+        };
+    
+        console.log(flightObject);
+
         let update = {
             "$addToSet": {
-                "savedFlights": new ObjectId(flightId)
+                "savedFlights": flightObject
             }
         };
+    
         return await new DB().UpdateOne("users", query, update);
     }
+    
 
     static async SetUserImage(userId, image){
         let query = {

@@ -16,8 +16,8 @@ POST http://localhost:3500/api/users/login
 Content-Type: application/json
 
 {
-  "email": "raz@gmail.com",
-  "password": "razraz2"
+  "email": "shoshi@gmail.com",
+  "password": "Something!"
 }
 
 ###
@@ -74,6 +74,16 @@ Content-Type: application/json
   }
 }
 
+###
+
+PUT http://localhost:3500/api/users/save-flight
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTQxNzA4M2Y3ZmM3OWU5NTYzNDI2MGYiLCJlbWFpbCI6InNob3NoaUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRWTUMxMXJmdXBUMkplQ01iUDkucHplVWZtLktkSFJYZzdPVDBjQjdWRUFkdFRBUGlBZElIYSIsInNhdmVkRmxpZ2h0cyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiXSwic2F2ZWRIb3RlbHMiOltdLCJmaXJzdE5hbWUiOiJzaG9zaG8iLCJsYXN0TmFtZSI6InNoaXNoaSIsInBob25lTnVtYmVyIjoiMDUyNTg0MjQ4MyIsImltYWdlIjoiaHR0cHM6Ly9yZXMuY2xvdWRpbmFyeS5jb20vZGg4Y3ZvbDVtL2ltYWdlL3VwbG9hZC92MTY5ODc4OTYyNS9yMnk2bmQxbHhyeWJzeG92OWFpdS5qcGciLCJjb3VudHJ5IjoiSXNyYWVsIiwiY2l0eSI6IlRlbCBBdml2LVlhZm8iLCJhZGRyZXNzIjoic29tZXdoZXJlIGluIHRlbCBhdml2IiwiaWF0IjoxNjk4NzkxMTQyLCJleHAiOjE2OTg3OTQ3NDJ9.kSf_xzAf2Ii8fckdHfWvU4HIkFJ0YeTUe10OBuCArUo
+Content-Type: application/json
+
+{
+    "flightId": "645e91233fb2fbd063c199c0",
+    "passengers": 5
+}
 
 ###
 
@@ -220,3 +230,4 @@ Content-Type: application/json
             "address": "somewhere in holon"
   }
 }
+

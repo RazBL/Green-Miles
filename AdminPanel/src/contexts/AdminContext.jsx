@@ -21,7 +21,7 @@ export default function AdminContextProvider({ children }) {
     
             console.log(res);
     
-            const data = await res.json();  // <-- Extract data from response here
+            const data = await res.json(); 
     
             if (!res.ok) {
                 console.log(`Error is: ${data.error}`);

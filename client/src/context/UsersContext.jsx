@@ -131,13 +131,11 @@ export default function UsersContextProvider({ children }) {
                 }),
             });
 
-
             let data = await res.json();
 
             if (!res.ok) {
-                let errorData = await res.json();
-                console.log(`Error is: ${errorData.error}`);
-                return null;
+                console.log(`Error is: ${data.error}`);
+                return false;
             }
 
             console.log("Password change worked");
@@ -185,33 +183,17 @@ export default function UsersContextProvider({ children }) {
         }
     }
 
-    async function GetUserByEmail(email) {
-        try {
-            // כאן יש להשתמש בלוגיקת מסד נתונים שלך לחיפוש אחר המשתמש לפי האימייל
-            const user = await UserModel.findOne({ email });
 
-            return user; // יחזיר את המשתמש או null אם לא נמצא
-        } catch (error) {
-            console.error("Error finding user by email:", error);
-            throw error;
-        }
-    }
-
-    // פונקציה לבדיקת תוקפנות הסיסמה
-    const ValidatePassword = async (inputPassword, hashedPassword) => {
-        return await bcrypt.compare(inputPassword, hashedPassword);
-    };
-
-
-
-    const UpdateUserFlightsInState = (flightId, action) => {
+    const UpdateUserFlightsInState = (flightId, passengers, action) => {
         const updatedUsers = users.map(user => {
             if (user._id === currentUser._id) {
                 let updatedUser = { ...user };
                 if (action === 'save') {
-                    updatedUser.savedFlights.push(flightId);
+                    updatedUser.savedFlights.push({ flightId, passengers });
                 } else if (action === 'remove') {
-                    updatedUser.savedFlights = updatedUser.savedFlights.filter(id => id !== flightId);
+                    updatedUser.savedFlights = updatedUser.savedFlights.filter(flight => 
+                        flight.flightId !== flightId || flight.passengers !== passengers
+                    );
                 }
                 SetCurrentUser(updatedUser);
                 return updatedUser;
@@ -238,16 +220,17 @@ export default function UsersContextProvider({ children }) {
         SetUsers(updatedUsers);
     }
 
-    const SaveFlight = async (flight, navigation) => {
+    const SaveFlight = async (flight, passengers, navigation) => {
         try {
             const token = await GetTokenAndNavigate(navigation);
+            let flightId = flight._id
             let res = await fetch(`${base_api}/users/save-flight`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ flight }),
+                body: JSON.stringify({ flightId, passengers }),
             });
 
             if (!res.ok) {

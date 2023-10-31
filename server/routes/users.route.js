@@ -153,9 +153,14 @@ UsersRoute.get('/:id/saved-flights', async (req, res) => {
 UsersRoute.put('/save-flight', AuthUser, async (req, res) => {
   try {
     const userEmail = req.user.email;
-    const flightId = req.body.flight._id;
+    const passengers = req.body.passengers;
+    const flightId = req.body.flightId;
 
-    const updatedUser = await UsersModel.SaveFlight(userEmail, flightId);
+    console.log(passengers);
+
+    console.log(flightId);
+
+    const updatedUser = await UsersModel.SaveFlight(userEmail, flightId, passengers);
 
     res.status(200).json({
       success: true,
@@ -239,6 +244,8 @@ UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
     });
   }
 });
+
+
 
 UsersRoute.put('/unsave-flight', AuthUser, async (req, res) => {
   try {
