@@ -189,12 +189,13 @@ export default function UsersContextProvider({ children }) {
             if (user._id === currentUser._id) {
                 let updatedUser = { ...user };
                 if (action === 'save') {
-                    updatedUser.savedFlights.push({ flightId, passengers });
+                    updatedUser.savedFlights.push({ _id: flightId, passengers: passengers });
                 } else if (action === 'remove') {
-                    updatedUser.savedFlights = updatedUser.savedFlights.filter(flight => 
-                        flight.flightId !== flightId || flight.passengers !== passengers
+                    updatedUser.savedFlights = updatedUser.savedFlights.filter(flight =>
+                        flight._id !== flightId && flight.passengers !== passengers
                     );
                 }
+                console.log(updatedUser);
                 SetCurrentUser(updatedUser);
                 return updatedUser;
             }
@@ -240,22 +241,23 @@ export default function UsersContextProvider({ children }) {
             }
 
             console.log("Flight saved successfully!");
-            UpdateUserFlightsInState(flight._id, 'save');
+            UpdateUserFlightsInState(flight._id, passengers, 'save');
         } catch (error) {
             console.error(error);
         }
     }
 
-    const RemoveSavedFlight = async (flight, navigation) => {
+    const RemoveSavedFlight = async (flight, passengers, navigation) => {
         try {
             const token = await GetTokenAndNavigate(navigation);
+            let flightId = flight._id;
             let res = await fetch(`${base_api}/users/unsave-flight`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ flight }),
+                body: JSON.stringify({ flightId, passengers }),
             });
 
             if (!res.ok) {
@@ -265,7 +267,7 @@ export default function UsersContextProvider({ children }) {
             }
 
             console.log("Saved Flight was removed successfully!");
-            UpdateUserFlightsInState(flight._id, 'remove');
+            UpdateUserFlightsInState(flight._id, passengers, 'remove');
         } catch (error) {
             console.error(error);
         }

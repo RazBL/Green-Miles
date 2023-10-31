@@ -17,18 +17,17 @@ export default function FlightCard({ flight, navigation }) {
     const FlightSaveHandler = () => {
         if (!currentUser) {
             alert("You must login in order to save");
-            navigation.navigate('Login');
             return;
         }
 
-        let isSaved = currentUser.savedFlights.find(item => item == flight._id);
+        let isSaved = currentUser.savedFlights.find(item => item._id == flight._id && item.passengers == passengersContext);
 
         if (!isSaved) {
-            SaveFlight(flight, navigation);
+            SaveFlight(flight, passengersContext, navigation);
             SetSaved(true)
         }
         else {
-            RemoveSavedFlight(flight, navigation);
+            RemoveSavedFlight(flight, passengersContext, navigation);
             SetSaved(false);
         }
     }
@@ -50,7 +49,7 @@ export default function FlightCard({ flight, navigation }) {
 
     useEffect(() => {
         IsFlightSaved();
-    }, [currentUser]);
+    }, [currentUser, currentUser.savedFlights]);
 
 
     return (

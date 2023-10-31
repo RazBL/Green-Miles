@@ -174,7 +174,29 @@ UsersRoute.put('/save-flight', AuthUser, async (req, res) => {
       error: 'An error occurred while trying to save the flight'
     });
   }
-})
+});
+
+UsersRoute.put('/unsave-flight', AuthUser, async (req, res) => {
+  try {
+    const userEmail = req.user.email;
+    const passengers = req.body.passengers;
+    const flightId = req.body.flightId;
+
+    const updatedUser = await UsersModel.UnsaveFlight(userEmail, passengers, flightId);
+
+    res.status(200).json({
+      success: true,
+      message: 'saved Flight was removed successfully',
+      user: updatedUser
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: 'An error occurred while trying to unsave the flight'
+    });
+  }
+});
 
 UsersRoute.put('/change-password', AuthUser, async (req, res) => {
   try {
@@ -244,29 +266,6 @@ UsersRoute.put('/edit-profile', AuthUser, async (req, res) => {
     });
   }
 });
-
-
-
-UsersRoute.put('/unsave-flight', AuthUser, async (req, res) => {
-  try {
-    const userEmail = req.user.email;
-    const flightId = req.body.flight._id;
-
-    const updatedUser = await UsersModel.UnsaveFlight(userEmail, flightId);
-
-    res.status(200).json({
-      success: true,
-      message: 'saved Flight was removed successfully',
-      user: updatedUser
-    });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: 'An error occurred while trying to unsave the flight'
-    });
-  }
-})
 
 
 

@@ -87,8 +87,6 @@ class UsersModel {
             passengers: passengers
         };
     
-        console.log(flightObject);
-
         let update = {
             "$addToSet": {
                 "savedFlights": flightObject
@@ -119,13 +117,20 @@ class UsersModel {
         }, 'users');
     }
 
-    static async UnsaveFlight(userEmail, flightId) {
+    static async UnsaveFlight(userEmail, passengers, flightId) {
         let query = {
             "email": userEmail
         };
+
+        let flightObject = {
+            _id: flightId,
+            passengers: passengers
+        };
+    
+
         let update = {
             "$pull": {
-                "savedFlights": new ObjectId(flightId)
+                "savedFlights": flightObject
             }
         };
         return await new DB().UpdateOne("users", query, update);
