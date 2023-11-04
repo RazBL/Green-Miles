@@ -14,10 +14,12 @@ import { UsersContext } from '../context/UsersContext';
 
 //Componenets
 
-export default function FlightCheckout({ navigation }) {
+export default function FlightCheckout({ navigation, route }) {
 
+    const { passengers } = route.params;
+    
     const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
-    const { FlightBooking, passengersContext, FlightToBook } = useContext(FlightsContext);
+    const { FlightBooking, FlightToBook } = useContext(FlightsContext);
 
     const [email, SetEmail] = useState(currentUser.email);
     const [country, SetCountry] = useState("Israel");
@@ -48,7 +50,7 @@ export default function FlightCheckout({ navigation }) {
             let localTime = `${hours}:${minutes}`;
             let localDate = `${year}-${month}-${day}`;
 
-            FlightBooking(currentUser, localTime, localDate, FlightToBook);
+            FlightBooking(currentUser, localTime, localDate, FlightToBook, passengers);
 
             navigation.navigate("BookedMessage");
         }
@@ -131,7 +133,7 @@ export default function FlightCheckout({ navigation }) {
                                 <Text style={[styles(theme).montserratBold, styles(theme).text]}>Departure</Text>
                                 <Text style={styles(theme).text}>{FlightToBook.departure.date}</Text>
                                 <Text style={styles(theme).text}>{FlightToBook.departure.time}</Text>
-                                <Text style={styles(theme).text}>Passengers <Text style={styles(theme).montserratBold}>{passengersContext}</Text></Text>
+                                <Text style={styles(theme).text}>Passengers <Text style={styles(theme).montserratBold}>{passengers}</Text></Text>
                             </View>
 
                             <View>

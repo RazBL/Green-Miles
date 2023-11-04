@@ -9,7 +9,9 @@ LogBox.ignoreLogs(['ViewPropTypes']);
 //Component
 import FlightCard from '../components/FlightCard';
 
-export default function FlightSearchResults({ navigation, passengers }) {
+export default function FlightSearchResults({ navigation, route  }) {
+
+  const { passengers } = route.params;
 
   const { searchedFlights } = useContext(FlightsContext);
 
@@ -174,7 +176,7 @@ export default function FlightSearchResults({ navigation, passengers }) {
           <FlatList
             data={displayedFlights}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <FlightCard flight={item} navigation={navigation}  />}
+            renderItem={({ item }) => <FlightCard flight={item} navigation={navigation} passengers={passengers} />}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 65}}
           />
