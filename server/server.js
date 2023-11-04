@@ -22,7 +22,6 @@ app.use('/api/admins', require('./routes/admins.route'));
 
 app.use(express.static(path.join(__dirname, '../adminpanel/dist')));
 
-// All other GET requests not handled before will return the React app
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../adminpanel/dist/index.html'));
 });
