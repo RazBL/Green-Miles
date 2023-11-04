@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build-admin": "cd ../AdminPanel && npm install && npm run dev"
+    "build-admin": "cd ../AdminPanel && npm install && npm run build",
+    "dev-admin": "cd ../AdminPanel && pnpm run dev"
     },
   "keywords": ["server", "node", "express", "mongodb"],
   "author": "",
