@@ -5,8 +5,7 @@ const cors = require('cors');
 require('dotenv').config();
 app.use(express.json());
 
-const port = 3500;
-
+const port = process.env.PORT || 3500;
 
 app.use(cors());
 
@@ -20,11 +19,12 @@ app.use('/api/image/upload', require('./routes/image.route'));
 
 app.use('/api/admins', require('./routes/admins.route'));
 
-app.use(express.static(path.join(__dirname, '../adminpanel/dist')));
+app.use(express.static(path.join(__dirname, '../AdminPanel/dist')));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../adminpanel/dist/index.html'));
+  res.sendFile(path.resolve(__dirname, '../AdminPanel/dist/index.html'));
 });
+
 
 app.listen(port, () => {
   console.log(`Server is running on port http://localhost:${port}`)
