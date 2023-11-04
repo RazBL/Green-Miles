@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { FlightsContext } from '../context/FlightsContext';
 import { UsersContext } from '../context/UsersContext';
 
-export default function FlightCard({ flight, navigation }) {
+export default function FlightCard({ flight, navigation, passengers }) {
 
     const { SaveFlight, CheckIfFlightSaved, RemoveSavedFlight, currentUser } = useContext(UsersContext);
     const { BookFlightPage, passengersContext } = useContext(FlightsContext);
@@ -20,21 +20,21 @@ export default function FlightCard({ flight, navigation }) {
             return;
         }
 
-        let isSaved = currentUser.savedFlights.find(item => item._id == flight._id && item.passengers == passengersContext);
+        let isSaved = currentUser.savedFlights.find(item => item._id === flight._id && item.passengers == passengers);
 
         if (!isSaved) {
-            SaveFlight(flight, passengersContext, navigation);
+            SaveFlight(flight, passengers, navigation);
             SetSaved(true)
         }
         else {
-            RemoveSavedFlight(flight, passengersContext, navigation);
+            RemoveSavedFlight(flight, passengers, navigation);
             SetSaved(false);
         }
     }
 
     //Saved Button First time viewing page.
     const IsFlightSaved = () => {
-        let foundFlight = CheckIfFlightSaved(flight._id);
+        let foundFlight = CheckIfFlightSaved(flight._id, passengers);
         if (foundFlight)
             SetSaved(true);
         else
@@ -44,7 +44,7 @@ export default function FlightCard({ flight, navigation }) {
     const theme = useTheme();
 
     const CheckOutPageHandler = () => {
-        BookFlightPage(navigation, flight);
+        BookFlightPage(navigation, flight, passengers);
     }
 
     useEffect(() => {
@@ -128,7 +128,7 @@ export default function FlightCard({ flight, navigation }) {
             <Card.Content style={styles(theme).infoBoxAction}>
 
                 <Card.Content>
-                    <Text style={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>${flight.price * passengersContext}</Text>
+                    <Text style={{ fontSize: 15, fontFamily: 'Montserrat_Medium' }}>${flight.price * passengers}</Text>
                 </Card.Content>
 
                 <TouchableOpacity style={styles(theme).bookNowBtn} onPress={CheckOutPageHandler}>

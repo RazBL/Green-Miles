@@ -13,7 +13,6 @@ export default function FlightsContextProvider({ children }) {
     const [destinationCities, SetDestinationCities] = useState([]);
     const [originCities, SetOriginCities] = useState([]);
     const [flightOrders, SetFlightOrders] = useState([]);
-    const [passengersContext, SetPassengersContext] = useState(1);
     const [FlightToBook, SetFlightToBook] = useState([]);
     
     const LoadAllFlights = async () => {
@@ -60,7 +59,7 @@ export default function FlightsContextProvider({ children }) {
         }
     };
 
-    const BookFlightPage = async (navigation, flight) => {
+    const BookFlightPage = async (navigation, flight, passengers) => {
 
         let token = await AsyncStorage.getItem('userToken', token);
         if (!token) {
@@ -69,12 +68,12 @@ export default function FlightsContextProvider({ children }) {
         }
         else {
             SetFlightToBook(flight);
-            navigation.navigate('Flight Checkout');
+            navigation.navigate('Flight Checkout', { passengers: passengers });
         }
 
     }
 
-    const FlightBooking = async (currentUser, currentTime, currentDate, FlightToBook) => {
+    const FlightBooking = async (currentUser, currentTime, currentDate, FlightToBook, passengers) => {
         try {
             let res = await fetch(`${base_api}/Flights/booking`, {
                 method: 'POST',
@@ -84,8 +83,8 @@ export default function FlightsContextProvider({ children }) {
                 body: JSON.stringify({
                     userId: currentUser._id,
                     flightId: FlightToBook._id,
-                    price: FlightToBook.price * passengersContext,
-                    passengers: passengersContext,
+                    price: FlightToBook.price * passengers,
+                    passengers: passengers,
                     date: currentDate,
                     time: currentTime
                 }),
@@ -149,8 +148,6 @@ export default function FlightsContextProvider({ children }) {
         originCities,
         searchedFlights,
         BookFlightPage,
-        passengersContext,
-        SetPassengersContext,
         FlightToBook,
         FlightBooking,
         SetFlightToBook,

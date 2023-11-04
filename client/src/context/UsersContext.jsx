@@ -192,7 +192,7 @@ export default function UsersContextProvider({ children }) {
                     updatedUser.savedFlights.push({ _id: flightId, passengers: passengers });
                 } else if (action === 'remove') {
                     updatedUser.savedFlights = updatedUser.savedFlights.filter(flight =>
-                        flight._id !== flightId && flight.passengers !== passengers
+                        flight._id !== flightId || flight.passengers !== passengers
                     );
                 }
                 console.log(updatedUser);
@@ -382,12 +382,12 @@ export default function UsersContextProvider({ children }) {
         return null;
     };
 
-    const CheckIfFlightSaved = (flightId) => {
+    const CheckIfFlightSaved = (flightId, passengers) => {
         if (!currentUser || !currentUser.savedFlights) {
             return undefined;
         }
         let savedFlights = currentUser.savedFlights;
-        let flightFound = savedFlights.find(id => flightId === id);
+        let flightFound = savedFlights.find(flight => flight._id === flightId && passengers === flight.passengers );
         return flightFound;
     }
 

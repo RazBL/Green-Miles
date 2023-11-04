@@ -31,8 +31,11 @@ export default function Save({ navigation }) {
 
   useEffect(() => {
     if (currentUser && currentUser.savedFlights) {
-      let filteredFlights = flights.filter(flight => currentUser.savedFlights.includes(flight._id));
-      SetSavedFlights(filteredFlights);
+      const enrichedSavedFlights = currentUser.savedFlights.map(savedFlight => {
+        const matchedFlight = flights.find(flight => flight._id === savedFlight._id);
+        return { ...matchedFlight, passengers: savedFlight.passengers };
+      });
+      SetSavedFlights(enrichedSavedFlights);
     }
     if (currentUser && currentUser.savedHotels) {
       let filteredHotels = hotels.filter(hotel => currentUser.savedHotels.includes(hotel._id));
@@ -79,11 +82,13 @@ export default function Save({ navigation }) {
       <View>
         <FlatList
           data={flightsButton ? savedFlights : savedHotels}
-          keyExtractor={(item) => item._id}
-          renderItem={({ item }) => flightsButton ? (<FlightCard flight={item} navigation={navigation} />) :
+          keyExtractor={(item, index) => `${item._id}-${index}`}
+          renderItem={({ item }) => flightsButton ?
+            (<FlightCard flight={item} navigation={navigation} passengers={item.passengers} />) :
             (<HotelCard hotel={item} navigation={navigation} />)}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 120 }} />
+          contentContainerStyle={{ paddingBottom: 120 }}
+        />
       </View>
     </View>
   )
