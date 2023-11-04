@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { AdminContext } from '../contexts/AdminContext';
-import Admin from './admin';
+import Admin from './Admin';
 
 
 export default function Login() {
