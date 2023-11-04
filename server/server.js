@@ -19,10 +19,10 @@ app.use('/api/image/upload', require('./routes/image.route'));
 
 app.use('/api/admins', require('./routes/admins.route'));
 
-app.use(express.static(path.join(__dirname, '../AdminPanel/dist')));
+app.use(express.static(path.join(__dirname, '../adminpanel/dist')));
 
-app.get('/', (req, res) => {
-  res.send(path.resolve(__dirname, '../AdminPanel/dist/index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../AdminPanel/index.html'));
 });
 
 app.listen(port, () => {
