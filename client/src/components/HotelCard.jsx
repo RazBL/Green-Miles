@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { UsersContext } from '../context/UsersContext'; 
+import { UsersContext } from '../context/UsersContext';
 import { HotelsContext } from '../context/HotelsContext';
 import TabOffsetContext from '../context/TabOffsetContext';
 
@@ -11,12 +11,13 @@ const HotelCard = ({ hotel, navigation }) => {
   const { HotelRatingText } = useContext(HotelsContext);
   const [hotelRating, SetHotelRating] = useState("");
   const [saved, SetSaved] = useState(false);
+  const [tooltipVisible, SetTooltipVisible] = useState(false);
 
   const moveToTab = useContext(TabOffsetContext);
 
   const navigateToHotelDetails = () => {
-      navigation.navigate('Hotel', { hotel });
-      moveToTab(2);
+    navigation.navigate('Hotel', { hotel });
+    moveToTab(2);
   };
 
   // Start state of the heart icon.
@@ -63,9 +64,45 @@ const HotelCard = ({ hotel, navigation }) => {
             uri: hotel.image,
           }}
         />
-        <Text style={styles.ecoRating}>
-          <Text style={[styles.ecoText, { color: '#38DDA2', fontWeight: 'bold' }]}>Eco</Text> Rating: {hotel.eco_rating}/5 - <Text style={{ color: '#38DDA2', fontWeight: 'bold' }}>{hotelRating}</Text>
-        </Text>
+
+        <View style={styles.ecoRating}>
+          <Text style={{color:'white', fontFamily: 'Montserrat_Bold'}}>
+            <Text style={[styles.ecoText, { color: '#38DDA2', fontFamily: 'Montserrat_Bold' }]}>Eco</Text> Rating {hotel.eco_rating}/5 - <Text style={{ color: '#38DDA2', fontWeight: 'bold' }}>{hotelRating}  </Text>
+          </Text>
+          <TouchableOpacity onPress={() => SetTooltipVisible(true)} style={{ }}>
+            <MaterialCommunityIcons name="help-circle-outline" size={20} color="white" />
+          </TouchableOpacity>
+        </View>
+
+
+
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={tooltipVisible}
+          onRequestClose={() => SetTooltipVisible(false)}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={styles.modalContainer}>
+              <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 16, textAlign: 'center' }}>
+                <Text style={{fontFamily: 'Montserrat_Bold', fontSize: 16, color: '#38DDA2'}}>Eco</Text> Rating
+              </Text>
+              <Text style={styles.modalText}>
+              "EcoRating reflects a hotel's commitment to eco-friendly practices, considering energy efficiency, waste reduction, water conservation, and fewer disposable items. Higher EcoRatings mean hotels are more eco-conscious, which allows travelers to make greener choices while supporting sustainable practices."
+              </Text>
+
+              <TouchableOpacity
+                style={styles.closeButton}
+                onPress={() => SetTooltipVisible(false)}
+              >
+                <Text style={styles.closeButtonText}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
+
+
       </View>
       <Card.Content style={{ margin: 10 }}>
         <Text style={styles.title}>{hotel.name}</Text>
@@ -120,13 +157,12 @@ const styles = StyleSheet.create({
     top: 20,
     left: 20,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    color: 'white',
     padding: 8,
     paddingHorizontal: 15,
     borderRadius: 25,
     fontSize: 15,
-    fontWeight: 'bold',
     zIndex: 1,
+    flexDirection: 'row'
   },
   ecoText: {
     fontWeight: 'normal',
@@ -142,6 +178,45 @@ const styles = StyleSheet.create({
     top: 0, // We specify that the icon will be at the same height as the button
     right: 10, // Horizontal position on the right side
   },
+
+  modalContainer: {
+    width: 300,
+    padding: 20,
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5
+  },
+  modalText: {
+    fontFamily: 'Montserrat_Medium',
+    fontSize: 15,
+    textAlign: 'center',
+    marginVertical: 20,
+  },
+  closeButton: {
+    backgroundColor: '#38DDA2',
+    borderColor: 'transparent',
+    width: '50%',
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
+  },
+  closeButtonText: {
+    fontFamily: 'Montserrat_Bold',
+    color: 'white',
+    fontSize: 15
+  }
+
+
 });
 
 export default HotelCard;

@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 export default function HotelSearch({route,  navigation }) {
   const {HotelSearchResults, hotels} = useContext(HotelsContext);
   const theme = useTheme();
-  const [passengers, setPassengers] = useState(1);
+  const [rooms, setRooms] = useState(1);
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [showDatePicker, setShowDatePicker] = useState({
@@ -22,16 +22,16 @@ export default function HotelSearch({route,  navigation }) {
   const [selectedDestination, setSelectedDestination] = useState('');
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedDateField, setSelectedDateField] = useState('checkIn');
-  const MAX_PASSENGERS = 9;
-  const MIN_PASSENGERS = 1;
+  const MAX_ROOMS = 9;
+  const MIN_ROOMS = 1;
   const [transformedHotelCountries, SetTransformedHotelCountries] = useState([]);
 
   const IncrementPassengers = () => {
-    if (passengers < MAX_PASSENGERS) setPassengers(passengers + 1);
+    if (rooms < MAX_ROOMS) setRooms(rooms + 1);
   };
 
   const DecrementPassengers = () => {
-    if (passengers > MIN_PASSENGERS) setPassengers(passengers - 1);
+    if (rooms > MIN_ROOMS) setRooms(rooms - 1);
   };
 
   const handleConfirm = () => {
@@ -69,6 +69,7 @@ export default function HotelSearch({route,  navigation }) {
       country: selectedDestination,
       checkInDate: formattedCheckInDate,
       checkOutDate: formattedCheckOutDate,
+      rooms: rooms
     };
   
     HotelSearchResults(query);
@@ -219,7 +220,7 @@ export default function HotelSearch({route,  navigation }) {
 
           <TouchableOpacity
             style={[styles(theme).searchSection]}
-            onPress={() => setModalVisible(true)}
+           onPress={() => setModalVisible(true)}
           >
             <View style={styles(theme).inputWrapper}>
               <MaterialCommunityIcons
@@ -234,7 +235,7 @@ export default function HotelSearch({route,  navigation }) {
                 backgroundColor="white"
                 style={styles(theme).input}
                 placeholderTextColor={theme.colors.inputTextColor}
-                placeholder={`${passengers} Guest${passengers === 1 ? '' : 's'}`}
+                placeholder={`${rooms} Room${rooms === 1 ? '' : 's'}`}
               />
             </View>
           </TouchableOpacity>
@@ -254,7 +255,7 @@ export default function HotelSearch({route,  navigation }) {
                     <TouchableOpacity onPress={IncrementPassengers}>
                       <Text style={styles(theme).modalText}>+</Text>
                     </TouchableOpacity>
-                    <Text style={[styles(theme).modalText]}>{passengers}</Text>
+                    <Text style={[styles(theme).modalText]}>{rooms}</Text>
                     <TouchableOpacity onPress={DecrementPassengers}>
                       <Text style={styles(theme).modalText}>-</Text>
                     </TouchableOpacity>
