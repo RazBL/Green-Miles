@@ -52,7 +52,7 @@ class HotelModel {
     let checkIn = query.checkIn.toISOString();
     let checkOut = query.checkOut.toISOString();
 
-    console.log(checkOut);
+    console.log("rooms", query.availableRooms);
 
     const pipeline = [
       {
@@ -64,6 +64,9 @@ class HotelModel {
           "rooms.availability.to": {
             $gte: checkOut, // תאריך צ'ק-אאוט גדול או שווה לתאריך שהתקבל
           },
+          "rooms.availability.availableRooms": {
+            $gte: query.availableRooms
+          }
         },
       },
     ];

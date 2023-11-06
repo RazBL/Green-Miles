@@ -8,7 +8,7 @@ import { UsersContext } from '../context/UsersContext';
 export default function FlightCard({ flight, navigation, passengers }) {
 
     const { SaveFlight, CheckIfFlightSaved, RemoveSavedFlight, currentUser } = useContext(UsersContext);
-    const { BookFlightPage, passengersContext } = useContext(FlightsContext);
+    const { BookFlightPage } = useContext(FlightsContext);
     const [saved, SetSaved] = useState(false);
 
     const [tooltipVisible, SetTooltipVisible] = useState(false);
