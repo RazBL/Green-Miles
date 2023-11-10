@@ -38,8 +38,8 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
       return;
     }
 
-    let isSaved = currentUser.savedHotels.find(item => item == hotel._id);
-
+    let isSaved = currentUser.savedHotels.find(item => item._id == hotel._id);
+    console.log("is saved", isSaved);
     if (!isSaved) {
       SaveHotel(hotel, navigation, rooms);
       SetSaved(true); // Change the value to true when the user clicks to save the hotel

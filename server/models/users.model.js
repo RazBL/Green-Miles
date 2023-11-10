@@ -223,11 +223,19 @@ class UsersModel {
         let query = {
             "email": userEmail
         };
+
+        let hotelObject = {
+            _id: hotelId,
+        };
+
         let update = {
             "$pull": {
-                "savedHotels": new ObjectId(hotelId)
+                "savedHotels": hotelObject
             }
         };
+
+        console.log("update = ", update);
+
         return await new DB().UpdateOne("users", query, update);
     }
 

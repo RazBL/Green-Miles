@@ -401,8 +401,7 @@ export default function UsersContextProvider({ children }) {
             return undefined;
         }
         let savedHotels = currentUser.savedHotels;
-        console.log(savedHotels);
-        let HotelFound = savedHotels.find(id => hotelId === id);
+        let HotelFound = savedHotels.find(savedHotel => hotelId === savedHotel._id);
         return HotelFound;
     }
 
