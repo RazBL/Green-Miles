@@ -16,7 +16,7 @@ import { toUpper } from 'lodash';
 
 const HotelCheckOut = ({ route, navigation }) => {
     const theme = useTheme();
-    const { hotel } = route.params;
+    const { hotel,rooms } = route.params;
     const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
     const { HotelBooking } = useContext(HotelsContext);
     const fromDate = new Date(hotel.rooms.availability.from);
@@ -38,6 +38,8 @@ const HotelCheckOut = ({ route, navigation }) => {
     const [cityPicker, SetCityPicker] = useState(false);
 
 
+    console.log(totalNights);
+
     const CheckoutHandler = () => {
         
         if (ValidInput()) {
@@ -53,9 +55,11 @@ const HotelCheckOut = ({ route, navigation }) => {
             let localTime = `${hours}:${minutes}`;
             let localDate = `${year}-${month}-${day}`;
 
+            let roomsToBook = rooms;
+
             totalPrice = totalNights * hotel.price_per_night; 4
             console.log("before ordering the hotel")
-            HotelBooking(totalPrice, currentUser, localTime, localDate, hotel);
+            HotelBooking(totalPrice, currentUser, localTime, localDate, hotel,roomsToBook, );
             navigation.navigate("BookedMessageHotel");
 
             console.log("After HotelBooking");
@@ -143,6 +147,7 @@ const HotelCheckOut = ({ route, navigation }) => {
                                 <Text style={styles(theme).text}>Location <Text style={styles(theme).montserratBold}>{hotel.city}</Text></Text>
                                 <Text style={[styles(theme).montserratBold, styles(theme).text]}>Checkin: {hotel.rooms.availability.from.substring(0, 10)} </Text>
                                 <Text style={[styles(theme).montserratBold, styles(theme).text]}>CheckOut: {hotel.rooms.availability.to.substring(0, 10)} </Text>
+                                <Text style={styles(theme).text}> Rooms: {rooms}</Text>
                                 <Text style={styles(theme).text}> Price :  <Text style={styles(theme).montserratBold}>{hotel.price_per_night} $ </Text></Text>
                                 <Text style={styles(theme).text}> Total Nights: {totalNights}</Text>
                                 <Text style={styles(theme).text}> Total Price: {totalNights * hotel.price_per_night}</Text>

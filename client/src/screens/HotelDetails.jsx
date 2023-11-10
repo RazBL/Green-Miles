@@ -4,18 +4,21 @@ import { Text, Button, useTheme, Headline } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UsersContext } from '../context/UsersContext';
+import { HotelsContext } from '../context/HotelsContext';
 
 
 
 const HotelDetails = ({ route }) => {
   const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
   const { hotel } = route.params;
+  const { rooms } = route.params;
+
   const navigation = useNavigation();
   const theme = useTheme();
 
   const handleBookNow = () => {
     if (currentUser)
-      navigation.navigate('Hotel Checkout', { hotel });
+      navigation.navigate('Hotel Checkout', { hotel,rooms });
     else {
       alert('You must login in order to book');
       navigation.navigate('Login');
@@ -126,6 +129,7 @@ const HotelDetails = ({ route }) => {
           {/* <Text style={styles(theme).infoTitle}> Total Price: {totalNights*hotel.price_per_night}</Text>*/}
 
           <Text style={styles(theme).infoTitle}>Price per night <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${hotel.price_per_night}</Text></Text>
+          <Text style={styles(theme).infoTitle}>Rooms : <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>{rooms}</Text></Text>
 
 
           {/*   <Text style={styles(theme).infoTitle}> Total Nights: {totalNights}</Text>*/}

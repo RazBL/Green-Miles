@@ -6,7 +6,7 @@ import { UsersContext } from '../context/UsersContext';
 import { HotelsContext } from '../context/HotelsContext';
 import TabOffsetContext from '../context/TabOffsetContext';
 
-const HotelCard = ({ hotel, navigation }) => {
+const HotelCard = ({ hotel, navigation, rooms }) => {
   const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
   const { HotelRatingText } = useContext(HotelsContext);
   const [hotelRating, SetHotelRating] = useState("");
@@ -16,7 +16,7 @@ const HotelCard = ({ hotel, navigation }) => {
   const moveToTab = useContext(TabOffsetContext);
 
   const navigateToHotelDetails = () => {
-    navigation.navigate('Hotel', { hotel });
+    navigation.navigate('Hotel', { hotel,rooms});
     moveToTab(2);
   };
 
@@ -49,6 +49,7 @@ const HotelCard = ({ hotel, navigation }) => {
       SetSaved(false); // Change the value to false when the user clicks to remove the hotel
     }
   };
+
 
   useEffect(() => {
     SetHotelRating(HotelRatingText(hotel));
@@ -107,7 +108,8 @@ const HotelCard = ({ hotel, navigation }) => {
       <Card.Content style={{ margin: 10 }}>
         <Text style={styles.title}>{hotel.name}</Text>
         <Text style={styles.info}>Address: {hotel.address.replace(/\n/g, ' ')}</Text>
-        <Text style={styles.info}>Price for 1 Night: $<Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{hotel.price_per_night}</Text></Text>
+        <Text style={styles.info}>Price for 1 Night: $<Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{hotel.price_per_night * rooms}</Text></Text>
+        <Text style={styles.info}>Rooms : <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{rooms}</Text></Text>
       </Card.Content>
       <View style={styles.cardActions}>
         <Button

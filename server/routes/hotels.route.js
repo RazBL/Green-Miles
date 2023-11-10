@@ -63,6 +63,9 @@ HotelRoute.get('/search', async (req, res) => {
 
 HotelRoute.post('/booking', async (req, res) => {
   try {
+    let hotelId = new ObjectId(req.body.hotelId);
+    let rooms = req.body.rooms; // Get the 'rooms' value from the request body
+
     let bookedHotel = {
       user_id: new ObjectId(req.body.userId),
       hotel_id: new ObjectId(req.body.hotelId),
@@ -73,11 +76,13 @@ HotelRoute.post('/booking', async (req, res) => {
       },
       bookingStatus: "pending",
       nights_stay: req.body.nightsStay,
-      price: req.body.price
+      price: req.body.price,
+      rooms: req.body.rooms
     }
 
     await HotelBookingModel.BookAHotel(bookedHotel);
-    res.status(200).json("Hotel booked successfully")
+    await HotelModel.UpdateHotelAvailableRooms(hotelId, rooms);
+    res.status(200).json("Hotel booked successfully");
 
   } catch (error) {
     console.log('Error:', error);
@@ -86,6 +91,7 @@ HotelRoute.post('/booking', async (req, res) => {
     });
   }
 });
+
 
 
 

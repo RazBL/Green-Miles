@@ -8,10 +8,10 @@ import { HotelsContext } from '../context/HotelsContext'
 import HotelCard from '../components/HotelCard'
 
 
-export default function HotelSearchResults({navigation}) {
+export default function HotelSearchResults({navigation, route}) {
 
   const theme = useTheme();
-
+  const { rooms } = route.params;
   const { searchedHotels } = useContext(HotelsContext);
 
   const [selectedPriceOptionIndex, SetSelectedPriceOptionIndex] = useState(null);
@@ -34,6 +34,8 @@ export default function HotelSearchResults({navigation}) {
 
   const FilterAndSortHotels = () => {
     let filteredHotels = [...searchedHotels];
+
+    console.log(filteredHotels);
 
     // Filter by price
     if (selectedPriceOptionIndex !== null) {
@@ -67,7 +69,6 @@ export default function HotelSearchResults({navigation}) {
 
     return filteredHotels;
   }
-
 
   useEffect(() => {
     SetDisplayedHotels(FilterAndSortHotels());
@@ -173,7 +174,7 @@ export default function HotelSearchResults({navigation}) {
           <FlatList
             data={displayedHotels}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <HotelCard hotel={item} navigation={navigation} />}
+            renderItem={({ item }) => <HotelCard hotel={item} navigation={navigation} rooms={rooms} />}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 65}}
           />

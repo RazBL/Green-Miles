@@ -76,6 +76,14 @@ class HotelModel {
     return await new DB().Aggregate('Hotels', pipeline);
   }
 
+  static async UpdateHotelAvailableRooms(hotelId, rooms) {
+    console.log("Hi Model")
+    let query = {_id: hotelId};
+    let update = {$inc: {"rooms.availability.availableRooms": -rooms}}
+    console.log("hi");
+    await new DB().UpdateOne('Hotels', query, update);
+  }
+
   
 
 

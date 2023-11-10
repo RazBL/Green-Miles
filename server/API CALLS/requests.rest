@@ -1,4 +1,4 @@
-GET http://localhost:3500/api/users
+GET http://localhost:3500/api/hotels
 
 ###
 
@@ -61,6 +61,24 @@ Content-Type: application/json
     "time": "23:21"
 }
 
+
+
+###
+
+
+POST http://localhost:3500/api/hotels/booking
+Content-Type: application/json
+
+{
+    "userId": "64c9dca7e1feda9915eca2b8",
+    "hotelId": "645e91233fb2fbd063c199bb",
+    "hotelImage": "",
+    "date": "2023-10-11",
+    "time": "00:53",
+    "nightsStay": 9,
+    "price": 420,
+    "rooms": 3
+}
 
 ###
 
@@ -243,4 +261,4 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3500/api/hotels/search?country=Israel&checkInDate=2023-08-01&checkOutDate=2023-08-10&rooms=2
+GET https://greenmiles.onrender.com/api/hotels/search?country=Israel&checkInDate=2023-08-01&checkOutDate=2023-08-10&rooms=51

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { base_api } from '../../utilis/api'
+import { base_api } from '../../utilis/api';
 
 export const HotelsContext = createContext();
 
@@ -109,6 +109,8 @@ export default function HotelsContextProvider({ children }) {
 */ 
 
 
+/*** הקוד המקורי של ההזמנות ***
+
 const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, HotelToBook) => {
   try {
     console.log("Total price", totalPrice);
@@ -140,6 +142,44 @@ const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, H
       console.log(error);
   }
 };
+*/ 
+
+const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, HotelToBook, roomsToBook) => {
+  try {
+    console.log("Total price", totalPrice);
+    let res = await fetch(`${base_api}/hotels/booking`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        userId: currentUser._id,
+        hotelId: HotelToBook._id,
+        hotelImage: HotelToBook.image,
+        price: totalPrice,
+        date: currentDate,
+        time: currentTime,
+        rooms: roomsToBook, // שימוש במספר החדרים שברצונך להזמין
+        nightsStay: 3
+      }),
+    });
+
+    if (!res.ok) {
+      let errorData = await res.json();
+      console.log(`Error is: ${errorData.error}`);
+      return null;
+    }
+
+    // אם ההזמנה התבצעה בהצלחה, עדכן מספר החדרים בשרת
+    await UpdateHotelAvailableRooms(HotelToBook._id, roomsToBook);
+    
+    // עדכן רשימת ההזמנות שלך
+    GetAllHotelBookings();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 
 const GetAllHotelBookings = async () => {

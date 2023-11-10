@@ -73,7 +73,7 @@ export default function HotelSearch({route,  navigation }) {
     };
   
     HotelSearchResults(query);
-    navigation.navigate('Hotel Search Results'); // כאן אנחנו משנים את המסך באמצעות ניווט
+    navigation.navigate('Hotel Search Results', { rooms: rooms });
   };
   
 
