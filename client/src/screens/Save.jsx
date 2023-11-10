@@ -38,10 +38,15 @@ export default function Save({ navigation }) {
       SetSavedFlights(enrichedSavedFlights);
     }
     if (currentUser && currentUser.savedHotels) {
-      let filteredHotels = hotels.filter(hotel => currentUser.savedHotels.includes(hotel._id));
-      SetSavedHotels(filteredHotels);
+      console.log("hi its me saved hotels");
+      const enrichedSavedHotels = currentUser.savedHotels.map(savedHotel =>{
+        const matchedHotel = hotels.find(hotel => hotel._id == savedHotel._id);
+        return {...matchedHotel, rooms: savedHotel.rooms};
+      });
+      console.log("saved hotels", enrichedSavedHotels);
+      SetSavedHotels(enrichedSavedHotels);
     }
-  }, [currentUser, flights,]);
+  }, [currentUser, flights, hotels]);
 
   useEffect(() => {
   }, [savedFlights, savedHotels]);

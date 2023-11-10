@@ -204,14 +204,16 @@ export default function UsersContextProvider({ children }) {
         SetUsers(updatedUsers);
     }
 
-    const UpdateUserHotelsInState = (hotelId, action) => {
+    const UpdateUserHotelsInState = (hotelId, action, rooms) => {
         const updatedUsers = users.map(user => {
             if (user._id === currentUser._id) {
                 let updatedUser = { ...user };
                 if (action === 'save') {
                     updatedUser.savedHotels.push(hotelId);
                 } else if (action === 'remove') {
-                    updatedUser.savedHotels = updatedUser.savedHotels.filter(id => id !== hotelId);
+                    updatedUser.savedHotels = updatedUser.savedHotels.filter(hotel =>
+                        hotel._id !== hotelId || hotel.rooms !== rooms
+                    );
                 }
                 SetCurrentUser(updatedUser);
                 return updatedUser;
@@ -273,8 +275,9 @@ export default function UsersContextProvider({ children }) {
         }
     }
 
-    const SaveHotel = async (hotel, navigation) => {
+    const SaveHotel = async (hotel, navigation, rooms) => {
         try {
+            console.log("rooms", rooms);
             const token = await GetTokenAndNavigate(navigation);
             let res = await fetch(`${base_api}/users/save-hotel`, {
                 method: 'PUT',
@@ -284,6 +287,7 @@ export default function UsersContextProvider({ children }) {
                 },
                 body: JSON.stringify({
                     hotel: hotel,
+                    rooms: rooms
                 }),
             });
 
@@ -294,7 +298,7 @@ export default function UsersContextProvider({ children }) {
                 return null;
             }
             console.log("hotel saved successfully!");
-            UpdateUserHotelsInState(hotel._id, 'save');
+            UpdateUserHotelsInState(hotel._id, 'save', rooms);
 
         } catch (error) {
             console.log(error);

@@ -38,7 +38,7 @@ const HotelCheckOut = ({ route, navigation }) => {
     const [cityPicker, SetCityPicker] = useState(false);
 
 
-    console.log(totalNights);
+   
 
     const CheckoutHandler = () => {
         
@@ -59,7 +59,7 @@ const HotelCheckOut = ({ route, navigation }) => {
 
             totalPrice = totalNights * hotel.price_per_night; 4
             console.log("before ordering the hotel")
-            HotelBooking(totalPrice, currentUser, localTime, localDate, hotel,roomsToBook, );
+            HotelBooking(totalPrice, currentUser, localTime, localDate, hotel,roomsToBook,totalNights );
             navigation.navigate("BookedMessageHotel");
 
             console.log("After HotelBooking");

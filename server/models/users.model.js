@@ -145,17 +145,25 @@ class UsersModel {
         return data[0].savedFlights;
     }
 
-    static async SaveHotel(userEmail, hotelId) {
+    static async SaveHotel(userEmail, hotelId, rooms) {
 
         console.log("save hotel");
         let query = {
             "email": userEmail
         };
+        let hotelObject = {
+            _id: hotelId,
+            rooms: rooms
+        };
+
         let update = {
             "$addToSet": {
-                "savedHotels": new ObjectId(hotelId)
+                "savedHotels": hotelObject
             }
-        };
+        }
+
+        console.log(update);
+        
         return await new DB().UpdateOne("users", query, update)
     }
 

@@ -16,8 +16,8 @@ POST http://localhost:3500/api/users/login
 Content-Type: application/json
 
 {
-  "email": "shoshi@gmail.com",
-  "password": "Something!"
+  "email": "basel@gmail.com",
+  "password": "baselbasel"
 }
 
 ###
@@ -66,7 +66,7 @@ Content-Type: application/json
 ###
 
 
-POST http://localhost:3500/api/hotels/booking
+POST https://greenmiles.onrender.com/api/hotels/booking
 Content-Type: application/json
 
 {
@@ -77,20 +77,22 @@ Content-Type: application/json
     "time": "00:53",
     "nightsStay": 9,
     "price": 420,
-    "rooms": 3
+    "rooms": 1
 }
 
 ###
 
-PUT https://greenmiles.onrender.com/api/users/save-hotel
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGM5ZGIzMGUxZmVkYTk5MTVlY2EyYjciLCJlbWFpbCI6InJhekBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCQ1NjNTMlNJSC5JWFI3MjZBSVhvUlZlRm5kOVF3akU2MWMzN3JBRzdlSVRza0FGbUZiVHBjeSIsInNhdmVkRmxpZ2h0cyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiLCI2NTBkZmYyNmNlMDEyNTk1NjQ3ZDcxYmEiXSwic2F2ZWRIb3RlbHMiOlsiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJiIiwiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWJjIl0sImZpcnN0TmFtZSI6InJheiIsImxhc3ROYW1lIjoicmF6IiwicGhvbmVOdW1iZXIiOm51bGwsImltYWdlIjpudWxsLCJjb3VudHJ5IjpudWxsLCJjaXR5IjpudWxsLCJhZGRyZXNzIjpudWxsLCJpYXQiOjE2OTU0OTYxMjgsImV4cCI6MTY5NTQ5OTcyOH0.9Elw0kXO9He6kUnSvthTMvAfDGLNx5MCHyr2oymE_DA
+PUT http://localhost:3500/api/users/save-hotel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTE4YTAyNzAwZWQ1ODU1Y2E1NmUwMGYiLCJlbWFpbCI6ImJhc2VsQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJHNrN0dNWHlwTTNUVi94R2F3cHRWMWU1VUpIVFUwaHgvaDI5MDBuTGNFMC40akU0bjV0WTBTIiwic2F2ZWRGbGlnaHRzIjpbeyJfaWQiOiI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YzAiLCJwYXNzZW5nZXJzIjoxfSx7Il9pZCI6IjY1MGRmZjI2Y2UwMTI1OTU2NDdkNzFiYSIsInBhc3NlbmdlcnMiOjF9LHsiX2lkIjoiNjQ1ZTkxMjMzZmIyZmJkMDYzYzE5OWMwIiwicGFzc2VuZ2VycyI6NX1dLCJzYXZlZEhvdGVscyI6WyI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmUiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmIiLCI2NDVlOTEyMzNmYjJmYmQwNjNjMTk5YmMiLCI2NTNhZDg3MDcwZDllNTBhMjU1OWEyZGMiLCI2NTNhZGZiMmFjNDRhNzQ3MjhmZmE5ZTMiLCI2NTNhZGNmNTllNmY2MmVmZTY5ZWI4YTUiXSwiZmlyc3ROYW1lIjoiYmFzZWwiLCJsYXN0TmFtZSI6ImJlbiIsInBob25lTnVtYmVyIjoiIiwiaW1hZ2UiOiJodHRwczovL3Jlcy5jbG91ZGluYXJ5LmNvbS9kaDhjdm9sNW0vaW1hZ2UvdXBsb2FkL3YxNjk3NDg4NDI0L3FpcnF3ZGNxbXZpbXV4eml2ZGxsLmpwZyIsImNvdW50cnkiOiIiLCJjaXR5IjoiIiwiYWRkcmVzcyI6IiIsImlhdCI6MTY5OTY1NTI5MCwiZXhwIjoxNjk5NjU4ODkwfQ.Xewr7AAgYHCTJ1VU1nCpSX6pGCmZTXwLMw0Fr-pHdfA
 Content-Type: application/json
 
 {
   "hotel": {
     "_id": "645e91233fb2fbd063c199bd"
-  }
+  },
+  "rooms": 2
 }
+
 
 ###
 

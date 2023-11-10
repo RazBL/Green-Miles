@@ -144,7 +144,7 @@ const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, H
 };
 */ 
 
-const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, HotelToBook, roomsToBook) => {
+const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, HotelToBook, roomsToBook, totalNights) => {
   try {
     console.log("Total price", totalPrice);
     let res = await fetch(`${base_api}/hotels/booking`, {
@@ -160,7 +160,7 @@ const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, H
         date: currentDate,
         time: currentTime,
         rooms: roomsToBook, // שימוש במספר החדרים שברצונך להזמין
-        nightsStay: 3
+        nightsStay: totalNights
       }),
     });
 
@@ -169,9 +169,6 @@ const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, H
       console.log(`Error is: ${errorData.error}`);
       return null;
     }
-
-    // אם ההזמנה התבצעה בהצלחה, עדכן מספר החדרים בשרת
-    await UpdateHotelAvailableRooms(HotelToBook._id, roomsToBook);
     
     // עדכן רשימת ההזמנות שלך
     GetAllHotelBookings();

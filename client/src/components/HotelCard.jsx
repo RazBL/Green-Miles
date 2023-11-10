@@ -41,7 +41,7 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
     let isSaved = currentUser.savedHotels.find(item => item == hotel._id);
 
     if (!isSaved) {
-      SaveHotel(hotel, navigation);
+      SaveHotel(hotel, navigation, rooms);
       SetSaved(true); // Change the value to true when the user clicks to save the hotel
       console.log("hotel was saved");
     } else {
@@ -108,8 +108,8 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
       <Card.Content style={{ margin: 10 }}>
         <Text style={styles.title}>{hotel.name}</Text>
         <Text style={styles.info}>Address: {hotel.address.replace(/\n/g, ' ')}</Text>
-        <Text style={styles.info}>Price for 1 Night: $<Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{hotel.price_per_night * rooms}</Text></Text>
-        <Text style={styles.info}>Rooms : <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{rooms}</Text></Text>
+        <Text style={styles.info}>Price for 1 Night: $<Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{hotel.price_per_night * rooms || hotel.price_per_night * hotel.rooms}</Text></Text>
+        <Text style={styles.info}>Rooms : <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{rooms || hotel.rooms}</Text></Text>
       </Card.Content>
       <View style={styles.cardActions}>
         <Button

@@ -156,10 +156,6 @@ UsersRoute.put('/save-flight', AuthUser, async (req, res) => {
     const passengers = req.body.passengers;
     const flightId = req.body.flightId;
 
-    console.log(passengers);
-
-    console.log(flightId);
-
     const updatedUser = await UsersModel.SaveFlight(userEmail, flightId, passengers);
 
     res.status(200).json({
@@ -273,8 +269,9 @@ UsersRoute.put('/save-hotel', AuthUser, async (req, res) => {
   try {
     const userEmail = req.user.email;
     const hotelId = req.body.hotel._id;
-
-    const updatedUser = await UsersModel.SaveHotel(userEmail, hotelId);
+    const rooms = req.body.rooms;
+    console.log("i am");
+    const updatedUser = await UsersModel.SaveHotel(userEmail, hotelId,rooms);
 
     res.status(200).json({
       success: true,
