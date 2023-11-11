@@ -15,7 +15,7 @@ import { HotelsContext } from '../context/HotelsContext';
 
 const HotelCheckOut = ({ route, navigation }) => {
     const theme = useTheme();
-    const { hotel,rooms } = route.params;
+    const { hotel, rooms } = route.params;
     const { currentUser, CheckValidEmail, countries, } = useContext(UsersContext);
     const { HotelBooking } = useContext(HotelsContext);
     const fromDate = new Date(hotel.rooms.availability.from);
@@ -37,10 +37,10 @@ const HotelCheckOut = ({ route, navigation }) => {
     const [cityPicker, SetCityPicker] = useState(false);
 
 
-   
+
 
     const CheckoutHandler = () => {
-        
+
         if (ValidInput()) {
             let now = new Date();
 
@@ -54,11 +54,13 @@ const HotelCheckOut = ({ route, navigation }) => {
             let localTime = `${hours}:${minutes}`;
             let localDate = `${year}-${month}-${day}`;
 
-            let roomsToBook = rooms;
+            let roomsToBook = 1;
+
+            if (rooms) { roomsToBook = rooms; }
 
             totalPrice = totalNights * hotel.price_per_night; 4
             console.log("before ordering the hotel")
-            HotelBooking(totalPrice, currentUser, localTime, localDate, hotel,roomsToBook,totalNights );
+            HotelBooking(totalPrice, currentUser, localTime, localDate, hotel, roomsToBook, totalNights);
             navigation.navigate("BookedMessageHotel");
 
             console.log("After HotelBooking");
@@ -144,12 +146,12 @@ const HotelCheckOut = ({ route, navigation }) => {
                         <Card.Content style={styles(theme).cardContentInfo}>
                             <View >
                                 <Text style={styles(theme).text}>Location <Text style={styles(theme).montserratBold}>{hotel.city}</Text></Text>
-                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>Checkin <Text style={{fontFamily: 'Montserrat_Bold'}}>{hotel.rooms.availability.from.substring(0, 10)}</Text> </Text>
-                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>CheckOut <Text style={{fontFamily: 'Montserrat_Bold'}}>{hotel.rooms.availability.to.substring(0, 10)} </Text></Text>
-                                <Text style={styles(theme).text}> Rooms <Text style={{fontFamily: 'Montserrat_Bold'}}>{rooms}</Text></Text>
-                                <Text style={styles(theme).text}> Price Per Night <Text style={styles(theme).montserratBold}>${rooms ? hotel.price_per_night * rooms : hotel.price_per_night } </Text></Text>
-                                <Text style={styles(theme).text}> Total Nights <Text style={{fontFamily: 'Montserrat_Bold'}}>{totalNights}</Text></Text>
-                                <Text style={styles(theme).text}> Total Price <Text style={{fontFamily: 'Montserrat_Bold'}}>${totalNights * hotel.price_per_night}</Text></Text>
+                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>Checkin <Text style={{ fontFamily: 'Montserrat_Bold' }}>{hotel.rooms.availability.from.substring(0, 10)}</Text> </Text>
+                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>CheckOut <Text style={{ fontFamily: 'Montserrat_Bold' }}>{hotel.rooms.availability.to.substring(0, 10)} </Text></Text>
+                                <Text style={styles(theme).text}> Rooms <Text style={{ fontFamily: 'Montserrat_Bold' }}>{rooms ? rooms : 1}</Text></Text>
+                                <Text style={styles(theme).text}> Price Per Night <Text style={styles(theme).montserratBold}>${rooms ? hotel.price_per_night * rooms : hotel.price_per_night} </Text></Text>
+                                <Text style={styles(theme).text}> Total Nights <Text style={{ fontFamily: 'Montserrat_Bold' }}>{totalNights}</Text></Text>
+                                <Text style={styles(theme).text}> Total Price <Text style={{ fontFamily: 'Montserrat_Bold' }}>${rooms ? totalNights * hotel.price_per_night * rooms : totalNights * hotel.price_per_night}</Text></Text>
                             </View>
                         </Card.Content>
                     </Card>

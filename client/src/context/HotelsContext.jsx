@@ -156,7 +156,7 @@ const HotelBooking = async (totalPrice, currentUser, currentTime, currentDate, H
         userId: currentUser._id,
         hotelId: HotelToBook._id,
         hotelImage: HotelToBook.image,
-        price: totalPrice,
+        price: totalPrice * rooms,
         date: currentDate,
         time: currentTime,
         rooms: roomsToBook, // שימוש במספר החדרים שברצונך להזמין

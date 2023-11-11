@@ -18,7 +18,7 @@ const HotelDetails = ({ route }) => {
 
   const handleBookNow = () => {
     if (currentUser)
-      navigation.navigate('Hotel Checkout', { hotel,rooms });
+      navigation.navigate('Hotel Checkout', { hotel, rooms });
     else {
       alert('You must login in order to book');
       navigation.navigate('Login');
@@ -50,11 +50,13 @@ const HotelDetails = ({ route }) => {
       navigation.navigate('Login');
       return;
     }
-
+    let currentRooms = 1
     let isSaved = currentUser.savedHotels.find(item => item._id == hotel._id);
-    console.log("is saved", isSaved);
+    if (rooms) {
+      currentRooms = rooms;
+    }
     if (!isSaved) {
-      SaveHotel(hotel, navigation, rooms);
+      SaveHotel(hotel, navigation, currentRooms);
       SetSaved(true); // Change the value to true when the user clicks to save the hotel
       console.log("hotel was saved");
     } else {
@@ -96,16 +98,16 @@ const HotelDetails = ({ route }) => {
             <Text style={styles(theme).hotelMiniTitle}>
               <Text style={[styles(theme).hotelMiniTitle, { color: theme.colors.primary }]}>Eco</Text> rating {hotel.eco_rating}/5
             </Text>
-            <View style={{marginLeft: 7, flexDirection: 'row'}}>
-            {Array.from({ length: 5 }).map((_, index) => (
-              <MaterialCommunityIcons
-                key={index}
-                name={'leaf'}
-                color={index < Math.floor(hotel.eco_rating) ? theme.colors.primary : (index === Math.floor(hotel.eco_rating) && hotel.eco_rating % 1 >= 0.5) ? theme.colors.primary : 'white'}
-                size={17}
-                style={{ transform: [{ rotate: '-17deg' }]}}
-              />
-            ))}
+            <View style={{ marginLeft: 7, flexDirection: 'row' }}>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <MaterialCommunityIcons
+                  key={index}
+                  name={'leaf'}
+                  color={index < Math.floor(hotel.eco_rating) ? theme.colors.primary : (index === Math.floor(hotel.eco_rating) && hotel.eco_rating % 1 >= 0.5) ? theme.colors.primary : 'white'}
+                  size={17}
+                  style={{ transform: [{ rotate: '-17deg' }] }}
+                />
+              ))}
             </View>
           </View>
 
