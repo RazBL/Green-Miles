@@ -1,19 +1,20 @@
-import { Text,View, StyleSheet, FlatList } from 'react-native'
-import { Button, Headline, useTheme} from 'react-native-paper'
+import { Text, View, StyleSheet, FlatList } from 'react-native'
+import { Button, Headline, useTheme } from 'react-native-paper'
 import React, { useContext, useState, useEffect } from 'react'
 import CheckBox from 'react-native-check-box';
 import { HotelsContext } from '../context/HotelsContext'
 
 //Component
 import HotelCard from '../components/HotelCard'
+import { UsersContext } from '../context/UsersContext';
 
 
-export default function HotelSearchResults({navigation, route}) {
+export default function HotelSearchResults({ navigation, route }) {
 
   const theme = useTheme();
   const { rooms } = route.params;
   const { searchedHotels } = useContext(HotelsContext);
-
+  const { currentUser } = useContext(UsersContext);
   const [selectedPriceOptionIndex, SetSelectedPriceOptionIndex] = useState(null);
   const [selectedSorteOptionIndex, SetSelectedSortOptionIndex] = useState(null);
   const [displayedHotels, SetDisplayedHotels] = useState(searchedHotels);
@@ -48,20 +49,20 @@ export default function HotelSearchResults({navigation, route}) {
     }
 
     // Filter by EcoRating
-     if (ecoRatingFilter) {
+    if (ecoRatingFilter) {
       filteredHotels = filteredHotels.filter(hotel => hotel.eco_rating > 3);
     }
 
     // Sort flights
     switch (selectedSorteOptionIndex) {
       case 0: // Price: Lowest first
-      filteredHotels.sort((a, b) => a.price_per_night - b.price_per_night);
+        filteredHotels.sort((a, b) => a.price_per_night - b.price_per_night);
         break;
       case 1: // Price: Highest first
-      filteredHotels.sort((a, b) => b.price_per_night - a.price_per_night);
+        filteredHotels.sort((a, b) => b.price_per_night - a.price_per_night);
         break;
       case 2: // EcoRating : Lowest first
-      filteredHotels.sort((a, b) => a.ecoRating - b.ecoRating);
+        filteredHotels.sort((a, b) => a.ecoRating - b.ecoRating);
         break;
       default:
         break;
@@ -72,7 +73,7 @@ export default function HotelSearchResults({navigation, route}) {
 
   useEffect(() => {
     SetDisplayedHotels(FilterAndSortHotels());
-  }, [searchedHotels, selectedPriceOptionIndex, ecoRatingFilter, selectedSorteOptionIndex,]);
+  }, [searchedHotels, selectedPriceOptionIndex, ecoRatingFilter, selectedSorteOptionIndex, currentUser.savedHotels]);
 
   return (<>
     <View style={styles(theme).container}>
@@ -120,7 +121,7 @@ export default function HotelSearchResults({navigation, route}) {
                     rightTextStyle={styles(theme).dropdownItemText}
                     rightText={"Above 3"}
                     checkBoxColor='white'
-                    
+
                   />
                 </View>
               </View>)
@@ -176,7 +177,7 @@ export default function HotelSearchResults({navigation, route}) {
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => <HotelCard hotel={item} navigation={navigation} rooms={rooms} />}
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={{ paddingBottom: 65}}
+            contentContainerStyle={{ paddingBottom: 65 }}
           />
         )}
       </View>
@@ -184,7 +185,7 @@ export default function HotelSearchResults({navigation, route}) {
   </>
   )
 }
-  
+
 const styles = theme => StyleSheet.create({
   container: {
     flex: 1,

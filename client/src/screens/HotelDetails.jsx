@@ -45,31 +45,28 @@ const HotelDetails = ({ route }) => {
 
   //Make sure to transfer the empty arrays of flights and hotels
   const hotelSaveHandler = () => {
-
     if (!currentUser) {
       alert("You must login in order to save");
+      navigation.navigate('Login');
       return;
     }
 
-    console.log(currentUser);
-    console.log(currentUser.savedHotels);
-    let isSaved = currentUser.savedHotels.find(item => item == hotel._id)
-
+    let isSaved = currentUser.savedHotels.find(item => item._id == hotel._id);
+    console.log("is saved", isSaved);
     if (!isSaved) {
-      SaveHotel(hotel, navigation);
-      console.log('Hotel saved successfully!');
-      SetSaved(true); // שנה את הערך ל־true כאשר משתמש לוחץ לשמור את המלון
+      SaveHotel(hotel, navigation, rooms);
+      SetSaved(true); // Change the value to true when the user clicks to save the hotel
+      console.log("hotel was saved");
     } else {
       RemoveSavedHotel(hotel);
-      console.log('Hotel removed from favorites.');
-      SetSaved(false); // שנה את הערך ל־false כאשר משתמש לוחץ להסיר את המלון
+      SetSaved(false); // Change the value to false when the user clicks to remove the hotel
     }
   };
 
 
   useEffect(() => {
     isHotelSaved();
-  }, [currentUser])
+  }, [currentUser, currentUser.savedHotels])
 
   return (
     <View style={styles(theme).container}>
@@ -82,7 +79,7 @@ const HotelDetails = ({ route }) => {
           style={styles(theme).image}
         />
 
-        <TouchableOpacity style={styles(theme).heartContainer} onPress={() => setSaved(!saved)}>
+        <TouchableOpacity style={styles(theme).heartContainer} onPress={() => SetSaved(!saved)}>
           <MaterialCommunityIcons
             onPress={hotelSaveHandler}
             name={saved ? 'heart' : 'heart-outline'}
@@ -129,7 +126,7 @@ const HotelDetails = ({ route }) => {
           {/* <Text style={styles(theme).infoTitle}> Total Price: {totalNights*hotel.price_per_night}</Text>*/}
 
           <Text style={styles(theme).infoTitle}>Price per night <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${hotel.price_per_night}</Text></Text>
-          <Text style={styles(theme).infoTitle}>Rooms : <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>{rooms}</Text></Text>
+          <Text style={styles(theme).infoTitle}>Rooms : <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>{rooms ? rooms : 1}</Text></Text>
 
 
           {/*   <Text style={styles(theme).infoTitle}> Total Nights: {totalNights}</Text>*/}
