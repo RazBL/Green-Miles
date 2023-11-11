@@ -7,7 +7,7 @@ import { HotelsContext } from '../context/HotelsContext';
 import TabOffsetContext from '../context/TabOffsetContext';
 
 const HotelCard = ({ hotel, navigation, rooms }) => {
-  const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
+  const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); 
   const { HotelRatingText } = useContext(HotelsContext);
   const [hotelRating, SetHotelRating] = useState("");
   const [saved, SetSaved] = useState(false);
@@ -54,7 +54,7 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
   useEffect(() => {
     SetHotelRating(HotelRatingText(hotel));
     isHotelSaved();
-  }, [currentUser]);
+  }, [currentUser, currentUser.savedHotels]);
 
   return (
     <View style={styles.card}>
@@ -89,7 +89,7 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
                 <Text style={{fontFamily: 'Montserrat_Bold', fontSize: 16, color: '#38DDA2'}}>Eco</Text> Rating
               </Text>
               <Text style={styles.modalText}>
-              "EcoRating reflects a hotel's commitment to eco-friendly practices, considering energy efficiency, waste reduction, water conservation, and fewer disposable items. Higher EcoRatings mean hotels are more eco-conscious, which allows travelers to make greener choices while supporting sustainable practices."
+              Eco Rating reflects a hotel's commitment to eco-friendly practices, considering energy efficiency, waste reduction, water conservation, and fewer disposable items. Higher EcoRatings mean hotels are more eco-conscious, which allows travelers to make greener choices while supporting sustainable practices.
               </Text>
 
               <TouchableOpacity

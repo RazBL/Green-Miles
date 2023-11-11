@@ -195,7 +195,6 @@ export default function UsersContextProvider({ children }) {
                         flight._id !== flightId || flight.passengers !== passengers
                     );
                 }
-                console.log(updatedUser);
                 SetCurrentUser(updatedUser);
                 return updatedUser;
             }
@@ -209,13 +208,14 @@ export default function UsersContextProvider({ children }) {
             if (user._id === currentUser._id) {
                 let updatedUser = { ...user };
                 if (action === 'save') {
-                    updatedUser.savedHotels.push(hotelId);
+                    updatedUser.savedHotels.push({_id: hotelId, rooms: rooms});
                 } else if (action === 'remove') {
                     updatedUser.savedHotels = updatedUser.savedHotels.filter(hotel =>
-                        hotel._id !== hotelId || hotel.rooms !== rooms
+                        hotel._id !== hotelId
                     );
                 }
                 SetCurrentUser(updatedUser);
+                console.log(updatedUser.savedHotels.length);
                 return updatedUser;
             }
             return user;

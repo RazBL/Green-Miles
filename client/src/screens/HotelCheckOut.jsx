@@ -12,7 +12,6 @@ LogBox.ignoreLogs(['Warning: componentWillReceiveProps has been renamed']);
 // Import the necessary contexts
 import { UsersContext } from '../context/UsersContext';
 import { HotelsContext } from '../context/HotelsContext';
-import { toUpper } from 'lodash';
 
 const HotelCheckOut = ({ route, navigation }) => {
     const theme = useTheme();
@@ -145,12 +144,12 @@ const HotelCheckOut = ({ route, navigation }) => {
                         <Card.Content style={styles(theme).cardContentInfo}>
                             <View >
                                 <Text style={styles(theme).text}>Location <Text style={styles(theme).montserratBold}>{hotel.city}</Text></Text>
-                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>Checkin: {hotel.rooms.availability.from.substring(0, 10)} </Text>
-                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>CheckOut: {hotel.rooms.availability.to.substring(0, 10)} </Text>
-                                <Text style={styles(theme).text}> Rooms: {rooms}</Text>
-                                <Text style={styles(theme).text}> Price :  <Text style={styles(theme).montserratBold}>{hotel.price_per_night} $ </Text></Text>
-                                <Text style={styles(theme).text}> Total Nights: {totalNights}</Text>
-                                <Text style={styles(theme).text}> Total Price: {totalNights * hotel.price_per_night}</Text>
+                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>Checkin <Text style={{fontFamily: 'Montserrat_Bold'}}>{hotel.rooms.availability.from.substring(0, 10)}</Text> </Text>
+                                <Text style={[styles(theme).montserratBold, styles(theme).text]}>CheckOut <Text style={{fontFamily: 'Montserrat_Bold'}}>{hotel.rooms.availability.to.substring(0, 10)} </Text></Text>
+                                <Text style={styles(theme).text}> Rooms <Text style={{fontFamily: 'Montserrat_Bold'}}>{rooms}</Text></Text>
+                                <Text style={styles(theme).text}> Price Per Night <Text style={styles(theme).montserratBold}>${rooms ? hotel.price_per_night * rooms : hotel.price_per_night } </Text></Text>
+                                <Text style={styles(theme).text}> Total Nights <Text style={{fontFamily: 'Montserrat_Bold'}}>{totalNights}</Text></Text>
+                                <Text style={styles(theme).text}> Total Price <Text style={{fontFamily: 'Montserrat_Bold'}}>${totalNights * hotel.price_per_night}</Text></Text>
                             </View>
                         </Card.Content>
                     </Card>

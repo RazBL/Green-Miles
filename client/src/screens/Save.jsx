@@ -38,10 +38,9 @@ export default function Save({ navigation }) {
       SetSavedFlights(enrichedSavedFlights);
     }
     if (currentUser && currentUser.savedHotels) {
-      console.log("hi its me saved hotels");
-      const enrichedSavedHotels = currentUser.savedHotels.map(savedHotel =>{
+      const enrichedSavedHotels = currentUser.savedHotels.map(savedHotel => {
         const matchedHotel = hotels.find(hotel => hotel._id == savedHotel._id);
-        return {...matchedHotel, rooms: savedHotel.rooms};
+        return { ...matchedHotel, rooms: savedHotel.rooms };
       });
       console.log("saved hotels", enrichedSavedHotels);
       SetSavedHotels(enrichedSavedHotels);
