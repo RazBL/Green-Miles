@@ -58,6 +58,8 @@ const HotelCheckOut = ({ route, navigation }) => {
 
             if (rooms) { roomsToBook = rooms; }
 
+            console.log(roomsToBook);
+
             totalPrice = totalNights * hotel.price_per_night; 4
             console.log("before ordering the hotel")
             HotelBooking(totalPrice, currentUser, localTime, localDate, hotel, roomsToBook, totalNights);

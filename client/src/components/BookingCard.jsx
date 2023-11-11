@@ -5,11 +5,14 @@ import React from 'react'
 
 export default function BookingCard({ item }) {
     const theme = useTheme();
+
+    console.log(item);
+
     return (
         <Card style={styles(theme).cardContainer}>
-           <Card.Cover
-                 style={styles(theme).imgContainer}
-                  source={item.passangers ? require('../images/flight2.jpg') : { uri: item.hotelImage }}
+            <Card.Cover
+                style={styles(theme).imgContainer}
+                source={item.passangers ? require('../images/flight2.jpg') : { uri: item.hotelImage }}
             />
 
             <Card.Content style={{ margin: 10 }}>
@@ -18,6 +21,14 @@ export default function BookingCard({ item }) {
                 <Text style={styles(theme).text}>Date Booked: <Text style={styles(theme).boldText}>{item.bookingTime.date}</Text></Text>
                 <Text style={styles(theme).text}>Time Booked: <Text style={styles(theme).boldText}>{item.bookingTime.time}</Text></Text>
                 <Text style={styles(theme).text}>Total Price: <Text style={styles(theme).boldText}>${item.price}</Text></Text>
+                {
+                    item.rooms ? (
+                        <Text style={styles(theme).text}>{item.rooms < 2 ? "Room" : "Rooms"} <Text style={styles(theme).boldText}>{item.rooms}</Text></Text>
+                    ) :
+                        <Text style={styles(theme).text}>
+                            {item.passangers < 2 ? "Passenger" : "Passengers"} <Text style={styles(theme).boldText}>{item.passangers}</Text>
+                        </Text>
+                }
             </Card.Content>
         </Card>
     )

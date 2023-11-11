@@ -127,7 +127,7 @@ const HotelDetails = ({ route }) => {
           </Text>
           {/* <Text style={styles(theme).infoTitle}> Total Price: {totalNights*hotel.price_per_night}</Text>*/}
 
-          <Text style={styles(theme).infoTitle}>Price per night <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${hotel.price_per_night}</Text></Text>
+          <Text style={styles(theme).infoTitle}>Price per night <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>${rooms ? hotel.price_per_night* rooms : hotel.price_per_night}</Text></Text>
           <Text style={styles(theme).infoTitle}>Rooms : <Text style={[styles(theme).price, { fontFamily: 'Montserrat_Medium', fontSize: 17 }]}>{rooms ? rooms : 1}</Text></Text>
 
 
