@@ -5,16 +5,9 @@ import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import { AdminContext } from '../contexts/AdminContext';
-import defaultImage from '../assets/Account.png';
 
-const UsersList = () => {
-  const {users} = useContext(AdminContext);
 
-  useEffect(() => {
-
-  }, [users])
-  
-  function AdminSidebar() {
+function AdminSidebar() {
     return (
       <div>
         <Col md={3} style={TypeStyle}>
@@ -62,96 +55,103 @@ const UsersList = () => {
     );
   }
 
+
+
+
+
+export default function BookingHotels() {
+    const {hotelbooking} = useContext(AdminContext);
+    useEffect(() => {
+
+    }, [hotelbooking])
+
   return (
     <>
-      <div style={containerStyle}>
+ <div style={containerStyle}>
         <AdminSidebar />
       </div>
       <div>
         <br></br>
-        <h2>Users List</h2>
+        <h2>Booking Hotels</h2>
         <br></br>
         <br></br>
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>image</th>
-              <th>first name</th>
-              <th>last Name</th>
-              <th>Email</th>
-              <th>country</th>
+              <th>hotel Image</th>
+              <th>user_id</th>
+              <th>hotel_id</th>
+              <th>bookingTime</th>
+              <th>bookingStatus</th>
+              <th>nights_stay</th>
+              <th>price</th>
+              <th>rooms</th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
-                <tr key={user._id}>
-                <td>
-                  <img src={user.image || defaultImage} alt={``} style={{ maxWidth: '50px', maxHeight: '50px' }} /></td>                <td>{user.firstName}
-                  </td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{user.country}</td>
-                <td>
-                  <Button variant="primary">Edit</Button>{' '}
-                  <Button variant="danger">Remove</Button>
-                </td>
+            {hotelbooking.map((hotelbook) => (
+                <tr key={hotelbook._id}>
+                <td></td> 
+                <td>{hotelbook.user_id}</td>
+                <td>{hotelbook.hotel_id}</td>
               </tr>
             ))}
-          </tbody>   
+          </tbody> 
+
         </Table>
       </div>
-    </>
-  );
-};
+    
+  </>
+  )
+}
 
 const containerStyle = {
-  display: 'flex',
-  // הסגנון הנוסף שברצונך להשתמש בו
-};
-
-const logoStyle = {
-  width: '5.2rem',
-  marginBottom: '100px',
-  position: 'absolute',
-  top: 0,
-  left: 5,
-};
-
-const itemStyle = {
-  borderColor: 'white',
-  borderWidth: 10,
-  display: 'flex',
-  alignItems: 'center',
-  paddingLeft: '20px',
-  margin: '10px 0 ',
-  left: 25,
-};
-
-const sideBarStyle = {
-  backgroundColor: '#101518',
-  minHeight: '100vh', // מייחס לרקע גובה מינימלי
-  display: 'flex',
-  flexDirection: 'column', // אנחנו רוצים שהאלמנטים בתוך הסרגל יהיו בעמודה
-  top: 0,
-  left: 5,
-};
-
-const TypeStyle = {
-  width: '350px',  // כאן תגדיר את הרוחב הרצוי
-  position: 'absolute',
-  backgroundColor: '#101518',
-  minHeight: '100vh', // מייחס לרקע גובה מינימלי
-  display: 'flex',
-  flexDirection: 'column', // אנחנו רוצים שהאלמנטים בתוך הסרגל יהיו בעמודה
-  top: 0,
-  left: 5,
-};
-const rightButtonStyle = {
-  position: 'absolute',
-  right: '8px', // מניח את הכפתור בצד ימין
-  top: 40, // הוא יישאר באותו גובה כמו הלוגו
-  margin: '10px 0 ',
-};
-
-export default UsersList;
+    display: 'flex',
+    // הסגנון הנוסף שברצונך להשתמש בו
+  };
+  
+  const logoStyle = {
+    width: '5.2rem',
+    marginBottom: '100px',
+    position: 'absolute',
+    top: 0,
+    left: 5,
+  };
+  
+  const itemStyle = {
+    borderColor: 'white',
+    borderWidth: 10,
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '20px',
+    margin: '10px 0 ',
+    left: 25,
+  };
+  
+  const sideBarStyle = {
+    backgroundColor: '#101518',
+    minHeight: '100vh', // מייחס לרקע גובה מינימלי
+    display: 'flex',
+    flexDirection: 'column', // אנחנו רוצים שהאלמנטים בתוך הסרגל יהיו בעמודה
+    top: 0,
+    left: 5,
+  };
+  
+  const TypeStyle = {
+    width: '350px',  // כאן תגדיר את הרוחב הרצוי
+    position: 'absolute',
+    backgroundColor: '#101518',
+    minHeight: '100vh', // מייחס לרקע גובה מינימלי
+    display: 'flex',
+    flexDirection: 'column', // אנחנו רוצים שהאלמנטים בתוך הסרגל יהיו בעמודה
+    top: 0,
+    left: 5,
+  };
+  const rightButtonStyle = {
+    position: 'absolute',
+    right: '8px', // מניח את הכפתור בצד ימין
+    top: 40, // הוא יישאר באותו גובה כמו הלוגו
+    margin: '10px 0 ',
+  };
+  

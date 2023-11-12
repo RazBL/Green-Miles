@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Button, Container, Row, Col, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import { AdminContext } from '../contexts/AdminContext';
 
 
 function AdminSidebar() {
@@ -31,6 +32,13 @@ function AdminSidebar() {
   <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25 ,fontSize: '40px', }}>
     <Link to="/admin/Support" style={{ textDecoration: 'none', color: '#38DDA2' }}>Support</Link>
   </div>
+  <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
+            <Link to="/admin/bookinghotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Hotels</Link>
+          </div>
+
+          <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
+            <Link to="/admin/bookingflights" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Flights</Link>
+          </div>
  </Col>
      
 <Col md={3} style={rightButtonStyle}>
@@ -48,6 +56,11 @@ function AdminSidebar() {
 
 
 export default function Hotels() {
+  const { hotels } = useContext(AdminContext);
+  useEffect(() => {
+
+  }, [Hotels])
+
   return (
     
     <Container>
@@ -55,25 +68,51 @@ export default function Hotels() {
         <AdminSidebar />
       </div>
       <Row>
-        <Col md={2} className="text-center">
-        <Button variant="primary" style={{ background: '#38DDA2', marginBottom: '100px', marginTop: '60px' }}>+ Add Hotel</Button>
-        </Col>
-        <Col md={10}>
-          <h1 className="text-center">Hotels Page</h1>
+
+
+      <Col md={15} style ={{display:'flex', alignItems: 'center', flexDirection: 'column'}}>
+      <h1 className="text-center">Hotels Page</h1>
+      <Col md={2} className="text-center">
+
+        <Button variant="primary" style={{ background: '#38DDA2', marginBottom: '50px', marginTop: '50px', padding:15, borderRadius: 10, fontSize: 20 }}>Add Hotel</Button>
+      </Col>
+
+
+
           <Table striped bordered hover>
         <thead>
           <tr>
+            <th>Image</th>
             <th>Name</th>
             <th>Address</th>
             <th>Eco Rating</th>
             <th>Price per Night</th>
             <th>Country</th>
-            <th>Total Rooms</th>
+            <th>availableRooms</th>
             <th>City</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+        {hotels.map((hotel) => (
+                <tr>
+                <td>
+  <img src={hotel.image} alt={`Hotel Image`} style={{ maxWidth: '65px', maxHeight: '65px' }} />
+</td>
+
+                  <td>{hotel.name}</td>
+                  <td>{hotel.address}</td>
+                  <td>{hotel.eco_rating}</td>
+                  <td>{hotel.price_per_night}</td>
+                  <td>{hotel.country}</td>
+                  <td>{hotel.rooms.availability.availableRooms}</td>
+                  <td>{hotel.city}</td>
+                  <td>{}</td>
+                  <td><Button variant="danger">Remove</Button></td>
+                </tr>
+              ))}
+        </tbody>
 
       </Table>
         </Col>

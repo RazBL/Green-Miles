@@ -7,7 +7,11 @@ export default function AdminContextProvider({ children }) {
 
     const [currentAdmin, SetCurrentAdmin] = useState(null);
     const [users, SetUsers] = useState([]);
+    const [flights, SetFlights] = useState([]);
+    const [hotels, SetHotels] = useState([]);
+    const [hotelbooking, SetHotelbooking] = useState([]);
 
+    
     const Login = async (email, password) => {
         try {
             let res = await fetch(`${base_api}/admins/login`, {
@@ -60,8 +64,50 @@ export default function AdminContextProvider({ children }) {
         SetCurrentAdmin(null);
     };
 
+    const LoadAllFlights = async () => {
+        try {
+            let res = await fetch(`${base_api}/flights`);
+            let data = await res.json();
+            SetFlights(data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const loadAllHotels = async () => {
+        try {
+          let res = await fetch(`${base_api}/hotels`);
+          let data = await res.json();
+          SetHotels(data);
+        } catch (err) {
+          console.error(err);
+        }
+      }
+
+      const GetAllHotelBookings = async () => {
+        try {
+          const token = await AsyncStorage.getItem('userToken');
+          const res = await fetch(`${base_api}/hotels/bookings`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          if (res.ok) {
+            const data = await res.json();
+            SetHotelbooking(data);
+          }
+        } catch (error) {
+          console.log('Error:', error);
+        }
+      };
+
     useEffect(() => {
         LoadAllUsers();
+        LoadAllFlights();
+        loadAllHotels();
+        GetAllHotelBookings();
     }, [])
 
 
@@ -69,7 +115,10 @@ export default function AdminContextProvider({ children }) {
         Login,
         logOut,
         currentAdmin,
-        users
+        users,
+        flights,
+        hotels,
+        hotelbooking,
     }
 
     return (
