@@ -56,6 +56,8 @@ export default function AdminContextProvider({ children }) {
         }
     }
 
+    
+
     const logOut = () => {
         // כאן נקודת הפרידה, עליך להוסיף את הפעולות שהמשתמש יתנתק מהן, לדוגמה, מחיקת Token מה-LocalStorage.
         localStorage.removeItem('adminToken'); // הסרת Token מה-LocalStorage
@@ -86,29 +88,42 @@ export default function AdminContextProvider({ children }) {
 
       const GetAllHotelBookings = async () => {
         try {
-          const token = await AsyncStorage.getItem('userToken');
-          const res = await fetch(`${base_api}/hotels/bookings`, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`
+            const token = localStorage.getItem('adminToken');
+    
+            if (!token) {
+                console.error('Missing token');
+                return;
             }
-          });
-          
-          if (res.ok) {
-            const data = await res.json();
-            SetHotelbooking(data);
-          }
+    
+            const res = await fetch(`${base_api}/hotels/bookings`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            if (res.ok) {
+                const data = await res.json();
+                SetHotelbooking(data);
+            } else {
+                console.error('Request failed:', res.status, res.statusText);
+            }
         } catch (error) {
-          console.log('Error:', error);
+            console.error('Error:', error);
         }
-      };
-
+    };
+    
+      
+      
+      
+   
     useEffect(() => {
+        console.log(currentAdmin);
         LoadAllUsers();
         LoadAllFlights();
         loadAllHotels();
         GetAllHotelBookings();
-    }, [])
+    }, [currentAdmin])
 
 
     const value = {

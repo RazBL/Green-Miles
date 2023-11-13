@@ -9,6 +9,8 @@ import { AdminContext } from '../contexts/AdminContext';
 
 
 function AdminSidebar() {
+  const { logOut } = useContext(AdminContext);
+
     return (
       <div>
         <Col md={3} style={TypeStyle}>
@@ -44,13 +46,15 @@ function AdminSidebar() {
         </Col>
 
         <Col md={3} style={rightButtonStyle}>
-          <div>
-            <div style={{ position: 'absolute', top: 0, right: 0 }}>
-              <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
-                <Dropdown.Item href="">Logout</Dropdown.Item>
-              </DropdownButton>
-            </div>
-          </div>
+        <div>
+  <div style={{ position: 'absolute', top: 0, right: 0 }}>
+    <Link to="/">
+      <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
+        <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
+      </DropdownButton>
+    </Link>
+  </div>
+</div>
         </Col>
       </div>
     );

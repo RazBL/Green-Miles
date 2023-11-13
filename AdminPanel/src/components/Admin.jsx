@@ -53,9 +53,11 @@ export default function Admin() {
         </Col>
         <Col md={3} style={rightButtonStyle}>
           <div style={{ position: 'absolute', top: 0, right: 0 }}>
+          <Link to="/">
             <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
               <Dropdown.Item href="">Logout</Dropdown.Item>
             </DropdownButton>
+            </Link>
           </div>
         </Col>
 

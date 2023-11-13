@@ -8,6 +8,8 @@ import { AdminContext } from '../contexts/AdminContext';
 
 
 function AdminSidebar() {
+  const { logOut } = useContext(AdminContext);
+
     return (
       <div>
         <Col md={3} style={TypeStyle}>
@@ -43,13 +45,15 @@ function AdminSidebar() {
         </Col>
 
         <Col md={3} style={rightButtonStyle}>
-          <div>
-            <div style={{ position: 'absolute', top: 0, right: 0 }}>
-              <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
-                <Dropdown.Item href="">Logout</Dropdown.Item>
-              </DropdownButton>
-            </div>
-          </div>
+        <div>
+  <div style={{ position: 'absolute', top: 0, right: 0 }}>
+    <Link to="/">
+      <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
+        <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
+      </DropdownButton>
+    </Link>
+  </div>
+</div>
         </Col>
       </div>
     );
@@ -58,11 +62,10 @@ function AdminSidebar() {
 
 
 
-
 export default function BookingHotels() {
     const {hotelbooking} = useContext(AdminContext);
     useEffect(() => {
-
+          console.log(hotelbooking)
     }, [hotelbooking])
 
   return (
@@ -89,22 +92,24 @@ export default function BookingHotels() {
               <th>Action</th>
             </tr>
           </thead>
+
           <tbody>
-            {hotelbooking.map((hotelbook) => (
-                <tr key={hotelbook._id}>
-                <td></td> 
-                <td>{hotelbook.user_id}</td>
-                <td>{hotelbook.hotel_id}</td>
-              </tr>
-            ))}
+          {hotelbooking.map((bookingItem) => (
+    <tr key={bookingItem.nights_stay}>
+        <td></td>
+        <td>{bookingItem.price}</td>
+        <td>{bookingItem.rooms}</td>
+    </tr>
+))}
+
           </tbody> 
 
         </Table>
       </div>
     
   </>
-  )
-}
+  );
+};
 
 const containerStyle = {
     display: 'flex',
