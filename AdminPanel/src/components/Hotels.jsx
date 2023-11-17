@@ -7,6 +7,8 @@ import { AdminContext } from '../contexts/AdminContext';
 
 
 function AdminSidebar() {
+    const { logOut } = useContext(AdminContext);
+
   return (
     <div>
     <Col md={3} style={TypeStyle}>
@@ -41,18 +43,20 @@ function AdminSidebar() {
           </div>
  </Col>
      
-<Col md={3} style={rightButtonStyle}>
-<div>
+ <Col md={3} style={rightButtonStyle}>
+        <div>
   <div style={{ position: 'absolute', top: 0, right: 0 }}>
-    <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
-      <Dropdown.Item href="">Logout</Dropdown.Item>
-    </DropdownButton>
+    <Link to="/">
+      <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
+        <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
+      </DropdownButton>
+    </Link>
   </div>
 </div>
-</Col>
-</div>
-  );
-}
+        </Col>
+      </div>
+    );
+  }
 
 
 export default function Hotels() {
@@ -98,8 +102,8 @@ export default function Hotels() {
         {hotels.map((hotel) => (
                 <tr>
                 <td>
-  <img src={hotel.image} alt={`Hotel Image`} style={{ maxWidth: '65px', maxHeight: '65px' }} />
-</td>
+                 <img src={hotel.image} alt={`Hotel Image`} style={{ maxWidth: '65px', maxHeight: '65px' }} />
+                </td>
 
                   <td>{hotel.name}</td>
                   <td>{hotel.address}</td>

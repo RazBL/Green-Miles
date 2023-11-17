@@ -61,6 +61,7 @@ export default function Admin() {
             <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Admin">
               <Dropdown.Item href="">Logout</Dropdown.Item>
             </DropdownButton>
+            </Link>
           </div>
         </Col>
 
