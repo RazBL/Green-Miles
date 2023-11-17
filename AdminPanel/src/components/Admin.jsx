@@ -8,13 +8,18 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export default function Admin() {
-  const { logOut } = useContext(AdminContext);
+  const { logOut, currentAdmin } = useContext(AdminContext);
   const navigate = useNavigate();
 
   const handleLogOut = () => {
     logOut();
     navigate('/');
   };
+
+  useEffect(() => {
+
+  }, [])
+  
 
   return (
     <Container>
@@ -53,7 +58,7 @@ export default function Admin() {
         </Col>
         <Col md={3} style={rightButtonStyle}>
           <div style={{ position: 'absolute', top: 0, right: 0 }}>
-            <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
+            <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Admin">
               <Dropdown.Item href="">Logout</Dropdown.Item>
             </DropdownButton>
           </div>
