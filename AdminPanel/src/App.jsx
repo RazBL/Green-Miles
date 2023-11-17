@@ -6,7 +6,6 @@ import Admin from './components/Admin';
 import UsersList from './components/UsersList';
 import Hotels from './components/Hotels';
 import Flights from './components/Flights';
-import BookingHotels from './components/Bookinghotels'
 import BookingFlights from './components/BookingFlights';
 import Support from './components/Support';
 import AdminContextProvidewr from './contexts/AdminContext';
@@ -24,7 +23,6 @@ function App() {
           <Route path="/admin/flights" element={<PrivateRoute><Flights /></PrivateRoute>} />
           <Route path="/admin/users" element={<PrivateRoute><UsersList /></PrivateRoute>} />
           <Route path="/admin/support" element={<PrivateRoute><Support /></PrivateRoute>} />
-          <Route path="/admin/bookingHotels" element={<PrivateRoute><BookingHotels /></PrivateRoute>} />
           <Route path="/admin/bookingflights" element={<PrivateRoute><BookingFlights /></PrivateRoute>} />
         </Routes>
       </Router>
