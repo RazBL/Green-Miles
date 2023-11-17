@@ -26,7 +26,7 @@ UsersRoute.post('/register', async (req, res) => {
       address: ""
     };
     let newUser = await UsersModel.Register(user);
-    res.status(201).json({
+    res.status(200).json({
       message: 'Rgistration successful',
       newUser
     });
@@ -38,18 +38,34 @@ UsersRoute.post('/register', async (req, res) => {
   }
 });
 
+
+UsersRoute.get('/email-exists/:email', async (req, res) => {
+  try {
+    let email =  req.params.email;
+    console.log("email", email);
+    let userFound = await UsersModel.EmailExists(email);
+    return res.status(200).json(userFound);
+
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 UsersRoute.put('/upload-image', AuthUser, async (req, res) => {
   try {
     const image = req.body.image;
     const userId = req.user._id;
 
-   await UsersModel.SetUserImage(userId, image);
+    await UsersModel.SetUserImage(userId, image);
 
-   let updatedUser = await UsersModel.GetUser(userId);
+    let updatedUser = await UsersModel.GetUser(userId);
 
-   console.log(updatedUser);
-    
-   res.status(200).json({ message: 'Image was uploaded successfully', updatedUser: updatedUser});
+    console.log(updatedUser);
+
+    res.status(200).json({
+      message: 'Image was uploaded successfully',
+      updatedUser: updatedUser
+    });
 
   } catch (error) {
     res.status(500).json({
@@ -127,7 +143,6 @@ UsersRoute.get('/profile', AuthUser, async (req, res) => {
 
 UsersRoute.get('/:id/saved-flights', async (req, res) => {
   try {
-    console.log("i am in ");
     const userId = req.params.id;
     console.log(userId);
     const savedFlights = await UsersModel.GetSavedFlights(userId);
@@ -204,14 +219,18 @@ UsersRoute.put('/change-password', AuthUser, async (req, res) => {
 
     console.log(isCurrentPasswordCorrect);
     if (!isCurrentPasswordCorrect) {
-      return res.status(400).json({ error: 'Current password is incorrect' });
+      return res.status(400).json({
+        error: 'Current password is incorrect'
+      });
     }
 
-   const differntPassword = await UsersModel.VerifyCurrentPassword(userId,  newPassword)
-   console.log(differntPassword);
+    const differntPassword = await UsersModel.VerifyCurrentPassword(userId, newPassword)
+    console.log(differntPassword);
 
-    if(differntPassword){
-      return res.status(400).json({ error: 'New password must be different from current password' });
+    if (differntPassword) {
+      return res.status(400).json({
+        error: 'New password must be different from current password'
+      });
 
     }
 
@@ -271,7 +290,7 @@ UsersRoute.put('/save-hotel', AuthUser, async (req, res) => {
     const hotelId = req.body.hotel._id;
     const rooms = req.body.rooms;
     console.log("i am");
-    const updatedUser = await UsersModel.SaveHotel(userEmail, hotelId,rooms);
+    const updatedUser = await UsersModel.SaveHotel(userEmail, hotelId, rooms);
 
     res.status(200).json({
       success: true,

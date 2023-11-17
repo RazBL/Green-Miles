@@ -264,3 +264,8 @@ Content-Type: application/json
 ###
 
 GET https://greenmiles.onrender.com/api/hotels/search?country=Israel&checkInDate=2023-08-01&checkOutDate=2023-08-10&rooms=51
+
+
+###
+
+GET http://localhost:3500/api/users/email-exists/basel@gmail.com
