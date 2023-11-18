@@ -21,6 +21,7 @@ const UsersList = () => {
 
   const EditProfile = () => {
     if(InputHandler()){
+      console.log(selectedUser);
       EditUserProfile(selectedUser);
       HandleEditClose();
       alert("yay");

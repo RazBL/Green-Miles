@@ -65,7 +65,6 @@ export default function AdminContextProvider({ children }) {
 
     const EditUserProfile = async (editedUser) => {
         try {
-            console.log(editedUser._id);
             const token = localStorage.getItem('adminToken');
             let res = await fetch(`${base_api}/admins/edit-user/${editedUser._id}`, {
                 method: 'PUT',
@@ -73,14 +72,12 @@ export default function AdminContextProvider({ children }) {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    editedUser: editedUser
-                })
-            });
+                body: JSON.stringify({ editedUser: editedUser }),
+            });    
             let data = await res.json();
             console.log(data);
-
             LoadAllUsers();
+
         } catch (error) {
             console.log(error);
         }
