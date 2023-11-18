@@ -11,7 +11,7 @@ export default function AdminContextProvider({ children }) {
     const [hotels, SetHotels] = useState([]);
     const [hotelbooking, SetHotelbooking] = useState([]);
 
-    
+
     const Login = async (email, password) => {
         try {
             let res = await fetch(`${base_api}/admins/login`, {
@@ -22,11 +22,11 @@ export default function AdminContextProvider({ children }) {
                 body: JSON.stringify({
                     email: email,
                     password: password,
+                    role: 'admin'
                 }),
             });
 
-
-            const data = await res.json();  // <-- Extract data from response here
+            const data = await res.json();
 
             if (!res.ok) {
                 console.log(`Error is: ${data.error}`);
@@ -46,9 +46,35 @@ export default function AdminContextProvider({ children }) {
         }
     };
 
+    const AuthAdmin = async () => {
+        try {
+            const token = localStorage.getItem('adminToken');
+            let res = await fetch(`${base_api}/admins/auth`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            let data = await res.json();
+
+            return data;
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     const LoadAllUsers = async () => {
         try {
-            let res = await fetch(`${base_api}/users`);
+            const token = localStorage.getItem('adminToken');
+            let res = await fetch(`${base_api}/admins/users`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
             let data = await res.json();
             SetUsers(data);
         } catch (err) {
@@ -56,7 +82,55 @@ export default function AdminContextProvider({ children }) {
         }
     }
 
-    
+    const DeleteUserAccount = async (user) => {
+        try {
+            let res = await fetch(`${base_api}/users/delete/${user._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+            )
+
+            let data = await res.json();
+            LoadAllUsers();
+            return data;
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const EditUserProfile = async (selectedUser) => {
+        try {
+            let editedUser = {
+                country: selectedUser.country,
+                email: selectedUser.email,
+                firstName: selectedUser.firstName,
+                lastName: selectedUser.lastName,
+                password: selectedUser.password,
+            }
+            console.log(editedUser);
+
+            console.log(editedUser.password);
+            const token = localStorage.getItem('adminToken');
+            let res = await fetch(`${base_api}/admins/edit-user/${selectedUser._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ editedUser: editedUser }),
+            });
+            let data = await res.json();
+            console.log(data);
+            LoadAllUsers();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 
     const logOut = () => {
         // כאן נקודת הפרידה, עליך להוסיף את הפעולות שהמשתמש יתנתק מהן, לדוגמה, מחיקת Token מה-LocalStorage.
@@ -78,30 +152,30 @@ export default function AdminContextProvider({ children }) {
 
     const loadAllHotels = async () => {
         try {
-          let res = await fetch(`${base_api}/hotels`);
-          let data = await res.json();
-          SetHotels(data);
+            let res = await fetch(`${base_api}/hotels`);
+            let data = await res.json();
+            SetHotels(data);
         } catch (err) {
-          console.error(err);
+            console.error(err);
         }
-      }
+    }
 
-      const GetAllHotelBookings = async () => {
+    const GetAllHotelBookings = async () => {
         try {
             const token = localStorage.getItem('adminToken');
-    
+
             if (!token) {
                 console.error('Missing token');
                 return;
             }
-    
+
             const res = await fetch(`${base_api}/hotels/bookings`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
-    
+
             if (res.ok) {
                 const data = await res.json();
                 SetHotelbooking(data);
@@ -112,11 +186,11 @@ export default function AdminContextProvider({ children }) {
             console.error('Error:', error);
         }
     };
-    
-      
-      
-      
-   
+
+
+
+
+
     useEffect(() => {
         console.log(currentAdmin);
         LoadAllUsers();
@@ -134,6 +208,9 @@ export default function AdminContextProvider({ children }) {
         flights,
         hotels,
         hotelbooking,
+        EditUserProfile,
+        AuthAdmin,
+        DeleteUserAccount
     }
 
     return (

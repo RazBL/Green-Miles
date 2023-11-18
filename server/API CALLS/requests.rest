@@ -264,3 +264,59 @@ Content-Type: application/json
 ###
 
 GET https://greenmiles.onrender.com/api/hotels/search?country=Israel&checkInDate=2023-08-01&checkOutDate=2023-08-10&rooms=51
+
+
+###
+
+GET http://localhost:3500/api/users/email-exists/basel@gmail.com
+
+###
+
+GET http://localhost:3500/api/admins/users
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUxNTZjNzQ5MGUwNzZiYmI5YWE4ZWMiLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6ImJhbG91bCIsInBhc3N3b3JkIjoiJDJhJDEwJHNrN0dNWHlwTTNUVi94R2F3cHRWMWU1VUpIVFUwaHgvaDI5MDBuTGNFMC40akU0bjV0WTBTIiwiZW1haWwiOiJhZG1pbnJhekBnbWFkbWluLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDI3MjYyMiwiZXhwIjoxNzAwMjc2MjIyfQ.oXMyLE9a1tIiF0BEEITD9jJ-jIXxJ8lEAuGY4hOrBB8
+
+
+###
+
+POST http://localhost:3500/api/admins/login
+Content-Type: application/json
+
+{
+  "email": "adminraz@gmadmin.com",
+  "password": "baselbasel",
+  "role": "admin"
+}
+
+###
+
+DELETE  http://localhost:3500/api/users/delete/65580b5cd23c8262ba7010e8
+
+###
+
+PUT https://greenmiles.onrender.com/api/admins/edit-user/65582580c8167ab55587d1e9
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUxNTZjNzQ5MGUwNzZiYmI5YWE4ZWMiLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6ImJhbG91bCIsInBhc3N3b3JkIjoiJDJhJDEwJHNrN0dNWHlwTTNUVi94R2F3cHRWMWU1VUpIVFUwaHgvaDI5MDBuTGNFMC40akU0bjV0WTBTIiwiZW1haWwiOiJhZG1pbnJhekBnbWFkbWluLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDI4MzIyNCwiZXhwIjoxNzAwMjg2ODI0fQ.sow3voww-RE4epqPfqbYtidysAAwkcAbKJXBciPneHY
+
+{
+  "editedUser": {
+    "address": "somewhere in israel",
+    "city": "holon",
+    "country": "israel",
+    "email": "raziel@gmail.com",
+    "firstName": "Raz",
+    "image": "",
+    "lastName": "Razzy",
+    "password": "Razraz!",
+    "phoneNumber": "newPhoneNumber2",
+    "savedFlights": [],
+    "savedHotels": []
+  }
+}
+
+
+###
+
+GET  http://localhost:3500/api/admins/auth
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUxNTZjNzQ5MGUwNzZiYmI5YWE4ZWMiLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6ImJhbG91bCIsInBhc3N3b3JkIjoiJDJhJDEwJHNrN0dNWHlwTTNUVi94R2F3cHRWMWU1VUpIVFUwaHgvaDI5MDBuTGNFMC40akU0bjV0WTBTIiwiZW1haWwiOiJhZG1pbnJhekBnbWFkbWluLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDMyMDgwMCwiZXhwIjoxNzAwNDA3MjAwfQ.q8aAcHyjagqER9KdpZpr1whFG6IqWqbN52tHZW-Nkps

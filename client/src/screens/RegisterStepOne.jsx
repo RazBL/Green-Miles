@@ -20,8 +20,8 @@ export default function RegisterStepOne({ navigation }) {
     navigation.navigate('Login');
   }
 
-  const RegisterHandler = () => {
-    if (IsInputValid()) {
+  const RegisterHandler = async() => {
+    if (await IsInputValid()) {
       let lowerCaseEmail = email.toLowerCase();
 
       let user = {
@@ -30,8 +30,7 @@ export default function RegisterStepOne({ navigation }) {
         email: lowerCaseEmail,
         password: password
       }
-
-      if (RegisterUser(user)) {
+      if (await RegisterUser(user)) {
         alert("User was created successfully!");
         navigation.navigate('Login');
       }
@@ -41,31 +40,33 @@ export default function RegisterStepOne({ navigation }) {
     }
   }
 
-  const IsInputValid = () => {
+  const IsInputValid = async() => {
 
     let isValid = true;
+    let lowerCaseEmail = email.toLowerCase();
 
     if (!email || !password || !firstName || !lastName) {
       alert('Input is required!');
       isValid = false;
-
     }
-    else if (EmailExists(email)) {
-      alert('Email already exist')
-      isValid = false;
-    }
-    else if (!CheckValidEmail(email)) {
-      alert('Invalid email');
+    else if (await EmailExists(lowerCaseEmail)) {
+      alert('Email already exist');
       isValid = false;
     }
     else if (!(/^(?=.*[A-Z])(?=.*[!@#$%^&*]).+$/.test(password))) {
       alert("Ensure your password has one capital letter and one unique symbol");
       isValid = false;
     }
-    else if(password.length < 7){
+    else if (password.length < 7) {
       alert("Password length has to contain 7 letters or more.");
       isValid = false;
     }
+    else if (!CheckValidEmail(email)) {
+      alert('Invalid email');
+      isValid = false;
+    }
+
+
     return isValid;
   }
 

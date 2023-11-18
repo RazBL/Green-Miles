@@ -32,7 +32,7 @@ export default function Login({ navigation }) {
           });
         }
       }
-      else if (EmailExists(email)) {
+      else if (await EmailExists(email)) {
         alert("Incorrect Password")
       }
       else {

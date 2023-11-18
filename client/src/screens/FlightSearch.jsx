@@ -25,8 +25,6 @@ export default function FlightSearch({ navigation }) {
     const [openOrigin, SetOpenOrigin] = useState(false);
     const [openDestination, SetOpenDestination] = useState(false);
 
-
-
     const IncrementPassengers = () => {
         if (passengers < MAX_PASSENGERS) SetPassengers(passengers + 1);
     };
@@ -44,13 +42,11 @@ export default function FlightSearch({ navigation }) {
         SetDatePickerVisibility(Platform.OS === 'ios');
     };
 
-    const HandleFlightSearch = () => {
+    const HandleFlightSearch = async () => {
         if (!isInputValid()) { return }
-
         const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
         const originAirport = selectedLocation.split(" - ")[0];
         const destinationAirport = selectedDestination.split(" - ")[0];
-
         let query = {
             destinationAirport: destinationAirport,
             originAirport: originAirport,
@@ -58,7 +54,7 @@ export default function FlightSearch({ navigation }) {
             availableSeats: passengers
         };
 
-        FlightSearchResults(query);
+        await FlightSearchResults(query);
         navigation.navigate('Flight Search Results', { passengers: passengers });
     }
 

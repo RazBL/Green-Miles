@@ -6,20 +6,10 @@ export const UsersContext = createContext();
 
 export default function UsersContextProvider({ children }) {
 
-    const [users, SetUsers] = useState([]);
     const [currentUser, SetCurrentUser] = useState(null);
     const [countries, SetCountries] = useState([]);
     const [savedFlights, SetSavedFlights] = useState([]);
 
-    const LoadAllUsers = async () => {
-        try {
-            let res = await fetch(`${base_api}/users`);
-            let data = await res.json();
-            SetUsers(data);
-        } catch (err) {
-            console.error(err);
-        }
-    }
 
     const GetAllCountriesAndCities = () => {
         const countries = cc.getCountries();
@@ -45,9 +35,10 @@ export default function UsersContextProvider({ children }) {
             }
 
             let data = await res.json();
-            console.log(data);
-            LoadAllUsers();
-            SetCurrentUser(data);
+            console.log("this is data", data);
+            if (data)
+                SetCurrentUser(data);
+
 
         } catch (error) {
             console.log(error);
@@ -66,13 +57,31 @@ export default function UsersContextProvider({ children }) {
             });
             let data = await res.json();
             if (data) {
-                await LoadAllUsers();
                 return true;
             }
         } catch (err) {
             console.log(err);
         }
     }
+
+    const DeleteUserAccount = async () => {
+        try {
+          console.log(currentUser._id);
+          let res = await fetch(`${base_api}/users/delete/${currentUser._id}`, {
+            method: 'DELETE',
+          });
+      
+          if (res.ok) {
+            let data = await res.json();
+            console.log(data);
+          } else {
+            console.log(`Error deleting user. Status: ${res.status}`);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      
 
     const Login = async (email, password) => {
         try {
@@ -139,7 +148,6 @@ export default function UsersContextProvider({ children }) {
             }
 
             console.log("Password change worked");
-            LoadAllUsers();
             SetCurrentUser(data);
             return true;
 
@@ -185,42 +193,27 @@ export default function UsersContextProvider({ children }) {
 
 
     const UpdateUserFlightsInState = (flightId, passengers, action) => {
-        const updatedUsers = users.map(user => {
-            if (user._id === currentUser._id) {
-                let updatedUser = { ...user };
-                if (action === 'save') {
-                    updatedUser.savedFlights.push({ _id: flightId, passengers: passengers });
-                } else if (action === 'remove') {
-                    updatedUser.savedFlights = updatedUser.savedFlights.filter(flight =>
-                        flight._id !== flightId || flight.passengers !== passengers
-                    );
-                }
-                SetCurrentUser(updatedUser);
-                return updatedUser;
-            }
-            return user;
-        });
-        SetUsers(updatedUsers);
+        let updatedUser = { ...currentUser };
+        if (action === 'save') {
+            updatedUser.savedFlights.push({ _id: flightId, passengers: passengers });
+        } else if (action === 'remove') {
+            updatedUser.savedFlights = updatedUser.savedFlights.filter(flight =>
+                flight._id !== flightId || flight.passengers !== passengers
+            );
+        }
+        SetCurrentUser(updatedUser);
     }
 
     const UpdateUserHotelsInState = (hotelId, action, rooms) => {
-        const updatedUsers = users.map(user => {
-            if (user._id === currentUser._id) {
-                let updatedUser = { ...user };
-                if (action === 'save') {
-                    updatedUser.savedHotels.push({_id: hotelId, rooms: rooms});
-                } else if (action === 'remove') {
-                    updatedUser.savedHotels = updatedUser.savedHotels.filter(hotel =>
-                        hotel._id !== hotelId
-                    );
-                }
-                SetCurrentUser(updatedUser);
-                console.log(updatedUser.savedHotels.length);
-                return updatedUser;
-            }
-            return user;
-        });
-        SetUsers(updatedUsers);
+        let updatedUser = { ...currentUser };
+        if (action === 'save') {
+            updatedUser.savedHotels.push({ _id: hotelId, rooms: rooms });
+        } else if (action === 'remove') {
+            updatedUser.savedHotels = updatedUser.savedHotels.filter(hotel =>
+                hotel._id !== hotelId
+            );
+        }
+        SetCurrentUser(updatedUser);
     }
 
     const SaveFlight = async (flight, passengers, navigation) => {
@@ -391,7 +384,7 @@ export default function UsersContextProvider({ children }) {
             return undefined;
         }
         let savedFlights = currentUser.savedFlights;
-        let flightFound = savedFlights.find(flight => flight._id === flightId && passengers === flight.passengers );
+        let flightFound = savedFlights.find(flight => flight._id === flightId && passengers === flight.passengers);
         return flightFound;
     }
 
@@ -416,9 +409,23 @@ export default function UsersContextProvider({ children }) {
     };
 
 
-    const EmailExists = (email) => {
-        let userFound = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-        return userFound;
+    const EmailExists = async (email) => {
+        try {
+            console.log(email);
+            let res = await fetch(`${base_api}/users/email-exists/${email}`);
+
+            if (!res.ok) {
+                console.error('Error Checking if Email exists');
+                return null;
+            }
+
+            let data = await res.json();
+            return data;
+
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     const CheckValidEmail = (email) => {
@@ -427,15 +434,12 @@ export default function UsersContextProvider({ children }) {
 
 
     useEffect(() => {
-        LoadAllUsers();
         GetAllCountriesAndCities();
     }, []);
 
 
 
     const value = {
-        users,
-        SetUsers,
         Login,
         EmailExists,
         CheckValidEmail,
@@ -455,7 +459,8 @@ export default function UsersContextProvider({ children }) {
         currentUser,
         EditProfile,
         ChangeUserPassword,
-        UploadProfilePicture
+        UploadProfilePicture,
+        DeleteUserAccount
     }
 
     return (

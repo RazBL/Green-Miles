@@ -1,6 +1,5 @@
 const DB = require('../utils/db');
 const bcrypt = require('react-native-bcrypt');
-const jwt = require("jsonwebtoken");
 const {
     ObjectId
 } = require('mongodb');
@@ -47,7 +46,7 @@ class UsersModel {
     }
 
     static async DeleteUser(userId) {
-        let query ={
+        let query = {
             _id: new ObjectId(userId)
         }
         await new DB().DeleteOne('users', query);
@@ -58,6 +57,18 @@ class UsersModel {
         let hashedPassword = bcrypt.hashSync(user.password, salt);
         user.password = hashedPassword;
         return await new DB().InsertDocument(user, 'users');
+    }
+
+    static async EmailExists(email) {
+        let query = {
+            email: email
+        }
+        let userFound = await new DB().FindOne(query, 'users');
+        if (userFound) {
+            return true;
+        }
+
+        return false;
     }
 
     static async Login(email, password) {
@@ -81,23 +92,23 @@ class UsersModel {
         let query = {
             "email": userEmail
         };
-    
+
         let flightObject = {
             _id: flightId,
             passengers: passengers
         };
-    
+
         let update = {
             "$addToSet": {
                 "savedFlights": flightObject
             }
         };
-    
+
         return await new DB().UpdateOne("users", query, update);
     }
-    
 
-    static async SetUserImage(userId, image){
+
+    static async SetUserImage(userId, image) {
         let query = {
             "_id": new ObjectId(userId)
         }
@@ -126,7 +137,7 @@ class UsersModel {
             _id: flightId,
             passengers: passengers
         };
-    
+
 
         let update = {
             "$pull": {
@@ -163,7 +174,7 @@ class UsersModel {
         }
 
         console.log(update);
-        
+
         return await new DB().UpdateOne("users", query, update)
     }
 
@@ -186,19 +197,19 @@ class UsersModel {
     }
 
 
-    static async GetUser(currentUserId){
+    static async GetUser(currentUserId) {
         let query = {
             "_id": new ObjectId(currentUserId)
         }
         return await new DB().FindOne(query, "users");
     }
-    
 
-    static async VerifyCurrentPassword(currentUserId, password){
+
+    static async VerifyCurrentPassword(currentUserId, password) {
         let query = {
             "_id": new ObjectId(currentUserId)
         }
-        let user =  await new DB().FindOne(query, "users");
+        let user = await new DB().FindOne(query, "users");
         return bcrypt.compareSync(password, user.password)
 
     }
@@ -208,16 +219,16 @@ class UsersModel {
         let query = {
             "_id": new ObjectId(currentUserId)
         }
-    
+
         let update = {
             $set: {
                 ...editedUser
             }
         }
-    
+
         await new DB().UpdateOne("users", query, update);
     }
-    
+
 
     static async UnsaveHotel(userEmail, hotelId) {
         let query = {
