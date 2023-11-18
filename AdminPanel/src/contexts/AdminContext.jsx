@@ -47,6 +47,26 @@ export default function AdminContextProvider({ children }) {
         }
     };
 
+    const AuthAdmin = async () => {
+        try {
+            const token = localStorage.getItem('adminToken');
+            let res = await fetch(`${base_api}/admins/auth`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            let data = await res.json();
+
+            return data;
+
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
     const LoadAllUsers = async () => {
         try {
             const token = localStorage.getItem('adminToken');
@@ -167,7 +187,8 @@ export default function AdminContextProvider({ children }) {
         flights,
         hotels,
         hotelbooking,
-        EditUserProfile
+        EditUserProfile,
+        AuthAdmin
     }
 
     return (

@@ -34,12 +34,22 @@ AdminRoute.post('/login', async (req, res) => {
   }
 });
 
+AdminRoute.get('/auth', AuthAdmin, async (req, res) => {
+  try {
+    res.status(200).json({
+      auth: true
+    });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 AdminRoute.put('/edit-user/:id', AuthAdmin, async (req, res) => {
   try {
 
     const currentUserId = req.params.id
     const editedUser = req.body.editedUser
-    
+
     await AdminModel.UpdateUserDetails(currentUserId, editedUser);
 
     const updatedUser = await UsersModel.GetUser(currentUserId);

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-
-const CheckAuthToken = () => {
-    const token = localStorage.getItem('adminToken');
-    console.log("Token exists:", token !== null); // Add this line for debugging
-    return token !== null;
-};
+import { AdminContext } from '../contexts/AdminContext';
 
 export default function PrivateRoute({children}) {
+
+    const {AuthAdmin} = useContext(AdminContext)
+
+    const CheckAuthToken = () => {
+        AuthAdmin();
+    };
+
     return CheckAuthToken() ? children : <Navigate to="/" />;
 }
