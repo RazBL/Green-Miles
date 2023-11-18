@@ -12,7 +12,7 @@ import HotelPreviewCard from '../components/HotelPreviewCard';
 //Contexts
 import { HotelsContext } from '../context/HotelsContext';
 
-export default function Home({ navigation, route}) {
+export default function Home({ navigation, route }) {
   //Context
   const { hotels } = useContext(HotelsContext);
   const moveToTab = useContext(TabOffsetContext);
@@ -38,7 +38,8 @@ export default function Home({ navigation, route}) {
 
   useEffect(() => {
     GetHighestEcoRatedHotels();
-  }, [])
+  }, [hotels])
+
 
   return (
     <ScrollView style={styles(theme).container}>

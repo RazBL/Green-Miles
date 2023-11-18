@@ -67,8 +67,10 @@ const HotelDetails = ({ route }) => {
 
 
   useEffect(() => {
-    isHotelSaved();
-  }, [currentUser, currentUser.savedHotels])
+    if(currentUser){
+      isHotelSaved();
+    }
+  }, [currentUser, currentUser?.savedHotels])
 
   return (
     <View style={styles(theme).container}>

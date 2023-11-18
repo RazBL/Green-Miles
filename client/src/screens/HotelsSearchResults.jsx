@@ -73,7 +73,7 @@ export default function HotelSearchResults({ navigation, route }) {
 
   useEffect(() => {
     SetDisplayedHotels(FilterAndSortHotels());
-  }, [searchedHotels, selectedPriceOptionIndex, ecoRatingFilter, selectedSorteOptionIndex, currentUser.savedHotels]);
+  }, [searchedHotels, selectedPriceOptionIndex, ecoRatingFilter, selectedSorteOptionIndex, currentUser?.savedHotels]);
 
   return (<>
     <View style={styles(theme).container}>
