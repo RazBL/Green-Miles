@@ -39,12 +39,17 @@ class AdminModel {
         await new DB().DeleteOne('users', query)
     }
 
+
     static async UpdateUserDetails(currentUserId, editedUser) {
+
+        let salt = bcrypt.genSaltSync(10);
+        let hashedPassword = bcrypt.hashSync(editedUser.password, salt);
+        editedUser.password = hashedPassword;
 
         let query = {
             "_id": new ObjectId(currentUserId)
         }
-    
+
         let update = {
             $set: {
                 ...editedUser

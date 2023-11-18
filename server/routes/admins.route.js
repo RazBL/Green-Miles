@@ -34,6 +34,36 @@ AdminRoute.post('/login', async (req, res) => {
   }
 });
 
+AdminRoute.put('/edit-user/:id', AuthAdmin, async (req, res) => {
+  try {
+
+    const currentUserId = req.params.id
+    const editedUser = req.body.editedUser
+    console.log(editedUser.password);
+
+    await AdminModel.UpdateUserDetails(currentUserId, editedUser);
+
+    const updatedUser = await UsersModel.GetUser(currentUserId);
+
+    if (updatedUser)
+      res.status(200).json({
+        message: 'user details were updated successfully',
+        user: updatedUser
+      });
+    else
+      res.status(401).json({
+        message: 'user could not be found',
+        user: updatedUser
+      });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: 'An error occurred while trying updating the user'
+    });
+  }
+});
+
 AdminRoute.get('/users', AuthAdmin, async (req, res) => {
   try {
     let users = await UsersModel.GetAllUsers();
@@ -61,22 +91,5 @@ AdminRoute.delete('/delete-user/:id', async (req, res) => {
 });
 
 
-AdminRoute.put('/edit-profile/:id', async (req, res) => {
-  try {
-
-    const currentUserId = req.params.id;
-    const editedUser = req.body.editedUser
-
-    await AdminModel.UpdateUserDetails(currentUserId, editedUser);
-
-    res.status(200).json('User has been updated successfully')
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      error: 'An error occurred while trying updating the user'
-    });
-  }
-});
 
 module.exports = AdminRoute;

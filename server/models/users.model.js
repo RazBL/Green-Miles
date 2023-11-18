@@ -1,6 +1,5 @@
 const DB = require('../utils/db');
 const bcrypt = require('react-native-bcrypt');
-const jwt = require("jsonwebtoken");
 const {
     ObjectId
 } = require('mongodb');
