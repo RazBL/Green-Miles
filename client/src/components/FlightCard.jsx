@@ -49,7 +49,7 @@ export default function FlightCard({ flight, navigation, passengers }) {
 
     useEffect(() => {
         IsFlightSaved();
-    }, [currentUser, currentUser.savedFlights]);
+    }, [currentUser, currentUser?.savedFlights]);
 
 
     return (

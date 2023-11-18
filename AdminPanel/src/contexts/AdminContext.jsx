@@ -110,6 +110,9 @@ export default function AdminContextProvider({ children }) {
                 lastName: selectedUser.lastName,
                 password: selectedUser.password,
             }
+            console.log(editedUser);
+
+            console.log(editedUser.password);
             const token = localStorage.getItem('adminToken');
             let res = await fetch(`${base_api}/admins/edit-user/${selectedUser._id}`, {
                 method: 'PUT',

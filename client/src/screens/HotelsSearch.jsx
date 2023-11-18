@@ -59,7 +59,7 @@ export default function HotelSearch({route,  navigation }) {
     }
   };
 
-  const HandleHotelSearch = () => {
+  const HandleHotelSearch = async() => {
     if (!isInputValid()) return;
   
     const formattedCheckInDate = checkInDate.toISOString().split('T')[0];
@@ -72,7 +72,7 @@ export default function HotelSearch({route,  navigation }) {
       rooms: rooms
     };
   
-    HotelSearchResults(query);
+    await HotelSearchResults(query);
     navigation.navigate('Hotel Search Results', { rooms: rooms });
   };
   

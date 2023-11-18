@@ -17,12 +17,15 @@ const UsersList = () => {
   const CloseEdit = () => {
     SetShowEditModal(false);
     SetSelectedUser(null);
+    SetPassword("");
   };
 
-  const EditProfile = () => {
+  const EditProfile = async () => {
     if (InputHandler()) {
-      EditUserProfile(selectedUser);
-      HandleEditClose();
+      let edited = await EditUserProfile(selectedUser);
+      CloseEdit();
+      alert('Account details were changed successfully');
+
     }
   };
 
