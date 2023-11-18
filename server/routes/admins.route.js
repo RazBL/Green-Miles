@@ -39,7 +39,7 @@ AdminRoute.put('/edit-user/:id', AuthAdmin, async (req, res) => {
 
     const currentUserId = req.params.id
     const editedUser = req.body.editedUser
-
+    
     await AdminModel.UpdateUserDetails(currentUserId, editedUser);
 
     const updatedUser = await UsersModel.GetUser(currentUserId);

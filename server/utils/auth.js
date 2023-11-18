@@ -48,7 +48,7 @@ function GenerateToken(doc) {
 
 function GenerateTokenAdmin(doc, role) {
   const token = jwt.sign({...doc, role}, process.env.SECRET_KEY, {
-      expiresIn: '1H'
+      expiresIn: '24H'
   });
   return token;
 }
