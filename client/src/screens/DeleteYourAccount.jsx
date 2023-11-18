@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Button, Headline, useTheme } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
 
-export default function DeleteAccount({ navigatio }) {
+export default function DeleteAccount({navigation}) {
   const theme = useTheme();
   const { DeleteUserAccount } = useContext(UsersContext);
   const [showMessage, SetShowMessage] = useState(false);
@@ -11,7 +11,7 @@ export default function DeleteAccount({ navigatio }) {
     await DeleteUserAccount();
 
     alert('Account was deleted successfully');
-    navigatio.navigate('Login');
+    navigation.navigate('Login')
   }
 
   return (
@@ -35,7 +35,7 @@ export default function DeleteAccount({ navigatio }) {
         Delete account
       </Button>
       <Modal
-        animationType="slide"
+        animationType="fade"
         transparent={true}
         visible={showMessage}
         onRequestClose={() => SetShowMessage(false)}

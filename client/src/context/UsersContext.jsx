@@ -64,16 +64,24 @@ export default function UsersContextProvider({ children }) {
         }
     }
 
-    const DeleteUserAccount = async() => {
+    const DeleteUserAccount = async () => {
         try {
-            console.log(currentUser._id);
-            let res = await fetch(`${base_api}/users/delete/${currentUser._id}`);
+          console.log(currentUser._id);
+          let res = await fetch(`${base_api}/users/delete/${currentUser._id}`, {
+            method: 'DELETE',
+          });
+      
+          if (res.ok) {
             let data = await res.json();
             console.log(data);
+          } else {
+            console.log(`Error deleting user. Status: ${res.status}`);
+          }
         } catch (error) {
-            console.log(error);
+          console.error(error);
         }
-    }
+      };
+      
 
     const Login = async (email, password) => {
         try {

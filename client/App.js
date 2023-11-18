@@ -21,7 +21,7 @@ import FlightCheckout from './src/screens/FlightCheckout';
 import BookedMessage from './src/screens/BookedMessage';
 import BookedMessageHotel from './src/screens/BookedMessageHotel';
 import HotelCheckOut from './src/screens/HotelCheckOut';
-
+import DeleteAccount from './src/screens/DeleteYourAccount';
 
 
 const Stack = createStackNavigator();
@@ -86,6 +86,9 @@ export default function App() {
                     },
                 }} />
                 </Stack.Navigator>
+                <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
+
+                
             </NavigationContainer>
             </SafeAreaProvider>            
           </HotelsContextProvider>
