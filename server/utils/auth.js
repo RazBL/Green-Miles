@@ -28,7 +28,11 @@ function AuthAdmin(req, res, next) {
     if (err) {
       return res.status(403).json({ error: 'Invalid token' });
     }
-    // Successfully authenticated, add the user data to the request object
+
+    if(data.role !== 'admin'){
+      return res.status(403).json({ error: 'Permission denied. Admins only.' });
+    }
+    // Successfully authenticated, add the admin data to the request object
     req.admin = data;
     next();
   });
@@ -42,4 +46,11 @@ function GenerateToken(doc) {
   return token;
 }
 
-module.exports = {AuthUser, GenerateToken, AuthAdmin};
+function GenerateTokenAdmin(doc, role) {
+  const token = jwt.sign({...doc, role}, process.env.SECRET_KEY, {
+      expiresIn: '1H'
+  });
+  return token;
+}
+
+module.exports = {AuthUser, GenerateToken, AuthAdmin, GenerateTokenAdmin};

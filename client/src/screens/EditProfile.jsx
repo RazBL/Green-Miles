@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Keyboard, TouchableWithoutFeedback, useIsFocused  } from 'react-native'
 import { useTheme, TextInput, Button } from 'react-native-paper';
 import React, { useState, useEffect, useContext } from 'react'
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -53,8 +53,8 @@ export default function EditProfile({ navigation }) {
     };
 
 
-    const EditProfileHandler = () => {
-        if (InputHandler()) {
+    const EditProfileHandler = async() => {
+        if (await InputHandler()) {
             let updatedUser = {
                 firstName: firstName,
                 lastName: lastName,
@@ -65,7 +65,7 @@ export default function EditProfile({ navigation }) {
                 address: address
             }
 
-            EditProfile(updatedUser);
+           await EditProfile(updatedUser);
 
             alert("Account details were changd successfully");
 
@@ -75,7 +75,7 @@ export default function EditProfile({ navigation }) {
     }
 
 
-    const InputHandler = () => {
+    const InputHandler = async() => {
         let valid = true;
 
         if (firstName == "" || lastName == "" || email == "") {
@@ -86,7 +86,7 @@ export default function EditProfile({ navigation }) {
             alert("Please enter a valid email.");
             valid = false;
         }
-        else if (EmailExists(email) && email != currentUser.email) {
+        else if (await EmailExists(email) && email != currentUser.email) {
             alert("Email already exists.");
             valid = false;
         }
@@ -95,10 +95,9 @@ export default function EditProfile({ navigation }) {
     }
 
 
-
     useEffect(() => {
         TransformCountries();
-    }, [country])
+    }, [country, currentUser])
 
     return (
         <TouchableWithoutFeedback onPress={() => { Keyboard.dismiss(); }}>

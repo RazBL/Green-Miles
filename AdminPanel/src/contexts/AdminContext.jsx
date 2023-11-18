@@ -22,6 +22,7 @@ export default function AdminContextProvider({ children }) {
                 body: JSON.stringify({
                     email: email,
                     password: password,
+                    role: 'admin'
                 }),
             });
 
@@ -48,7 +49,13 @@ export default function AdminContextProvider({ children }) {
 
     const LoadAllUsers = async () => {
         try {
-            let res = await fetch(`${base_api}/users`);
+            const token = localStorage.getItem('adminToken');
+            let res = await fetch(`${base_api}/admins/users`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+            });
             let data = await res.json();
             SetUsers(data);
         } catch (err) {

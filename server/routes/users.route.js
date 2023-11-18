@@ -41,7 +41,7 @@ UsersRoute.post('/register', async (req, res) => {
 
 UsersRoute.get('/email-exists/:email', async (req, res) => {
   try {
-    let email =  req.params.email;
+    let email = req.params.email;
     console.log("email", email);
     let userFound = await UsersModel.EmailExists(email);
     return res.status(200).json(userFound);
