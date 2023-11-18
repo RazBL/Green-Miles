@@ -287,3 +287,7 @@ Content-Type: application/json
   "password": "baselbasel",
   "role": "admin"
 }
+
+###
+
+DELETE  http://localhost:3500/api/users/delete/65580b5cd23c8262ba7010e8

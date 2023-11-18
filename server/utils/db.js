@@ -53,7 +53,6 @@ class DB {
         try {
             await this.client.connect();
             let document = await this.client.db(this.db_name).collection(collection).findOne(query);
-            console.log(document);
             return document;
         } catch (error) {
             throw error;

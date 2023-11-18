@@ -64,6 +64,17 @@ export default function UsersContextProvider({ children }) {
         }
     }
 
+    const DeleteUserAccount = async() => {
+        try {
+            console.log(currentUser._id);
+            let res = await fetch(`${base_api}/users/delete/${currentUser._id}`);
+            let data = await res.json();
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const Login = async (email, password) => {
         try {
             let res = await fetch(`${base_api}/users/login`, {
@@ -440,7 +451,8 @@ export default function UsersContextProvider({ children }) {
         currentUser,
         EditProfile,
         ChangeUserPassword,
-        UploadProfilePicture
+        UploadProfilePicture,
+        DeleteUserAccount
     }
 
     return (

@@ -333,7 +333,7 @@ UsersRoute.put('/unsave-hotel', AuthUser, async (req, res) => {
 
 //DELETE == DELETE
 
-UsersRoute.delete('delete/:id', async (req, res) => {
+UsersRoute.delete('/delete/:id' , async (req, res) => {
   try {
     let userId = req.params.id;
     await UsersModel.DeleteUser(userId);
