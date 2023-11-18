@@ -26,8 +26,7 @@ export default function AdminContextProvider({ children }) {
                 }),
             });
 
-
-            const data = await res.json();  // <-- Extract data from response here
+            const data = await res.json();
 
             if (!res.ok) {
                 console.log(`Error is: ${data.error}`);
@@ -82,6 +81,25 @@ export default function AdminContextProvider({ children }) {
             console.error(err);
         }
     }
+
+    const DeleteUserAccount = async (user) => {
+        try {
+            let res = await fetch(`${base_api}/users/delete/${user._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+            )
+
+            let data = await res.json();
+            LoadAllUsers();
+            return data;
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const EditUserProfile = async (selectedUser) => {
         try {
@@ -188,7 +206,8 @@ export default function AdminContextProvider({ children }) {
         hotels,
         hotelbooking,
         EditUserProfile,
-        AuthAdmin
+        AuthAdmin,
+        DeleteUserAccount
     }
 
     return (

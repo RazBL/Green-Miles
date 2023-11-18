@@ -8,24 +8,23 @@ import { AdminContext } from '../contexts/AdminContext';
 import defaultImage from '../assets/Account.png';
 
 const UsersList = () => {
-  const { users, EditUserProfile } = useContext(AdminContext);
+  const { users, EditUserProfile, DeleteUserAccount } = useContext(AdminContext);
   const [showEditModal, SetShowEditModal] = useState(false);
   const [selectedUser, SetSelectedUser] = useState(null);
   const [password, SetPassword] = useState("");
 
 
-  const HandleEditClose = () => {
+  const CloseEdit = () => {
     SetShowEditModal(false);
     SetSelectedUser(null);
   };
 
   const EditProfile = () => {
-    if(InputHandler()){
+    if (InputHandler()) {
       EditUserProfile(selectedUser);
       HandleEditClose();
     }
   };
-
 
   const ClickedOnUser = (user) => {
     SetSelectedUser(user)
@@ -39,10 +38,16 @@ const UsersList = () => {
     }
   }
 
+  const DeleteUser = async (user) => {
+    let userDeleted = await DeleteUserAccount(user);
+    if (userDeleted)
+      alert("user was deleted successfully")
+  }
+
   const InputHandler = () => {
     let valid = true;
 
-    if(password == ''){
+    if (password == '') {
       alert("Please don't leave the password input empty.");
       valid = false
     }
@@ -51,14 +56,13 @@ const UsersList = () => {
   }
 
   useEffect(() => {
-    console.log(users);
   }, [users])
 
   function AdminSidebar() {
     const { logOut } = useContext(AdminContext);
 
     return (
-      <div>
+      <div >
         <Col md={3} style={TypeStyle}>
           <div style={{ logoStyle }}>
             <div>
@@ -138,14 +142,15 @@ const UsersList = () => {
                 <td>{user.country}</td>
                 <td>
                   <Button variant="primary" onClick={() => ClickedOnUser(user)}>Edit</Button>{' '}
-                  <Button variant="danger">Remove</Button>
+                  <Button variant="danger" onClick={() => DeleteUser(user)}>Remove</Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </div>
-      <Modal show={showEditModal} onHide={HandleEditClose} centered>
+
+      <Modal show={showEditModal} onHide={CloseEdit} centered>
         <Modal.Header closeButton>
           <Modal.Title>Edit User</Modal.Title>
         </Modal.Header >
@@ -205,7 +210,7 @@ const UsersList = () => {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={HandleEditClose}>
+          <Button variant="secondary" onClick={CloseEdit}>
             Close
           </Button>
           <Button variant="primary" onClick={EditProfile}>

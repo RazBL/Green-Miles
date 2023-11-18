@@ -7,56 +7,56 @@ import { AdminContext } from '../contexts/AdminContext';
 
 
 function AdminSidebar() {
-    const { logOut } = useContext(AdminContext);
+  const { logOut } = useContext(AdminContext);
 
   return (
     <div>
-    <Col md={3} style={TypeStyle}>
-    <div style={{logoStyle}}>
-      <div>
-      <img src="/Logo.png" alt="Logo" style={itemStyle} />
-      </div>
-    </div>
-    
-    
-    <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25 ,fontSize: '40px', }}>
-    <Link to="/admin/users" style={{ textDecoration: 'none', color: '#38DDA2' }}>Users</Link>
-  </div>
-  
-  <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25 ,fontSize: '40px', }}>
-    <Link to="/admin/flights" style={{ textDecoration: 'none', color: '#38DDA2' }}>Flights</Link>
-  </div>
-  
-  <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25 ,fontSize: '40px', }}>
-    <Link to="/admin/hotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Hotels</Link>
-  </div>
-  
-  <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25 ,fontSize: '40px', }}>
-    <Link to="/admin/Support" style={{ textDecoration: 'none', color: '#38DDA2' }}>Support</Link>
-  </div>
-  <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
-            <Link to="/admin/bookinghotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Hotels</Link>
+      <Col md={3} style={TypeStyle}>
+        <div style={{ logoStyle }}>
+          <div>
+            <img src="/Logo.png" alt="Logo" style={itemStyle} />
           </div>
+        </div>
 
-          <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
-            <Link to="/admin/bookingflights" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Flights</Link>
-          </div>
- </Col>
-     
- <Col md={3} style={rightButtonStyle}>
+
+        <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
+          <Link to="/admin/users" style={{ textDecoration: 'none', color: '#38DDA2' }}>Users</Link>
+        </div>
+
+        <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
+          <Link to="/admin/flights" style={{ textDecoration: 'none', color: '#38DDA2' }}>Flights</Link>
+        </div>
+
+        <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
+          <Link to="/admin/hotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Hotels</Link>
+        </div>
+
+        <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
+          <Link to="/admin/Support" style={{ textDecoration: 'none', color: '#38DDA2' }}>Support</Link>
+        </div>
+        <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
+          <Link to="/admin/bookinghotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Hotels</Link>
+        </div>
+
+        <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
+          <Link to="/admin/bookingflights" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Flights</Link>
+        </div>
+      </Col>
+
+      <Col md={3} style={rightButtonStyle}>
         <div>
-  <div style={{ position: 'absolute', top: 0, right: 0 }}>
-    <Link to="/">
-      <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
-        <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
-      </DropdownButton>
-    </Link>
-  </div>
-</div>
-        </Col>
-      </div>
-    );
-  }
+          <div style={{ position: 'absolute', top: 0, right: 0 }}>
+            <Link to="/">
+              <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
+                <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
+              </DropdownButton>
+            </Link>
+          </div>
+        </div>
+      </Col>
+    </div>
+  );
+}
 
 
 export default function Hotels() {
@@ -66,44 +66,44 @@ export default function Hotels() {
   }, [Hotels])
 
   return (
-    
+
     <Container>
-       <div style={containerStyle}>
+      <div style={containerStyle}>
         <AdminSidebar />
       </div>
       <Row>
 
 
-      <Col md={15} style ={{display:'flex', alignItems: 'center', flexDirection: 'column'}}>
-      <h1 className="text-center">Hotels Page</h1>
-      <Col md={2} className="text-center">
+        <Col md={15} style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+          <h1 className="text-center">Hotels Page</h1>
+          <Col md={2} className="text-center">
 
-        <Button variant="primary" style={{ background: '#38DDA2', marginBottom: '50px', marginTop: '50px', padding:15, borderRadius: 10, fontSize: 20 }}>Add Hotel</Button>
-      </Col>
+            <Button variant="primary" style={{ background: '#38DDA2', marginBottom: '50px', marginTop: '50px', padding: 15, borderRadius: 10, fontSize: 20 }}>Add Hotel</Button>
+          </Col>
 
 
 
           <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Eco Rating</th>
-            <th>Price per Night</th>
-            <th>Country</th>
-            <th>availableRooms</th>
-            <th>City</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-        {hotels.map((hotel) => (
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Eco Rating</th>
+                <th>Price per Night</th>
+                <th>Country</th>
+                <th>availableRooms</th>
+                <th>City</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {hotels.map((hotel) => (
                 <tr>
-                <td>
-                 <img src={hotel.image} alt={`Hotel Image`} style={{ maxWidth: '65px', maxHeight: '65px' }} />
-                </td>
+                  <td>
+                    <img src={hotel.image} alt={`Hotel Image`} style={{ maxWidth: '65px', maxHeight: '65px' }} />
+                  </td>
 
                   <td>{hotel.name}</td>
                   <td>{hotel.address}</td>
@@ -112,13 +112,13 @@ export default function Hotels() {
                   <td>{hotel.country}</td>
                   <td>{hotel.rooms.availability.availableRooms}</td>
                   <td>{hotel.city}</td>
-                  <td>{}</td>
+                  <td>{ }</td>
                   <td><Button variant="danger">Remove</Button></td>
                 </tr>
               ))}
-        </tbody>
+            </tbody>
 
-      </Table>
+          </Table>
         </Col>
       </Row>
     </Container>
@@ -145,7 +145,7 @@ const itemStyle = {
   alignItems: 'center',
   paddingLeft: '20px',
   margin: '10px 0 ',
-  left: 25, 
+  left: 25,
 };
 
 const sideBarStyle = {
@@ -157,7 +157,7 @@ const sideBarStyle = {
   left: 5,
 };
 
-const TypeStyle ={
+const TypeStyle = {
   width: '350px',  // כאן תגדיר את הרוחב הרצוי
   position: 'absolute',
   backgroundColor: '#101518',
