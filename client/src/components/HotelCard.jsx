@@ -16,14 +16,14 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
   const moveToTab = useContext(TabOffsetContext);
 
   const navigateToHotelDetails = () => {
-    navigation.navigate('Hotel', { hotel,rooms});
+    navigation.navigate('Hotel', { hotel , rooms});
     moveToTab(2);
   };
+
 
   // Start state of the heart icon.
   const isHotelSaved = () => {
     let foundHotel = CheckIfHotelSaved(hotel._id);
-    console.log('found hotel', foundHotel);
     if (foundHotel) {
       SetSaved(true);
     } else {
@@ -54,7 +54,7 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
   useEffect(() => {
     SetHotelRating(HotelRatingText(hotel));
     isHotelSaved();
-  }, [currentUser, currentUser.savedHotels]);
+  }, [currentUser, currentUser?.savedHotels]);
 
   return (
     <View style={styles.card}>
@@ -108,8 +108,8 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
       <Card.Content style={{ margin: 10 }}>
         <Text style={styles.title}>{hotel.name}</Text>
         <Text style={styles.info}>Address: {hotel.address.replace(/\n/g, ' ')}</Text>
-        <Text style={styles.info}>Price for 1 Night: $<Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{hotel.price_per_night * rooms || hotel.price_per_night * hotel.rooms}</Text></Text>
-        <Text style={styles.info}>Rooms : <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{rooms || hotel.rooms}</Text></Text>
+        <Text style={styles.info}>Price for 1 Night: $<Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{hotel.price_per_night * rooms || hotel.price_per_night * hotel.roomz}</Text></Text>
+        <Text style={styles.info}>Rooms : <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 15 }}>{rooms || hotel.roomz}</Text></Text>
       </Card.Content>
       <View style={styles.cardActions}>
         <Button
