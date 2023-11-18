@@ -270,7 +270,6 @@ export default function UsersContextProvider({ children }) {
 
     const SaveHotel = async (hotel, navigation, rooms) => {
         try {
-            console.log("rooms", rooms);
             const token = await GetTokenAndNavigate(navigation);
             let res = await fetch(`${base_api}/users/save-hotel`, {
                 method: 'PUT',
@@ -290,7 +289,7 @@ export default function UsersContextProvider({ children }) {
                 console.log(`Error is: ${errorData.error}`);
                 return null;
             }
-            console.log("hotel saved successfully!");
+            console.log("hotel was saved successfully!");
             UpdateUserHotelsInState(hotel._id, 'save', rooms);
 
         } catch (error) {

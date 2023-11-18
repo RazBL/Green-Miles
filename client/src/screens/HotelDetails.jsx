@@ -29,8 +29,6 @@ const HotelDetails = ({ route }) => {
   const [saved, SetSaved] = useState(false);
   const fromDate = new Date(hotel.rooms.availability.from);
   const toDate = new Date(hotel.rooms.availability.to);
-  const timeDiff = Math.abs(toDate.getTime() - fromDate.getTime());
-  const totalNights = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 
   //Start state of the heart icon.
   const isHotelSaved = () => {

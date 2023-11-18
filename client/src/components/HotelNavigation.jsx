@@ -8,6 +8,8 @@ import HotelsSearchResults from "../screens/HotelsSearchResults"
 import HotelDetails from '../screens/HotelDetails'; // וודא שאתה מייבא את מסך ה-HotelDetails
 import HotelCheckOut from '../screens/HotelCheckOut'
 // ...
+//Components
+import HotelCard from './HotelCard';
 
 import HotelPreviewCard from './HotelPreviewCard';
 
@@ -37,6 +39,7 @@ export default function HotelNavigation() {
                     },
                 }}
             />
+            <Stack.Screen name="HotelCard" component={HotelCard} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
             <Stack.Screen name="HotelPreviewCard" component={HotelPreviewCard} options={{ headerTransparent: true, headerTitle: '', headerLeft: null }} />
         </Stack.Navigator>
 

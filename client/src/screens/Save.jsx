@@ -39,8 +39,9 @@ export default function Save({ navigation }) {
     }
     if (currentUser && currentUser.savedHotels) {
       const enrichedSavedHotels = currentUser.savedHotels.map(savedHotel => {
-        const matchedHotel = hotels.find(hotel => hotel._id == savedHotel._id);
-        return { ...matchedHotel, rooms: savedHotel.rooms };
+        const matchedHotel = hotels.find(hotel => hotel._id === savedHotel._id);
+        console.log("this is matched hotel!", matchedHotel);
+        return { ...matchedHotel, roomz: savedHotel.rooms };
       });
       console.log("saved hotels", enrichedSavedHotels);
       SetSavedHotels(enrichedSavedHotels);
@@ -48,6 +49,7 @@ export default function Save({ navigation }) {
   }, [currentUser, flights, hotels]);
 
   useEffect(() => {
+
   }, [savedFlights, savedHotels]);
 
 
