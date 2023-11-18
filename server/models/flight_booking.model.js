@@ -23,13 +23,34 @@ class FlightBookingModel {
         this.passangers = passangers;
     }
 
+    /*
     static async GetAllBookedFlights(useId) {
         let query = {
             "user_id": new ObjectId(useId)
         }
         return await new DB().FindAll('Flight_Booking', query);
     }
+
+    */
     
+    static async GetAllBookedFlights(userId) {
+
+        if(userId){
+            let query = {
+                "user_id": new ObjectId(userId)
+            };
+            return await new DB().FindAll('Flight_Booking', query);
+
+        }
+    
+        return await new DB().FindAll('Flight_Booking');
+    }
+
+
+
+
+
+
     static async UpdateBookingStatus(bookingId, newStatus) {
         try {
             await new DB().ChangeBookingStatus('Flight_Booking', bookingId, { booking_status: newStatus });

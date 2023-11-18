@@ -116,8 +116,9 @@ export default function BookingHotels() {
                 <td>{bookingItem.price}</td>
                 <td>{bookingItem.rooms}</td>
                 <td>{bookingItem.bookingStatus}</td>
-                <td>
-
+                <td style={buttonscontainer}>
+                  <Button variant="primary">confirm </Button>
+                  <Button variant="danger" >decline</Button>
                 </td>
               </tr>
             ))}
@@ -133,7 +134,6 @@ export default function BookingHotels() {
 
 const containerStyle = {
   display: 'flex',
-  // הסגנון הנוסף שברצונך להשתמש בו
 };
 
 const logoStyle = {
@@ -144,6 +144,13 @@ const logoStyle = {
   left: 5,
 };
 
+const buttonscontainer ={
+  display: 'flex',
+  gap: '10px',
+  justifyContent: 'center',
+  padding: '10px', 
+  borderRadius: '5px',
+}
 const itemStyle = {
   borderColor: 'white',
   borderWidth: 10,

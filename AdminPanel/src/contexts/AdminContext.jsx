@@ -192,8 +192,8 @@ export default function AdminContextProvider({ children }) {
                 console.error('Missing token');
                 return;
             }
-            console.log(`${base_api}/admins/bookings`);
-            const res = await fetch(`${base_api}/admins/bookings`, {
+ 
+            const res = await fetch(`${base_api}/admins/booking/hotels`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`

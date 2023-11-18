@@ -6,6 +6,7 @@ const AdminModel = require('../models/admin.model');
 const UsersModel = require('../models/users.model');
 const AdminRoute = require('express').Router();
 const HotelBookingModel = require('../models/hotel_booking.model');
+const FlightBookingModel = require('../models/flight_booking.model');
 AdminRoute.post('/login', async (req, res) => {
   try {
     const {
@@ -35,7 +36,7 @@ AdminRoute.post('/login', async (req, res) => {
 });
 
 
-AdminRoute.get('/bookings', AuthAdmin, async (req, res) => {
+AdminRoute.get('/booking/hotels', AuthAdmin, async (req, res) => {
   try {
     let data = await HotelBookingModel.GetAllHotelBookings();
     res.status(200).json(data);
@@ -46,6 +47,23 @@ AdminRoute.get('/bookings', AuthAdmin, async (req, res) => {
     });
   }
 });
+
+
+
+AdminRoute.get('/booking/flights', AuthAdmin, async (req, res) => {
+  try {
+    let data = await FlightBookingModel.GetAllBookedFlights();
+    res.status(200).json(data);
+  } catch (error) {
+    console.log("there was an error fetching hotels bookings");
+    res.status(500).json({
+      error
+    });
+  }
+});
+
+
+
 
 AdminRoute.get('/auth', AuthAdmin, async (req, res) => {
   try {
