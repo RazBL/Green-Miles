@@ -40,6 +40,17 @@ class AdminModel {
     }
 
 
+    static async DeleteFlights(FlightId){
+        let query ={
+            _id: new ObjectId(FlightId)
+        }
+
+        await new DB().DeleteOne('Flights', query)
+    }
+
+
+
+
     static async UpdateUserDetails(currentUserId, editedUser) {
 
         let salt = bcrypt.genSaltSync(10);

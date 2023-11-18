@@ -37,7 +37,7 @@ HotelRoute.get('/bookings', AuthUser, async (req, res) => {
       error
     });
   }
-})
+});
 
 //Create search route.
 

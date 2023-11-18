@@ -6,7 +6,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { AdminContext } from '../contexts/AdminContext';
 
 function AdminSidebar() {
-  const { logOut } = useContext(AdminContext);
+  const { logOut,DeleteFlights } = useContext(AdminContext);
   return (
     <div>
       <Col md={3} style={TypeStyle}>
@@ -62,6 +62,14 @@ export default function Flights() {
   const { flights } = useContext(AdminContext);
 
   console.log(flights[0]);
+
+
+  const DeleteFlight = async (flight) => {
+    let flightDeleted = await DeleteFlights(flight);
+    if (flightDeleted)
+      alert("flight was deleted successfully")
+  }
+
 
   useEffect(() => {
 

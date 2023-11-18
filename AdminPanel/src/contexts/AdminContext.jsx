@@ -101,6 +101,30 @@ export default function AdminContextProvider({ children }) {
         }
     };
 
+
+    const DeleteFlights = async (flight) => {
+        try {
+            let res = await fetch(`${base_api}/flights/delete/${flight._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+            )
+
+            let data = await res.json();
+            LoadAllFlights();
+            return data;
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+
+
+
     const EditUserProfile = async (selectedUser) => {
         try {
             let editedUser = {
