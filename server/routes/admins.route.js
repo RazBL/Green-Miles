@@ -37,11 +37,10 @@ AdminRoute.post('/login', async (req, res) => {
 
 AdminRoute.get('/bookings', AuthAdmin, async (req, res) => {
   try {
-
     let data = await HotelBookingModel.GetAllHotelBookings();
     res.status(200).json(data);
   } catch (error) {
-    console.log("there was an error fetching htoels bookings");
+    console.log("there was an error fetching hotels bookings");
     res.status(500).json({
       error
     });
