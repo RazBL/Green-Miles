@@ -23,15 +23,7 @@ class FlightBookingModel {
         this.passangers = passangers;
     }
 
-    /*
-    static async GetAllBookedFlights(useId) {
-        let query = {
-            "user_id": new ObjectId(useId)
-        }
-        return await new DB().FindAll('Flight_Booking', query);
-    }
-
-    */
+    
     
     static async GetAllBookedFlights(userId) {
 

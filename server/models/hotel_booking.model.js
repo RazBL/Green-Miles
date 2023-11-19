@@ -59,6 +59,7 @@ class HotelBookingModel {
 
 
 
+
 /*
     static async BookAFlight(bookedHotel){
         try {

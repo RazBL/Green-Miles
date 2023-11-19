@@ -64,9 +64,10 @@ function AdminSidebar() {
 
 export default function BookingHotels() {
 
-  const { hotelBooking, users, hotels } = useContext(AdminContext);
+  const { hotelBooking, users, hotels,updateBookingStatus  } = useContext(AdminContext);
 
   useEffect(() => {
+    console.log("Component updated:", hotelBooking);
   }, [hotelBooking])
 
   const GetUserEmail =  (id) => {
@@ -79,6 +80,13 @@ export default function BookingHotels() {
     let foundHotel = hotels.find(hotel => hotel._id === id);
     return foundHotel ? foundHotel.name : '';
   }
+
+  const handleConfirm = (bookingId) => {
+    console.log("Before:", hotelBooking);
+    updateBookingStatus(bookingId, 'hotel', 'Confirmed');
+    console.log("After:", hotelBooking);
+  };
+  
   
   return (
     <>
@@ -109,16 +117,18 @@ export default function BookingHotels() {
             {hotelBooking.map((bookingItem) => (
               <tr key={bookingItem._id}>
                 <td>{bookingItem._id}</td>
-                <td>{GetUserEmail(bookingItem.user_id)}</td>
-                <td>{GetHotelName(bookingItem.hotel_id)}</td>
+                <td>{GetUserEmail(bookingItem.user_id) ?GetUserEmail(bookingItem.user_id) :"Deleted User"}</td>
+                <td>{GetHotelName(bookingItem.hotel_id) }</td>
                 <td>{bookingItem.bookingTime.date} - {bookingItem.bookingTime.time}</td>
                 <td>{bookingItem.nights_stay}</td>
                 <td>{bookingItem.price}</td>
                 <td>{bookingItem.rooms}</td>
                 <td>{bookingItem.bookingStatus}</td>
                 <td style={buttonscontainer}>
-                  <Button variant="primary">confirm </Button>
-                  <Button variant="danger" >decline</Button>
+               <Button variant="primary" onClick={() => handleConfirm(bookingItem._id)}>
+                confirm
+              </Button>        
+                        <Button variant="danger" >decline</Button>
                 </td>
               </tr>
             ))}
