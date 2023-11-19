@@ -87,8 +87,6 @@ export default function App() {
                 }} />
                 </Stack.Navigator>
                 <Stack.Screen name="DeleteAccount" component={DeleteAccount} options={{headerTransparent: true, headerTitle: '',headerLeft: null }}/>
-
-                
             </NavigationContainer>
             </SafeAreaProvider>            
           </HotelsContextProvider>
