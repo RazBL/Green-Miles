@@ -7,7 +7,7 @@ import { HotelsContext } from '../context/HotelsContext';
 import TabOffsetContext from '../context/TabOffsetContext';
 
 const HotelCard = ({ hotel, navigation, rooms }) => {
-  const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); 
+  const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext);
   const { HotelRatingText } = useContext(HotelsContext);
   const [hotelRating, SetHotelRating] = useState("");
   const [saved, SetSaved] = useState(false);
@@ -16,7 +16,12 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
   const moveToTab = useContext(TabOffsetContext);
 
   const navigateToHotelDetails = () => {
-    navigation.navigate('Hotel', { hotel , rooms});
+    navigation.navigate('Hotel',
+      {
+        hotel: hotel,
+        rooms: rooms
+      }
+    );
     moveToTab(2);
   };
 
@@ -67,10 +72,10 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
         />
 
         <View style={styles.ecoRating}>
-          <Text style={{color:'white', fontFamily: 'Montserrat_Bold'}}>
+          <Text style={{ color: 'white', fontFamily: 'Montserrat_Bold' }}>
             <Text style={[styles.ecoText, { color: '#38DDA2', fontFamily: 'Montserrat_Bold' }]}>Eco</Text> Rating {hotel.eco_rating}/5 - <Text style={{ color: '#38DDA2', fontWeight: 'bold' }}>{hotelRating}  </Text>
           </Text>
-          <TouchableOpacity onPress={() => SetTooltipVisible(true)} style={{ }}>
+          <TouchableOpacity onPress={() => SetTooltipVisible(true)} style={{}}>
             <MaterialCommunityIcons name="help-circle-outline" size={20} color="white" />
           </TouchableOpacity>
         </View>
@@ -86,10 +91,10 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={styles.modalContainer}>
               <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 16, textAlign: 'center' }}>
-                <Text style={{fontFamily: 'Montserrat_Bold', fontSize: 16, color: '#38DDA2'}}>Eco</Text> Rating
+                <Text style={{ fontFamily: 'Montserrat_Bold', fontSize: 16, color: '#38DDA2' }}>Eco</Text> Rating
               </Text>
               <Text style={styles.modalText}>
-              Eco Rating reflects a hotel's commitment to eco-friendly practices, considering energy efficiency, waste reduction, water conservation, and fewer disposable items. Higher EcoRatings mean hotels are more eco-conscious, which allows travelers to make greener choices while supporting sustainable practices.
+                Eco Rating reflects a hotel's commitment to eco-friendly practices, considering energy efficiency, waste reduction, water conservation, and fewer disposable items. Higher EcoRatings mean hotels are more eco-conscious, which allows travelers to make greener choices while supporting sustainable practices.
               </Text>
 
               <TouchableOpacity
