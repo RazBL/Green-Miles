@@ -27,12 +27,16 @@ class HotelBookingModel {
 
 
     static async GetAllHotelBookings(userId) {
-        let query = {
-            "user_id": new ObjectId(userId)
-        };
+
+        if(userId){
+            let query = {
+                "user_id": new ObjectId(userId)
+            };
+            return await new DB().FindAll('Hotel_Booking', query);
+
+        }
     
-        console.log(query);
-        return await new DB().FindAll('Hotel_Booking', query);
+        return await new DB().FindAll('Hotel_Booking');
     }
     
     async UpdateBookingStatus(bookingId, newStatus) {

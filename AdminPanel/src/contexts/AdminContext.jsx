@@ -9,7 +9,7 @@ export default function AdminContextProvider({ children }) {
     const [users, SetUsers] = useState([]);
     const [flights, SetFlights] = useState([]);
     const [hotels, SetHotels] = useState([]);
-    const [hotelbooking, SetHotelbooking] = useState([]);
+    const [hotelBooking, SetHotelbooking] = useState([]);
 
 
     const Login = async (email, password) => {
@@ -101,6 +101,30 @@ export default function AdminContextProvider({ children }) {
         }
     };
 
+
+    const DeleteFlights = async (flight) => {
+        try {
+            let res = await fetch(`${base_api}/flights/delete/${flight._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+            )
+
+            let data = await res.json();
+            LoadAllFlights();
+            return data;
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+
+
+
     const EditUserProfile = async (selectedUser) => {
         try {
             let editedUser = {
@@ -162,26 +186,22 @@ export default function AdminContextProvider({ children }) {
 
     const GetAllHotelBookings = async () => {
         try {
-            const token = localStorage.getItem('adminToken');
+            let token = localStorage.getItem('adminToken');
 
             if (!token) {
                 console.error('Missing token');
                 return;
             }
-
-            const res = await fetch(`${base_api}/hotels/bookings`, {
+ 
+            const res = await fetch(`${base_api}/admins/booking/hotels`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
+            let data = await res.json();
+            SetHotelbooking(data);
 
-            if (res.ok) {
-                const data = await res.json();
-                SetHotelbooking(data);
-            } else {
-                console.error('Request failed:', res.status, res.statusText);
-            }
         } catch (error) {
             console.error('Error:', error);
         }
@@ -207,10 +227,10 @@ export default function AdminContextProvider({ children }) {
         users,
         flights,
         hotels,
-        hotelbooking,
+        hotelBooking,
         EditUserProfile,
         AuthAdmin,
-        DeleteUserAccount
+        DeleteUserAccount,
     }
 
     return (
