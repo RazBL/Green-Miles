@@ -7,7 +7,7 @@ import { AdminContext } from '../contexts/AdminContext';
 
 
 function AdminSidebar() {
-  const { logOut } = useContext(AdminContext);
+  const { logOut, currentAdmin } = useContext(AdminContext);
 
   return (
     <div>
@@ -45,7 +45,7 @@ function AdminSidebar() {
         <div>
           <div style={{ position: 'absolute', top: 0, right: 0 }}>
             <Link to="/">
-              <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
+              <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title={currentAdmin ? currentAdmin.firstName + " " + currentAdmin.lastName : ''}>
                 <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
               </DropdownButton>
             </Link>
@@ -55,7 +55,6 @@ function AdminSidebar() {
     </div>
   );
 }
-
 
 
 
@@ -124,14 +123,14 @@ export default function BookingHotels() {
                 <td style={buttonscontainer}>
                   {
                     bookingItem.bookingStatus === "Approved" || bookingItem.bookingStatus === "Declined" ? (
-                      <span style={{alignSelf: 'center'}}>{bookingItem.bookingStatus}</span>) :
+                      <span style={{ alignSelf: 'center' }}>{bookingItem.bookingStatus}</span>) :
                       (
                         <>
-                          <span style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                          <Button variant="primary" onClick={() => ApproveBooking(bookingItem._id)}>
-                            confirm
-                          </Button>
-                          <Button variant="danger" onClick={() => DeclineBooking(bookingItem._id)} >decline</Button> 
+                          <span style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Button variant="primary" onClick={() => ApproveBooking(bookingItem._id)}>
+                              confirm
+                            </Button>
+                            <Button variant="danger" onClick={() => DeclineBooking(bookingItem._id)} >decline</Button>
                           </span></>
                       )
                   }

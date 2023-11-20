@@ -6,7 +6,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import { AdminContext } from '../contexts/AdminContext';
 
 function AdminSidebar() {
-  const { logOut,DeleteFlights } = useContext(AdminContext);
+  const { logOut, currentAdmin } = useContext(AdminContext);
   return (
     <div>
       <Col md={3} style={TypeStyle}>
@@ -43,7 +43,7 @@ function AdminSidebar() {
         <div>
   <div style={{ position: 'absolute', top: 0, right: 0 }}>
     <Link to="/">
-      <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title="Basel Basel">
+    <DropdownButton className="adminButtonStyle" id="dropdown-basic-button" title={currentAdmin ? currentAdmin.firstName + " " + currentAdmin.lastName : ''}>
         <Dropdown.Item onClick={logOut}>Logout</Dropdown.Item>
       </DropdownButton>
     </Link>
