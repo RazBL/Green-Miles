@@ -48,41 +48,38 @@ export default function AdminContextProvider({ children }) {
         }
     };
 
-    const updateBookingStatus = async (bookingId, bookingType, newStatus) => {
+    
+
+    const updateBookingStatus = async (bookingId, newStatus) => {
         try {
-          const token = localStorage.getItem('adminToken');
-      
-          if (!token) {
-            console.error('Missing token');
-            return;
-          }
-      
-          const res = await fetch(`${base_api}/admins/booking/${bookingType}/${bookingId}/update-status`, {
-            method: 'PUT', // או 'PATCH' כמו שאתה משתמש
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ newStatus }),
-          });
-      
-          if (!res.ok) {
-            console.error('Failed to update booking status');
-            return;
-          }
-      
-          // עדכון הסטטוס בלוח הסטטים
-          setHotelBookings((prevBookings) =>
-            prevBookings.map((booking) =>
-              booking._id === bookingId ? { ...booking, bookingStatus: newStatus } : booking
-            )
-          );
-      
-          console.log('Booking status updated successfully:', bookingId, newStatus);
+            const token = localStorage.getItem('adminToken');
+    
+            if (!token) {
+                console.error('Missing token');
+                return;
+            }
+    
+            const res = await fetch(`${base_api}/admins/booking/Hotel_Booking/${bookingId}/update-status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ newStatus }),
+            });
+    
+            if (!res.ok) {
+                console.error('Failed to update booking status');
+                return;
+            }
+    
+            // Handle the response or update UI if necessary
+            const result = await res.json();
+            console.log('Booking status updated successfully:', result.message);
         } catch (error) {
-          console.error('Error updating booking status:', error);
+            console.error('Error updating booking status:', error);
         }
-      };
+    };
+    
       
       
 

@@ -331,3 +331,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUxNTZjN
 GET https://greenmiles.onrender.com/api/admins/booking/flights
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUxNTZjNzQ5MGUwNzZiYmI5YWE4ZWMiLCJmaXJzdE5hbWUiOiJyYXoiLCJsYXN0TmFtZSI6ImJhbG91bCIsInBhc3N3b3JkIjoiJDJhJDEwJHNrN0dNWHlwTTNUVi94R2F3cHRWMWU1VUpIVFUwaHgvaDI5MDBuTGNFMC40akU0bjV0WTBTIiwiZW1haWwiOiJhZG1pbnJhekBnbWFkbWluLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTcwMDM0OTU5OSwiZXhwIjoxNzAwNDM1OTk5fQ.UJIv84wtkzRo86tO8csJ5JHXmJuwICAfQKTimjG39-o
 
+###
+
+put http://localhost:3500/api/hotel_booking/6525c86b4ffa6647756d9066/update-status
+Content-Type: application/json
+
+{
+  "newStatus": "approved"
+}

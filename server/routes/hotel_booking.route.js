@@ -14,7 +14,7 @@ HotelBookingRoute.get('/', async (req, res) => {
 })
 
 
-HotelBookingRoute.post('/:bookingId/update-status', async (req, res) => {
+HotelBookingRoute.put('/:bookingId/update-status', async (req, res) => {
     try {
         const bookingId = req.params.bookingId;
         const newStatus = req.body.newStatus;
@@ -23,10 +23,8 @@ HotelBookingRoute.post('/:bookingId/update-status', async (req, res) => {
             return res.status(400).json({ message: 'Booking ID and new status are required.' });
         }
 
-        // הוסף אימות נוסף כמו וידוא שה-status הוא תקין וכו'.
-
-        const booking = new HotelBookingModel();
-        await booking.UpdateBookingStatus(bookingId, newStatus);
+    
+        await HotelBookingModel.UpdateBookingStatus(bookingId, newStatus);
 
         res.status(200).json({ message: 'Booking status updated successfully.' });
     } catch (error) {

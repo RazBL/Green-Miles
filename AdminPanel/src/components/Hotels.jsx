@@ -31,9 +31,7 @@ function AdminSidebar() {
           <Link to="/admin/hotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Hotels</Link>
         </div>
 
-        <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
-          <Link to="/admin/Support" style={{ textDecoration: 'none', color: '#38DDA2' }}>Support</Link>
-        </div>
+        
         <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
           <Link to="/admin/bookinghotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Hotels</Link>
         </div>
@@ -77,8 +75,6 @@ export default function Hotels() {
         <Col md={15} style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
           <h1 className="text-center">Hotels Page</h1>
           <Col md={2} className="text-center">
-
-            <Button variant="primary" style={{ background: '#38DDA2', marginBottom: '50px', marginTop: '50px', padding: 15, borderRadius: 10, fontSize: 20 }}>Add Hotel</Button>
           </Col>
 
 

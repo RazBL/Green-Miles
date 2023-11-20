@@ -85,25 +85,7 @@ class DB {
             await this.client.close();
         }
     }
-    
 
-
-    async ChangeBookingStatus(collection, id, status) {
-        try {
-            await this.client.connect();
-            let query = {
-                "_id": new ObjectId(id)
-            };
-            let newValues = {
-                $set: status
-            };
-            await this.client.db(this.db_name).collection(collection).updateOne(query, newValues);
-        } catch (error) {
-            throw error;
-        } finally {
-            await this.client.close();
-        }
-    }
 
     async Aggregate(collection, pipeline = []) {
         try {
