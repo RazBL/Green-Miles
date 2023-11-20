@@ -333,9 +333,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTUxNTZjN
 
 ###
 
-put http://localhost:3500/api/hotel_booking/6525c86b4ffa6647756d9066/update-status
+PUT https://greenmiles.onrender.com/api/hotel_booking/6525c86b4ffa6647756d9066/update-status
 Content-Type: application/json
 
 {
   "newStatus": "approved"
+}
+
+###
+PUT http://localhost:3500/api/flight_booking/654ff3e922ed5e18469453e6/update-status
+Content-Type: application/json
+
+{
+  "newStatus": "declined"
 }

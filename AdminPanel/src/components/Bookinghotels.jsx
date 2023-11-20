@@ -63,15 +63,14 @@ export default function BookingHotels() {
 
   const { hotelBooking, users, hotels,updateBookingStatus  } = useContext(AdminContext);
 
-  const ApproveBooking = async() => {
-    await updateBookingStatus('approved');
+  const ApproveBooking = async(id) => {
+    await updateBookingStatus('approved', id);
   }
 
   const DeclineBooking = async() => {
-    await updateBookingStatus('decline');
+    await updateBookingStatus('decline', id);
   }
   useEffect(() => {
-    console.log("Component updated:", hotelBooking);
   }, [hotelBooking])
 
   const GetUserEmail =  (id) => {
@@ -84,13 +83,6 @@ export default function BookingHotels() {
     let foundHotel = hotels.find(hotel => hotel._id === id);
     return foundHotel ? foundHotel.name : '';
   }
-
-  const handleConfirm = (bookingId) => {
-    console.log("Before:", hotelBooking);
-    updateBookingStatus(bookingId, 'hotel', 'Confirmed');
-    console.log("After:", hotelBooking);
-  };
-  
   
   return (
     <>

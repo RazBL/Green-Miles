@@ -13,7 +13,7 @@ export default function AdminContextProvider({ children }) {
     const [flightBooking, SetFlightbooking] = useState([]);
     const [hotelBookings, setHotelBookings] = useState([]);
     const [hotelBookingStatus, setHotelBookingStatus] = useState([]);
-    
+
     const Login = async (email, password) => {
         try {
             let res = await fetch(`${base_api}/admins/login`, {
@@ -48,30 +48,25 @@ export default function AdminContextProvider({ children }) {
         }
     };
 
-    
+
 
     const updateBookingStatus = async (bookingId, newStatus) => {
         try {
-            const token = localStorage.getItem('adminToken');
-    
-            if (!token) {
-                console.error('Missing token');
-                return;
-            }
-    
-            const res = await fetch(`${base_api}/admins/booking/Hotel_Booking/${bookingId}/update-status`, {
+            const res = await fetch(`${base_api}/hotel_booking/6525c86b4ffa6647756d9066/update-status`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ newStatus }),
+                body: JSON.stringify(newStatus),
             });
-    
+
+            console.log(res);
+
             if (!res.ok) {
                 console.error('Failed to update booking status');
                 return;
             }
-    
+
             // Handle the response or update UI if necessary
             const result = await res.json();
             console.log('Booking status updated successfully:', result.message);
@@ -79,9 +74,9 @@ export default function AdminContextProvider({ children }) {
             console.error('Error updating booking status:', error);
         }
     };
-    
-      
-      
+
+
+
 
 
     const AuthAdmin = async () => {
@@ -230,7 +225,7 @@ export default function AdminContextProvider({ children }) {
                 console.error('Missing token');
                 return;
             }
- 
+
             const res = await fetch(`${base_api}/admins/booking/hotels`, {
                 method: 'GET',
                 headers: {
@@ -254,7 +249,7 @@ export default function AdminContextProvider({ children }) {
                 console.error('Missing token');
                 return;
             }
- 
+
             const res = await fetch(`${base_api}/admins/booking/flights`, {
                 method: 'GET',
                 headers: {

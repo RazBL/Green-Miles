@@ -40,17 +40,22 @@ class FlightBookingModel {
 
 
 
-
-
-
     static async UpdateBookingStatus(bookingId, newStatus) {
-        try {
-            await new DB().ChangeBookingStatus('Flight_Booking', bookingId, { booking_status: newStatus });
-            console.log('Booking status updated successfully.');
-        } catch (error) {
-            console.error('Error updating booking status:', error);
+
+        let query = {
+            _id: new ObjectId(bookingId)
         }
+
+        let update = {
+            $set: {
+                "bookingStatus": newStatus
+            }
+        };
+        await new DB().UpdateOne('Flight_Booking', query, update);
+
     }
+
+
 
     static async BookAFlight(bookedFlight){
         try {
