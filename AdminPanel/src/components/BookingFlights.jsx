@@ -31,9 +31,7 @@ function AdminSidebar() {
             <Link to="/admin/hotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Hotels</Link>
           </div>
 
-          <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
-            <Link to="/admin/Support" style={{ textDecoration: 'none', color: '#38DDA2' }}>Support</Link>
-          </div>
+          
           <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
             <Link to="/admin/bookinghotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Hotels</Link>
           </div>
@@ -62,6 +60,20 @@ function AdminSidebar() {
 
 
 export default function BookingFlights() {
+  
+  const {flightBooking,users} =  useContext(AdminContext);
+
+  const GetUserEmail = (id) => {
+    let foundUser = users.find(user => user._id.toString() === id.toString());
+    console.log('foundUser:', foundUser);
+    return foundUser ? foundUser.email : '';
+  }
+  
+  
+
+  useEffect(() => {
+  }, [flightBooking])
+
   return (
     <>
  <div style={containerStyle}>
@@ -75,16 +87,34 @@ export default function BookingFlights() {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>flight_id</th>
-              <th>user_id</th>
-              <th>hotel_id</th>
-              <th>bookingTime</th>
+              <th>Booking ID</th>
+              <th>User Email</th>
+              <th>bookingTime date </th>
               <th>bookingStatus</th>
               <th>price</th>
               <th>passangers</th>
               <th>Action</th>
             </tr>
           </thead>
+
+
+          <tbody>
+            {flightBooking.map((flightItem) => (
+              <tr key={flightItem._id}>
+                <td>{flightItem._id}</td>
+                <td>{GetUserEmail(flightItem.user_id) ?GetUserEmail(flightItem.user_id) : "Deleted User" }</td>
+                <td>{flightItem.bookingTime.date} - {flightItem.bookingTime.time}</td>
+                <td>{flightItem.bookingStatus}</td>
+                <td>{flightItem.price}</td>
+                <td>{flightItem.passangers}</td>
+                <td style={buttonscontainer}>
+                  <Button variant="primary">confirm </Button>
+                  <Button variant="danger" >decline</Button>
+                </td>
+              </tr>
+            ))}
+
+          </tbody>
 
         </Table>
       </div>
@@ -105,7 +135,13 @@ const containerStyle = {
     top: 0,
     left: 5,
   };
-  
+  const buttonscontainer ={
+    display: 'flex',
+    gap: '10px',
+    justifyContent: 'center',
+    padding: '10px', 
+    borderRadius: '5px',
+  }
   const itemStyle = {
     borderColor: 'white',
     borderWidth: 10,

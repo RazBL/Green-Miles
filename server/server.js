@@ -17,6 +17,10 @@ app.use('/api/hotels', require('./routes/hotels.route'));
 
 app.use('/api/image/upload', require('./routes/image.route'));
 
+app.use('/api/hotel_booking', require('./routes/hotel_booking.route'));
+
+app.use('/api/flight_booking', require('./routes/flight_booking.route'));
+
 app.use('/api/admins', require('./routes/admins.route'));
 
 app.use(express.static(path.join(__dirname, '../AdminPanel/dist')));

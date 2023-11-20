@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import { Table, Button, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -32,9 +31,7 @@ function AdminSidebar() {
           <Link to="/admin/hotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Hotels</Link>
         </div>
 
-        <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
-          <Link to="/admin/Support" style={{ textDecoration: 'none', color: '#38DDA2' }}>Support</Link>
-        </div>
+        
         <div style={{ borderColor: 'white', borderWidth: 10, display: 'flex', alignItems: 'center', paddingLeft: '20px', margin: '10px 0', left: 25, fontSize: '40px', }}>
           <Link to="/admin/bookinghotels" style={{ textDecoration: 'none', color: '#38DDA2' }}>Booking Hotels</Link>
         </div>
@@ -64,8 +61,15 @@ function AdminSidebar() {
 
 export default function BookingHotels() {
 
-  const { hotelBooking, users, hotels } = useContext(AdminContext);
+  const { hotelBooking, users, hotels,updateBookingStatus  } = useContext(AdminContext);
 
+  const ApproveBooking = async(id) => {
+    await updateBookingStatus('approved', id);
+  }
+
+  const DeclineBooking = async() => {
+    await updateBookingStatus('decline', id);
+  }
   useEffect(() => {
   }, [hotelBooking])
 
@@ -109,16 +113,18 @@ export default function BookingHotels() {
             {hotelBooking.map((bookingItem) => (
               <tr key={bookingItem._id}>
                 <td>{bookingItem._id}</td>
-                <td>{GetUserEmail(bookingItem.user_id)}</td>
-                <td>{GetHotelName(bookingItem.hotel_id)}</td>
+                <td>{GetUserEmail(bookingItem.user_id) ?GetUserEmail(bookingItem.user_id) :"Deleted User"}</td>
+                <td>{GetHotelName(bookingItem.hotel_id) }</td>
                 <td>{bookingItem.bookingTime.date} - {bookingItem.bookingTime.time}</td>
                 <td>{bookingItem.nights_stay}</td>
                 <td>{bookingItem.price}</td>
                 <td>{bookingItem.rooms}</td>
                 <td>{bookingItem.bookingStatus}</td>
                 <td style={buttonscontainer}>
-                  <Button variant="primary">confirm </Button>
-                  <Button variant="danger" >decline</Button>
+               <Button variant="primary" onClick={() => ApproveBooking(bookingItem._id)}>
+                confirm
+              </Button>        
+                        <Button variant="danger" onClick={() => DeclineBooking(bookingItem._id)} >decline</Button>
                 </td>
               </tr>
             ))}

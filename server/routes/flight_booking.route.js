@@ -12,7 +12,9 @@ FlightBookingRoute.get('/', async (req, res) => {
     }
 
 })
-FlightBookingRoute.post('/:bookingId/update-status', async (req, res) => {
+
+
+FlightBookingRoute.put('/:bookingId/update-status', async (req, res) => {
     try {
         const bookingId = req.params.bookingId;
         const newStatus = req.body.newStatus;
@@ -23,14 +25,14 @@ FlightBookingRoute.post('/:bookingId/update-status', async (req, res) => {
 
         // הוסף אימות נוסף כמו וידוא שה-status הוא תקין וכו'.
 
-        const booking = new FlightBookingModel();
-        await booking.UpdateBookingStatus(bookingId, newStatus);
+        await FlightBookingModel.UpdateBookingStatus(bookingId, newStatus);
 
         res.status(200).json({ message: 'Booking status updated successfully.' });
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while updating booking status.' });
     }
 });
+
 
 //CRUD
 

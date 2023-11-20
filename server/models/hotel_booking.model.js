@@ -28,47 +28,54 @@ class HotelBookingModel {
 
     static async GetAllHotelBookings(userId) {
 
-        if(userId){
+        if (userId) {
             let query = {
                 "user_id": new ObjectId(userId)
             };
             return await new DB().FindAll('Hotel_Booking', query);
 
         }
-    
+
         return await new DB().FindAll('Hotel_Booking');
     }
-    
-    async UpdateBookingStatus(bookingId, newStatus) {
-    try {
-        await new DB().ChangeBookingStatus('Hotel_Booking', bookingId, { booking_status: newStatus });
-        console.log('Booking status updated successfully.');
-    } catch (error) {
-        console.error('Error updating booking status:', error);
+
+    static async UpdateBookingStatus(bookingId, newStatus) {
+
+        let query = {
+            _id: new ObjectId(bookingId)
+        }
+
+        let update = {
+            $set: {
+                "bookingStatus": newStatus
+            }
+        };
+        await new DB().UpdateOne('Hotel_Booking', query, update);
+
     }
-}
 
-    static async BookAHotel(bookedHotel){
-    try {
-        await new DB().InsertDocument(bookedHotel, 'Hotel_Booking');
-    } catch (error) {
-        console.log("Error from Hotel_booking");
-        console.log(error);
-    }
-}
-
-
-
-/*
-    static async BookAFlight(bookedHotel){
+    static async BookAHotel(bookedHotel) {
         try {
             await new DB().InsertDocument(bookedHotel, 'Hotel_Booking');
         } catch (error) {
-            console.log("Error from Hotel_Booking");
+            console.log("Error from Hotel_booking");
             console.log(error);
         }
     }
-*/
+
+
+
+
+    /*
+        static async BookAFlight(bookedHotel){
+            try {
+                await new DB().InsertDocument(bookedHotel, 'Hotel_Booking');
+            } catch (error) {
+                console.log("Error from Hotel_Booking");
+                console.log(error);
+            }
+        }
+    */
 
 }
 

@@ -10,7 +10,9 @@ export default function AdminContextProvider({ children }) {
     const [flights, SetFlights] = useState([]);
     const [hotels, SetHotels] = useState([]);
     const [hotelBooking, SetHotelbooking] = useState([]);
-
+    const [flightBooking, SetFlightbooking] = useState([]);
+    const [hotelBookings, setHotelBookings] = useState([]);
+    const [hotelBookingStatus, setHotelBookingStatus] = useState([]);
 
     const Login = async (email, password) => {
         try {
@@ -45,6 +47,37 @@ export default function AdminContextProvider({ children }) {
             return null;
         }
     };
+
+
+
+    const updateBookingStatus = async (bookingId, newStatus) => {
+        try {
+            const res = await fetch(`${base_api}/hotel_booking/6525c86b4ffa6647756d9066/update-status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newStatus),
+            });
+
+            console.log(res);
+
+            if (!res.ok) {
+                console.error('Failed to update booking status');
+                return;
+            }
+
+            // Handle the response or update UI if necessary
+            const result = await res.json();
+            console.log('Booking status updated successfully:', result.message);
+        } catch (error) {
+            console.error('Error updating booking status:', error);
+        }
+    };
+
+
+
+
 
     const AuthAdmin = async () => {
         try {
@@ -192,7 +225,7 @@ export default function AdminContextProvider({ children }) {
                 console.error('Missing token');
                 return;
             }
- 
+
             const res = await fetch(`${base_api}/admins/booking/hotels`, {
                 method: 'GET',
                 headers: {
@@ -201,6 +234,30 @@ export default function AdminContextProvider({ children }) {
             });
             let data = await res.json();
             SetHotelbooking(data);
+
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+
+    const GetAllFlightsBookings = async () => {
+        try {
+            let token = localStorage.getItem('adminToken');
+
+            if (!token) {
+                console.error('Missing token');
+                return;
+            }
+
+            const res = await fetch(`${base_api}/admins/booking/flights`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+            let data = await res.json();
+            SetFlightbooking(data);
 
         } catch (error) {
             console.error('Error:', error);
@@ -217,6 +274,7 @@ export default function AdminContextProvider({ children }) {
         LoadAllFlights();
         loadAllHotels();
         GetAllHotelBookings();
+        GetAllFlightsBookings();
     }, [currentAdmin])
 
 
@@ -228,9 +286,17 @@ export default function AdminContextProvider({ children }) {
         flights,
         hotels,
         hotelBooking,
+        flightBooking,
+        hotelBookingStatus,
+        hotelBookings,
         EditUserProfile,
         AuthAdmin,
         DeleteUserAccount,
+        updateBookingStatus,
+        hotelBookings,
+        setHotelBookings,
+        hotelBookingStatus,
+        setHotelBookingStatus,
     }
 
     return (
