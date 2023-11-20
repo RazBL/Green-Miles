@@ -103,6 +103,13 @@ UsersRoute.post('/login', async (req, res) => {
 });
 
 
+UsersRoute.post('/support', async (req, res) => {
+  try {
+    try
+  } catch (error) {
+    res.status(500).json({error: 'Failed to send form to the email'})
+  }
+})
 
 
 

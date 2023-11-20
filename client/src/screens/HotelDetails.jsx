@@ -42,7 +42,7 @@ const HotelDetails = ({ route }) => {
 
 
   //Make sure to transfer the empty arrays of flights and hotels
-  const hotelSaveHandler = () => {
+  const hotelSaveHandler = async() => {
     if (!currentUser) {
       alert("You must login in order to save");
       navigation.navigate('Login');
@@ -54,11 +54,11 @@ const HotelDetails = ({ route }) => {
       currentRooms = rooms;
     }
     if (!isSaved) {
-      SaveHotel(hotel, navigation, currentRooms);
+      await SaveHotel(hotel, navigation, currentRooms);
       SetSaved(true); // Change the value to true when the user clicks to save the hotel
       console.log("hotel was saved");
     } else {
-      RemoveSavedHotel(hotel);
+      await RemoveSavedHotel(hotel);
       SetSaved(false); // Change the value to false when the user clicks to remove the hotel
     }
   };

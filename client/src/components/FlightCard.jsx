@@ -14,7 +14,7 @@ export default function FlightCard({ flight, navigation, passengers }) {
     const [tooltipVisible, SetTooltipVisible] = useState(false);
 
 
-    const FlightSaveHandler = () => {
+    const FlightSaveHandler = async () => {
         if (!currentUser) {
             alert("You must login in order to save");
             return;
@@ -23,11 +23,11 @@ export default function FlightCard({ flight, navigation, passengers }) {
         let isSaved = currentUser.savedFlights.find(item => item._id === flight._id && item.passengers == passengers);
 
         if (!isSaved) {
-            SaveFlight(flight, passengers, navigation);
+            await SaveFlight(flight, passengers, navigation);
             SetSaved(true)
         }
         else {
-            RemoveSavedFlight(flight, passengers, navigation);
+            await RemoveSavedFlight(flight, passengers, navigation);
             SetSaved(false);
         }
     }
@@ -84,7 +84,7 @@ export default function FlightCard({ flight, navigation, passengers }) {
                                 CO₂ Emissions
                             </Text>
                             <Text style={styles(theme).modalText}>
-                            CO₂ emissions indicate the carbon dioxide produced during a flight from burning fuel. The value, in tons, helps travelers gauge their flight's environmental impact.
+                                CO₂ emissions indicate the carbon dioxide produced during a flight from burning fuel. The value, in tons, helps travelers gauge their flight's environmental impact.
                             </Text>
 
                             <TouchableOpacity

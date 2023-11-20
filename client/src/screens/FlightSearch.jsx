@@ -11,7 +11,7 @@ export default function FlightSearch({ navigation }) {
 
     const theme = useTheme();
 
-    const { destinationAirports, originAirports, FlightSearchResults, originCities, destinationCities } = useContext(FlightsContext);
+    const { destinationAirports, originAirports, flights, FlightSearchResults, originCities, destinationCities } = useContext(FlightsContext);
     const [passengers, SetPassengers] = useState(1);
     const [date, SetDate] = useState(new Date());
     const [showDatePicker, SetDatePickerVisibility] = useState(false);
@@ -24,6 +24,7 @@ export default function FlightSearch({ navigation }) {
     const [transformedDestinationAirport, SetTransformedDestinationAirports] = useState([])
     const [openOrigin, SetOpenOrigin] = useState(false);
     const [openDestination, SetOpenDestination] = useState(false);
+    const [flightNotification, SetFlightNotification] = useState(true);
 
     const IncrementPassengers = () => {
         if (passengers < MAX_PASSENGERS) SetPassengers(passengers + 1);
@@ -39,7 +40,7 @@ export default function FlightSearch({ navigation }) {
             const pureDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
             SetDate(pureDate);
         }
-        SetDatePickerVisibility(Platform.OS === 'ios');
+        SetDatePickerVisibility(false);
     };
 
     const HandleFlightSearch = async () => {
@@ -84,6 +85,17 @@ export default function FlightSearch({ navigation }) {
         SetTransformedDestinationAirports(data);
     };
 
+    const FlightOriginDestinationExists = () => {
+        let foundFlight = flights.find(flight => {
+            return flight.origin.airport === selectedLocation.slice(0, 3) && flight.destination.airport === selectedDestination.slice(0, 3);
+        });
+
+        if (!foundFlight) {
+            alert('We have no flight that goes from  ' + selectedLocation + ' to  ' + selectedDestination);
+            SetSelectedDestination("");
+            SetSelectedLocation("");
+        }
+    }
 
     const isInputValid = () => {
 
@@ -191,7 +203,10 @@ export default function FlightSearch({ navigation }) {
                             )}
                         </View>
                     </TouchableOpacity>
-
+                    {
+                        selectedDestination !== "" && selectedLocation !== "" && flightNotification ? FlightOriginDestinationExists() :
+                        null
+                    }
 
                     <TouchableOpacity style={[styles(theme).searchSection]} onPress={() => SetModalVisible(true)}>
                         <View style={styles(theme).inputWrapper}>

@@ -36,7 +36,7 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
     }
   };
 
-  const hotelSaveHandler = () => {
+  const hotelSaveHandler = async() => {
     if (!currentUser) {
       alert("You must login in order to save");
       navigation.navigate('Login');
@@ -46,11 +46,11 @@ const HotelCard = ({ hotel, navigation, rooms }) => {
     let isSaved = currentUser.savedHotels.find(item => item._id == hotel._id);
     console.log("is saved", isSaved);
     if (!isSaved) {
-      SaveHotel(hotel, navigation, rooms);
+     await SaveHotel(hotel, navigation, rooms);
       SetSaved(true); // Change the value to true when the user clicks to save the hotel
       console.log("hotel was saved");
     } else {
-      RemoveSavedHotel(hotel);
+      await RemoveSavedHotel(hotel);
       SetSaved(false); // Change the value to false when the user clicks to remove the hotel
     }
   };
