@@ -341,7 +341,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:3500/api/flight_booking/654ff3e922ed5e18469453e6/update-status
+PUT https://greenmiles.onrender.com/api/flight_booking/654ff3e922ed5e18469453e6/update-status
 Content-Type: application/json
 
 {

@@ -50,14 +50,17 @@ export default function AdminContextProvider({ children }) {
 
 
 
-    const updateBookingStatus = async (bookingId, newStatus) => {
+    const UpdateHotelBookingStatus = async (bookingId, newStatus) => {
         try {
-            const res = await fetch(`${base_api}/hotel_booking/6525c86b4ffa6647756d9066/update-status`, {
+            console.log("id is", bookingId);
+            const res = await fetch(`${base_api}/hotel_booking/${bookingId}/update-status`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newStatus),
+                body: JSON.stringify({
+                    newStatus
+                }),
             });
 
             console.log(res);
@@ -68,14 +71,44 @@ export default function AdminContextProvider({ children }) {
             }
 
             // Handle the response or update UI if necessary
-            const result = await res.json();
-            console.log('Booking status updated successfully:', result.message);
+            const data = await res.json();
+            GetAllHotelBookings(data);
+            console.log('Booking status updated successfully:', data.message);
         } catch (error) {
             console.error('Error updating booking status:', error);
         }
     };
 
 
+    const UpdateFlightBookingStatus = async (bookingId, newStatus) => {
+        try {
+            console.log("id is", bookingId);
+            console.log(newStatus);
+            const res = await fetch(`${base_api}/flight_booking/${bookingId}/update-status`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    newStatus
+                }),
+            });
+
+            console.log(res);
+
+            if (!res.ok) {
+                console.error('Failed to update booking status');
+                return;
+            }
+
+            // Handle the response or update UI if necessary
+            const data = await res.json();
+            GetAllFlightsBookings(data);
+            console.log('Booking status updated successfully:', data.message);
+        } catch (error) {
+            console.error('Error updating booking status:', error);
+        }
+    };
 
 
 
@@ -153,7 +186,6 @@ export default function AdminContextProvider({ children }) {
             console.log(error);
         }
     };
-
 
 
 
@@ -292,11 +324,12 @@ export default function AdminContextProvider({ children }) {
         EditUserProfile,
         AuthAdmin,
         DeleteUserAccount,
-        updateBookingStatus,
+        UpdateHotelBookingStatus,
         hotelBookings,
         setHotelBookings,
         hotelBookingStatus,
         setHotelBookingStatus,
+        UpdateFlightBookingStatus
     }
 
     return (
