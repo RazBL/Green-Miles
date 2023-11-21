@@ -2,13 +2,16 @@ import { KeyboardAvoidingView, ScrollView, Image, View, Text, StyleSheet, Toucha
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { TextInput, Button, Headline } from 'react-native-paper';
 import { UsersContext } from '../context/UsersContext';
+import { FlightsContext } from '../context/FlightsContext';
+import { HotelsContext } from '../context/HotelsContext';
 
 export default function Login({ navigation }) {
   const { RemoveToken, Login, EmailExists } = useContext(UsersContext);
   const [email, SetEmail] = useState('');
   const [password, SetPassword] = useState('');
   const scrollRef = useRef(null);
-
+  const { GetAllFlightOrders } = useContext(FlightsContext);
+  const { GetAllHotelBookings } = useContext(HotelsContext)
   const HandleInputFocus = () => {
     scrollRef.current.scrollTo({ x: 0, y: 180, animated: true });
   };
@@ -31,6 +34,8 @@ export default function Login({ navigation }) {
             routes: [{ name: 'Navigation' }],
           });
         }
+        GetAllFlightOrders();
+        GetAllHotelBookings();
       }
       else if (await EmailExists(email)) {
         alert("Incorrect Password")
