@@ -58,16 +58,16 @@ export default function HotelsContextProvider({ children }) {
     } catch (err) {
       console.error(err);
     }
-  };
+
   */ 
+
+
   const HotelSearchResults = async (query) => {
     try {
       const queryString = new URLSearchParams(query).toString();
       const url = `${base_api}/hotels/search?${queryString}`;
-      console.log("this is url",url);
       let res = await fetch(url);
       let data = await res.json();
-      console.log(data);
       setSearchedHotels(data);
     } catch (err) {
       console.error(err);

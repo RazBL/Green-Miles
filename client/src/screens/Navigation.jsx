@@ -47,6 +47,7 @@ export default function Navigation({route}) {
       duration: 500,
       useNativeDriver: true
     }).start();
+    moveToTab(0);
   }, []);
 
 

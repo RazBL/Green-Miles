@@ -96,8 +96,7 @@ export default function FlightsContextProvider({ children }) {
                 return null;
             }
 
-            console.log("Getting all flight orders");
-            GetAllFlightOrders();
+            await GetAllFlightOrders();
 
         } catch (error) {
             console.log(error);

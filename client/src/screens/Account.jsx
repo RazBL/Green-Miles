@@ -11,8 +11,8 @@ export default function Account() {
 
   const theme = useTheme();
   const { currentUser, RemoveToken } = useContext(UsersContext);
-  const {flightOrders, GetAllFlightOrders} = useContext(FlightsContext);
-  const {hotelBookings, GetAllHotelBookings} = useContext(HotelsContext)
+  const { flightOrders, GetAllFlightOrders } = useContext(FlightsContext);
+  const { hotelBookings, GetAllHotelBookings } = useContext(HotelsContext)
 
   const navigation = useNavigation();
   const navigateToSupport = () => {
@@ -48,14 +48,18 @@ export default function Account() {
     ToLoginPage();
   }
 
+  const LoadBooking = async () => {
+    await GetAllHotelBookings();
+    await GetAllFlightOrders();
+  }
+
   useEffect(() => {
   }, [flightOrders, currentUser, hotelBookings])
 
   useEffect(() => {
-    GetAllHotelBookings();
-    GetAllFlightOrders();
+    LoadBooking();
   }, [])
-  
+
 
   return (
     <View style={styles(theme).container}>
@@ -66,7 +70,7 @@ export default function Account() {
             {
               currentUser ? (<Image
                 source={currentUser.image ? { uri: currentUser.image } :
-                require('../images/Account.png')}
+                  require('../images/Account.png')}
                 resizeMode="contain"
                 style={{ height: '100%', width: '100%', borderRadius: 30 }}
               />) :
@@ -111,12 +115,12 @@ export default function Account() {
 
 
                 <View style={styles(theme).optionBox}>
-                <TouchableOpacity onPress={ToBookingPage}>
-                  <View style={styles(theme).optionContainer}>
-                    <MaterialCommunityIcons name="book" size={20} color="black" />
-                    <Text style={styles(theme).optionText}>Booking</Text>
-                  </View>
-                  <View style={styles(theme).underline}></View>
+                  <TouchableOpacity onPress={ToBookingPage}>
+                    <View style={styles(theme).optionContainer}>
+                      <MaterialCommunityIcons name="book" size={20} color="black" />
+                      <Text style={styles(theme).optionText}>Booking</Text>
+                    </View>
+                    <View style={styles(theme).underline}></View>
                   </TouchableOpacity>
                 </View>
 

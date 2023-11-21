@@ -74,11 +74,6 @@ export default function HotelSearch({route,  navigation }) {
   
     await HotelSearchResults(query);
     navigation.navigate('Hotel Search Results', { rooms: rooms });
-
-    setSelectedDestination('');
-    setCheckInDate(new Date());
-    setCheckOutDate(new Date());
-    setRooms(1);
   };
   
 

@@ -123,7 +123,7 @@ const HotelDetails = ({ route }) => {
           {/*  <Text style={styles(theme).infoTitle}>From{hotel.rooms.availability.from} To {hotel.rooms.availability.to} </Text> */}
 
           <Text style={styles(theme).infoTitle}>
-            From {fromDate.toISOString().split('T')[0]} To {toDate.toISOString().split('T')[0]}
+            From <Text style={{fontFamily: 'Montserrat_Medium'}}>{fromDate.toISOString().split('T')[0]}</Text> To <Text style={{fontFamily: 'Montserrat_Medium'}}>{toDate.toISOString().split('T')[0]}</Text>
           </Text>
           {/* <Text style={styles(theme).infoTitle}> Total Price: {totalNights*hotel.price_per_night}</Text>*/}
 

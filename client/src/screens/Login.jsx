@@ -60,10 +60,6 @@ export default function Login({ navigation }) {
     navigation.navigate('Register');
   };
 
-  const ForgotPasswordBtnHandler = () => {
-    navigation.navigate('ForgotPassword');
-  };
-
   const SkipBtnHandler = () => {
     RemoveToken();
     navigation.reset({
@@ -112,11 +108,11 @@ export default function Login({ navigation }) {
               >
                 <Text style={[{ fontSize: 15, color: 'white', fontFamily: 'Montserrat_Bold' }]}>Sign in</Text>
               </Button>
-              <View style={styles.linkTextContainer}>
+              {/* <View style={styles.linkTextContainer}>
                 <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={ForgotPasswordBtnHandler}>
                   <Text style={[styles.linkText, styles.default]}>Forgot your password?</Text>
                 </TouchableOpacity>
-              </View>
+              </View> */}
               <View style={styles.linkTextContainer}>
                 <Text style={[{ color: 'black', fontSize: 15 }, styles.default]}>Don't have an account? </Text>
                 <TouchableOpacity style={{ padding: 0, margin: 0 }} onPress={SignUpBtnHandler}>
