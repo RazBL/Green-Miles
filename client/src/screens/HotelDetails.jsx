@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Text, Button, useTheme, Headline } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UsersContext } from '../context/UsersContext';
-import { HotelsContext } from '../context/HotelsContext';
 
-
+//TODO: Make it scrollable.
 
 const HotelDetails = ({ route }) => {
   const { SaveHotel, RemoveSavedHotel, currentUser, CheckIfHotelSaved } = useContext(UsersContext); // Get the functions and currentUser from UsersContext
@@ -71,7 +70,7 @@ const HotelDetails = ({ route }) => {
   }, [currentUser, currentUser?.savedHotels])
 
   return (
-    <View style={styles(theme).container}>
+    <ScrollView style={styles(theme).container} contentContainerStyle={{ paddingBottom: 50 }}>
       <View style={styles(theme).imageContainer}>
         <Image
           source={{
@@ -141,7 +140,7 @@ const HotelDetails = ({ route }) => {
       >
         Book Now
       </Button>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -221,12 +220,9 @@ const styles = (theme) =>
       color: '#02304B',
     },
     bookNowButton: {
-      position: 'absolute',
-      bottom: 20,
-      left: 20,
-      right: 20,
       backgroundColor: '#38DDA2',
-      fontFamily: 'Montserrat_Bold'
+      fontFamily: 'Montserrat_Bold',
+      marginTop: 30
     },
   });
 

@@ -6,7 +6,6 @@ import slides from '../data/slides';
 import OnBoardingElement from '../components/OnBoardingElement';
 import Paginator from '../components/Paginator';
 import OnboardingButton from '../components/onBoardingButton';
-import TabOffsetContext from '../context/TabOffsetContext'
 
 export default function OnBoarding({ navigation }) {
     const theme = useTheme();
@@ -32,6 +31,10 @@ export default function OnBoarding({ navigation }) {
           });
     }
 
+    const PrevBtnHandler = () => {
+        slideRef.current.scrollToIndex({ index: currentIndex - 1 })
+    }
+
     const NextOrSkipBtnHandler = () => {
         if (currentIndex < slides.length - 1) {
             slideRef.current.scrollToIndex({ index: currentIndex + 1 });
@@ -53,7 +56,6 @@ export default function OnBoarding({ navigation }) {
                     horizontal
                     pagingEnabled
                     bounces={false}
-                    //scrollEnabled={false}
                     alwaysBounceHorizontal={false}
                     showsHorizontalScrollIndicator={false}
                     keyExtractor={(item) => item.id}
@@ -78,7 +80,7 @@ export default function OnBoarding({ navigation }) {
             {currentIndex === 0 ? (
                 <View></View>
             ) : (
-                <TouchableOpacity style={styles(theme).prevBtn} onPress={() => {setCurrentIndex(0)}}>
+                <TouchableOpacity style={styles(theme).prevBtn} onPress={PrevBtnHandler}>
                 <Text style={[styles(theme).skipPrevBtnText]}>Prev</Text>
             </TouchableOpacity>
             )}

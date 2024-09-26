@@ -6,7 +6,6 @@ const Stack = createStackNavigator();
 import HotelsSearch from "../screens/HotelsSearch";
 import HotelsSearchResults from "../screens/HotelsSearchResults"
 import HotelDetails from '../screens/HotelDetails'; // וודא שאתה מייבא את מסך ה-HotelDetails
-import HotelCheckOut from '../screens/HotelCheckOut'
 // ...
 //Components
 import HotelCard from './HotelCard';

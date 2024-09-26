@@ -1,9 +1,11 @@
-import { StatusBar, StyleSheet, Text, View, I18nManager, Platform } from 'react-native';
+import { StatusBar, StyleSheet,Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useFonts } from 'expo-font';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
+
 
 //Contexts
 import UsersContextProvider from './src/context/UsersContext';
@@ -22,7 +24,10 @@ import BookedMessage from './src/screens/BookedMessage';
 import BookedMessageHotel from './src/screens/BookedMessageHotel';
 import HotelCheckOut from './src/screens/HotelCheckOut';
 import DeleteAccount from './src/screens/DeleteYourAccount';
+import { I18nManager } from 'react-native';
 
+I18nManager.forceRTL(false); 
+I18nManager.allowRTL(false);
 
 const Stack = createStackNavigator();
 
@@ -95,6 +100,7 @@ export default function App() {
     </PaperProvider>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
