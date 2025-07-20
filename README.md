@@ -30,9 +30,9 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
  # 📸 Screenshots
  
 <p align="center">
-  <img src="./client/src/images/preview/HomePage.jpg" alt="Home" width="220"/><br>Home Screen
-  <img src="./client/src/images/preview/Sign in.jpg" alt="Sign In" width="220"/><br>Sign In
-  <img src="./client/src/images/preview/Hotel Search.jpg" alt="Hotel Search" width="220"/><br>Search Hotels
+  <img src="./client/src/images/preview/HomePage.jpg" alt="Home" width="220"/>
+  <img src="./client/src/images/preview/Sign in.jpg" alt="Sign In" width="220"/>
+  <img src="./client/src/images/preview/Hotel Search.jpg" alt="Hotel Search" width="220"/>
 </p>
 
 
