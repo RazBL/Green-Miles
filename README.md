@@ -1,6 +1,6 @@
-**Green Miles**
+# 🌿 Green Miles
 
-**Green Miles** is a mobile application created as a school project to help users find and book **eco-friendly flights** and **hotels**, promoting sustainable travel choices. This app is built using **React Native** for the front-end, with **Express** and **MongoDB** on the back-end.
+**Green Miles** is a mobile app built as a final project, helping users discover and book eco-friendly flights and hotels.  
+The goal: Promote sustainable travel by highlighting green-rated accommodation and flight options.
 
-| **Note: The data used in this project is not real**
-
+> 📌 *Note: All travel data used in this project is mock/demo only.*
