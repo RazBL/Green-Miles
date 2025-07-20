@@ -5,7 +5,7 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
 
 > 📌 *Note: All travel data used in this project is mock/demo only.*
 
-## ✨ Features
+# ✨ Features
 - 🔐 Sign Up & Sign In with JWT-based authentication
 - 🏨 Search and book eco-rated **hotels**
 - ✈️ Search and book eco-rated **flights**
@@ -14,7 +14,7 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
 - 🌐 RESTful API using Express.js
 - 🗄️ MongoDB for database management
 
-##
+#
 
 ## 🛠️ Tech Stack
 | Layer     | Technology                  |
@@ -27,7 +27,7 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
 
 ##
 
- ## 📸 Screenshots
+ # 📸 Screenshots
 
 ### 🏠 Home Screen
 ![Home](./screenshots/home.jpg)
