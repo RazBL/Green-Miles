@@ -28,15 +28,15 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
 ---
 
  # 📸 Screenshots
-<p align="center"><b>Home Screen &nbsp;&nbsp;&nbsp;&nbsp; Sign In &nbsp;&nbsp;&nbsp;&nbsp; Search Hotels</b></p>
-<p align="center">
-  <img src="./client/src/images/preview/HomePage.jpg" width="220"/>
-  <img src="./client/src/images/preview/Sign in.jpg" width="220"/>
-  <img src="./client/src/images/preview/Hotel Search.jpg" width="220"/>
-</p>
 
-<p align="center"><b>Found Hotels &nbsp;&nbsp;&nbsp;&nbsp; Saved Hotels</b></p>
 <p align="center">
-  <img src="./client/src/images/preview/Found hotels.jpg" width="220"/>
-  <img src="./client/src/images/preview/Saved.jpg" width="220"/>
+  
+| Home Screen | Sign In | Search Hotels |
+|:---:|:---:|:---:|
+| <img src="./client/src/images/preview/HomePage.jpg" width="220"/> | <img src="./client/src/images/preview/Sign in.jpg" width="220"/> | <img src="./client/src/images/preview/Hotel Search.jpg" width="220"/> |
+
+| Found Hotels | Saved Hotels |   |
+|:---:|:---:|:---:|
+| <img src="./client/src/images/preview/Found hotels.jpg" width="220"/> | <img src="./client/src/images/preview/Saved.jpg" width="220"/> |   |
+
 </p>
