@@ -4,3 +4,12 @@
 The goal: Promote sustainable travel by highlighting green-rated accommodation and flight options.
 
 > 📌 *Note: All travel data used in this project is mock/demo only.*
+
+## ✨ Features
+- 🔐 Sign Up & Sign In with JWT-based authentication
+- 🏨 Search and book eco-rated **hotels**
+- ✈️ Search and book eco-rated **flights**
+- ❤️ Save favorites (hotels & flights)
+- 📱 Mobile UI built with React Native
+- 🌐 RESTful API using Express.js
+- 🗄️ MongoDB for database management
