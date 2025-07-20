@@ -25,7 +25,7 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
 | Auth      | JSON Web Tokens (JWT)       |
 | Version Control | Git + GitHub          |
 
-##
+--
 
  # 📸 Screenshots
 
