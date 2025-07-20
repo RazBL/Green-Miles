@@ -13,9 +13,7 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
 - 📱 Mobile UI built with React Native
 - 🌐 RESTful API using Express.js
 - 🗄️ MongoDB for database management
-
 ---
-
 ## 🛠️ Tech Stack
 | Layer     | Technology                  |
 |-----------|-----------------------------|
@@ -24,3 +22,20 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
 | Database  | MongoDB                     |
 | Auth      | JSON Web Tokens (JWT)       |
 | Version Control | Git + GitHub          |
+ ---
+ ## 📸 Screenshots
+
+### 🏠 Home Screen
+![Home](./screenshots/home.jpg)
+
+### 🔐 Sign In
+![Sign In](./screenshots/signin.jpg)
+
+### ✈️ Search Flights
+![Search Flights](./screenshots/search_flights.jpg)
+
+### 🏨 Hotel Result
+![Hotels](./screenshots/hotel_result.jpg)
+
+### 💚 Saved Hotels
+![Saved](./screenshots/saved.jpg)
