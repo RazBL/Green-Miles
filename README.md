@@ -1,4 +1,4 @@
-# Green Miles
+v# Green Miles
 
 **Green Miles** is a mobile app built as a final project, helping users discover and book eco-friendly flights and hotels.  
 The goal: Promote sustainable travel by highlighting green-rated accommodation and flight options.
@@ -29,7 +29,7 @@ The goal: Promote sustainable travel by highlighting green-rated accommodation a
 
  # 📸 Screenshots
  
-<p align="center">
+<p align="center" display="inline>
  
 ### Home Screen
 <img src="./client/src/images/preview/HomePage.jpg" alt="Home" width="250"/>
